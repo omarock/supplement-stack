@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { QuizData } from "@/types/quiz";
 import { recommend, Recommendation, Supplement } from "@/lib/supplements";
-import { iherbLink, IHERB_HOME } from "@/lib/iherb";
+import { iherbLink, iherbProductLink, IHERB_HOME } from "@/lib/iherb";
+import { getProducts, getPrimaryProduct, ProductOption } from "@/lib/products";
 
+// ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
   bg: "#f4ede1", bgWarm: "#ebe3d3", paper: "#fbf6ec",
   ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
@@ -26,6 +28,13 @@ const TIMING_COLOR: Record<Supplement["timing"], string> = {
   morning: th.burgundy, midday: "#a87a52", "pre-train": th.sage, evening: th.sageDeep,
 };
 
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function productHref(p: ProductOption): string {
+  if (p.productPath) return iherbProductLink(p.productPath);
+  return iherbLink(p.searchQuery ?? `${p.brand} ${p.productName}`);
+}
+
+// ─── UI primitives ───────────────────────────────────────────────────────────
 function PhylaLogo() {
   return (
     <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
@@ -59,33 +68,232 @@ function ScoreCard({ label, score, color }: { label: string; score: number; colo
   );
 }
 
-function BottleSvg({ hue, label }: { hue: string; label: string }) {
+/**
+ * Branded product visual — the "pill" of the design.
+ * Displays the brand prominently like real product packaging.
+ */
+function ProductVisual({
+  brand, name, bg, ink, height = 160,
+}: { brand: string; name: string; bg: string; ink: string; height?: number }) {
+  // Split brand into 1-2 lines for tall display
+  const parts = brand.split(" ");
   return (
-    <svg width="50" height="76" viewBox="0 0 64 98">
-      <rect x="25" y="4" width="14" height="8" rx="1.5" fill={th.sage} />
-      <rect x="22" y="11" width="20" height="4" fill={th.sage} opacity="0.85" />
-      <path d="M14 18 Q14 16 16 16 L48 16 Q50 16 50 18 L50 90 Q50 94 46 94 L18 94 Q14 94 14 90 Z" fill={hue} />
-      <rect x="18" y="42" width="28" height="38" rx="3" fill={th.paper} opacity="0.94" />
-      <text x="32" y="60" textAnchor="middle" fill={th.ink} fontFamily="Instrument Serif" fontSize="10" fontStyle="italic">
-        {label}
-      </text>
-      <line x1="22" y1="68" x2="42" y2="68" stroke={th.sage} strokeWidth="0.4" />
-      <text x="32" y="74" textAnchor="middle" fill={th.sage} fontFamily="Inter" fontSize="3.5" letterSpacing="1.5">PHYLA</text>
-    </svg>
+    <div style={{
+      background: bg, borderRadius: 12, height,
+      display: "flex", flexDirection: "column", justifyContent: "space-between",
+      padding: "14px 16px", position: "relative", overflow: "hidden",
+      border: `1px solid ${ink}10`,
+    }}>
+      {/* Top: brand badge */}
+      <div style={{
+        fontSize: 9, ...MM, color: ink, opacity: 0.7,
+        letterSpacing: "0.15em",
+      }}>
+        VERIFIED · iHerb
+      </div>
+
+      {/* Center: brand letters */}
+      <div style={{
+        ...S, fontSize: 30, lineHeight: 0.9, color: ink, letterSpacing: "-0.02em",
+        fontStyle: parts.length > 1 ? "italic" : "normal",
+      }}>
+        {parts.length === 1
+          ? brand.toLowerCase()
+          : (
+            <>
+              <div>{parts[0]}</div>
+              <div style={{ fontStyle: "normal", fontSize: 20 }}>{parts.slice(1).join(" ")}</div>
+            </>
+          )
+        }
+      </div>
+
+      {/* Bottom: product name */}
+      <div style={{
+        fontSize: 10, color: ink, opacity: 0.8, fontWeight: 500,
+        lineHeight: 1.3, marginTop: "auto",
+      }}>
+        {name}
+      </div>
+    </div>
   );
 }
 
+/**
+ * Rating stars + count
+ */
+function Stars({ rating, count }: { rating: number; count: number }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: th.inkSoft }}>
+      <span style={{ color: "#d97706", fontSize: 13 }}>★</span>
+      <span style={{ fontWeight: 600, color: th.ink }}>{rating.toFixed(1)}</span>
+      <span style={{ color: th.inkMute }}>· {count.toLocaleString()} reviews</span>
+    </div>
+  );
+}
+
+/**
+ * One product option card (used inside the modal).
+ */
+function ProductCard({ option }: { option: ProductOption }) {
+  const badgeColors: Record<ProductOption["badge"], { bg: string; ink: string }> = {
+    "Bestseller":    { bg: "#fef3c7", ink: "#854d0e" },
+    "Editor's Pick": { bg: "#d1fae5", ink: "#065f46" },
+    "Best Value":    { bg: "#dbeafe", ink: "#1e40af" },
+    "Premium":       { bg: "#ede9fe", ink: "#5b21b6" },
+    "Vegan":         { bg: "#d1fae5", ink: "#065f46" },
+  };
+  const bc = badgeColors[option.badge];
+
+  return (
+    <div style={{
+      background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16,
+      padding: 16, display: "flex", flexDirection: "column", gap: 12,
+      transition: "transform .2s ease, box-shadow .2s ease",
+    }}>
+      {/* Product visual */}
+      <ProductVisual brand={option.brand} name={option.productName} bg={option.brandBg} ink={option.brandInk} height={170} />
+
+      {/* Badge */}
+      <div style={{
+        alignSelf: "flex-start",
+        padding: "3px 10px", borderRadius: 999,
+        background: bc.bg, color: bc.ink,
+        fontSize: 11, fontWeight: 600, letterSpacing: "0.02em",
+      }}>
+        {option.badge}
+      </div>
+
+      {/* Name & size */}
+      <div>
+        <div style={{ ...S, fontSize: 20, color: th.ink, lineHeight: 1.15, letterSpacing: "-0.01em" }}>
+          {option.productName}
+        </div>
+        <div style={{ fontSize: 12, color: th.inkMute, marginTop: 3 }}>
+          by {option.brand} · {option.size}
+        </div>
+      </div>
+
+      {/* Rating */}
+      <Stars rating={option.rating} count={option.reviewCount} />
+
+      {/* Price + CTA */}
+      <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 10 }}>
+        <div style={{ ...S, fontSize: 28, color: th.ink, letterSpacing: "-0.02em" }}>
+          ${option.approxPrice.toFixed(2)}
+          <span style={{ fontSize: 12, color: th.inkMute, ...MM, marginLeft: 6 }}>approx</span>
+        </div>
+        <a
+          href={productHref(option)}
+          target="_blank" rel="noopener noreferrer sponsored"
+          style={{
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+            padding: "12px 16px", borderRadius: 12,
+            background: th.ink, color: th.bg, textDecoration: "none",
+            fontSize: 14, fontWeight: 500,
+          }}
+        >
+          Buy on iHerb
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+            <path d="M7 17L17 7M7 7h10v10" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Modal that displays the 3 product options for a given supplement.
+ */
+function ProductModal({ supp, options, onClose }: {
+  supp: Supplement; options: ProductOption[]; onClose: () => void;
+}) {
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handler);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed", inset: 0, zIndex: 100,
+        background: "rgba(28,29,24,0.55)", backdropFilter: "blur(8px)",
+        display: "flex", alignItems: "flex-start", justifyContent: "center",
+        padding: "40px 16px",
+        animation: "phyla-fade-in .25s ease-out",
+        overflowY: "auto",
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          background: th.bg, borderRadius: 24, padding: 32,
+          maxWidth: 1080, width: "100%",
+          boxShadow: "0 30px 80px rgba(0,0,0,0.3)",
+          animation: "phyla-rise .35s cubic-bezier(.4,0,.2,1)",
+          position: "relative",
+        }}
+      >
+        {/* Close */}
+        <button onClick={onClose} aria-label="Close" style={{
+          position: "absolute", top: 18, right: 18,
+          width: 36, height: 36, borderRadius: 999,
+          background: th.paper, border: `1px solid ${th.line}`,
+          cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 18, color: th.ink,
+        }}>×</button>
+
+        {/* Header */}
+        <div style={{ marginBottom: 22, maxWidth: 720 }}>
+          <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 12 }}>
+            CHOOSE YOUR PRODUCT
+          </div>
+          <h2 style={{ ...S, fontSize: 42, color: th.ink, margin: "0 0 8px", letterSpacing: "-0.02em", lineHeight: 1.05 }}>
+            {supp.name}
+          </h2>
+          <p style={{ color: th.inkSoft, fontSize: 15, lineHeight: 1.5, margin: 0 }}>
+            Three top-rated options on iHerb. All include your affiliate code.
+            <br />
+            <span style={{ color: th.inkMute, fontSize: 13 }}>Target dose: {supp.dose} · {supp.purpose}</span>
+          </p>
+        </div>
+
+        {/* Product grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14 }}>
+          {options.map(opt => (
+            <ProductCard key={opt.brand + opt.productName} option={opt} />
+          ))}
+        </div>
+
+        {/* Footer note */}
+        <p style={{ fontSize: 11, color: th.inkMute, textAlign: "center", marginTop: 24, lineHeight: 1.6 }}>
+          Prices are approximate and may vary on iHerb. We may earn a commission on qualifying purchases — at no extra cost to you.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main page ───────────────────────────────────────────────────────────────
 export default function ResultsPage() {
   const [data, setData] = useState<QuizData | null>(null);
   const [rec, setRec] = useState<Recommendation | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [activeSupp, setActiveSupp] = useState<Supplement | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("phylaQuizData");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        // Merge with safe defaults so old quiz data doesn't crash the engine
         const safeData: QuizData = {
           age: "", gender: "", height: "", weight: "",
           goals: [],
@@ -172,7 +380,7 @@ export default function ResultsPage() {
           <h1 style={{ ...S, fontSize: 64, color: th.ink, margin: "0 0 14px", letterSpacing: "-0.03em", lineHeight: 1 }}>
             Your <em style={{ color: th.burgundy }}>personalised</em> stack.
           </h1>
-          <p style={{ color: th.inkSoft, fontSize: 17, lineHeight: 1.6, maxWidth: 560, margin: "0 auto" }}>
+          <p style={{ color: th.inkSoft, fontSize: 17, lineHeight: 1.6, maxWidth: 580, margin: "0 auto" }}>
             {rec.supplements.length} clean, evidence-led ingredients matched to your goals, lifestyle, and biology — sourced via iHerb.
           </p>
         </section>
@@ -245,7 +453,7 @@ export default function ResultsPage() {
           </section>
         )}
 
-        {/* Stack */}
+        {/* Stack with product cards */}
         <section style={{ marginBottom: 56 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 18, flexWrap: "wrap", gap: 10 }}>
             <h2 style={{ ...S, fontSize: 32, margin: 0, letterSpacing: "-0.02em", color: th.ink }}>
@@ -257,62 +465,89 @@ export default function ResultsPage() {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 14 }}>
-            {rec.supplements.map((s, i) => (
-              <div key={s.id} style={{
-                background: th.paper, border: `1px solid ${th.line}`, borderRadius: 18,
-                padding: 22, display: "flex", flexDirection: "column", gap: 12,
-                animation: `phyla-rise .5s ${i * 0.06}s ease-out both`,
-              }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
-                  <BottleSvg hue={s.hue} label={s.name.split(" ")[0].toLowerCase()} />
-                  <div style={{
-                    padding: "4px 10px", borderRadius: 999,
-                    background: `${TIMING_COLOR[s.timing]}1f`, color: TIMING_COLOR[s.timing],
-                    fontSize: 11, fontWeight: 500, whiteSpace: "nowrap",
-                    display: "flex", alignItems: "center", gap: 5,
-                  }}>
-                    <span>{TIMING_GLYPH[s.timing]}</span>{TIMING_LABEL[s.timing]}
-                  </div>
-                </div>
-
-                <div>
-                  <h3 style={{ ...S, fontSize: 24, margin: 0, letterSpacing: "-0.01em", color: th.ink, lineHeight: 1.15 }}>
-                    {s.name}
-                  </h3>
-                  <div style={{ fontSize: 12, color: th.inkMute, ...MM, marginTop: 4 }}>
-                    {s.brand.toUpperCase()} · {s.dose}
-                  </div>
-                </div>
-
-                <p style={{ fontSize: 13, color: th.inkSoft, lineHeight: 1.55, margin: 0 }}>{s.why}</p>
-
-                <div style={{
-                  display: "flex", justifyContent: "space-between", alignItems: "center",
-                  paddingTop: 10, marginTop: "auto",
-                  fontSize: 11, color: th.sage, ...MM, letterSpacing: "0.08em",
+            {rec.supplements.map((s, i) => {
+              const primary = getPrimaryProduct(s.id);
+              const productCount = getProducts(s.id).length;
+              return (
+                <div key={s.id} style={{
+                  background: th.paper, border: `1px solid ${th.line}`, borderRadius: 18,
+                  padding: 18, display: "flex", flexDirection: "column", gap: 14,
+                  animation: `phyla-rise .5s ${i * 0.06}s ease-out both`,
                 }}>
-                  <span>{s.evidence.toUpperCase()} EVIDENCE</span>
-                  <span style={{ color: th.inkMute }}>~${s.monthlyCost}/MO</span>
-                </div>
+                  {/* Top: branded product visual + timing tag */}
+                  <div style={{ position: "relative" }}>
+                    {primary ? (
+                      <ProductVisual
+                        brand={primary.brand}
+                        name={primary.productName}
+                        bg={primary.brandBg}
+                        ink={primary.brandInk}
+                        height={170}
+                      />
+                    ) : (
+                      <div style={{
+                        background: th.bgWarm, borderRadius: 12, height: 170,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        color: th.inkMute, fontSize: 12, ...MM,
+                      }}>
+                        {s.brand.toUpperCase()}
+                      </div>
+                    )}
+                    <div style={{
+                      position: "absolute", top: 10, right: 10,
+                      padding: "4px 10px", borderRadius: 999,
+                      background: `${TIMING_COLOR[s.timing]}1f`, color: TIMING_COLOR[s.timing],
+                      fontSize: 11, fontWeight: 500, whiteSpace: "nowrap",
+                      display: "flex", alignItems: "center", gap: 5,
+                      backdropFilter: "blur(8px)",
+                    }}>
+                      <span>{TIMING_GLYPH[s.timing]}</span>{TIMING_LABEL[s.timing]}
+                    </div>
+                  </div>
 
-                <a
-                  href={iherbLink(s.iherbSearch)}
-                  target="_blank" rel="noopener noreferrer sponsored"
-                  style={{
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                    padding: "12px 16px", borderRadius: 12, marginTop: 4,
-                    background: th.ink, color: th.bg, textDecoration: "none",
-                    fontSize: 14, fontWeight: 500,
-                    transition: "background .2s",
-                  }}
-                >
-                  Shop on iHerb
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                    <path d="M5 12h14M13 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-            ))}
+                  {/* Name */}
+                  <div>
+                    <h3 style={{ ...S, fontSize: 24, margin: 0, letterSpacing: "-0.01em", color: th.ink, lineHeight: 1.15 }}>
+                      {s.name}
+                    </h3>
+                    <div style={{ fontSize: 12, color: th.inkMute, ...MM, marginTop: 4 }}>
+                      {s.dose} · {s.purpose}
+                    </div>
+                  </div>
+
+                  {/* Why */}
+                  <p style={{ fontSize: 13, color: th.inkSoft, lineHeight: 1.55, margin: 0 }}>{s.why}</p>
+
+                  {/* Footer: evidence + cta */}
+                  <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 10 }}>
+                    <div style={{
+                      display: "flex", justifyContent: "space-between", alignItems: "center",
+                      fontSize: 11, color: th.sage, ...MM, letterSpacing: "0.08em",
+                    }}>
+                      <span>{s.evidence.toUpperCase()} EVIDENCE</span>
+                      <span style={{ color: th.inkMute }}>~${s.monthlyCost}/MO</span>
+                    </div>
+
+                    <button
+                      onClick={() => setActiveSupp(s)}
+                      style={{
+                        display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                        padding: "12px 16px", borderRadius: 12,
+                        background: th.ink, color: th.bg, border: "none", cursor: "pointer",
+                        fontSize: 14, fontWeight: 500,
+                        fontFamily: '"Inter", system-ui, sans-serif',
+                        transition: "transform .15s ease",
+                      }}
+                    >
+                      {productCount > 0 ? `Choose product · ${productCount} options` : "Find on iHerb"}
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                        <path d="M5 12h14M13 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -357,18 +592,17 @@ export default function ResultsPage() {
           marginBottom: 28,
         }}>
           <h2 style={{ ...S, fontSize: 40, margin: "0 0 12px", letterSpacing: "-0.02em", lineHeight: 1.05 }}>
-            Ready to begin?
+            Browse iHerb directly?
           </h2>
           <p style={{ color: "rgba(251,246,236,0.85)", fontSize: 15, marginBottom: 22, maxWidth: 480, marginLeft: "auto", marginRight: "auto", lineHeight: 1.5 }}>
-            We&apos;ve curated the exact products on iHerb — quality brands, third-party tested, ships globally.
-            New iHerb customers get extra discounts on their first order.
+            New customers get extra discounts on their first iHerb order. All products ship globally.
           </p>
           <a href={IHERB_HOME} target="_blank" rel="noopener noreferrer sponsored" style={{
             display: "inline-flex", alignItems: "center", gap: 10,
             padding: "16px 28px", borderRadius: 999, fontSize: 15, fontWeight: 600,
             background: "#fbf6ec", color: th.burgundyDeep, textDecoration: "none",
           }}>
-            Open my iHerb stack →
+            Open iHerb →
           </a>
         </section>
 
@@ -383,6 +617,15 @@ export default function ResultsPage() {
           <em>Phyla is an iHerb affiliate. We may earn a commission on qualifying purchases made through our links — at no extra cost to you.</em>
         </p>
       </div>
+
+      {/* Modal */}
+      {activeSupp && (
+        <ProductModal
+          supp={activeSupp}
+          options={getProducts(activeSupp.id)}
+          onClose={() => setActiveSupp(null)}
+        />
+      )}
     </div>
   );
 }
