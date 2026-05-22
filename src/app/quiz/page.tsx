@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { QuizData } from "@/types/quiz";
+import { trackEmailSignup } from "@/lib/track";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
@@ -538,7 +539,7 @@ function StepGenerating({ data }: { data: QuizData }) {
     e.preventDefault();
     if (email && email.includes("@")) {
       localStorage.setItem("phylaUserEmail", email);
-      // If Supabase is configured later, we'll sync here.
+      trackEmailSignup(email, "quiz_results").catch(() => {});
     }
     setPhase("loading");
   }

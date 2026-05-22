@@ -6,6 +6,7 @@ import { QuizData } from "@/types/quiz";
 import { recommend, Recommendation, Supplement } from "@/lib/supplements";
 import { iherbLink, iherbProductLink, IHERB_HOME } from "@/lib/iherb";
 import { getProducts, getPrimaryProduct, ProductOption } from "@/lib/products";
+import { trackQuizSubmission, trackClick } from "@/lib/track";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
@@ -135,7 +136,7 @@ function Stars({ rating, count }: { rating: number; count: number }) {
 /**
  * One product option card (used inside the modal).
  */
-function ProductCard({ option }: { option: ProductOption }) {
+function ProductCard({ option, supplement }: { option: ProductOption; supplement: Supplement }) {
   const badgeColors: Record<ProductOption["badge"], { bg: string; ink: string }> = {
     "Bestseller":    { bg: "#fef3c7", ink: "#854d0e" },
     "Editor's Pick": { bg: "#d1fae5", ink: "#065f46" },
@@ -186,6 +187,7 @@ function ProductCard({ option }: { option: ProductOption }) {
         <a
           href={productHref(option)}
           target="_blank" rel="noopener noreferrer sponsored"
+          onClick={() => { trackClick(supplement, option, "modal").catch(() => {}); }}
           style={{
             display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
             padding: "12px 16px", borderRadius: 12,
@@ -269,7 +271,7 @@ function ProductModal({ supp, options, onClose }: {
         {/* Product grid */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14 }}>
           {options.map(opt => (
-            <ProductCard key={opt.brand + opt.productName} option={opt} />
+            <ProductCard key={opt.brand + opt.productName} option={opt} supplement={supp} />
           ))}
         </div>
 
@@ -308,7 +310,15 @@ export default function ResultsPage() {
           ...parsed,
         };
         setData(safeData);
-        setRec(recommend(safeData));
+        const r = recommend(safeData);
+        setRec(r);
+        // Fire-and-forget: log this quiz submission to Supabase
+        // Only log once per quiz session
+        const submissionKey = `phylaSubmitted:${JSON.stringify(safeData).slice(0, 60)}`;
+        if (!sessionStorage.getItem(submissionKey)) {
+          sessionStorage.setItem(submissionKey, "1");
+          trackQuizSubmission(safeData, r).catch(() => { /* silent */ });
+        }
       } catch { /* ignore */ }
     }
     setLoaded(true);
