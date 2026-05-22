@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase";
 
@@ -22,6 +22,18 @@ export default function AuthForm({ mode }: { mode: Mode }) {
   const [success, setSuccess] = useState<string | null>(null);
 
   const configured = isSupabaseConfigured();
+
+  // Surface any ?error=... query param coming back from /auth/callback
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const err = params.get("error");
+    if (err) {
+      setError(`Sign-in failed: ${decodeURIComponent(err)}`);
+      // Clean the URL so the message doesn't persist after the user retries
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+  }, []);
 
   async function handleEmail(e: React.FormEvent) {
     e.preventDefault();
