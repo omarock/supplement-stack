@@ -99,6 +99,9 @@ function PhylaNav({ dark, setDark }: { dark: boolean; setDark: (v: boolean) => v
 
         <div style={{ display: "var(--nav-show)", gap: 14, alignItems: "center" }}>
           <ThemeToggle dark={dark} setDark={setDark} />
+          <Link href="/signin" style={{ fontSize: 14, color: t.inkSoft, textDecoration: "none" }}>
+            Sign in
+          </Link>
           <Link href="/quiz" style={{
             background: t.ink, color: t.bg, textDecoration: "none",
             padding: "12px 22px", borderRadius: 999, fontWeight: 500, fontSize: 14,
@@ -153,6 +156,15 @@ function PhylaNav({ dark, setDark }: { dark: boolean; setDark: (v: boolean) => v
               {n}
             </Link>
           ))}
+          <Link
+            href="/signin" onClick={() => setOpen(false)}
+            style={{
+              ...S, fontSize: 30, color: t.ink, textDecoration: "none",
+              padding: "14px 0", borderBottom: `1px solid ${t.line}`,
+            }}
+          >
+            Sign in
+          </Link>
           <Link
             href="/quiz" onClick={() => setOpen(false)}
             style={{

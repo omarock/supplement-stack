@@ -48,6 +48,9 @@ export default function SiteHeader() {
         </div>
 
         <div style={{ display: "var(--nav-show)", gap: 14, alignItems: "center" }}>
+          <Link href="/signin" style={{
+            fontSize: 14, color: th.inkSoft, textDecoration: "none",
+          }}>Sign in</Link>
           <Link href="/quiz" style={{
             background: th.ink, color: th.bg, textDecoration: "none",
             padding: "12px 22px", borderRadius: 999, fontWeight: 500, fontSize: 14,
@@ -101,6 +104,16 @@ export default function SiteHeader() {
               {label}
             </Link>
           ))}
+          <Link
+            href="/signin"
+            onClick={() => setOpen(false)}
+            style={{
+              ...S, fontSize: 32, color: th.ink, textDecoration: "none",
+              padding: "14px 0", borderBottom: `1px solid ${th.line}`,
+            }}
+          >
+            Sign in
+          </Link>
           <Link
             href="/quiz"
             onClick={() => setOpen(false)}

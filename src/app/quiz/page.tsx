@@ -518,14 +518,34 @@ function Step10({ d, u }: { d: QuizData; u: Updater }) {
 
 function StepGenerating({ data }: { data: QuizData }) {
   const router = useRouter();
+  const [phase, setPhase] = useState<"email" | "loading">("email");
+  const [email, setEmail] = useState("");
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
+    // Save quiz data immediately
     localStorage.setItem("phylaQuizData", JSON.stringify(data));
-    const ticks = [700, 1500, 2300, 3100].map((d, i) => setTimeout(() => setTick(i + 1), d));
-    const redirect = setTimeout(() => router.push("/results"), 4000);
+  }, [data]);
+
+  useEffect(() => {
+    if (phase !== "loading") return;
+    const ticks = [600, 1300, 2000, 2700].map((d, i) => setTimeout(() => setTick(i + 1), d));
+    const redirect = setTimeout(() => router.push("/results"), 3400);
     return () => { ticks.forEach(clearTimeout); clearTimeout(redirect); };
-  }, [data, router]);
+  }, [phase, router]);
+
+  function submitEmail(e: React.FormEvent) {
+    e.preventDefault();
+    if (email && email.includes("@")) {
+      localStorage.setItem("phylaUserEmail", email);
+      // If Supabase is configured later, we'll sync here.
+    }
+    setPhase("loading");
+  }
+
+  function skipEmail() {
+    setPhase("loading");
+  }
 
   const steps = [
     "Analysing your wellness profile",
@@ -533,6 +553,66 @@ function StepGenerating({ data }: { data: QuizData }) {
     "Filtering for safety and preferences",
     "Building your personalised stack",
   ];
+
+  if (phase === "email") {
+    return (
+      <div style={{ textAlign: "center", padding: "20px 0" }}>
+        <div style={{ marginBottom: 24 }}>
+          <svg width="64" height="64" viewBox="0 0 24 24" style={{ animation: "phyla-sway 4s ease-in-out infinite" }}>
+            <ellipse cx="12" cy="6" rx="3" ry="5.5" fill={th.sage} />
+            <ellipse cx="6.5" cy="14" rx="3" ry="5" transform="rotate(-50 6.5 14)" fill={th.sage} />
+            <ellipse cx="17.5" cy="14" rx="3" ry="5" transform="rotate(50 17.5 14)" fill={th.sage} />
+            <circle cx="12" cy="12" r="1.6" fill={th.burgundy} />
+          </svg>
+        </div>
+        <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 12 }}>
+          ALMOST READY
+        </div>
+        <h1 style={{ ...S, fontSize: 44, color: th.ink, margin: "0 0 12px", letterSpacing: "-0.03em", lineHeight: 1 }}>
+          Want a copy in your inbox?
+        </h1>
+        <p style={{ color: th.inkSoft, fontSize: 15, lineHeight: 1.5, maxWidth: 420, margin: "0 auto 28px" }}>
+          We&apos;ll email your stack so you can revisit it anytime. Optional — your results are about to load either way.
+        </p>
+
+        <form onSubmit={submitEmail} style={{ maxWidth: 420, margin: "0 auto", display: "flex", flexDirection: "column", gap: 12 }}>
+          <input
+            type="email" autoComplete="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            style={{
+              width: "100%", padding: "16px 18px", borderRadius: 12, fontSize: 16,
+              border: email ? `2px solid ${th.sage}` : `1.5px solid ${th.line}`,
+              background: th.paper, color: th.ink, outline: "none",
+              fontFamily: '"Inter", system-ui, sans-serif', boxSizing: "border-box",
+            }}
+          />
+          <button type="submit" style={{
+            padding: "15px 18px", borderRadius: 12,
+            background: th.burgundy, color: "#fbf6ec", border: "none",
+            fontSize: 15, fontWeight: 500, cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+            fontFamily: '"Inter", system-ui, sans-serif',
+          }}>
+            Email me my stack →
+          </button>
+          <button type="button" onClick={skipEmail} style={{
+            padding: "10px", background: "transparent", border: "none",
+            color: th.inkMute, fontSize: 13, cursor: "pointer",
+            fontFamily: '"Inter", system-ui, sans-serif', textDecoration: "underline",
+            textUnderlineOffset: 3,
+          }}>
+            Skip — just show me my results
+          </button>
+        </form>
+
+        <p style={{ fontSize: 11, color: th.inkMute, marginTop: 24, maxWidth: 360, marginLeft: "auto", marginRight: "auto", lineHeight: 1.5 }}>
+          We never share your email. Unsubscribe anytime. See our <a href="/privacy" style={{ color: th.sage }}>privacy policy</a>.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div style={{ textAlign: "center", padding: "32px 0" }}>
