@@ -900,6 +900,17 @@ export default function HomePage() {
   const [dark, setDark] = useState(false);
   const t = dark ? phylaTheme.dark : phylaTheme.light;
 
+  // Safety net: if Supabase routes back to "/?code=..." (when Site URL is set to root),
+  // forward to /auth/callback so the session can be exchanged.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    if (code) {
+      window.location.replace(`/auth/callback?code=${encodeURIComponent(code)}`);
+    }
+  }, []);
+
   return (
     <Ctx.Provider value={t}>
       <div style={{
