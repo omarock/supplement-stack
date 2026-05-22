@@ -597,7 +597,13 @@ export default function QuizPage() {
 
   useEffect(() => {
     const saved = localStorage.getItem("phylaQuizDraft");
-    if (saved) { try { setData(JSON.parse(saved)); } catch { /* ignore */ } }
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        // Merge with INITIAL so missing fields (from old quiz versions) default safely
+        setData({ ...INITIAL, ...parsed });
+      } catch { /* ignore */ }
+    }
   }, []);
 
   useEffect(() => {

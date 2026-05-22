@@ -84,9 +84,23 @@ export default function ResultsPage() {
     const saved = localStorage.getItem("phylaQuizData");
     if (saved) {
       try {
-        const parsed = JSON.parse(saved) as QuizData;
-        setData(parsed);
-        setRec(recommend(parsed));
+        const parsed = JSON.parse(saved);
+        // Merge with safe defaults so old quiz data doesn't crash the engine
+        const safeData: QuizData = {
+          age: "", gender: "", height: "", weight: "",
+          goals: [],
+          sleep: 0, sleepHours: "", sleepIssues: [],
+          stress: 0, mood: 0, mindConcerns: [],
+          energy: 0, afternoonCrash: "",
+          workoutFreq: "", workoutType: "",
+          diet: "", caffeine: "", alcohol: "",
+          bodyConcerns: [],
+          pregnant: "", allergies: [], conditions: [],
+          budget: "", veganOnly: false,
+          ...parsed,
+        };
+        setData(safeData);
+        setRec(recommend(safeData));
       } catch { /* ignore */ }
     }
     setLoaded(true);
