@@ -1,9 +1,65 @@
 @import "tailwindcss";
 
+/* ─── Base type families ──────────────────────────────────────────────── */
 :root {
   --font-serif: "Instrument Serif", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+
+  /* Responsive sizing tokens — override below for smaller viewports */
+  --hero-h1: 96px;
+  --hero-h1-line: 0.93;
+  --section-h2: 72px;
+  --section-pad-y: 120px;
+  --section-pad-x: 56px;
+  --hero-pad-y: 64px;
+  --hero-pad-x: 56px;
+  --hero-cols: 1fr 1.05fr;
+  --grid-3-cols: repeat(3, 1fr);
+  --grid-3-gap: 24px;
+  --grid-2-cols: 1fr 1.2fr;
+  --grid-2-gap: 48px;
+  --footer-cols: 1.5fr 1fr 1fr 1fr 1fr;
+  --nav-pad-x: 56px;
+  --nav-gap: 36px;
+  --nav-show: flex;
+  --burger-show: none;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  :root {
+    --hero-h1: 62px;
+    --section-h2: 44px;
+    --section-pad-y: 72px;
+    --section-pad-x: 32px;
+    --hero-pad-y: 48px;
+    --hero-pad-x: 32px;
+    --hero-cols: 1fr;
+    --grid-3-cols: 1fr;
+    --grid-2-cols: 1fr;
+    --footer-cols: 1fr 1fr;
+    --nav-pad-x: 24px;
+    --nav-show: none;
+    --burger-show: flex;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  :root {
+    --hero-h1: 44px;
+    --hero-h1-line: 1;
+    --section-h2: 32px;
+    --section-pad-y: 56px;
+    --section-pad-x: 18px;
+    --hero-pad-y: 32px;
+    --hero-pad-x: 18px;
+    --grid-3-gap: 14px;
+    --grid-2-gap: 32px;
+    --footer-cols: 1fr;
+    --nav-pad-x: 16px;
+  }
 }
 
 html { scroll-behavior: smooth; }
@@ -13,30 +69,45 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ─── Phyla Animations ─────────────────────────────────── */
-@keyframes phyla-draw {
-  to { stroke-dashoffset: 0; }
+img, svg { max-width: 100%; }
+
+/* ─── Phyla Animations ────────────────────────────────────────────────── */
+@keyframes phyla-draw     { to   { stroke-dashoffset: 0; } }
+@keyframes phyla-pulse    { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: 0.5; } }
+@keyframes phyla-sway     { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(8deg); } }
+@keyframes phyla-marquee  { from { transform: translateX(0); } to { transform: translateX(-33.33%); } }
+@keyframes phyla-rise     { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes phyla-bar      { from { width: 0; } }
+@keyframes phyla-fade-in  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Article body typography ─────────────────────────────────────────── */
+.prose { color: #5b5d52; font-size: 17px; line-height: 1.75; }
+.prose p { margin: 0 0 1.2em; }
+.prose h2 {
+  font-family: var(--font-serif); font-weight: 400; color: #1c1d18;
+  font-size: 34px; letter-spacing: -0.02em; line-height: 1.15;
+  margin: 2em 0 0.6em;
 }
-@keyframes phyla-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%       { transform: scale(1.4); opacity: 0.5; }
+.prose h3 {
+  font-family: var(--font-serif); font-weight: 400; color: #1c1d18;
+  font-size: 24px; letter-spacing: -0.01em;
+  margin: 1.6em 0 0.4em;
 }
-@keyframes phyla-sway {
-  0%, 100% { transform: rotate(0deg); }
-  50%      { transform: rotate(8deg); }
+.prose ul, .prose ol { margin: 0 0 1.4em 1.2em; padding: 0; }
+.prose li { margin-bottom: 0.4em; }
+.prose strong { color: #1c1d18; font-weight: 600; }
+.prose em { color: #7d2e3a; font-style: italic; }
+.prose a { color: #4a6a4e; text-decoration: underline; text-underline-offset: 3px; }
+.prose blockquote {
+  border-left: 3px solid #4a6a4e; padding: 4px 0 4px 18px; margin: 1.6em 0;
+  font-family: var(--font-serif); font-size: 22px; color: #1c1d18; font-style: italic;
 }
-@keyframes phyla-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-33.33%); }
-}
-@keyframes phyla-rise {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes phyla-bar {
-  from { width: 0; }
-}
-@keyframes phyla-fade-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+.prose table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: 14px; }
+.prose th, .prose td { padding: 12px 14px; border-bottom: 1px solid rgba(28,29,24,0.10); text-align: left; }
+.prose th { font-weight: 600; color: #1c1d18; background: rgba(74,106,78,0.06); }
+
+@media (max-width: 640px) {
+  .prose { font-size: 16px; }
+  .prose h2 { font-size: 26px; }
+  .prose h3 { font-size: 20px; }
 }

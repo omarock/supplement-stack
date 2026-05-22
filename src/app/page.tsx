@@ -71,35 +71,102 @@ function ThemeToggle({ dark, setDark }: { dark: boolean; setDark: (v: boolean) =
 // ─── Nav ──────────────────────────────────────────────────────────────────────
 function PhylaNav({ dark, setDark }: { dark: boolean; setDark: (v: boolean) => void }) {
   const t = useT();
+  const [open, setOpen] = useState(false);
+  const links: [string, string][] = [
+    ["How it works", "#how-it-works"],
+    ["Ingredients", "#ingredients"],
+    ["Example", "#example"],
+    ["Journal", "/journal"],
+    ["About", "/about"],
+  ];
   return (
-    <nav style={{
-      position: "sticky", top: 0, zIndex: 30,
-      display: "flex", alignItems: "center", justifyContent: "space-between",
-      padding: "20px 56px",
-      background: `${t.bg}cc`, backdropFilter: "blur(20px)",
-      borderBottom: `1px solid ${t.line}`,
-    }}>
-      <PhylaLogo />
-      <div style={{ display: "flex", gap: 36, fontSize: 14, color: t.inkSoft }}>
-        {[["How it works", "#how-it-works"], ["Ingredients", "#ingredients"], ["Example", "#example"], ["Journal", "#journal"]].map(([n, h]) => (
-          <a key={n} href={h} style={{ color: "inherit", textDecoration: "none", cursor: "pointer" }}>{n}</a>
-        ))}
-      </div>
-      <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
-        <ThemeToggle dark={dark} setDark={setDark} />
-        <span style={{ fontSize: 14, color: t.inkSoft, cursor: "pointer" }}>Sign in</span>
-        <Link href="/quiz" style={{
-          background: t.ink, color: t.bg, textDecoration: "none",
-          padding: "12px 22px", borderRadius: 999, fontWeight: 500, fontSize: 14,
-          cursor: "pointer", display: "flex", alignItems: "center", gap: 8,
-        }}>
-          Begin analysis
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M5 12h14M13 5l7 7-7 7" />
-          </svg>
-        </Link>
-      </div>
-    </nav>
+    <>
+      <nav style={{
+        position: "sticky", top: 0, zIndex: 30,
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "18px var(--nav-pad-x)",
+        background: `${t.bg}cc`, backdropFilter: "blur(20px)",
+        borderBottom: `1px solid ${t.line}`,
+      }}>
+        <PhylaLogo />
+
+        {/* Desktop nav */}
+        <div style={{ display: "var(--nav-show)", gap: "var(--nav-gap)", fontSize: 14, color: t.inkSoft, alignItems: "center" }}>
+          {links.map(([n, h]) => (
+            <Link key={n} href={h} style={{ color: "inherit", textDecoration: "none" }}>{n}</Link>
+          ))}
+        </div>
+
+        <div style={{ display: "var(--nav-show)", gap: 14, alignItems: "center" }}>
+          <ThemeToggle dark={dark} setDark={setDark} />
+          <Link href="/quiz" style={{
+            background: t.ink, color: t.bg, textDecoration: "none",
+            padding: "12px 22px", borderRadius: 999, fontWeight: 500, fontSize: 14,
+            display: "flex", alignItems: "center", gap: 8,
+          }}>
+            Begin analysis
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+
+        {/* Mobile right: theme + hamburger */}
+        <div style={{ display: "var(--burger-show)", alignItems: "center", gap: 10 }}>
+          <ThemeToggle dark={dark} setDark={setDark} />
+          <button
+            onClick={() => setOpen(o => !o)}
+            aria-label="Toggle menu"
+            style={{
+              width: 40, height: 40, borderRadius: 12,
+              border: `1px solid ${t.line}`, background: "transparent", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.ink} strokeWidth="2">
+              {open ? <path d="M18 6L6 18M6 6l12 12" /> : <><path d="M3 6h18" /><path d="M3 12h18" /><path d="M3 18h18" /></>}
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile menu overlay */}
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          style={{
+            position: "fixed", inset: 0, top: 64, zIndex: 29,
+            background: t.bg,
+            padding: "32px 24px",
+            animation: "phyla-fade-in .2s ease-out",
+            display: "flex", flexDirection: "column", gap: 4,
+          }}
+        >
+          {links.map(([n, h]) => (
+            <Link
+              key={n} href={h} onClick={() => setOpen(false)}
+              style={{
+                ...S, fontSize: 30, color: t.ink, textDecoration: "none",
+                padding: "14px 0", borderBottom: `1px solid ${t.line}`,
+              }}
+            >
+              {n}
+            </Link>
+          ))}
+          <Link
+            href="/quiz" onClick={() => setOpen(false)}
+            style={{
+              marginTop: 24, padding: "18px 24px",
+              background: t.ink, color: t.bg, textDecoration: "none",
+              borderRadius: 999, fontSize: 16, fontWeight: 500,
+              textAlign: "center",
+            }}
+          >
+            Begin analysis →
+          </Link>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -214,15 +281,15 @@ function Counter({ target }: { target: number }) {
 function PhylaHero() {
   const t = useT();
   return (
-    <section style={{ padding: "64px 56px 80px", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", top: 60, right: 24, animation: "phyla-sway 7s ease-in-out infinite" }}>
+    <section style={{ padding: "var(--hero-pad-y) var(--hero-pad-x) calc(var(--hero-pad-y) * 1.25)", position: "relative", overflow: "hidden" }}>
+      <div style={{ position: "absolute", top: 60, right: 24, animation: "phyla-sway 7s ease-in-out infinite", opacity: 0.6 }}>
         <PhylaLeaf size={130} rotate={25} opacity={0.45} />
       </div>
-      <div style={{ position: "absolute", bottom: 100, left: -40, animation: "phyla-sway 9s ease-in-out infinite reverse" }}>
+      <div style={{ position: "absolute", bottom: 100, left: -40, animation: "phyla-sway 9s ease-in-out infinite reverse", opacity: 0.6 }}>
         <PhylaLeaf size={170} rotate={-160} opacity={0.35} />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.05fr", gap: 56, alignItems: "center", position: "relative" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "var(--hero-cols)", gap: 56, alignItems: "center", position: "relative" }}>
         {/* Left — copy */}
         <div>
           <div style={{
@@ -234,7 +301,7 @@ function PhylaHero() {
             AI engine v4.2 · live
           </div>
 
-          <h1 style={{ ...S, fontSize: 96, lineHeight: 0.93, margin: "0 0 28px", letterSpacing: "-0.03em", color: t.ink }}>
+          <h1 style={{ ...S, fontSize: "var(--hero-h1)", lineHeight: "var(--hero-h1-line)", margin: "0 0 28px", letterSpacing: "-0.03em", color: t.ink }}>
             A supplement<br />
             ritual,<br />
             <span style={{ color: t.burgundy, fontStyle: "italic" }}>tuned</span> to <em style={{ color: t.sage }}>you</em>.
@@ -244,7 +311,7 @@ function PhylaHero() {
             Answer a few questions about how you sleep, move, and feel. Our AI composes a daily stack from clean, evidence-led ingredients — and tells you exactly why.
           </p>
 
-          <div style={{ display: "flex", gap: 12, marginBottom: 30 }}>
+          <div style={{ display: "flex", gap: 12, marginBottom: 30, flexWrap: "wrap" }}>
             <Link href="/quiz" style={{
               background: t.burgundy, color: "#fbf6ec", textDecoration: "none",
               padding: "18px 28px", borderRadius: 999, fontWeight: 500, fontSize: 15,
@@ -312,7 +379,7 @@ function PhylaTrust() {
     <section style={{
       padding: "40px 56px", background: t.bgWarm,
       borderTop: `1px solid ${t.line}`, borderBottom: `1px solid ${t.line}`,
-      display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24,
+      display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 24,
     }}>
       {[
         ["12,000+", "rituals composed"],
@@ -365,17 +432,17 @@ function PhylaHow() {
   ];
   const stepBgs = ["#e8d9c5", "#cfdcc8", "#e8c8b6"];
   return (
-    <section id="how-it-works" style={{ padding: "120px 56px", position: "relative" }}>
+    <section id="how-it-works" style={{ padding: "var(--section-pad-y) var(--section-pad-x)", position: "relative" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 64 }}>
         <div>
           <div style={{ fontSize: 13, color: t.sage, marginBottom: 16, letterSpacing: "0.1em", ...MM }}>— THE RITUAL —</div>
-          <h2 style={{ ...S, fontSize: 72, margin: 0, letterSpacing: "-0.02em", color: t.ink, maxWidth: 800 }}>
+          <h2 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.02em", color: t.ink, maxWidth: 800 }}>
             From <em style={{ color: t.burgundy }}>question</em> to <em style={{ color: t.sage }}>routine</em>, in three quiet steps.
           </h2>
         </div>
         <div style={{ ...MM, fontSize: 12, color: t.inkMute }}>~60s end to end</div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, position: "relative" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 24, position: "relative" }}>
         <div style={{
           position: "absolute", top: 70, left: "16%", right: "16%", height: 1,
           background: `repeating-linear-gradient(90deg, ${t.line} 0 8px, transparent 8px 16px)`,
@@ -416,17 +483,17 @@ function PhylaBenefits() {
     ["Personal guidance", "never one-size-fits-all", "✿"],
   ];
   return (
-    <section style={{ padding: "120px 56px", background: t.bgWarm, position: "relative", overflow: "hidden" }}>
+    <section style={{ padding: "var(--section-pad-y) var(--section-pad-x)", background: t.bgWarm, position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", top: 40, right: 40 }}>
         <PhylaLeaf size={200} rotate={45} opacity={0.25} />
       </div>
       <div style={{ marginBottom: 64, position: "relative" }}>
         <div style={{ fontSize: 13, color: t.sage, marginBottom: 16, letterSpacing: "0.1em", ...MM }}>— REAL BENEFITS —</div>
-        <h2 style={{ ...S, fontSize: 72, margin: 0, letterSpacing: "-0.02em", maxWidth: 900, color: t.ink }}>
+        <h2 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.02em", maxWidth: 900, color: t.ink }}>
           Six things you&apos;ll <em style={{ color: t.burgundy }}>actually</em> notice.
         </h2>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, position: "relative" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 24, position: "relative" }}>
         {items.map(([title, body, glyph]) => (
           <div key={title} style={{
             background: t.panel, borderRadius: 24, padding: 32,
@@ -456,17 +523,17 @@ function PhylaBenefits() {
 function PhylaExample() {
   const t = useT();
   return (
-    <section id="example" style={{ padding: "120px 56px" }}>
+    <section id="example" style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
       <div style={{ textAlign: "center", marginBottom: 56 }}>
         <div style={{ fontSize: 13, color: t.sage, marginBottom: 16, letterSpacing: "0.1em", ...MM }}>— A SAMPLE READING —</div>
-        <h2 style={{ ...S, fontSize: 72, margin: 0, letterSpacing: "-0.02em", color: t.ink }}>
+        <h2 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.02em", color: t.ink }}>
           What your <em style={{ color: t.burgundy }}>letter</em> looks like.
         </h2>
       </div>
       <div style={{
-        background: t.panel, borderRadius: 32, padding: 48,
+        background: t.panel, borderRadius: 32, padding: "32px 24px",
         border: `1px solid ${t.line}`,
-        display: "grid", gridTemplateColumns: "1fr 1.5fr 1fr", gap: 40,
+        display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 40,
       }}>
         {/* Readings */}
         <div>
@@ -548,14 +615,14 @@ function PhylaIngredients() {
   ];
   const cur = items[active];
   return (
-    <section id="ingredients" style={{ padding: "120px 56px", borderTop: `1px solid ${t.line}` }}>
+    <section id="ingredients" style={{ padding: "var(--section-pad-y) var(--section-pad-x)", borderTop: `1px solid ${t.line}` }}>
       <div style={{ marginBottom: 56 }}>
         <div style={{ fontSize: 13, color: t.sage, marginBottom: 16, letterSpacing: "0.1em", ...MM }}>— THE APOTHECARY —</div>
-        <h2 style={{ ...S, fontSize: 72, margin: 0, letterSpacing: "-0.02em", color: t.ink, maxWidth: 900 }}>
+        <h2 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.02em", color: t.ink, maxWidth: 900 }}>
           Every ingredient, <em style={{ color: t.burgundy }}>explained.</em>
         </h2>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 48, alignItems: "stretch" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "var(--grid-2-cols)", gap: 48, alignItems: "stretch" }}>
         <div>
           {items.map((item, i) => (
             <div key={item.name} onClick={() => setActive(i)} style={{
@@ -625,14 +692,14 @@ function PhylaTestimonials() {
   ];
   const avatarBgs = ["#e8d9c5", "#cfdcc8", "#e8c8b6"];
   return (
-    <section style={{ padding: "120px 56px", background: t.bgWarm }}>
+    <section style={{ padding: "var(--section-pad-y) var(--section-pad-x)", background: t.bgWarm }}>
       <div style={{ marginBottom: 56, textAlign: "center" }}>
         <div style={{ fontSize: 13, color: t.sage, marginBottom: 16, letterSpacing: "0.1em", ...MM }}>— FROM OUR COMMUNITY —</div>
-        <h2 style={{ ...S, fontSize: 72, margin: 0, letterSpacing: "-0.02em", color: t.ink }}>
+        <h2 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.02em", color: t.ink }}>
           12,000 quieter mornings.
         </h2>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 24 }}>
         {testimonials.map(([quote, name, role], i) => (
           <div key={name} style={{
             background: t.panel, borderRadius: 24, padding: 36, border: `1px solid ${t.line}`,
@@ -670,11 +737,11 @@ function PhylaFAQ() {
     ["Can a beginner use this?", "Yes. Every recommendation comes with plain-language reasoning, exact dose, and the time of day to take it."],
   ];
   return (
-    <section style={{ padding: "120px 56px" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "0.85fr 1.15fr", gap: 64 }}>
+    <section style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "var(--grid-2-cols)", gap: 64 }}>
         <div>
           <div style={{ fontSize: 13, color: t.sage, marginBottom: 16, letterSpacing: "0.1em", ...MM }}>— GENTLE ANSWERS —</div>
-          <h2 style={{ ...S, fontSize: 72, margin: 0, letterSpacing: "-0.02em", color: t.ink, lineHeight: 1 }}>
+          <h2 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.02em", color: t.ink, lineHeight: 1 }}>
             Common <em style={{ color: t.burgundy }}>questions</em>.
           </h2>
           <p style={{ color: t.inkSoft, marginTop: 24, fontSize: 16, lineHeight: 1.6 }}>
@@ -712,10 +779,10 @@ function PhylaFAQ() {
 function PhylaCTA() {
   const t = useT();
   return (
-    <section style={{ padding: "64px 56px" }}>
+    <section style={{ padding: "var(--hero-pad-y) var(--section-pad-x)" }}>
       <div style={{
         background: `linear-gradient(135deg, ${t.burgundyDeep}, ${t.burgundy})`,
-        borderRadius: 32, padding: "80px 64px", position: "relative", overflow: "hidden",
+        borderRadius: 32, padding: "var(--section-pad-y) calc(var(--section-pad-x) + 8px)", position: "relative", overflow: "hidden",
       }}>
         <div style={{ position: "absolute", top: -40, right: -40, opacity: 0.25 }}>
           <PhylaLeaf size={300} rotate={30} color="#f8e1d6" />
@@ -724,7 +791,7 @@ function PhylaCTA() {
           <PhylaLeaf size={260} rotate={-120} color="#f8e1d6" />
         </div>
         <div style={{ position: "relative", maxWidth: 800 }}>
-          <h2 style={{ ...S, fontSize: 84, color: "#fbf6ec", margin: "0 0 24px", letterSpacing: "-0.025em", lineHeight: 1 }}>
+          <h2 style={{ ...S, fontSize: "var(--section-h2)", color: "#fbf6ec", margin: "0 0 24px", letterSpacing: "-0.025em", lineHeight: 1 }}>
             Begin your <em style={{ color: "#f8e1d6" }}>ritual</em>.
           </h2>
           <p style={{ color: "rgba(251,246,236,0.82)", fontSize: 19, maxWidth: 540, marginBottom: 36, lineHeight: 1.5 }}>
@@ -764,33 +831,51 @@ function PhylaCTA() {
 // ─── Footer ───────────────────────────────────────────────────────────────────
 function PhylaFooter() {
   const t = useT();
-  const cols = [
-    ["Product", ["How it works", "Ingredients", "Example", "Pricing"]],
-    ["Studio", ["About", "Journal", "Practitioners", "Press"]],
-    ["Care", ["Help", "FAQ", "Contact", "Concierge"]],
-    ["Legal", ["Terms", "Privacy", "Disclaimer", "Cookies"]],
+  const cols: [string, [string, string][]][] = [
+    ["Product", [
+      ["How it works", "#how-it-works"],
+      ["Ingredients", "#ingredients"],
+      ["Example", "#example"],
+      ["Take the quiz", "/quiz"],
+    ]],
+    ["Studio", [
+      ["About Phyla", "/about"],
+      ["Journal", "/journal"],
+      ["Contact", "/contact"],
+    ]],
+    ["Care", [
+      ["Help & FAQ", "/help"],
+      ["Contact us", "/contact"],
+    ]],
+    ["Legal", [
+      ["Terms", "/terms"],
+      ["Privacy", "/privacy"],
+      ["Medical Disclaimer", "/disclaimer"],
+      ["Cookies", "/cookies"],
+    ]],
   ];
   return (
     <footer style={{
-      padding: "40px 56px 56px", borderTop: `1px solid ${t.line}`,
-      display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr 1fr 1fr", gap: 40,
+      padding: "40px var(--nav-pad-x) 48px", borderTop: `1px solid ${t.line}`,
+      display: "grid", gridTemplateColumns: "var(--footer-cols)", gap: 40,
     }}>
       <div>
         <PhylaLogo />
-        <p style={{ fontSize: 14, color: t.inkSoft, lineHeight: 1.55, marginTop: 16, maxWidth: 280 }}>
-          AI-guided supplement rituals composed from clean, evidence-led ingredients.
+        <p style={{ fontSize: 14, color: t.inkSoft, lineHeight: 1.55, marginTop: 16, maxWidth: 320 }}>
+          AI-guided supplement rituals composed from clean, evidence-led ingredients available on iHerb.
         </p>
-        <div style={{ fontSize: 12, color: t.inkMute, marginTop: 32 }}>
-          © 2026 Phyla. For informational purposes only — not medical advice.
+        <div style={{ fontSize: 11, color: t.inkMute, marginTop: 22, lineHeight: 1.5 }}>
+          © {new Date().getFullYear()} Phyla. For informational purposes only — not medical advice.
+          <br />Phyla is an iHerb affiliate.
         </div>
       </div>
       {cols.map(([heading, links]) => (
-        <div key={heading as string}>
-          <div style={{ fontSize: 12, color: t.inkMute, letterSpacing: "0.1em", marginBottom: 16, ...MM }}>
-            {(heading as string).toUpperCase()}
+        <div key={heading}>
+          <div style={{ fontSize: 11, color: t.inkMute, letterSpacing: "0.1em", marginBottom: 14, ...MM }}>
+            {heading.toUpperCase()}
           </div>
-          {(links as string[]).map(link => (
-            <div key={link} style={{ fontSize: 14, color: t.ink, marginBottom: 10, cursor: "pointer" }}>{link}</div>
+          {links.map(([label, href]) => (
+            <Link key={label} href={href} style={{ display: "block", fontSize: 14, color: t.ink, marginBottom: 10, textDecoration: "none" }}>{label}</Link>
           ))}
         </div>
       ))}
