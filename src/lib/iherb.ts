@@ -10,7 +10,7 @@
  * iHerb pays you when someone buys after clicking your link.
  */
 
-export const IHERB_REWARDS_CODE = "PHYLA";
+export const IHERB_REWARDS_CODE = "DII6469";
 
 /**
  * Build an iHerb affiliate link from a search query.
