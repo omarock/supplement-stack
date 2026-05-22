@@ -16,17 +16,7 @@ const S = { fontFamily: "var(--font-serif)", fontWeight: 400 } as const;
 const MM = { fontFamily: "var(--font-mono)" } as const;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-export interface QuizData {
-  age: string;
-  gender: string;
-  goals: string[];
-  sleep: number;
-  stress: number;
-  energy: number;
-  workoutFreq: string;
-  diet: string;
-  budget: string;
-}
+import { QuizData } from "@/types/quiz";
 
 const INITIAL: QuizData = {
   age: "", gender: "", goals: [],

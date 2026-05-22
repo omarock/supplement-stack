@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { QuizData } from "@/app/quiz/page";
+import { QuizData } from "@/types/quiz";
 
 const th = {
   bg: "#f4ede1", paper: "#fbf6ec",
