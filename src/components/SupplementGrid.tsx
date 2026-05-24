@@ -64,11 +64,12 @@ function BrandedFallback({ brand, name, bg, ink, height }: {
 }
 
 // ─── Real product image with brand overlay + onError fallback ───────────────
-function ProductImage({ supplementId, option, height = 170, showBrandStrip = true }: {
-  supplementId: string; option: ProductOption; height?: number; showBrandStrip?: boolean;
+function ProductImage({ supplementId, option, brandIndex = 0, height = 170, showBrandStrip = true }: {
+  supplementId: string; option: ProductOption; brandIndex?: number;
+  height?: number; showBrandStrip?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
-  const src = option.imageUrl ?? getProductImage(supplementId, option.brand);
+  const src = option.imageUrl ?? getProductImage(supplementId, brandIndex);
 
   if (failed) {
     return (
@@ -141,8 +142,8 @@ function Stars({ rating, count }: { rating: number; count: number }) {
 }
 
 // ─── Product card (inside modal) ─────────────────────────────────────────────
-function ProductCard({ option, supplement, source }: {
-  option: ProductOption; supplement: Supplement; source: string;
+function ProductCard({ option, supplement, source, brandIndex }: {
+  option: ProductOption; supplement: Supplement; source: string; brandIndex: number;
 }) {
   const badgeColors: Record<ProductOption["badge"], { bg: string; ink: string }> = {
     "Bestseller":    { bg: "#fef3c7", ink: "#854d0e" },
@@ -159,7 +160,7 @@ function ProductCard({ option, supplement, source }: {
       padding: 16, display: "flex", flexDirection: "column", gap: 12,
       boxShadow: `0 2px 6px rgba(10,37,64,0.04)`,
     }}>
-      <ProductImage supplementId={supplement.id} option={option} height={180} />
+      <ProductImage supplementId={supplement.id} option={option} brandIndex={brandIndex} height={180} />
 
       <div style={{
         alignSelf: "flex-start", padding: "3px 10px", borderRadius: 999,
@@ -261,8 +262,14 @@ function ProductModal({ supp, options, source, onClose }: {
           </p>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
-          {options.map(opt => (
-            <ProductCard key={opt.brand + opt.productName} option={opt} supplement={supp} source={source} />
+          {options.map((opt, i) => (
+            <ProductCard
+              key={opt.brand + opt.productName}
+              option={opt}
+              supplement={supp}
+              source={source}
+              brandIndex={i}
+            />
           ))}
         </div>
         <p style={{ fontSize: 11, color: th.inkMute, textAlign: "center", marginTop: 24, lineHeight: 1.6 }}>
@@ -305,8 +312,12 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 14 }}>
         {supplements.map((s, i) => {
-          const primary = getPrimaryProduct(s.id);
-          const productCount = getProducts(s.id).length;
+          const allProducts = getProducts(s.id);
+          const productCount = allProducts.length;
+          // Always prefer NOW Foods variant for the main card per user direction.
+          const nowIdx = allProducts.findIndex(p => p.brand.toLowerCase().includes("now"));
+          const display = nowIdx >= 0 ? allProducts[nowIdx] : getPrimaryProduct(s.id);
+          const brandIndex = nowIdx >= 0 ? nowIdx : 0;
           return (
             <div key={s.id} style={{
               background: th.paper, border: `1px solid ${th.line}`, borderRadius: 18,
@@ -315,8 +326,8 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
               animation: `sd-rise .5s ${i * 0.05}s ease-out both`,
             }}>
               <div style={{ position: "relative" }}>
-                {primary ? (
-                  <ProductImage supplementId={s.id} option={primary} height={180} />
+                {display ? (
+                  <ProductImage supplementId={s.id} option={display} brandIndex={brandIndex} height={180} />
                 ) : (
                   <div style={{
                     background: th.bgWarm, borderRadius: 12, height: 180,
