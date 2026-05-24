@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import type { Supplement } from "@/lib/supplements";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { getProducts, getPrimaryProduct, type ProductOption } from "@/lib/products";
-import { getProductImage } from "@/lib/productImages";
 import { trackClick } from "@/lib/track";
+import BottleMockup from "@/components/BottleMockup";
 
 // ─── Theme (synced with global suppdoc.io palette) ──────────────────────────
 const th = {
@@ -34,69 +34,35 @@ function productHref(p: ProductOption): string {
   return iherbLink(p.searchQuery ?? `${p.brand} ${p.productName}`);
 }
 
-// ─── Branded fallback card (shown if image fails to load) ───────────────────
-function BrandedFallback({ brand, name, bg, ink, height }: {
-  brand: string; name: string; bg: string; ink: string; height: number;
-}) {
-  const parts = brand.split(" ");
-  return (
-    <div style={{
-      background: bg, borderRadius: 12, height,
-      display: "flex", flexDirection: "column", justifyContent: "space-between",
-      padding: "14px 16px", border: `1px solid ${ink}10`,
-    }}>
-      <div style={{ fontSize: 9, ...MM, color: ink, opacity: 0.7, letterSpacing: "0.15em" }}>
-        VERIFIED · iHerb
-      </div>
-      <div style={{ ...D, fontSize: 26, lineHeight: 0.95, color: ink, letterSpacing: "-0.02em" }}>
-        {parts.length === 1 ? brand : (
-          <>
-            <div>{parts[0]}</div>
-            <div style={{ fontSize: 18 }}>{parts.slice(1).join(" ")}</div>
-          </>
-        )}
-      </div>
-      <div style={{ fontSize: 10, color: ink, opacity: 0.8, fontWeight: 500, lineHeight: 1.3 }}>
-        {name}
-      </div>
-    </div>
-  );
-}
-
-// ─── Real product image with brand overlay + onError fallback ───────────────
-function ProductImage({ supplementId, option, brandIndex = 0, height = 170, showBrandStrip = true }: {
-  supplementId: string; option: ProductOption; brandIndex?: number;
+// ─── Product visual: SVG bottle mockup with brand strip ─────────────────────
+function ProductImage({ option, height = 220, showBrandStrip = true }: {
+  option: ProductOption; supplementId?: string; brandIndex?: number;
   height?: number; showBrandStrip?: boolean;
 }) {
-  const [failed, setFailed] = useState(false);
-  const src = option.imageUrl ?? getProductImage(supplementId, brandIndex);
-
-  if (failed) {
-    return (
-      <BrandedFallback
-        brand={option.brand} name={option.productName}
-        bg={option.brandBg} ink={option.brandInk} height={height}
-      />
-    );
-  }
+  // If a real image URL is provided (e.g. iHerb CDN), use it. Otherwise render
+  // the SVG bottle mockup so the product always looks consistent and on-brand.
+  const useImage = !!option.imageUrl;
 
   return (
     <div style={{
       position: "relative", height, borderRadius: 12, overflow: "hidden",
-      background: `linear-gradient(180deg, ${option.brandBg}, ${th.bg})`,
+      background: `linear-gradient(180deg, ${option.brandBg}, ${th.bg} 80%)`,
       border: `1px solid ${th.line}`,
     }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt={`${option.brand} ${option.productName}`}
-        onError={() => setFailed(true)}
-        loading="lazy"
-        style={{
-          width: "100%", height: "100%", objectFit: "cover",
-          display: "block",
-        }}
-      />
+      {useImage ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={option.imageUrl}
+          alt={`${option.brand} ${option.productName}`}
+          loading="lazy"
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        />
+      ) : (
+        <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <BottleMockup option={option} height={height} showBackgroundScene={false} />
+        </div>
+      )}
+
       {showBrandStrip && (
         <div style={{
           position: "absolute", bottom: 0, left: 0, right: 0,
