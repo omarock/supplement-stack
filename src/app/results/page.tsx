@@ -168,18 +168,8 @@ export default function ResultsPage() {
           </p>
         </section>
 
-        {/* ─── Stack (front and center) ─── */}
-        <section style={{ marginBottom: 64 }}>
-          <SupplementGrid
-            supplements={rec.supplements}
-            source="results"
-            title="Your stack"
-            showTotalCost
-          />
-        </section>
-
-        {/* Wellness scores */}
-        <section style={{ marginBottom: 48 }}>
+        {/* ─── Wellness reading (before the stack) ─── */}
+        <section style={{ marginBottom: 56 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 18, flexWrap: "wrap", gap: 8 }}>
             <h2 style={{
               fontFamily: '"Bricolage Grotesque", system-ui, sans-serif', fontWeight: 600,
@@ -197,6 +187,16 @@ export default function ResultsPage() {
             <ScoreCard label="Stress" score={rec.scores.stress} color="#7a6d92" />
             <ScoreCard label="Mood" score={rec.scores.mood} color={th.burgundy} />
           </div>
+        </section>
+
+        {/* ─── Stack ─── */}
+        <section style={{ marginBottom: 64 }}>
+          <SupplementGrid
+            supplements={rec.supplements}
+            source="results"
+            title="Your stack"
+            showTotalCost
+          />
         </section>
 
         {/* Reasoning */}

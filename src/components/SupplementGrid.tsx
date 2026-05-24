@@ -55,7 +55,11 @@ function ProductImage({ option, height = 220, showBrandStrip = true }: {
           src={option.imageUrl}
           alt={`${option.brand} ${option.productName}`}
           loading="lazy"
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          style={{
+            width: "100%", height: "100%", objectFit: "contain",
+            objectPosition: "center", display: "block",
+            padding: "12px 12px 56px",
+          }}
         />
       ) : (
         <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
