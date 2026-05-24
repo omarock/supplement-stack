@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Cookie Policy — Phyla",
+  title: "Cookie Policy — suppdoc.io",
   description: "Phyla uses minimal essential storage to remember your quiz progress. We don't use advertising or tracking cookies. Full details inside.",
 };
 
@@ -33,7 +33,7 @@ export default function Page() {
         <code style={{ background: "rgba(28,29,24,0.05)", padding: "4px 8px", borderRadius: 6, fontSize: 13 }}>localStorage.clear()</code>
       </p>
       <p>
-        Or use your browser&apos;s &quot;Clear site data&quot; setting for phyla.studio.
+        Or use your browser&apos;s &quot;Clear site data&quot; setting for suppdoc.io.
       </p>
 
       <h2>Third-Party Services</h2>
@@ -48,7 +48,7 @@ export default function Page() {
 
       <h2>Contact</h2>
       <p>
-        Cookie questions: <a href="mailto:hello@phyla.studio">hello@phyla.studio</a>
+        Cookie questions: <a href="mailto:hello@suppdoc.io">hello@suppdoc.io</a>
       </p>
     </LegalPage>
   );

@@ -2,26 +2,41 @@
 
 /* ─── Base type families ──────────────────────────────────────────────── */
 :root {
-  --font-serif: "Instrument Serif", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-display: "Bricolage Grotesque", "Inter Display", system-ui, sans-serif;
+  --font-serif:   "Instrument Serif", Georgia, serif;
+  --font-sans:    "Inter", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
 
-  /* Responsive sizing tokens — override below for smaller viewports */
-  --hero-h1: 96px;
-  --hero-h1-line: 0.93;
-  --section-h2: 72px;
+  /* Brand colors as CSS vars (for places that need raw color access) */
+  --c-bg:       #f6f5f1;
+  --c-surface:  #ffffff;
+  --c-ink:      #0a2540;
+  --c-ink-soft: #3c4858;
+  --c-muted:    #6b7280;
+  --c-sage:     #5ba373;
+  --c-sage-deep:#3f7a52;
+  --c-amber:    #e8a04a;
+  --c-amber-deep:#b5751e;
+  --c-coral:    #ff8b6b;
+  --c-lavender: #a78bfa;
+  --c-edge:     rgba(10, 37, 64, 0.08);
+
+  /* Responsive sizing tokens — desktop defaults */
+  --hero-h1: 88px;
+  --hero-h1-line: 0.96;
+  --section-h2: 64px;
   --section-pad-y: 120px;
-  --section-pad-x: 56px;
-  --hero-pad-y: 64px;
-  --hero-pad-x: 56px;
-  --hero-cols: 1fr 1.05fr;
+  --section-pad-x: 40px;
+  --hero-pad-y: 140px;
+  --hero-pad-x: 40px;
+  --hero-cols: 1.1fr 0.9fr;
   --grid-3-cols: repeat(3, 1fr);
   --grid-3-gap: 24px;
-  --grid-2-cols: 1fr 1.2fr;
+  --grid-2-cols: 1fr 1.4fr;
   --grid-2-gap: 48px;
-  --footer-cols: 1.5fr 1fr 1fr 1fr 1fr;
-  --nav-pad-x: 56px;
-  --nav-gap: 36px;
+  --footer-cols: 2fr 1fr 1fr 1fr;
+  --nav-pad-x: 40px;
+  --nav-gap: 28px;
   --nav-show: flex;
   --burger-show: none;
 }
@@ -31,15 +46,15 @@
   :root {
     --hero-h1: 62px;
     --section-h2: 44px;
-    --section-pad-y: 72px;
-    --section-pad-x: 32px;
-    --hero-pad-y: 48px;
-    --hero-pad-x: 32px;
+    --section-pad-y: 80px;
+    --section-pad-x: 28px;
+    --hero-pad-y: 100px;
+    --hero-pad-x: 28px;
     --hero-cols: 1fr;
     --grid-3-cols: 1fr;
     --grid-2-cols: 1fr;
     --footer-cols: 1fr 1fr;
-    --nav-pad-x: 24px;
+    --nav-pad-x: 22px;
     --nav-show: none;
     --burger-show: flex;
   }
@@ -49,14 +64,14 @@
 @media (max-width: 640px) {
   :root {
     --hero-h1: 44px;
-    --hero-h1-line: 1;
-    --section-h2: 32px;
-    --section-pad-y: 56px;
+    --hero-h1-line: 1.02;
+    --section-h2: 34px;
+    --section-pad-y: 64px;
     --section-pad-x: 18px;
-    --hero-pad-y: 32px;
+    --hero-pad-y: 84px;
     --hero-pad-x: 18px;
     --grid-3-gap: 14px;
-    --grid-2-gap: 32px;
+    --grid-2-gap: 28px;
     --footer-cols: 1fr;
     --nav-pad-x: 16px;
   }
@@ -66,45 +81,67 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-sans);
+  background: var(--c-bg);
+  color: var(--c-ink);
   -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.003em;
 }
 
 img, svg { max-width: 100%; }
 
-/* ─── Phyla Animations ────────────────────────────────────────────────── */
-@keyframes phyla-draw     { to   { stroke-dashoffset: 0; } }
-@keyframes phyla-pulse    { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: 0.5; } }
-@keyframes phyla-sway     { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(8deg); } }
-@keyframes phyla-marquee  { from { transform: translateX(0); } to { transform: translateX(-33.33%); } }
-@keyframes phyla-rise     { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes phyla-bar      { from { width: 0; } }
-@keyframes phyla-fade-in  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+::selection {
+  background: rgba(91, 163, 115, 0.25);
+  color: var(--c-ink);
+}
+
+/* ─── suppdoc.io animations ───────────────────────────────────────────── */
+@keyframes sd-pulse    { 0%,100% { transform: scale(1); opacity: 1 } 50% { transform: scale(1.5); opacity: 0.4 } }
+@keyframes sd-spin     { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+@keyframes sd-marq-l   { from { transform: translateX(0) } to { transform: translateX(-33.33%) } }
+@keyframes sd-marq-r   { from { transform: translateX(-33.33%) } to { transform: translateX(0) } }
+@keyframes sd-bar      { from { width: 0 } }
+@keyframes sd-draw     { to { stroke-dashoffset: 0 } }
+@keyframes sd-rise     { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+@keyframes sd-float    { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+@keyframes sd-fade-in  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes sd-drift-a  { 0%,100% { transform: translate(0,0) scale(1) } 33% { transform: translate(40px,-30px) scale(1.1) } 66% { transform: translate(-30px,40px) scale(0.95) } }
+@keyframes sd-drift-b  { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(-50px,30px) scale(1.15) } }
+@keyframes sd-drift-c  { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(30px,-40px) scale(1.08) } }
+
+/* Legacy phyla animation names kept as aliases so existing pages still animate */
+@keyframes phyla-rise    { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes phyla-fade-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes phyla-bar     { from { width: 0; } }
+@keyframes phyla-pulse   { 0%,100% { transform: scale(1); opacity: 1 } 50% { transform: scale(1.4); opacity: 0.5 } }
+@keyframes phyla-sway    { 0%,100% { transform: rotate(0deg) } 50% { transform: rotate(8deg) } }
+@keyframes phyla-marquee { from { transform: translateX(0) } to { transform: translateX(-33.33%) } }
+@keyframes phyla-draw    { to { stroke-dashoffset: 0 } }
 
 /* ─── Article body typography ─────────────────────────────────────────── */
-.prose { color: #5b5d52; font-size: 17px; line-height: 1.75; }
+.prose { color: var(--c-ink-soft); font-size: 17px; line-height: 1.75; }
 .prose p { margin: 0 0 1.2em; }
 .prose h2 {
-  font-family: var(--font-serif); font-weight: 400; color: #1c1d18;
-  font-size: 34px; letter-spacing: -0.02em; line-height: 1.15;
+  font-family: var(--font-display); font-weight: 600; color: var(--c-ink);
+  font-size: 32px; letter-spacing: -0.02em; line-height: 1.15;
   margin: 2em 0 0.6em;
 }
 .prose h3 {
-  font-family: var(--font-serif); font-weight: 400; color: #1c1d18;
-  font-size: 24px; letter-spacing: -0.01em;
+  font-family: var(--font-display); font-weight: 600; color: var(--c-ink);
+  font-size: 22px; letter-spacing: -0.015em;
   margin: 1.6em 0 0.4em;
 }
 .prose ul, .prose ol { margin: 0 0 1.4em 1.2em; padding: 0; }
 .prose li { margin-bottom: 0.4em; }
-.prose strong { color: #1c1d18; font-weight: 600; }
-.prose em { color: #7d2e3a; font-style: italic; }
-.prose a { color: #4a6a4e; text-decoration: underline; text-underline-offset: 3px; }
+.prose strong { color: var(--c-ink); font-weight: 600; }
+.prose em { color: var(--c-sage-deep); font-style: italic; font-family: var(--font-serif); }
+.prose a { color: var(--c-sage-deep); text-decoration: underline; text-underline-offset: 3px; }
 .prose blockquote {
-  border-left: 3px solid #4a6a4e; padding: 4px 0 4px 18px; margin: 1.6em 0;
-  font-family: var(--font-serif); font-size: 22px; color: #1c1d18; font-style: italic;
+  border-left: 3px solid var(--c-sage); padding: 4px 0 4px 18px; margin: 1.6em 0;
+  font-family: var(--font-serif); font-size: 22px; color: var(--c-ink); font-style: italic;
 }
 .prose table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: 14px; }
-.prose th, .prose td { padding: 12px 14px; border-bottom: 1px solid rgba(28,29,24,0.10); text-align: left; }
-.prose th { font-weight: 600; color: #1c1d18; background: rgba(74,106,78,0.06); }
+.prose th, .prose td { padding: 12px 14px; border-bottom: 1px solid var(--c-edge); text-align: left; }
+.prose th { font-weight: 600; color: var(--c-ink); background: rgba(91,163,115,0.06); }
 
 @media (max-width: 640px) {
   .prose { font-size: 16px; }

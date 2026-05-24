@@ -4,14 +4,14 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 const th = {
-  bg: "#f4ede1", paper: "#fbf6ec", ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", burgundy: "#7d2e3a", line: "rgba(28,29,24,0.12)",
+  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
+  sage: "#5ba373", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
-  title: "Contact — Phyla",
+  title: "Contact — suppdoc.io",
   description: "Get in touch with the Phyla team. Questions about your stack, partnerships, or press inquiries — we reply within one business day.",
 };
 
@@ -33,9 +33,9 @@ export default function ContactPage() {
       <section style={{ padding: "0 var(--section-pad-x) var(--section-pad-y)" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 18 }}>
           {[
-            { label: "General questions", value: "hello@phyla.studio", href: "mailto:hello@phyla.studio", desc: "Quiz feedback, ritual support, anything else." },
-            { label: "Partnerships", value: "partners@phyla.studio", href: "mailto:partners@phyla.studio", desc: "Affiliate, brand, or distribution partnerships." },
-            { label: "Press & media", value: "press@phyla.studio", href: "mailto:press@phyla.studio", desc: "Interviews, citations, and content collaborations." },
+            { label: "General questions", value: "hello@suppdoc.io", href: "mailto:hello@suppdoc.io", desc: "Quiz feedback, ritual support, anything else." },
+            { label: "Partnerships", value: "partners@suppdoc.io", href: "mailto:partners@suppdoc.io", desc: "Affiliate, brand, or distribution partnerships." },
+            { label: "Press & media", value: "press@suppdoc.io", href: "mailto:press@suppdoc.io", desc: "Interviews, citations, and content collaborations." },
           ].map(c => (
             <a key={c.label} href={c.href} style={{
               background: th.paper, border: `1px solid ${th.line}`, borderRadius: 18,

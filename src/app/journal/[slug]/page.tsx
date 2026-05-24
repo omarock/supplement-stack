@@ -6,9 +6,9 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 const th = {
-  bg: "#f4ede1", bgWarm: "#ebe3d3", paper: "#fbf6ec",
-  ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", burgundy: "#7d2e3a", line: "rgba(28,29,24,0.12)",
+  bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
+  ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
+  sage: "#5ba373", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = getPost(slug);
   if (!post) return { title: "Not found" };
   return {
-    title: `${post.title} — Phyla Journal`,
+    title: `${post.title} — suppdoc.io Journal`,
     description: post.description,
     keywords: post.keywords,
     openGraph: {
@@ -104,8 +104,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         <section style={{ padding: "0 var(--section-pad-x) 64px" }}>
           <div style={{
             maxWidth: 720, margin: "0 auto",
-            background: `linear-gradient(135deg, ${th.sage} 0%, #324d36 100%)`,
-            borderRadius: 20, padding: "32px 36px", color: "#fbf6ec",
+            background: `linear-gradient(135deg, ${th.sage} 0%, #3f7a52 100%)`,
+            borderRadius: 20, padding: "32px 36px", color: "#ffffff",
             textAlign: "center",
           }}>
             <h3 style={{ ...S, fontSize: 32, margin: "0 0 10px", letterSpacing: "-0.02em", lineHeight: 1 }}>
@@ -117,7 +117,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <Link href="/quiz" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               padding: "14px 24px", borderRadius: 999,
-              background: "#fbf6ec", color: "#324d36", textDecoration: "none",
+              background: "#ffffff", color: "#3f7a52", textDecoration: "none",
               fontWeight: 600, fontSize: 14,
             }}>
               Begin your analysis →

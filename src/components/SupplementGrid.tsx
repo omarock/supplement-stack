@@ -8,10 +8,10 @@ import { trackClick } from "@/lib/track";
 
 // ─── Shared theme (kept in sync with results page) ──────────────────────────
 const th = {
-  bg: "#f4ede1", bgWarm: "#ebe3d3", paper: "#fbf6ec",
-  ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", sageDeep: "#324d36", sageGlow: "rgba(74,106,78,0.10)",
-  burgundy: "#7d2e3a", line: "rgba(28,29,24,0.12)",
+  bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
+  ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
+  sage: "#5ba373", sageDeep: "#3f7a52", sageGlow: "rgba(91,163,115,0.10)",
+  burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
@@ -155,7 +155,7 @@ function ProductModal({ supp, options, source, onClose }: {
       onClick={onClose}
       style={{
         position: "fixed", inset: 0, zIndex: 100,
-        background: "rgba(28,29,24,0.55)", backdropFilter: "blur(8px)",
+        background: "rgba(10,37,64,0.55)", backdropFilter: "blur(8px)",
         display: "flex", alignItems: "flex-start", justifyContent: "center",
         padding: "40px 16px",
         animation: "phyla-fade-in .25s ease-out",

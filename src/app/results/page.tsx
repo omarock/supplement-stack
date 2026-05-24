@@ -10,11 +10,11 @@ import { trackQuizSubmission, trackClick } from "@/lib/track";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
-  bg: "#f4ede1", bgWarm: "#ebe3d3", paper: "#fbf6ec",
-  ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", sageDeep: "#324d36", sageGlow: "rgba(74,106,78,0.10)",
-  burgundy: "#7d2e3a", burgundyDeep: "#5a1f2a",
-  line: "rgba(28,29,24,0.12)",
+  bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
+  ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
+  sage: "#5ba373", sageDeep: "#3f7a52", sageGlow: "rgba(91,163,115,0.10)",
+  burgundy: "#0a2540", burgundyDeep: "#0a2540",
+  line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
@@ -227,7 +227,7 @@ function ProductModal({ supp, options, onClose }: {
       onClick={onClose}
       style={{
         position: "fixed", inset: 0, zIndex: 100,
-        background: "rgba(28,29,24,0.55)", backdropFilter: "blur(8px)",
+        background: "rgba(10,37,64,0.55)", backdropFilter: "blur(8px)",
         display: "flex", alignItems: "flex-start", justifyContent: "center",
         padding: "40px 16px",
         animation: "phyla-fade-in .25s ease-out",
@@ -342,7 +342,7 @@ export default function ResultsPage() {
           <Link href="/quiz" style={{
             display: "inline-flex", alignItems: "center", gap: 10,
             padding: "16px 28px", borderRadius: 999, fontSize: 15, fontWeight: 500,
-            background: th.burgundy, color: "#fbf6ec", textDecoration: "none",
+            background: th.burgundy, color: "#ffffff", textDecoration: "none",
           }}>
             Begin your analysis →
           </Link>
@@ -598,7 +598,7 @@ export default function ResultsPage() {
         {/* iHerb CTA */}
         <section style={{
           background: `linear-gradient(135deg, ${th.burgundyDeep}, ${th.burgundy})`,
-          borderRadius: 24, padding: 40, textAlign: "center", color: "#fbf6ec",
+          borderRadius: 24, padding: 40, textAlign: "center", color: "#ffffff",
           marginBottom: 28,
         }}>
           <h2 style={{ ...S, fontSize: 40, margin: "0 0 12px", letterSpacing: "-0.02em", lineHeight: 1.05 }}>
@@ -610,7 +610,7 @@ export default function ResultsPage() {
           <a href={IHERB_HOME} target="_blank" rel="noopener noreferrer sponsored" style={{
             display: "inline-flex", alignItems: "center", gap: 10,
             padding: "16px 28px", borderRadius: 999, fontSize: 15, fontWeight: 600,
-            background: "#fbf6ec", color: th.burgundyDeep, textDecoration: "none",
+            background: "#ffffff", color: th.burgundyDeep, textDecoration: "none",
           }}>
             Open iHerb →
           </a>
@@ -624,7 +624,7 @@ export default function ResultsPage() {
           <strong>For informational purposes only. Not medical advice.</strong>{" "}
           Recommendations are educational guidance based on your inputs. Always consult a qualified healthcare professional before starting any supplement regimen, particularly if you have medical conditions, take medications, are pregnant, or are nursing.
           <br /><br />
-          <em>Phyla is an iHerb affiliate. We may earn a commission on qualifying purchases made through our links — at no extra cost to you.</em>
+          <em>suppdoc.io is an iHerb affiliate. We may earn a commission on qualifying purchases made through our links — at no extra cost to you.</em>
         </p>
       </div>
 

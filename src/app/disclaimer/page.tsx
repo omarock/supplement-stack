@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Medical Disclaimer — Phyla",
+  title: "Medical Disclaimer — suppdoc.io",
   description: "Phyla provides educational guidance only. This is not medical advice. Always consult a qualified healthcare professional before starting supplements.",
 };
 
@@ -15,7 +15,7 @@ export default function Page() {
 
       <h2>Educational Only</h2>
       <p>
-        All content on Phyla — including the quiz, recommendations, daily routines, articles, and product information — is provided for educational and informational purposes only. It is <strong>not intended as medical advice, diagnosis, or treatment</strong>.
+        All content on suppdoc.io — including the quiz, recommendations, daily routines, articles, and product information — is provided for educational and informational purposes only. It is <strong>not intended as medical advice, diagnosis, or treatment</strong>.
       </p>
 
       <h2>Consult a Qualified Professional</h2>

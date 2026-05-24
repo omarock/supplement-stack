@@ -6,14 +6,14 @@ import { createServerClient } from "@supabase/ssr";
 import { getAdminSupabase, isAdminEmail } from "@/lib/supabase-admin";
 
 export const metadata: Metadata = {
-  title: "Admin — Phyla",
+  title: "Admin — suppdoc.io",
   robots: "noindex,nofollow",
 };
 
 const th = {
-  bg: "#f4ede1", paper: "#fbf6ec", ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", sageGlow: "rgba(74,106,78,0.10)",
-  burgundy: "#7d2e3a", line: "rgba(28,29,24,0.12)",
+  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
+  sage: "#5ba373", sageGlow: "rgba(91,163,115,0.10)",
+  burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;

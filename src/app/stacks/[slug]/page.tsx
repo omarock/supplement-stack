@@ -7,8 +7,8 @@ import SiteFooter from "@/components/SiteFooter";
 import SupplementGrid, { DailyRoutine } from "@/components/SupplementGrid";
 
 const th = {
-  bg: "#f4ede1", paper: "#fbf6ec", ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", burgundy: "#7d2e3a", line: "rgba(28,29,24,0.12)",
+  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
+  sage: "#5ba373", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const stack = getStack(slug);
   if (!stack) return { title: "Not found" };
   return {
-    title: `${stack.name} — Phyla`,
+    title: `${stack.name} — suppdoc.io`,
     description: stack.description,
     keywords: `${stack.name}, ${stack.bestFor.join(", ")}, supplement stack`,
     openGraph: {
@@ -146,7 +146,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
             </div>
             <p style={{
               marginTop: 18, padding: "14px 20px",
-              background: "rgba(74,106,78,0.06)", borderRadius: 12,
+              background: "rgba(91,163,115,0.06)", borderRadius: 12,
               fontSize: 13, color: th.inkSoft, lineHeight: 1.5,
             }}>
               <strong style={{ color: th.sage }}>Expected timeline:</strong> {stack.expectedTimeline}
@@ -174,8 +174,8 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
           {/* CTA */}
           <section style={{ marginBottom: 56 }}>
             <div style={{
-              background: `linear-gradient(135deg, ${th.burgundy} 0%, #5a1f2a 100%)`,
-              borderRadius: 24, padding: 40, textAlign: "center", color: "#fbf6ec",
+              background: `linear-gradient(135deg, ${th.burgundy} 0%, #0a2540 100%)`,
+              borderRadius: 24, padding: 40, textAlign: "center", color: "#ffffff",
             }}>
               <h2 style={{ ...S, fontSize: 40, margin: "0 0 12px", letterSpacing: "-0.02em", lineHeight: 1.05 }}>
                 Ready to adopt this stack?
@@ -186,7 +186,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
               <Link href="/quiz" style={{
                 display: "inline-flex", alignItems: "center", gap: 10,
                 padding: "14px 26px", borderRadius: 999, fontSize: 14, fontWeight: 500,
-                background: "transparent", color: "#fbf6ec", textDecoration: "none",
+                background: "transparent", color: "#ffffff", textDecoration: "none",
                 border: "1px solid rgba(251,246,236,0.4)",
               }}>
                 Or get a personalised stack →
@@ -232,7 +232,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
             <strong>For informational purposes only. Not medical advice.</strong>{" "}
             Always consult a qualified healthcare professional before starting any supplement regimen.
             <br /><br />
-            <em>Phyla is an iHerb affiliate. We may earn a commission on qualifying purchases through our links — at no extra cost to you.</em>
+            <em>suppdoc.io is an iHerb affiliate. We may earn a commission on qualifying purchases through our links — at no extra cost to you.</em>
           </p>
 
         </div>

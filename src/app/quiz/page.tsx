@@ -8,11 +8,11 @@ import { trackEmailSignup } from "@/lib/track";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
-  bg: "#f4ede1", bgWarm: "#ebe3d3", paper: "#fbf6ec",
-  ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", sageGlow: "rgba(74,106,78,0.12)",
-  burgundy: "#7d2e3a", burgundyDeep: "#5a1f2a",
-  line: "rgba(28,29,24,0.12)",
+  bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
+  ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
+  sage: "#5ba373", sageGlow: "rgba(91,163,115,0.12)",
+  burgundy: "#0a2540", burgundyDeep: "#0a2540",
+  line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
@@ -591,7 +591,7 @@ function StepGenerating({ data }: { data: QuizData }) {
           />
           <button type="submit" style={{
             padding: "15px 18px", borderRadius: 12,
-            background: th.burgundy, color: "#fbf6ec", border: "none",
+            background: th.burgundy, color: "#ffffff", border: "none",
             fontSize: 15, fontWeight: 500, cursor: "pointer",
             display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
             fontFamily: '"Inter", system-ui, sans-serif',
@@ -647,7 +647,7 @@ function StepGenerating({ data }: { data: QuizData }) {
               display: "flex", alignItems: "center", justifyContent: "center",
               transition: "background .3s ease",
             }}>
-              {tick > i && <span style={{ color: "#fbf6ec", fontSize: 11, fontWeight: 600 }}>✓</span>}
+              {tick > i && <span style={{ color: "#ffffff", fontSize: 11, fontWeight: 600 }}>✓</span>}
             </div>
             <span style={{ fontSize: 13, color: tick > i ? th.ink : th.inkSoft }}>{item}</span>
           </div>
@@ -792,7 +792,7 @@ export default function QuizPage() {
           <button onClick={goNext} disabled={!ok} style={{
             padding: "12px 24px", borderRadius: 999, fontSize: 14, fontWeight: 500,
             background: ok ? th.burgundy : th.line,
-            color: ok ? "#fbf6ec" : th.inkMute,
+            color: ok ? "#ffffff" : th.inkMute,
             border: "none", cursor: ok ? "pointer" : "default",
             display: "flex", alignItems: "center", gap: 8,
             fontFamily: '"Inter", system-ui, sans-serif',

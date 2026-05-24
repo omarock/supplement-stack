@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <title>suppdoc.io</title>
+  <defs>
+    <linearGradient id="st" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#3f7a52"></stop>
+      <stop offset="100%" stop-color="#5ba373"></stop>
+    </linearGradient>
+    <linearGradient id="ll" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5ba373"></stop>
+      <stop offset="100%" stop-color="#a8c97a"></stop>
+    </linearGradient>
+    <linearGradient id="lr" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5ba373"></stop>
+      <stop offset="100%" stop-color="#e8a04a"></stop>
+    </linearGradient>
+    <radialGradient id="b" cx="0.35" cy="0.3" r="0.75">
+      <stop offset="0%" stop-color="#ffe0a8"></stop>
+      <stop offset="60%" stop-color="#e8a04a"></stop>
+      <stop offset="100%" stop-color="#b5751e"></stop>
+    </radialGradient>
+    <radialGradient id="g" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#f5c280" stop-opacity="0.4"></stop>
+      <stop offset="100%" stop-color="#f5c280" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <circle cx="20" cy="10" r="8" fill="url(#g)"></circle>
+  <path d="M 20 36 Q 20 24 20 12" stroke="url(#st)" stroke-width="2.2" stroke-linecap="round" fill="none"></path>
+  <path d="M 20 23 Q 12 22 8 15 Q 14 14.5 20 23 Z" fill="url(#ll)"></path>
+  <path d="M 20 19 Q 28 18 32 11 Q 26 10.5 20 19 Z" fill="url(#lr)"></path>
+  <circle cx="20" cy="10" r="3.6" fill="url(#b)"></circle>
+  <circle cx="19" cy="9" r="1.2" fill="rgba(255,255,255,0.5)"></circle>
+</svg>

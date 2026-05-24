@@ -4,14 +4,14 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 const th = {
-  bg: "#f4ede1", paper: "#fbf6ec", ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", burgundy: "#7d2e3a", line: "rgba(28,29,24,0.12)",
+  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
+  sage: "#5ba373", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
-  title: "About — Phyla",
+  title: "About — suppdoc.io",
   description: "Phyla composes AI-guided supplement rituals from clean, evidence-led ingredients. Built to help you understand your stack — not just sell it.",
 };
 
@@ -71,7 +71,7 @@ export default function AboutPage() {
 
           <div>
             <h2 style={{ ...S, fontSize: 36, margin: "0 0 14px", letterSpacing: "-0.02em", color: th.ink }}>
-              What Phyla is not
+              What suppdoc.io is not
             </h2>
             <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.7 }}>
               We&apos;re not medical professionals. We don&apos;t diagnose, treat, or cure conditions. We don&apos;t replace your doctor, dietitian, or pharmacist. For any health concerns — and especially before starting supplements — talk to a qualified clinician. Our recommendations are educational.
@@ -91,7 +91,7 @@ export default function AboutPage() {
             <Link href="/quiz" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               padding: "14px 26px", borderRadius: 999, fontSize: 15, fontWeight: 500,
-              background: th.burgundy, color: "#fbf6ec", textDecoration: "none",
+              background: th.burgundy, color: "#ffffff", textDecoration: "none",
             }}>
               Begin your analysis →
             </Link>

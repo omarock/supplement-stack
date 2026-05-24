@@ -47,7 +47,7 @@ export const POSTS: BlogPost[] = [
     excerpt: "Both are common forms of magnesium, but they work very differently. Here's how to pick the right one for sleep, stress, or digestion.",
     description: "Compare magnesium glycinate and citrate. Learn which form is best for sleep, stress, anxiety, or constipation — and how to choose the right dose.",
     keywords: "magnesium glycinate vs citrate, magnesium for sleep, magnesium types, best magnesium supplement",
-    author: "Phyla Editorial", date: "2026-04-22", readTime: "5 min", category: "Guides",
+    author: "suppdoc Editorial", date: "2026-04-22", readTime: "5 min", category: "Guides",
     coverBg: "linear-gradient(135deg, #7a6d92 0%, #5b5184 100%)", coverGlyph: "Mg", coverInk: "#fbf6ec",
     content: () =>
       r(React.Fragment, null,
@@ -84,7 +84,7 @@ export const POSTS: BlogPost[] = [
     excerpt: "Forget melatonin. These five evidence-led supplements address the actual root causes of poor sleep — stress, low magnesium, and circadian disruption.",
     description: "Evidence-based guide to the best supplements for sleep: magnesium glycinate, ashwagandha, glycine, L-theanine, and more. Doses and timing included.",
     keywords: "best supplements for sleep, natural sleep aids, magnesium glycinate sleep, ashwagandha sleep",
-    author: "Phyla Editorial", date: "2026-04-18", readTime: "6 min", category: "Sleep",
+    author: "suppdoc Editorial", date: "2026-04-18", readTime: "6 min", category: "Sleep",
     coverBg: "linear-gradient(135deg, #324d36 0%, #1c2e1f 100%)", coverGlyph: "☾", coverInk: "#cfdcc8",
     content: () =>
       r(React.Fragment, null,
@@ -119,7 +119,7 @@ export const POSTS: BlogPost[] = [
     excerpt: "Vitamin D deficiency affects an estimated 1 billion people worldwide. The symptoms are subtle — until they're not.",
     description: "7 signs of vitamin D deficiency: fatigue, low mood, frequent illness, bone pain, hair loss. Learn how to test and the right D3 dose.",
     keywords: "vitamin d deficiency signs, vitamin d3 dose, low vitamin d symptoms, vitamin d3 k2",
-    author: "Phyla Editorial", date: "2026-04-12", readTime: "5 min", category: "Energy",
+    author: "suppdoc Editorial", date: "2026-04-12", readTime: "5 min", category: "Energy",
     coverBg: "linear-gradient(135deg, #c4944a 0%, #8b6730 100%)", coverGlyph: "☀", coverInk: "#fbf6ec",
     content: () =>
       r(React.Fragment, null,
@@ -157,7 +157,7 @@ export const POSTS: BlogPost[] = [
     excerpt: "Algae omega-3 isn't just for vegans anymore. Here's how plant-based omega-3 compares to fish oil on absorption, sustainability, and cost.",
     description: "Compare fish oil and algae omega-3. EPA/DHA content, absorption, environmental impact, and which is right for your needs.",
     keywords: "fish oil vs algae omega 3, vegan omega 3, best omega 3 supplement, algae oil DHA EPA",
-    author: "Phyla Editorial", date: "2026-04-05", readTime: "5 min", category: "Nutrition",
+    author: "suppdoc Editorial", date: "2026-04-05", readTime: "5 min", category: "Nutrition",
     coverBg: "linear-gradient(135deg, #688a6b 0%, #4a6a4e 100%)", coverGlyph: "ω", coverInk: "#fbf6ec",
     content: () =>
       r(React.Fragment, null,
@@ -199,7 +199,7 @@ export const POSTS: BlogPost[] = [
     excerpt: "Ashwagandha is one of the most-studied herbal supplements on earth. Here's the science of how it calms cortisol — and when not to take it.",
     description: "How ashwagandha (KSM-66) lowers cortisol and reduces stress. Dose, timing, evidence, and who should avoid it.",
     keywords: "ashwagandha cortisol, ashwagandha for stress, KSM-66 dose, ashwagandha benefits",
-    author: "Phyla Editorial", date: "2026-03-28", readTime: "6 min", category: "Stress",
+    author: "suppdoc Editorial", date: "2026-03-28", readTime: "6 min", category: "Stress",
     coverBg: "linear-gradient(135deg, #a3604a 0%, #6e3d2c 100%)", coverGlyph: "♡", coverInk: "#fbf6ec",
     content: () =>
       r(React.Fragment, null,
@@ -233,7 +233,7 @@ export const POSTS: BlogPost[] = [
     excerpt: "Creatine isn't just for bodybuilders. For women, it supports strength, cognition, recovery, and even bone density — at less than $0.50 per day.",
     description: "Creatine benefits for women: strength, cognition, mood, bone density. Dose, timing, and common myths debunked.",
     keywords: "creatine for women, creatine benefits, creatine monohydrate dose, creatine and cognition",
-    author: "Phyla Editorial", date: "2026-03-20", readTime: "5 min", category: "Recovery",
+    author: "suppdoc Editorial", date: "2026-03-20", readTime: "5 min", category: "Recovery",
     coverBg: "linear-gradient(135deg, #4a6a4e 0%, #324d36 100%)", coverGlyph: "↺", coverInk: "#fbf6ec",
     content: () =>
       r(React.Fragment, null,
@@ -269,7 +269,7 @@ export const POSTS: BlogPost[] = [
     excerpt: "Ashwagandha, rhodiola, reishi, eleuthero — the adaptogen category is exploding. Here's how to make sense of it and pick what actually works for you.",
     description: "Complete guide to adaptogens: ashwagandha, rhodiola, reishi, eleuthero. How they work, evidence levels, and which to pick.",
     keywords: "adaptogens, rhodiola vs ashwagandha, what are adaptogens, best adaptogens for stress",
-    author: "Phyla Editorial", date: "2026-03-14", readTime: "7 min", category: "Stress",
+    author: "suppdoc Editorial", date: "2026-03-14", readTime: "7 min", category: "Stress",
     coverBg: "linear-gradient(135deg, #5b5184 0%, #3d3460 100%)", coverGlyph: "✿", coverInk: "#fbf6ec",
     content: () =>
       r(React.Fragment, null,
@@ -318,7 +318,7 @@ export const POSTS: BlogPost[] = [
     excerpt: "A plant-based diet is one of the healthiest ways to eat — but it leaves a few specific nutrient gaps. Here's exactly what to supplement.",
     description: "Essential supplements for vegans: B12, vitamin D3 (vegan), algae omega-3, iron, zinc, creatine. Doses and brands.",
     keywords: "vegan supplements, b12 for vegans, vegan omega 3, plant based supplements, vegan vitamin d3",
-    author: "Phyla Editorial", date: "2026-03-08", readTime: "7 min", category: "Nutrition",
+    author: "suppdoc Editorial", date: "2026-03-08", readTime: "7 min", category: "Nutrition",
     coverBg: "linear-gradient(135deg, #688a6b 0%, #4a6a4e 100%)", coverGlyph: "✦", coverInk: "#fbf6ec",
     content: () =>
       r(React.Fragment, null,
@@ -359,7 +359,7 @@ export const POSTS: BlogPost[] = [
     excerpt: "The probiotic aisle is chaos. Strain numbers, CFU counts, prebiotics, postbiotics… here's a no-nonsense guide to picking the right one.",
     description: "How to choose a probiotic: CFU, strains, refrigeration, what to avoid. Best probiotics for gut, mood, immunity, and bloating.",
     keywords: "best probiotic, how to choose probiotic, probiotic for bloating, gut health supplements, probiotic strains",
-    author: "Phyla Editorial", date: "2026-02-28", readTime: "6 min", category: "Nutrition",
+    author: "suppdoc Editorial", date: "2026-02-28", readTime: "6 min", category: "Nutrition",
     coverBg: "linear-gradient(135deg, #688a6b 0%, #4a6a4e 100%)", coverGlyph: "◎", coverInk: "#fbf6ec",
     content: () =>
       r(React.Fragment, null,
@@ -403,7 +403,7 @@ export const POSTS: BlogPost[] = [
     excerpt: "Roughly 1 in 5 women of menstruating age has low iron — yet most don't know. Here's how to know, how to test, and how to fix it safely.",
     description: "Iron deficiency in women: signs, causes, blood tests. Best iron supplements for women (gentle forms, dose, timing).",
     keywords: "iron for women, iron deficiency anemia, gentle iron supplement, ferritin test, iron bisglycinate",
-    author: "Phyla Editorial", date: "2026-02-20", readTime: "5 min", category: "Women's Health",
+    author: "suppdoc Editorial", date: "2026-02-20", readTime: "5 min", category: "Women's Health",
     coverBg: "linear-gradient(135deg, #7d2e3a 0%, #5a1f2a 100%)", coverGlyph: "Fe", coverInk: "#fbf6ec",
     content: () =>
       r(React.Fragment, null,

@@ -1,12 +1,10 @@
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { TH, FONTS } from "@/lib/theme";
 
-const th = {
-  bg: "#f4ede1", paper: "#fbf6ec", ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", burgundy: "#7d2e3a", line: "rgba(28,29,24,0.12)",
-};
-const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
+const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic", fontWeight: 400 } as const;
+const MM = { fontFamily: FONTS.mono } as const;
 
 export default function LegalPage({
   eyebrow, title, lastUpdated, children,
@@ -15,18 +13,18 @@ export default function LegalPage({
   children: React.ReactNode;
 }) {
   return (
-    <div style={{ minHeight: "100vh", background: th.bg, color: th.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
+    <div style={{ minHeight: "100vh", background: TH.bg, color: TH.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
       <SiteHeader />
 
       <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 48px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>
-            — {eyebrow.toUpperCase()} —
+          <div style={{ fontSize: 14, color: TH.sage, fontWeight: 600, marginBottom: 14 }}>
+            {eyebrow}
           </div>
-          <h1 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.025em", lineHeight: 1.05 }}>
+          <h1 style={{ ...D, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.03em", lineHeight: 1.05 }}>
             {title}
           </h1>
-          <p style={{ color: th.inkMute, fontSize: 13, ...MM, marginTop: 18 }}>
+          <p style={{ color: TH.muted, fontSize: 13, ...MM, marginTop: 18 }}>
             LAST UPDATED · {lastUpdated.toUpperCase()}
           </p>
         </div>

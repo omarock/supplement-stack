@@ -5,14 +5,14 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 const th = {
-  bg: "#f4ede1", paper: "#fbf6ec", ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", burgundy: "#7d2e3a", line: "rgba(28,29,24,0.12)",
+  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
+  sage: "#5ba373", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
-  title: "Pre-made Stacks — Phyla",
+  title: "Pre-made Stacks — suppdoc.io",
   description: "11 ready-to-adopt supplement stacks composed by Phyla. Sleep, energy, focus, stress, recovery, immunity, vegan, longevity, hormonal balance, beauty, and a foundational starter.",
   keywords: "supplement stacks, best supplements for sleep, best supplements for energy, vegan supplements, supplement routines",
 };
@@ -85,7 +85,7 @@ export default function StacksPage() {
                         {stack.bestFor.slice(0, 3).map(tag => (
                           <span key={tag} style={{
                             fontSize: 11, padding: "3px 10px", borderRadius: 999,
-                            background: "rgba(74,106,78,0.08)", color: th.sage,
+                            background: "rgba(91,163,115,0.08)", color: th.sage,
                             border: "1px solid rgba(74,106,78,0.18)",
                           }}>
                             {tag}
@@ -134,7 +134,7 @@ export default function StacksPage() {
             <Link href="/quiz" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               padding: "14px 26px", borderRadius: 999, fontSize: 15, fontWeight: 500,
-              background: th.burgundy, color: "#fbf6ec", textDecoration: "none",
+              background: th.burgundy, color: "#ffffff", textDecoration: "none",
             }}>
               Take the quiz →
             </Link>

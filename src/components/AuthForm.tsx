@@ -5,9 +5,9 @@ import Link from "next/link";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase";
 
 const th = {
-  bg: "#f4ede1", paper: "#fbf6ec", ink: "#1c1d18", inkSoft: "#5b5d52", inkMute: "#8c8d80",
-  sage: "#4a6a4e", sageGlow: "rgba(74,106,78,0.12)",
-  burgundy: "#7d2e3a", line: "rgba(28,29,24,0.12)",
+  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
+  sage: "#5ba373", sageGlow: "rgba(91,163,115,0.12)",
+  burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
@@ -199,7 +199,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
               disabled={busy}
               style={{
                 width: "100%", padding: "15px 18px", borderRadius: 12,
-                background: th.burgundy, color: "#fbf6ec",
+                background: th.burgundy, color: "#ffffff",
                 border: "none", cursor: busy ? "default" : "pointer",
                 fontSize: 15, fontWeight: 500,
                 fontFamily: '"Inter", system-ui, sans-serif',
