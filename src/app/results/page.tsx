@@ -152,25 +152,42 @@ export default function ResultsPage() {
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "48px 24px 64px" }}>
 
         {/* Hero */}
-        <section style={{ marginBottom: 56, textAlign: "center" }}>
-          <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.12em", marginBottom: 12 }}>
+        <section style={{ marginBottom: 48, textAlign: "center" }}>
+          <div style={{ fontSize: 12, color: th.sage, fontWeight: 600, letterSpacing: "0.04em", marginBottom: 14 }}>
             YOUR RITUAL IS READY
           </div>
-          <h1 style={{ ...S, fontSize: 64, color: th.ink, margin: "0 0 14px", letterSpacing: "-0.03em", lineHeight: 1 }}>
-            Your <em style={{ color: th.burgundy }}>personalised</em> stack.
+          <h1 style={{
+            fontFamily: '"Bricolage Grotesque", system-ui, sans-serif',
+            fontWeight: 600, fontSize: 68, color: th.ink,
+            margin: "0 0 14px", letterSpacing: "-0.035em", lineHeight: 1,
+          }}>
+            Your personalised <span style={{ fontFamily: '"Instrument Serif", Georgia, serif', fontStyle: "italic", fontWeight: 400, color: th.sageDeep }}>stack</span>.
           </h1>
-          <p style={{ color: th.inkSoft, fontSize: 17, lineHeight: 1.6, maxWidth: 580, margin: "0 auto" }}>
-            {rec.supplements.length} clean, evidence-led ingredients matched to your goals, lifestyle, and biology — sourced via iHerb.
+          <p style={{ color: th.inkSoft, fontSize: 18, lineHeight: 1.55, maxWidth: 580, margin: "0 auto" }}>
+            {rec.supplements.length} bestseller-grade ingredients matched to your goals, lifestyle, and biology — sourced from iHerb's top brands.
           </p>
+        </section>
+
+        {/* ─── Stack (front and center) ─── */}
+        <section style={{ marginBottom: 64 }}>
+          <SupplementGrid
+            supplements={rec.supplements}
+            source="results"
+            title="Your stack"
+            showTotalCost
+          />
         </section>
 
         {/* Wellness scores */}
         <section style={{ marginBottom: 48 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 18 }}>
-            <h2 style={{ ...S, fontSize: 32, margin: 0, letterSpacing: "-0.02em", color: th.ink }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 18, flexWrap: "wrap", gap: 8 }}>
+            <h2 style={{
+              fontFamily: '"Bricolage Grotesque", system-ui, sans-serif', fontWeight: 600,
+              fontSize: 32, margin: 0, letterSpacing: "-0.025em", color: th.ink,
+            }}>
               Your wellness reading
             </h2>
-            <span style={{ fontSize: 11, color: th.inkMute, ...MM }}>BASELINE · TODAY</span>
+            <span style={{ fontSize: 11, color: th.inkMute, ...MM, letterSpacing: "0.05em" }}>BASELINE · TODAY</span>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             <ScoreCard label="Energy" score={rec.scores.energy} color={th.burgundy} />
@@ -231,16 +248,6 @@ export default function ResultsPage() {
             </ul>
           </section>
         )}
-
-        {/* Stack with product cards (real product images via SupplementGrid) */}
-        <section style={{ marginBottom: 56 }}>
-          <SupplementGrid
-            supplements={rec.supplements}
-            source="results"
-            title="Your stack"
-            showTotalCost
-          />
-        </section>
 
         {/* Daily routine */}
         <section style={{ marginBottom: 56 }}>

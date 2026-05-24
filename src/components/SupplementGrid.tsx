@@ -255,66 +255,57 @@ export interface SupplementGridProps {
 }
 
 export default function SupplementGrid({ supplements, source, showTotalCost, title }: SupplementGridProps) {
-  const [active, setActive] = useState<Supplement | null>(null);
   const totalCost = supplements.reduce((s, x) => s + x.monthlyCost, 0);
 
   return (
     <section>
       <div style={{
         display: "flex", justifyContent: "space-between", alignItems: "baseline",
-        marginBottom: 18, flexWrap: "wrap", gap: 10,
+        marginBottom: 22, flexWrap: "wrap", gap: 10,
       }}>
         {title && (
-          <h2 style={{ ...D, fontSize: 28, margin: 0, letterSpacing: "-0.02em", color: th.ink }}>
+          <h2 style={{ ...D, fontSize: 32, margin: 0, letterSpacing: "-0.025em", color: th.ink }}>
             {title}
           </h2>
         )}
         {showTotalCost && (
-          <span style={{ fontSize: 13, color: th.inkMute, ...MM }}>
-            ~${totalCost}/mo · {supplements.length} supplements · via iHerb
+          <span style={{ fontSize: 13, color: th.inkMute, ...MM, fontWeight: 500 }}>
+            ~${totalCost}/MO · {supplements.length} ITEMS · VIA IHERB
           </span>
         )}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
         {supplements.map((s, i) => {
-          const allProducts = getProducts(s.id);
-          const productCount = allProducts.length;
-          // Always prefer NOW Foods variant for the main card per user direction.
-          const nowIdx = allProducts.findIndex(p => p.brand.toLowerCase().includes("now"));
-          const display = nowIdx >= 0 ? allProducts[nowIdx] : getPrimaryProduct(s.id);
-          const brandIndex = nowIdx >= 0 ? nowIdx : 0;
+          const bestseller = getPrimaryProduct(s.id);
+          if (!bestseller) return null;
+          const href = bestseller.productPath
+            ? iherbProductLink(bestseller.productPath)
+            : iherbLink(bestseller.searchQuery ?? `${bestseller.brand} ${bestseller.productName}`);
           return (
             <div key={s.id} style={{
-              background: th.paper, border: `1px solid ${th.line}`, borderRadius: 18,
-              padding: 18, display: "flex", flexDirection: "column", gap: 14,
-              boxShadow: `0 2px 6px rgba(10,37,64,0.04)`,
+              background: th.paper, border: `1px solid ${th.line}`, borderRadius: 20,
+              padding: 16, display: "flex", flexDirection: "column", gap: 14,
+              boxShadow: `0 1px 3px rgba(10,37,64,0.04), 0 8px 20px rgba(10,37,64,0.04)`,
               animation: `sd-rise .5s ${i * 0.05}s ease-out both`,
+              transition: "transform .25s ease, box-shadow .25s ease",
             }}>
               <div style={{ position: "relative" }}>
-                {display ? (
-                  <ProductImage supplementId={s.id} option={display} brandIndex={brandIndex} height={180} />
-                ) : (
-                  <div style={{
-                    background: th.bgWarm, borderRadius: 12, height: 180,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    color: th.inkMute, fontSize: 12, ...MM,
-                  }}>{s.brand.toUpperCase()}</div>
-                )}
+                <ProductImage option={bestseller} height={220} />
                 <div style={{
-                  position: "absolute", top: 10, right: 10,
-                  padding: "4px 10px", borderRadius: 999,
-                  background: `${TIMING_COLOR[s.timing]}e6`, color: "white",
+                  position: "absolute", top: 12, right: 12,
+                  padding: "5px 12px", borderRadius: 999,
+                  background: `${TIMING_COLOR[s.timing]}f0`, color: "white",
                   fontSize: 11, fontWeight: 600, whiteSpace: "nowrap",
                   display: "flex", alignItems: "center", gap: 5,
-                  boxShadow: `0 4px 10px ${TIMING_COLOR[s.timing]}55`,
+                  boxShadow: `0 4px 12px ${TIMING_COLOR[s.timing]}66`,
                 }}>
                   <span>{TIMING_GLYPH[s.timing]}</span>{TIMING_LABEL[s.timing]}
                 </div>
               </div>
 
               <div>
-                <h3 style={{ ...D, fontSize: 20, margin: 0, letterSpacing: "-0.02em", color: th.ink, lineHeight: 1.2 }}>
+                <h3 style={{ ...D, fontSize: 21, margin: 0, letterSpacing: "-0.02em", color: th.ink, lineHeight: 1.2 }}>
                   {s.name}
                 </h3>
                 <div style={{ fontSize: 12, color: th.inkMute, ...MM, marginTop: 4 }}>
@@ -327,41 +318,34 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
               <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 10 }}>
                 <div style={{
                   display: "flex", justifyContent: "space-between", alignItems: "center",
-                  fontSize: 11, color: th.sage, ...MM, letterSpacing: "0.08em",
+                  fontSize: 11, ...MM, letterSpacing: "0.08em",
                 }}>
-                  <span>{s.evidence.toUpperCase()} EVIDENCE</span>
-                  <span style={{ color: th.inkMute }}>~${s.monthlyCost}/MO</span>
+                  <span style={{ color: th.sage, fontWeight: 600 }}>{s.evidence.toUpperCase()} EVIDENCE</span>
+                  <span style={{ color: th.inkMute }}>~${bestseller.approxPrice.toFixed(0)}</span>
                 </div>
-                <button
-                  onClick={() => setActive(s)}
+                <a
+                  href={href}
+                  target="_blank" rel="noopener noreferrer sponsored"
+                  onClick={() => { trackClick(s, bestseller, source).catch(() => {}); }}
                   style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                    padding: "12px 16px", borderRadius: 12,
-                    background: th.ink, color: "#ffffff", border: "none", cursor: "pointer",
+                    padding: "13px 16px", borderRadius: 12,
+                    background: th.ink, color: "#ffffff", textDecoration: "none",
                     fontSize: 14, fontWeight: 500,
                     fontFamily: '"Inter", system-ui, sans-serif',
                     boxShadow: `0 4px 14px rgba(10,37,64,0.18)`,
                   }}
                 >
-                  {productCount > 0 ? `Choose product · ${productCount} options` : "Find on iHerb"}
+                  Buy on iHerb
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                    <path d="M5 12h14M13 5l7 7-7 7" />
+                    <path d="M7 17L17 7M7 7h10v10" />
                   </svg>
-                </button>
+                </a>
               </div>
             </div>
           );
         })}
       </div>
-
-      {active && (
-        <ProductModal
-          supp={active}
-          options={getProducts(active.id)}
-          source={source}
-          onClose={() => setActive(null)}
-        />
-      )}
     </section>
   );
 }

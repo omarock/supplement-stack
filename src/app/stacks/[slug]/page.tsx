@@ -87,8 +87,18 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
 
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "56px 24px 32px" }}>
 
+          {/* ─── The stack (front and center) ─── */}
+          <section style={{ marginBottom: 56 }}>
+            <SupplementGrid
+              supplements={supplements}
+              source={`stack-${stack.slug}`}
+              title="What's in the stack"
+              showTotalCost
+            />
+          </section>
+
           {/* Description */}
-          <section style={{ maxWidth: 720, margin: "0 auto 48px" }}>
+          <section style={{ maxWidth: 760, margin: "0 auto 48px" }}>
             <p style={{ fontSize: 18, color: th.ink, lineHeight: 1.65, fontWeight: 500 }}>
               {stack.description}
             </p>
@@ -127,7 +137,10 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
 
           {/* Why this works */}
           <section style={{ marginBottom: 48 }}>
-            <h2 style={{ ...S, fontSize: 32, margin: "0 0 18px", letterSpacing: "-0.02em", color: th.ink }}>
+            <h2 style={{
+              fontFamily: '"Bricolage Grotesque", system-ui, sans-serif', fontWeight: 600,
+              fontSize: 32, margin: "0 0 18px", letterSpacing: "-0.025em", color: th.ink,
+            }}>
               Why this works
             </h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
@@ -151,16 +164,6 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
             }}>
               <strong style={{ color: th.sage }}>Expected timeline:</strong> {stack.expectedTimeline}
             </p>
-          </section>
-
-          {/* Supplements */}
-          <section style={{ marginBottom: 48 }}>
-            <SupplementGrid
-              supplements={supplements}
-              source={`stack-${stack.slug}`}
-              title="What's in the stack"
-              showTotalCost
-            />
           </section>
 
           {/* Daily routine */}

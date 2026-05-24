@@ -32,6 +32,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 12, rating: 4.8, reviewCount: 11500, badge: "Bestseller",
       productPath: "/pr/now-foods-vitamin-d-3-k-2-120-veg-capsules/72717",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "/products/d3k2.jpg",
     },
     {
       brand: "Sports Research", productName: "Vitamin D3 + K2", size: "60 softgels",
@@ -53,6 +54,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 24, rating: 4.8, reviewCount: 15200, badge: "Bestseller",
       searchQuery: "Sports Research Triple Strength Omega-3",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "/products/omega3.jpg",
     },
     {
       brand: "Nordic Naturals", productName: "Ultimate Omega", size: "60 softgels",
@@ -74,6 +76,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 28, rating: 4.6, reviewCount: 2400, badge: "Bestseller",
       searchQuery: "Ovega-3 Vegetarian DHA EPA",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "/products/omega3-algae.jpg",
     },
     {
       brand: "Nordic Naturals", productName: "Algae Omega", size: "60 softgels",
@@ -95,6 +98,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 28, rating: 4.7, reviewCount: 4200, badge: "Bestseller",
       searchQuery: "Garden of Life mykind Organics Multi",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "/products/multivit.jpg",
     },
     {
       brand: "Thorne", productName: "Basic Nutrients 2/Day", size: "60 capsules",
@@ -116,6 +120,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 18, rating: 4.7, reviewCount: 32000, badge: "Bestseller",
       productPath: "/pr/doctor-s-best-high-absorption-magnesium-100-mg-240-tablets/15295",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "/products/mag-glycinate.jpg",
     },
     {
       brand: "NOW Foods", productName: "Magnesium Glycinate", size: "180 tablets",
@@ -137,6 +142,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 18, rating: 4.7, reviewCount: 5400, badge: "Bestseller",
       searchQuery: "Jarrow Formulas Ashwagandha KSM-66",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "/products/ashwagandha.jpg",
     },
     {
       brand: "NOW Foods", productName: "Ashwagandha", size: "180 veg capsules",
@@ -158,6 +164,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 18, rating: 4.7, reviewCount: 6900, badge: "Bestseller",
       searchQuery: "NOW Foods L-Theanine 200 Suntheanine",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "/products/l-theanine.jpg",
     },
     {
       brand: "Doctor's Best", productName: "Suntheanine L-Theanine", size: "90 veg capsules",
@@ -179,6 +186,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 14, rating: 4.7, reviewCount: 3400, badge: "Bestseller",
       searchQuery: "NOW Foods Glycine Pure Powder",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "/products/glycine.jpg",
     },
     {
       brand: "Source Naturals", productName: "Glycine 500mg", size: "200 capsules",
@@ -200,6 +208,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 12, rating: 4.8, reviewCount: 11000, badge: "Bestseller",
       searchQuery: "Jarrow Methyl B-12 1000",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "/products/b12.jpg",
     },
     {
       brand: "Garden of Life", productName: "mykind Organics B-12 Spray", size: "58 ml",
@@ -221,6 +230,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 28, rating: 4.8, reviewCount: 4400, badge: "Bestseller",
       searchQuery: "Thorne Basic B Complex",
       brandBg: "#f3f4f6", brandInk: "#1f2937",
+      imageUrl: "/products/b-complex.jpg",
     },
     {
       brand: "Jarrow Formulas", productName: "B-Right Complex", size: "100 capsules",
@@ -242,6 +252,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 17, rating: 4.6, reviewCount: 4800, badge: "Bestseller",
       searchQuery: "NOW Foods Rhodiola 500",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "/products/rhodiola.jpg",
     },
     {
       brand: "Gaia Herbs", productName: "Rhodiola Rosea", size: "60 veg capsules",
@@ -263,6 +274,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 27, rating: 4.7, reviewCount: 6300, badge: "Bestseller",
       searchQuery: "Host Defense Lion's Mane",
       brandBg: "#f5f5f4", brandInk: "#57534e",
+      imageUrl: "/products/lions-mane.jpg",
     },
     {
       brand: "Real Mushrooms", productName: "Organic Lions Mane Extract", size: "120 capsules",
@@ -284,6 +296,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 24, rating: 4.8, reviewCount: 13800, badge: "Bestseller",
       searchQuery: "Optimum Nutrition Creatine Monohydrate Powder",
       brandBg: "#fef9c3", brandInk: "#854d0e",
+      imageUrl: "/products/creatine.jpg",
     },
     {
       brand: "NOW Foods", productName: "Creatine Monohydrate Pure Powder", size: "1 kg",
@@ -305,6 +318,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 32, rating: 4.7, reviewCount: 21000, badge: "Bestseller",
       searchQuery: "Sports Research Collagen Peptides",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "/products/collagen.jpg",
     },
     {
       brand: "Vital Proteins", productName: "Collagen Peptides", size: "284 g",
@@ -326,6 +340,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 22, rating: 4.7, reviewCount: 7600, badge: "Bestseller",
       searchQuery: "Doctor's Best High Absorption Curcumin BioPerine",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "/products/curcumin.jpg",
     },
     {
       brand: "Thorne", productName: "Meriva-SF", size: "120 capsules",
@@ -347,6 +362,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 25, rating: 4.7, reviewCount: 6900, badge: "Bestseller",
       searchQuery: "NOW Foods Glucosamine Chondroitin MSM",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "/products/glucosamine.jpg",
     },
     {
       brand: "Doctor's Best", productName: "Glucosamine Chondroitin MSM", size: "240 capsules",
@@ -368,6 +384,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 14, rating: 4.8, reviewCount: 7800, badge: "Bestseller",
       searchQuery: "NOW Foods Vitamin C 1000 Rose Hips",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "/products/vit-c.jpg",
     },
     {
       brand: "Nature's Way", productName: "Vitamin C Buffered", size: "100 capsules",
@@ -389,6 +406,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 12, rating: 4.8, reviewCount: 6700, badge: "Bestseller",
       searchQuery: "Thorne Zinc Picolinate",
       brandBg: "#f3f4f6", brandInk: "#1f2937",
+      imageUrl: "/products/zinc.jpg",
     },
     {
       brand: "NOW Foods", productName: "Zinc Picolinate 50mg", size: "120 veg capsules",
@@ -410,6 +428,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 18, rating: 4.8, reviewCount: 8200, badge: "Bestseller",
       searchQuery: "Sambucol Black Elderberry Original",
       brandBg: "#ede9fe", brandInk: "#5b21b6",
+      imageUrl: "/products/elderberry.jpg",
     },
     {
       brand: "Gaia Herbs", productName: "Black Elderberry Syrup", size: "89 ml",
@@ -431,6 +450,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 42, rating: 4.6, reviewCount: 6400, badge: "Bestseller",
       searchQuery: "Garden of Life Dr Formulated Probiotics Mood",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "/products/probiotic.jpg",
     },
     {
       brand: "Renew Life", productName: "Ultimate Flora Extra Care", size: "60 capsules",
@@ -452,6 +472,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 38, rating: 4.8, reviewCount: 5100, badge: "Bestseller",
       searchQuery: "Enzymedica Digest Gold ATPro",
       brandBg: "#ede9fe", brandInk: "#5b21b6",
+      imageUrl: "/products/digestive-enzymes.jpg",
     },
     {
       brand: "NOW Foods", productName: "Super Enzymes", size: "180 tablets",
@@ -473,6 +494,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 16, rating: 4.8, reviewCount: 4200, badge: "Bestseller",
       searchQuery: "Solgar Gentle Iron",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "/products/iron.jpg",
     },
     {
       brand: "Thorne", productName: "Iron Bisglycinate 25mg", size: "60 capsules",
@@ -494,6 +516,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 32, rating: 4.7, reviewCount: 5800, badge: "Bestseller",
       searchQuery: "Doctor's Best Ubiquinol Kaneka",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "/products/coq10.jpg",
     },
     {
       brand: "NOW Foods", productName: "CoQ10 100mg", size: "150 veg capsules",
@@ -515,6 +538,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 14, rating: 4.7, reviewCount: 12300, badge: "Bestseller",
       searchQuery: "Sports Research Biotin 5000 Coconut Oil",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "/products/biotin.jpg",
     },
     {
       brand: "NOW Foods", productName: "Biotin 5000mcg", size: "120 veg capsules",
