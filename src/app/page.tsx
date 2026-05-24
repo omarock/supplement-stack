@@ -73,9 +73,9 @@ function PhylaNav({ dark, setDark }: { dark: boolean; setDark: (v: boolean) => v
   const t = useT();
   const [open, setOpen] = useState(false);
   const links: [string, string][] = [
+    ["Stacks", "/stacks"],
     ["How it works", "#how-it-works"],
     ["Ingredients", "#ingredients"],
-    ["Example", "#example"],
     ["Journal", "/journal"],
     ["About", "/about"],
   ];
@@ -344,10 +344,20 @@ function PhylaHero() {
             </a>
           </div>
 
-          <div style={{ display: "flex", gap: 28, fontSize: 13, color: t.inkMute, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 28, fontSize: 13, color: t.inkMute, alignItems: "center", flexWrap: "wrap" }}>
             <div>♡ no signup</div>
             <div>⏱ 60 seconds</div>
             <div>✦ instant blend</div>
+          </div>
+
+          <div style={{
+            marginTop: 18, fontSize: 13, color: t.inkSoft,
+            display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap",
+          }}>
+            <span>or skip the quiz —</span>
+            <Link href="/stacks" style={{ color: t.burgundy, fontWeight: 500, textDecoration: "underline", textUnderlineOffset: 3 }}>
+              browse 11 ready-made stacks →
+            </Link>
           </div>
         </div>
 
@@ -845,10 +855,10 @@ function PhylaFooter() {
   const t = useT();
   const cols: [string, [string, string][]][] = [
     ["Product", [
+      ["Pre-made stacks", "/stacks"],
+      ["Take the quiz", "/quiz"],
       ["How it works", "#how-it-works"],
       ["Ingredients", "#ingredients"],
-      ["Example", "#example"],
-      ["Take the quiz", "/quiz"],
     ]],
     ["Studio", [
       ["About Phyla", "/about"],

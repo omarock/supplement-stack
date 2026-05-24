@@ -10,10 +10,10 @@ const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 const COLS: [string, [string, string][]][] = [
   ["Product", [
+    ["Pre-made stacks", "/stacks"],
+    ["Take the quiz", "/quiz"],
     ["How it works", "/#how-it-works"],
     ["Ingredients", "/#ingredients"],
-    ["Example", "/#example"],
-    ["Take the quiz", "/quiz"],
   ]],
   ["Studio", [
     ["About Phyla", "/about"],

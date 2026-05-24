@@ -11,9 +11,8 @@ const th = {
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 
 const LINKS = [
+  ["Stacks", "/stacks"],
   ["How it works", "/#how-it-works"],
-  ["Ingredients", "/#ingredients"],
-  ["Example", "/#example"],
   ["Journal", "/journal"],
   ["About", "/about"],
 ];
