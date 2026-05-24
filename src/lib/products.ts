@@ -20,6 +20,7 @@ export interface ProductOption {
   searchQuery?: string;    // fallback search query (used if productPath missing)
   brandBg: string;         // soft background tint for branded card
   brandInk: string;        // brand-name text color
+  imageUrl?: string;       // optional override: real product photo URL (Unsplash, iHerb CDN, or local)
 }
 
 // ─── Product Database ────────────────────────────────────────────────────────
