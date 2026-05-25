@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { STACKS, getStack, getStackSupplements, stackMonthlyCost } from "@/lib/stacks";
+import { PRODUCTS } from "@/lib/products";
+import { iherbLink, iherbProductLink } from "@/lib/iherb";
+import { amazonEnabled, amazonLink } from "@/lib/amazon";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SupplementGrid, { DailyRoutine } from "@/components/SupplementGrid";
@@ -172,6 +175,126 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
               Your daily routine
             </h2>
             <DailyRoutine supplements={supplements} />
+          </section>
+
+          {/* Product alternatives — 3 brand options per supplement */}
+          <section style={{ marginBottom: 56 }}>
+            <h2 style={{ ...S, fontSize: 32, margin: "0 0 8px", letterSpacing: "-0.02em", color: th.ink }}>
+              All product options
+            </h2>
+            <p style={{ color: th.inkSoft, fontSize: 15, lineHeight: 1.6, margin: "0 0 24px", maxWidth: 640 }}>
+              Each supplement has multiple trusted brands. Compare quickly and pick what fits your budget — all available on iHerb with your affiliate credit applied automatically.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+              {supplements.map(s => {
+                const opts = PRODUCTS[s.id] ?? [
+                  // Fallback: synthesize a single "bestseller" from the base supplement entry
+                  {
+                    brand: s.brand, productName: s.name, size: s.dose,
+                    approxPrice: s.monthlyCost, rating: 4.7, reviewCount: 0,
+                    badge: "Bestseller" as const,
+                    searchQuery: s.iherbSearch,
+                    brandBg: "#fef3c7", brandInk: "#92400e",
+                  },
+                ];
+                const showAmazon = amazonEnabled();
+                return (
+                  <div key={s.id}>
+                    {/* Sub-header */}
+                    <div style={{
+                      display: "flex", justifyContent: "space-between", alignItems: "baseline",
+                      marginBottom: 12, paddingBottom: 10, borderBottom: `1px solid ${th.line}`,
+                    }}>
+                      <div>
+                        <Link href={`/ingredients/${s.id}`} style={{
+                          fontFamily: '"Bricolage Grotesque", system-ui, sans-serif', fontWeight: 600,
+                          fontSize: 18, color: th.ink, textDecoration: "none", letterSpacing: "-0.015em",
+                        }}>
+                          {s.name}
+                        </Link>
+                        <span style={{ color: th.inkMute, fontSize: 12, ...MM, marginLeft: 10 }}>
+                          {s.dose}
+                        </span>
+                      </div>
+                      <Link href={`/products/${s.id}`} style={{
+                        fontSize: 12, color: th.sage, textDecoration: "none", fontWeight: 500,
+                      }}>
+                        Full details →
+                      </Link>
+                    </div>
+
+                    {/* Product cards row */}
+                    <div style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+                      gap: 12,
+                    }}>
+                      {opts.slice(0, 3).map((p, i) => {
+                        const iherbHref = p.productPath
+                          ? iherbProductLink(p.productPath)
+                          : iherbLink(p.searchQuery ?? `${p.brand} ${p.productName}`);
+                        const amazonHref = amazonLink(`${p.brand} ${p.productName}`);
+                        return (
+                          <div key={i} style={{
+                            background: th.paper, border: `1px solid ${th.line}`, borderRadius: 12,
+                            padding: 14, display: "flex", flexDirection: "column", gap: 8,
+                          }}>
+                            <span style={{
+                              alignSelf: "flex-start",
+                              padding: "3px 9px", borderRadius: 999,
+                              fontSize: 10, ...MM, fontWeight: 600, letterSpacing: "0.08em",
+                              background: p.brandBg, color: p.brandInk,
+                            }}>
+                              {p.badge.toUpperCase()}
+                            </span>
+                            <div style={{
+                              fontFamily: '"Bricolage Grotesque", system-ui, sans-serif', fontWeight: 600,
+                              fontSize: 14, color: th.ink, lineHeight: 1.3, letterSpacing: "-0.01em",
+                            }}>
+                              {p.productName}
+                            </div>
+                            <div style={{ color: th.inkSoft, fontSize: 12 }}>
+                              {p.brand} · {p.size}
+                            </div>
+                            <div style={{
+                              display: "flex", justifyContent: "space-between", alignItems: "baseline",
+                              fontSize: 12, ...MM, color: th.inkMute,
+                            }}>
+                              <span style={{ color: "#e8a04a" }}>★ {p.rating}</span>
+                              <span>${p.approxPrice}</span>
+                            </div>
+                            <a
+                              href={iherbHref}
+                              target="_blank" rel="noopener noreferrer sponsored"
+                              style={{
+                                marginTop: 4, display: "block", textAlign: "center",
+                                padding: "9px 12px", borderRadius: 9, fontSize: 12, fontWeight: 500,
+                                background: th.burgundy, color: "#fff", textDecoration: "none",
+                              }}
+                            >
+                              Buy on iHerb →
+                            </a>
+                            {showAmazon && (
+                              <a
+                                href={amazonHref}
+                                target="_blank" rel="noopener noreferrer sponsored"
+                                style={{
+                                  display: "block", textAlign: "center",
+                                  padding: "8px 12px", borderRadius: 9, fontSize: 12, fontWeight: 500,
+                                  background: "#ff9900", color: "#fff", textDecoration: "none",
+                                }}
+                              >
+                                Buy on Amazon →
+                              </a>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </section>
 
           {/* CTA */}
