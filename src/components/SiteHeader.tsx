@@ -7,6 +7,7 @@ import { TH, FONTS } from "@/lib/theme";
 
 const LINKS: [string, string][] = [
   ["Stacks", "/stacks"],
+  ["Ingredients", "/ingredients"],
   ["How it works", "/#how-it-works"],
   ["Journal", "/journal"],
   ["About", "/about"],

@@ -7,7 +7,7 @@ const COLS: [string, [string, string][]][] = [
     ["Pre-made stacks", "/stacks"],
     ["Take the quiz", "/quiz"],
     ["How it works", "/#how-it-works"],
-    ["Ingredients", "/#ingredients"],
+    ["Ingredients", "/ingredients"],
   ]],
   ["Company", [
     ["About", "/about"],
