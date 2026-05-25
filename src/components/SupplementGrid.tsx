@@ -36,66 +36,53 @@ function productHref(p: ProductOption): string {
   return iherbLink(p.searchQuery ?? `${p.brand} ${p.productName}`);
 }
 
-// ─── Product visual: SVG bottle mockup with brand strip ─────────────────────
-function ProductImage({ option, height = 220, showBrandStrip = true }: {
+// ─── Product visual: clean Amazon-style image area ──────────────────────────
+function ProductImage({ option, height = 280, showBrandStrip = false }: {
   option: ProductOption; supplementId?: string; brandIndex?: number;
   height?: number; showBrandStrip?: boolean;
 }) {
-  // If a real image URL is provided (e.g. iHerb CDN), use it. Otherwise render
-  // the SVG bottle mockup so the product always looks consistent and on-brand.
   const useImage = !!option.imageUrl;
 
   return (
     <div style={{
-      position: "relative", height, borderRadius: 12, overflow: "hidden",
-      background: `linear-gradient(180deg, ${option.brandBg}, ${th.bg} 80%)`,
-      border: `1px solid ${th.line}`,
+      position: "relative", height, borderRadius: 14, overflow: "hidden",
+      background: "#ffffff",
+      border: `1px solid #e5e7eb`,
+      display: "flex", alignItems: "center", justifyContent: "center",
     }}>
       {useImage ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={option.imageUrl}
-          alt={`${option.brand} ${option.productName}`}
+          alt={`${option.brand} ${option.productName} — ${option.size}`}
           loading="lazy"
+          itemProp="image"
           style={{
-            width: "100%", height: "100%", objectFit: "contain",
-            objectPosition: "center", display: "block",
-            padding: "12px 12px 56px",
+            width: "100%", height: "100%",
+            objectFit: "contain", objectPosition: "center",
+            display: "block",
+            padding: 16,
           }}
         />
       ) : (
-        <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <BottleMockup option={option} height={height} showBackgroundScene={false} />
+        <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <BottleMockup option={option} height={height - 32} showBackgroundScene={false} />
         </div>
       )}
 
+      {/* Optional brand strip — off by default for cleaner Amazon-style cards */}
       {showBrandStrip && (
         <div style={{
           position: "absolute", bottom: 0, left: 0, right: 0,
-          padding: "10px 12px",
-          background: "linear-gradient(0deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.85) 70%, transparent 100%)",
+          padding: "8px 12px",
+          background: "linear-gradient(0deg, rgba(255,255,255,0.95) 0%, transparent 100%)",
           display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8,
         }}>
-          <div style={{ minWidth: 0, flex: 1 }}>
-            <div style={{
-              ...D, fontSize: 13, color: th.ink, letterSpacing: "-0.01em",
-              whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-            }}>
-              {option.brand}
-            </div>
-            <div style={{
-              fontSize: 10, color: th.inkMute, fontWeight: 500,
-              whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-            }}>
-              {option.size}
-            </div>
-          </div>
           <div style={{
-            fontSize: 9, ...MM, color: th.sage, letterSpacing: "0.1em",
-            padding: "3px 7px", borderRadius: 6,
-            background: th.sageGlow, flexShrink: 0,
+            ...D, fontSize: 12, color: th.ink, letterSpacing: "-0.01em",
+            whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
           }}>
-            iHERB
+            {option.brand}
           </div>
         </div>
       )}
@@ -281,7 +268,11 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
         )}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 18 }}>
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))",
+        gap: 16,
+      }}>
         {supplements.map((s, i) => {
           const bestseller = getPrimaryProduct(s.id);
           if (!bestseller) return null;
@@ -291,126 +282,161 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
           const amazonHref = amazonLink(`${bestseller.brand} ${bestseller.productName}`);
           const showAmazon = amazonEnabled();
 
-          // Tag chips: form + ingredient form + top 2 certifications
-          const tagChips: { label: string; bg: string; ink: string }[] = [];
-          if (bestseller.form) {
-            tagChips.push({ label: bestseller.form, bg: "#f3f4f6", ink: "#374151" });
+          // Tag chips: form + count tag
+          const tagChips: { label: string }[] = [];
+          if (bestseller.form) tagChips.push({ label: bestseller.form });
+          if (bestseller.servingsPerContainer) {
+            tagChips.push({ label: `${bestseller.servingsPerContainer} Count` });
+          } else if (bestseller.size) {
+            tagChips.push({ label: bestseller.size.replace(/(\d+)\s*(capsules?|softgels?|tablets?|servings?|veg.*?capsules?)/i, "$1 Count") });
           }
-          if (bestseller.ingredientForm) {
-            // Truncate long ingredient forms
-            const label = bestseller.ingredientForm.length > 30
-              ? bestseller.ingredientForm.slice(0, 28) + "…"
-              : bestseller.ingredientForm;
-            tagChips.push({ label, bg: "#dbeafe", ink: "#1e40af" });
-          }
-          (bestseller.certifications ?? []).slice(0, 2).forEach(c => {
-            tagChips.push({ label: c, bg: "#fef3c7", ink: "#92400e" });
-          });
+          // 1 certification chip if available (the most credible)
+          const credibleCert = (bestseller.certifications ?? []).find(c =>
+            /USP|NSF|Informed|Organic|GMP/i.test(c)
+          ) ?? bestseller.certifications?.[0];
+          if (credibleCert) tagChips.push({ label: credibleCert });
+
+          const formattedReviews = bestseller.reviewCount >= 1000
+            ? `${(bestseller.reviewCount / 1000).toFixed(bestseller.reviewCount >= 10000 ? 0 : 1)}K`
+            : bestseller.reviewCount.toString();
+
+          // Schema.org Product description for SEO
+          const seoDescription = `${s.purpose}. ${s.why}`.slice(0, 200);
 
           return (
-            <div key={s.id} style={{
-              background: th.paper, border: `1px solid ${th.line}`, borderRadius: 20,
-              padding: 16, display: "flex", flexDirection: "column", gap: 12,
-              boxShadow: `0 1px 3px rgba(10,37,64,0.04), 0 8px 20px rgba(10,37,64,0.04)`,
-              animation: `sd-rise .5s ${i * 0.05}s ease-out both`,
-              transition: "transform .25s ease, box-shadow .25s ease",
-            }}>
-              {/* Image with timing badge */}
+            <article
+              key={s.id}
+              itemScope
+              itemType="https://schema.org/Product"
+              style={{
+                background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16,
+                padding: 14, display: "flex", flexDirection: "column", gap: 10,
+                boxShadow: `0 1px 3px rgba(10,37,64,0.04), 0 6px 16px rgba(10,37,64,0.04)`,
+                animation: `sd-rise .5s ${i * 0.05}s ease-out both`,
+                transition: "transform .25s ease, box-shadow .25s ease",
+              }}
+            >
+              {/* SEO meta */}
+              <meta itemProp="name" content={`${bestseller.brand} ${bestseller.productName}`} />
+              <meta itemProp="description" content={seoDescription} />
+              <meta itemProp="category" content={s.category ?? "Supplement"} />
+              {bestseller.brand && (
+                <span itemProp="brand" itemScope itemType="https://schema.org/Brand" style={{ display: "none" }}>
+                  <meta itemProp="name" content={bestseller.brand} />
+                </span>
+              )}
+
+              {/* Image area — pure white, Amazon-style */}
               <div style={{ position: "relative" }}>
-                <ProductImage option={bestseller} height={220} />
+                <ProductImage option={bestseller} height={260} />
+                {/* Timing badge floating top-right */}
                 <div style={{
-                  position: "absolute", top: 12, right: 12,
-                  padding: "5px 12px", borderRadius: 999,
-                  background: `${TIMING_COLOR[s.timing]}f0`, color: "white",
+                  position: "absolute", top: 10, right: 10,
+                  padding: "5px 11px", borderRadius: 999,
+                  background: `${TIMING_COLOR[s.timing]}f5`, color: "white",
                   fontSize: 11, fontWeight: 600, whiteSpace: "nowrap",
                   display: "flex", alignItems: "center", gap: 5,
-                  boxShadow: `0 4px 12px ${TIMING_COLOR[s.timing]}66`,
+                  boxShadow: `0 4px 12px ${TIMING_COLOR[s.timing]}55`,
                 }}>
                   <span>{TIMING_GLYPH[s.timing]}</span>{TIMING_LABEL[s.timing]}
                 </div>
               </div>
 
-              {/* Brand + product name */}
-              <div>
-                <div style={{ fontSize: 11, color: th.inkMute, ...MM, letterSpacing: "0.05em", marginBottom: 4 }}>
-                  {bestseller.brand.toUpperCase()}
-                </div>
-                <h3 style={{ ...D, fontSize: 19, margin: 0, letterSpacing: "-0.02em", color: th.ink, lineHeight: 1.2 }}>
-                  {s.name}
-                </h3>
-                <div style={{ fontSize: 12, color: th.inkMute, ...MM, marginTop: 4 }}>
-                  {s.dose} · {s.purpose}
-                </div>
+              {/* Brand */}
+              <div style={{
+                fontSize: 14, color: th.ink, fontWeight: 700,
+                marginTop: 2,
+              }}>
+                {bestseller.brand}
               </div>
+
+              {/* Product description (multi-line, Amazon-style) */}
+              <h3 style={{
+                fontSize: 15, color: th.inkSoft, lineHeight: 1.45,
+                margin: 0, fontWeight: 400,
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                minHeight: "calc(15px * 1.45 * 3)",
+              }}>
+                {bestseller.productName} — {s.purpose}
+              </h3>
 
               {/* Tag chips */}
               {tagChips.length > 0 && (
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-                  {tagChips.map((t, idx) => (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {tagChips.slice(0, 3).map((t, idx) => (
                     <span key={idx} style={{
-                      padding: "3px 9px", borderRadius: 999,
-                      fontSize: 10.5, fontWeight: 500,
-                      background: t.bg, color: t.ink,
+                      padding: "4px 10px", borderRadius: 6,
+                      fontSize: 12, fontWeight: 400,
+                      background: "#f3f4f6", color: "#374151",
                       whiteSpace: "nowrap",
+                      border: "1px solid #e5e7eb",
                     }}>{t.label}</span>
                   ))}
                 </div>
               )}
 
-              {/* Serving facts (compact, only if data present) */}
-              {(bestseller.servingSize || bestseller.servingsPerContainer) && (
-                <div style={{
-                  display: "flex", gap: 14, flexWrap: "wrap",
-                  padding: "10px 12px", background: th.bgWarm, borderRadius: 10,
-                  fontSize: 11, color: th.inkSoft, ...MM, letterSpacing: "0.02em",
-                }}>
-                  {bestseller.servingSize && (
-                    <span><strong style={{ color: th.ink, fontWeight: 600 }}>Serving:</strong> {bestseller.servingSize}</span>
-                  )}
-                  {bestseller.servingsPerContainer && (
-                    <span><strong style={{ color: th.ink, fontWeight: 600 }}>Total:</strong> {bestseller.servingsPerContainer}</span>
-                  )}
+              {/* Rating + reviews + bought count (Amazon style) */}
+              {bestseller.reviewCount > 0 && (
+                <div
+                  itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating"
+                  style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13 }}
+                >
+                  <meta itemProp="ratingValue" content={bestseller.rating.toString()} />
+                  <meta itemProp="reviewCount" content={bestseller.reviewCount.toString()} />
+                  <span style={{ color: "#ff9900", fontSize: 14, letterSpacing: "1px" }}>
+                    {"★".repeat(Math.round(bestseller.rating))}
+                    <span style={{ color: "#e5e7eb" }}>{"★".repeat(5 - Math.round(bestseller.rating))}</span>
+                  </span>
+                  <a
+                    href={iherbHref} target="_blank" rel="noopener noreferrer sponsored"
+                    style={{ color: "#0066c0", textDecoration: "none", fontSize: 13 }}
+                  >({formattedReviews})</a>
+                </div>
+              )}
+              {bestseller.reviewCount >= 1000 && (
+                <div style={{ fontSize: 12, color: "#565959" }}>
+                  <strong>{bestseller.reviewCount >= 10000 ? "10K+" : "1K+"}</strong> bought in past month
                 </div>
               )}
 
-              {/* Why this supplement */}
-              <p style={{ fontSize: 13, color: th.inkSoft, lineHeight: 1.5, margin: 0 }}>{s.why}</p>
-
-              {/* Rating + Evidence + Price */}
-              <div style={{
-                display: "flex", justifyContent: "space-between", alignItems: "center",
-                fontSize: 11, ...MM, letterSpacing: "0.06em",
-                paddingTop: 4,
-              }}>
-                {bestseller.reviewCount > 0 ? (
-                  <span style={{ color: th.inkSoft, display: "flex", alignItems: "center", gap: 4 }}>
-                    <span style={{ color: th.amber, fontSize: 13 }}>★</span>
-                    <strong style={{ color: th.ink }}>{bestseller.rating.toFixed(1)}</strong>
-                    <span style={{ color: th.inkMute }}>· {bestseller.reviewCount > 999 ? `${(bestseller.reviewCount / 1000).toFixed(0)}k` : bestseller.reviewCount}</span>
-                  </span>
-                ) : (
-                  <span style={{ color: th.sage, fontWeight: 600 }}>{s.evidence.toUpperCase()}</span>
-                )}
-                <span style={{ color: th.ink, fontSize: 16, ...D, fontWeight: 600 }}>${bestseller.approxPrice.toFixed(0)}</span>
+              {/* Price — big like Amazon */}
+              <div
+                itemProp="offers" itemScope itemType="https://schema.org/Offer"
+                style={{ display: "flex", alignItems: "baseline", gap: 4, marginTop: 4 }}
+              >
+                <meta itemProp="price" content={bestseller.approxPrice.toString()} />
+                <meta itemProp="priceCurrency" content="USD" />
+                <meta itemProp="availability" content="https://schema.org/InStock" />
+                <meta itemProp="url" content={iherbHref} />
+                <span style={{ fontSize: 13, color: th.ink, fontWeight: 500 }}>$</span>
+                <span style={{ fontSize: 26, color: th.ink, fontWeight: 600, letterSpacing: "-0.02em" }}>
+                  {bestseller.approxPrice.toFixed(0)}
+                </span>
+                <span style={{ fontSize: 11, color: "#565959", marginLeft: 6 }}>~/month</span>
               </div>
 
-              {/* Buy buttons */}
-              <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 8, paddingTop: 4 }}>
+              {/* Buy buttons — bigger touch targets for mobile (min 44px height) */}
+              <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 8, paddingTop: 6 }}>
                 <a
                   href={iherbHref}
                   target="_blank" rel="noopener noreferrer sponsored"
                   onClick={() => { trackClick(s, bestseller, source).catch(() => {}); }}
+                  aria-label={`Buy ${bestseller.brand} ${bestseller.productName} on iHerb`}
                   style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                    padding: "12px 16px", borderRadius: 12,
+                    padding: "14px 16px", borderRadius: 999,
                     background: th.ink, color: "#ffffff", textDecoration: "none",
                     fontSize: 14, fontWeight: 600,
                     fontFamily: '"Inter", system-ui, sans-serif',
                     boxShadow: `0 4px 14px rgba(10,37,64,0.18)`,
+                    minHeight: 44,
                   }}
                 >
                   Buy on iHerb
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
                     <path d="M7 17L17 7M7 7h10v10" />
                   </svg>
                 </a>
@@ -418,17 +444,20 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                   <a
                     href={amazonHref}
                     target="_blank" rel="noopener noreferrer sponsored"
+                    aria-label={`Buy ${bestseller.brand} ${bestseller.productName} on Amazon`}
                     style={{
                       display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                      padding: "11px 16px", borderRadius: 12,
-                      background: "#ff9900", color: "#ffffff", textDecoration: "none",
+                      padding: "13px 16px", borderRadius: 999,
+                      background: "#ffd814", color: "#0f1111", textDecoration: "none",
                       fontSize: 14, fontWeight: 600,
                       fontFamily: '"Inter", system-ui, sans-serif',
-                      boxShadow: `0 4px 14px rgba(255,153,0,0.25)`,
+                      boxShadow: `0 4px 12px rgba(255,216,20,0.35)`,
+                      border: "1px solid #fcd200",
+                      minHeight: 44,
                     }}
                   >
                     Buy on Amazon
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
                       <path d="M7 17L17 7M7 7h10v10" />
                     </svg>
                   </a>
@@ -437,15 +466,15 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                   href={`/products/${s.id}`}
                   style={{
                     display: "block", textAlign: "center",
-                    padding: "8px 16px", borderRadius: 10,
-                    background: "transparent", color: th.inkSoft, textDecoration: "none",
-                    fontSize: 12, fontWeight: 500,
+                    padding: "10px 16px", borderRadius: 8,
+                    background: "transparent", color: "#0066c0", textDecoration: "none",
+                    fontSize: 13, fontWeight: 500,
                   }}
                 >
-                  View full details →
+                  View product details →
                 </Link>
               </div>
-            </div>
+            </article>
           );
         })}
       </div>
