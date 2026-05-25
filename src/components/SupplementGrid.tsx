@@ -36,12 +36,26 @@ function productHref(p: ProductOption): string {
   return iherbLink(p.searchQuery ?? `${p.brand} ${p.productName}`);
 }
 
+// Insert Cloudinary white-pad transformation into iHerb CDN URLs so all
+// bottle images sit on a clean white background regardless of the original
+// photo's lifestyle props.
+function cleanIherbImageUrl(url: string | undefined): string | undefined {
+  if (!url) return url;
+  if (!url.includes("cloudinary.images-iherb.com")) return url;
+  // Insert `c_pad,b_white,w_500,h_500` (pad to 500x500 with white bg) right after the existing transforms
+  return url.replace(
+    /\/image\/upload\/([^/]+)\/images\//,
+    "/image/upload/$1,c_pad,b_white,w_500,h_500/images/"
+  );
+}
+
 // ─── Product visual: clean Amazon-style image area ──────────────────────────
 function ProductImage({ option, height = 280, showBrandStrip = false }: {
   option: ProductOption; supplementId?: string; brandIndex?: number;
   height?: number; showBrandStrip?: boolean;
 }) {
   const useImage = !!option.imageUrl;
+  const imgSrc = cleanIherbImageUrl(option.imageUrl);
 
   return (
     <div style={{
@@ -53,7 +67,7 @@ function ProductImage({ option, height = 280, showBrandStrip = false }: {
       {useImage ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={option.imageUrl}
+          src={imgSrc}
           alt={`${option.brand} ${option.productName} — ${option.size}`}
           loading="lazy"
           itemProp="image"
@@ -326,8 +340,12 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                 </span>
               )}
 
-              {/* Image area — pure white, Amazon-style */}
-              <div style={{ position: "relative" }}>
+              {/* Image area — pure white, Amazon-style, clickable → /products/[id] */}
+              <Link
+                href={`/products/${s.id}`}
+                aria-label={`View ${bestseller.brand} ${bestseller.productName} details`}
+                style={{ position: "relative", display: "block", textDecoration: "none" }}
+              >
                 <ProductImage option={bestseller} height={260} />
                 {/* Timing badge floating top-right */}
                 <div style={{
@@ -337,10 +355,11 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                   fontSize: 11, fontWeight: 600, whiteSpace: "nowrap",
                   display: "flex", alignItems: "center", gap: 5,
                   boxShadow: `0 4px 12px ${TIMING_COLOR[s.timing]}55`,
+                  pointerEvents: "none",
                 }}>
                   <span>{TIMING_GLYPH[s.timing]}</span>{TIMING_LABEL[s.timing]}
                 </div>
-              </div>
+              </Link>
 
               {/* Brand */}
               <div style={{
