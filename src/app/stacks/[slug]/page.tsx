@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { STACKS, getStack, getStackSupplements, stackMonthlyCost } from "@/lib/stacks";
+import { STACKS, getStack, getStackSupplements, getStackOptionalSupplements, stackMonthlyCost } from "@/lib/stacks";
 import { PRODUCTS } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink } from "@/lib/amazon";
@@ -42,6 +42,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
   if (!stack) notFound();
 
   const supplements = getStackSupplements(stack);
+  const optionalSupplements = getStackOptionalSupplements(stack);
   const cost = stackMonthlyCost(stack);
 
   const related = STACKS.filter(s => s.slug !== stack.slug && s.category === stack.category).slice(0, 3);
@@ -99,6 +100,37 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
               showTotalCost
             />
           </section>
+
+          {/* ─── Optional add-ons ─── */}
+          {optionalSupplements.length > 0 && (
+            <section style={{ marginBottom: 56 }}>
+              <div style={{
+                marginBottom: 18,
+                padding: "16px 20px",
+                background: "rgba(91,163,115,0.06)",
+                borderLeft: `3px solid ${th.sage}`,
+                borderRadius: 12,
+              }}>
+                <div style={{ fontSize: 11, ...MM, color: th.sage, letterSpacing: "0.1em", fontWeight: 600, marginBottom: 6 }}>
+                  OPTIONAL ADD-ON
+                </div>
+                <h2 style={{
+                  ...S, fontSize: 26, margin: 0, letterSpacing: "-0.02em", color: th.ink,
+                }}>
+                  Want to go deeper?
+                </h2>
+                <p style={{ fontSize: 14, color: th.inkSoft, lineHeight: 1.5, margin: "6px 0 0" }}>
+                  {optionalSupplements.length === 1
+                    ? "One additional supplement that pairs well with this stack — for users wanting to extend the protocol."
+                    : `${optionalSupplements.length} additional supplements that pair well with this stack — for users wanting to extend the protocol.`}
+                </p>
+              </div>
+              <SupplementGrid
+                supplements={optionalSupplements}
+                source={`stack-${stack.slug}-optional`}
+              />
+            </section>
+          )}
 
           {/* Description */}
           <section style={{ maxWidth: 760, margin: "0 auto 48px" }}>

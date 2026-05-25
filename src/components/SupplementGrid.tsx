@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Supplement } from "@/lib/supplements";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { getProducts, getPrimaryProduct, type ProductOption } from "@/lib/products";
+import { amazonEnabled, amazonLink } from "@/lib/amazon";
 import { trackClick } from "@/lib/track";
 import BottleMockup from "@/components/BottleMockup";
 
@@ -280,21 +281,41 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
         )}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 18 }}>
         {supplements.map((s, i) => {
           const bestseller = getPrimaryProduct(s.id);
           if (!bestseller) return null;
-          const href = bestseller.productPath
+          const iherbHref = bestseller.productPath
             ? iherbProductLink(bestseller.productPath)
             : iherbLink(bestseller.searchQuery ?? `${bestseller.brand} ${bestseller.productName}`);
+          const amazonHref = amazonLink(`${bestseller.brand} ${bestseller.productName}`);
+          const showAmazon = amazonEnabled();
+
+          // Tag chips: form + ingredient form + top 2 certifications
+          const tagChips: { label: string; bg: string; ink: string }[] = [];
+          if (bestseller.form) {
+            tagChips.push({ label: bestseller.form, bg: "#f3f4f6", ink: "#374151" });
+          }
+          if (bestseller.ingredientForm) {
+            // Truncate long ingredient forms
+            const label = bestseller.ingredientForm.length > 30
+              ? bestseller.ingredientForm.slice(0, 28) + "…"
+              : bestseller.ingredientForm;
+            tagChips.push({ label, bg: "#dbeafe", ink: "#1e40af" });
+          }
+          (bestseller.certifications ?? []).slice(0, 2).forEach(c => {
+            tagChips.push({ label: c, bg: "#fef3c7", ink: "#92400e" });
+          });
+
           return (
             <div key={s.id} style={{
               background: th.paper, border: `1px solid ${th.line}`, borderRadius: 20,
-              padding: 16, display: "flex", flexDirection: "column", gap: 14,
+              padding: 16, display: "flex", flexDirection: "column", gap: 12,
               boxShadow: `0 1px 3px rgba(10,37,64,0.04), 0 8px 20px rgba(10,37,64,0.04)`,
               animation: `sd-rise .5s ${i * 0.05}s ease-out both`,
               transition: "transform .25s ease, box-shadow .25s ease",
             }}>
+              {/* Image with timing badge */}
               <div style={{ position: "relative" }}>
                 <ProductImage option={bestseller} height={220} />
                 <div style={{
@@ -309,8 +330,12 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                 </div>
               </div>
 
+              {/* Brand + product name */}
               <div>
-                <h3 style={{ ...D, fontSize: 21, margin: 0, letterSpacing: "-0.02em", color: th.ink, lineHeight: 1.2 }}>
+                <div style={{ fontSize: 11, color: th.inkMute, ...MM, letterSpacing: "0.05em", marginBottom: 4 }}>
+                  {bestseller.brand.toUpperCase()}
+                </div>
+                <h3 style={{ ...D, fontSize: 19, margin: 0, letterSpacing: "-0.02em", color: th.ink, lineHeight: 1.2 }}>
                   {s.name}
                 </h3>
                 <div style={{ fontSize: 12, color: th.inkMute, ...MM, marginTop: 4 }}>
@@ -318,25 +343,68 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                 </div>
               </div>
 
-              <p style={{ fontSize: 13, color: th.inkSoft, lineHeight: 1.55, margin: 0 }}>{s.why}</p>
-
-              <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 10 }}>
-                <div style={{
-                  display: "flex", justifyContent: "space-between", alignItems: "center",
-                  fontSize: 11, ...MM, letterSpacing: "0.08em",
-                }}>
-                  <span style={{ color: th.sage, fontWeight: 600 }}>{s.evidence.toUpperCase()} EVIDENCE</span>
-                  <span style={{ color: th.inkMute }}>~${bestseller.approxPrice.toFixed(0)}</span>
+              {/* Tag chips */}
+              {tagChips.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                  {tagChips.map((t, idx) => (
+                    <span key={idx} style={{
+                      padding: "3px 9px", borderRadius: 999,
+                      fontSize: 10.5, fontWeight: 500,
+                      background: t.bg, color: t.ink,
+                      whiteSpace: "nowrap",
+                    }}>{t.label}</span>
+                  ))}
                 </div>
+              )}
+
+              {/* Serving facts (compact, only if data present) */}
+              {(bestseller.servingSize || bestseller.servingsPerContainer) && (
+                <div style={{
+                  display: "flex", gap: 14, flexWrap: "wrap",
+                  padding: "10px 12px", background: th.bgWarm, borderRadius: 10,
+                  fontSize: 11, color: th.inkSoft, ...MM, letterSpacing: "0.02em",
+                }}>
+                  {bestseller.servingSize && (
+                    <span><strong style={{ color: th.ink, fontWeight: 600 }}>Serving:</strong> {bestseller.servingSize}</span>
+                  )}
+                  {bestseller.servingsPerContainer && (
+                    <span><strong style={{ color: th.ink, fontWeight: 600 }}>Total:</strong> {bestseller.servingsPerContainer}</span>
+                  )}
+                </div>
+              )}
+
+              {/* Why this supplement */}
+              <p style={{ fontSize: 13, color: th.inkSoft, lineHeight: 1.5, margin: 0 }}>{s.why}</p>
+
+              {/* Rating + Evidence + Price */}
+              <div style={{
+                display: "flex", justifyContent: "space-between", alignItems: "center",
+                fontSize: 11, ...MM, letterSpacing: "0.06em",
+                paddingTop: 4,
+              }}>
+                {bestseller.reviewCount > 0 ? (
+                  <span style={{ color: th.inkSoft, display: "flex", alignItems: "center", gap: 4 }}>
+                    <span style={{ color: th.amber, fontSize: 13 }}>★</span>
+                    <strong style={{ color: th.ink }}>{bestseller.rating.toFixed(1)}</strong>
+                    <span style={{ color: th.inkMute }}>· {bestseller.reviewCount > 999 ? `${(bestseller.reviewCount / 1000).toFixed(0)}k` : bestseller.reviewCount}</span>
+                  </span>
+                ) : (
+                  <span style={{ color: th.sage, fontWeight: 600 }}>{s.evidence.toUpperCase()}</span>
+                )}
+                <span style={{ color: th.ink, fontSize: 16, ...D, fontWeight: 600 }}>${bestseller.approxPrice.toFixed(0)}</span>
+              </div>
+
+              {/* Buy buttons */}
+              <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 8, paddingTop: 4 }}>
                 <a
-                  href={href}
+                  href={iherbHref}
                   target="_blank" rel="noopener noreferrer sponsored"
                   onClick={() => { trackClick(s, bestseller, source).catch(() => {}); }}
                   style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                    padding: "13px 16px", borderRadius: 12,
+                    padding: "12px 16px", borderRadius: 12,
                     background: th.ink, color: "#ffffff", textDecoration: "none",
-                    fontSize: 14, fontWeight: 500,
+                    fontSize: 14, fontWeight: 600,
                     fontFamily: '"Inter", system-ui, sans-serif',
                     boxShadow: `0 4px 14px rgba(10,37,64,0.18)`,
                   }}
@@ -346,17 +414,35 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                     <path d="M7 17L17 7M7 7h10v10" />
                   </svg>
                 </a>
+                {showAmazon && (
+                  <a
+                    href={amazonHref}
+                    target="_blank" rel="noopener noreferrer sponsored"
+                    style={{
+                      display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                      padding: "11px 16px", borderRadius: 12,
+                      background: "#ff9900", color: "#ffffff", textDecoration: "none",
+                      fontSize: 14, fontWeight: 600,
+                      fontFamily: '"Inter", system-ui, sans-serif',
+                      boxShadow: `0 4px 14px rgba(255,153,0,0.25)`,
+                    }}
+                  >
+                    Buy on Amazon
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M7 17L17 7M7 7h10v10" />
+                    </svg>
+                  </a>
+                )}
                 <Link
                   href={`/products/${s.id}`}
                   style={{
                     display: "block", textAlign: "center",
-                    padding: "10px 16px", borderRadius: 10,
+                    padding: "8px 16px", borderRadius: 10,
                     background: "transparent", color: th.inkSoft, textDecoration: "none",
-                    fontSize: 13, fontWeight: 500,
-                    border: `1px solid ${th.line}`,
+                    fontSize: 12, fontWeight: 500,
                   }}
                 >
-                  View details
+                  View full details →
                 </Link>
               </div>
             </div>

@@ -8,6 +8,7 @@ export interface PreMadeStack {
   description: string;
   category: "Goal" | "Persona" | "Life Stage" | "Foundation";
   supplementIds: string[];
+  optionalSupplementIds?: string[];      // suggested add-ons rendered as a separate "optional" section
   bestFor: string[];
   warnings?: string[];
   benefits: string[];
@@ -28,7 +29,8 @@ export const STACKS: PreMadeStack[] = [
     tagline: "The three supplements almost everyone benefits from.",
     description: "If you only take three supplements, take these. Vitamin D3 (most people are deficient), Omega-3 (modern diets are low in EPA/DHA), and Magnesium (50%+ of adults don't meet the RDA). This is the floor — everything else builds on top.",
     category: "Foundation",
-    supplementIds: ["d3k2", "omega3", "mag-glycinate"],
+    supplementIds: ["d3k2", "omega3", "mag-glycinate", "b-complex", "creatine"],
+    optionalSupplementIds: ["probiotic"],
     bestFor: ["Beginners", "Anyone unsure where to start", "Budget-conscious", "General wellness"],
     benefits: [
       "Covers the 3 most common deficiencies in modern diets",
@@ -49,7 +51,8 @@ export const STACKS: PreMadeStack[] = [
     tagline: "Deeper sleep, fewer trips to the bathroom.",
     description: "A three-supplement evening ritual that calms the nervous system, lowers cortisol, and deepens restorative sleep cycles. Most users notice improvements within 1-2 weeks.",
     category: "Goal",
-    supplementIds: ["mag-glycinate", "ashwagandha", "glycine"],
+    supplementIds: ["mag-glycinate", "ashwagandha", "glycine", "l-theanine", "melatonin"],
+    optionalSupplementIds: ["reishi"],
     bestFor: ["Trouble falling asleep", "Waking up at night", "Don't feel rested in the morning", "Stress-driven insomnia"],
     warnings: ["Skip ashwagandha if pregnant or on thyroid medication"],
     benefits: [
@@ -71,7 +74,8 @@ export const STACKS: PreMadeStack[] = [
     tagline: "Steady output, no caffeine crashes.",
     description: "Fuels cellular energy production at the root level. Supports mitochondrial function, addresses common nutrient gaps that cause fatigue, and adds an adaptogen for performance under stress.",
     category: "Goal",
-    supplementIds: ["d3k2", "b-complex", "rhodiola", "coq10"],
+    supplementIds: ["d3k2", "b-complex", "rhodiola", "coq10", "acetyl-l-carnitine"],
+    optionalSupplementIds: ["iron"],
     bestFor: ["Persistent fatigue", "Afternoon crashes", "Low motivation", "Mental fog at work"],
     warnings: ["Skip rhodiola if pregnant or have bipolar disorder"],
     benefits: [
@@ -93,7 +97,8 @@ export const STACKS: PreMadeStack[] = [
     tagline: "Sharper mind, calmer attention.",
     description: "Combines the most well-studied cognitive enhancers. Omega-3 for brain structure, L-theanine for calm focus, lion's mane for neuroplasticity, and B-complex for neurotransmitter synthesis.",
     category: "Goal",
-    supplementIds: ["omega3", "l-theanine", "lions-mane", "b-complex"],
+    supplementIds: ["omega3", "l-theanine", "lions-mane", "b-complex", "citicoline"],
+    optionalSupplementIds: ["bacopa"],
     bestFor: ["Brain fog", "Work-from-home productivity", "Students", "Knowledge workers", "Memory concerns"],
     benefits: [
       "Improved sustained attention",
@@ -114,7 +119,8 @@ export const STACKS: PreMadeStack[] = [
     tagline: "Calmer baseline, no sedation.",
     description: "Four ingredients that modulate the stress response from different angles. Ashwagandha lowers cortisol, L-theanine eases acute anxiety, magnesium relaxes the nervous system, and rhodiola builds resilience to chronic stress.",
     category: "Goal",
-    supplementIds: ["ashwagandha", "l-theanine", "mag-glycinate", "rhodiola"],
+    supplementIds: ["ashwagandha", "l-theanine", "mag-glycinate", "rhodiola", "holy-basil"],
+    optionalSupplementIds: ["phosphatidylserine"],
     bestFor: ["Chronic stress", "Anxiety", "Burnout recovery", "High-pressure jobs", "Wired-but-tired evenings"],
     warnings: ["Skip ashwagandha if pregnant or on thyroid medication"],
     benefits: [
@@ -137,6 +143,7 @@ export const STACKS: PreMadeStack[] = [
     description: "Built for people who train 3+ times a week. Creatine for performance, omega-3 and curcumin for inflammation, collagen for joints and connective tissue, magnesium for sleep-based recovery.",
     category: "Persona",
     supplementIds: ["creatine", "omega3", "curcumin", "collagen", "mag-glycinate"],
+    optionalSupplementIds: ["l-glutamine"],
     bestFor: ["Strength athletes", "Endurance training", "Joint stiffness", "Post-workout soreness", "Recovery between sessions"],
     warnings: ["Skip high-dose omega-3 and curcumin if on blood thinners"],
     benefits: [
@@ -159,6 +166,7 @@ export const STACKS: PreMadeStack[] = [
     description: "Strengthens the immune pillar with the four most-studied nutrients — vitamin D3, vitamin C, zinc — plus a multi-strain probiotic for the gut-immune axis. Elderberry on standby for the first sign of illness.",
     category: "Goal",
     supplementIds: ["d3k2", "vit-c", "zinc", "probiotic", "elderberry"],
+    optionalSupplementIds: ["quercetin"],
     bestFor: ["Frequent colds or flu", "Seasonal immune support", "Recovery after illness", "Travelers"],
     warnings: ["Elderberry is not recommended for active autoimmune conditions"],
     benefits: [
@@ -181,6 +189,7 @@ export const STACKS: PreMadeStack[] = [
     description: "Plant-based diets are nutrient-dense — but three specific things are missing, and three others run low. This stack fills every common gap so you can stay vegan with confidence.",
     category: "Persona",
     supplementIds: ["b12", "omega3-algae", "d3k2", "iron", "zinc", "creatine"],
+    optionalSupplementIds: ["vit-k2"],
     bestFor: ["Vegans", "Strict vegetarians", "Plant-based athletes", "Anyone reducing animal products"],
     benefits: [
       "Covers the non-negotiable vegan gap: B12",
@@ -202,6 +211,7 @@ export const STACKS: PreMadeStack[] = [
     description: "Six ingredients chosen for their cumulative evidence on healthspan — cardiovascular, joint, cognitive, and mitochondrial function. Especially valuable after 40, when natural reserves of these compounds drop.",
     category: "Life Stage",
     supplementIds: ["d3k2", "omega3", "curcumin", "coq10", "mag-glycinate", "collagen"],
+    optionalSupplementIds: ["nac"],
     bestFor: ["Adults 40+", "Anyone focused on longevity", "Family history of heart or joint issues"],
     warnings: ["Skip high-dose omega-3 and curcumin if on blood thinners"],
     benefits: [
@@ -224,6 +234,7 @@ export const STACKS: PreMadeStack[] = [
     description: "A women's stack focused on the most common nutrient gaps that affect cycle regularity, PMS, mood, and energy. Magnesium and B6 (in B-complex) work synergistically for hormone signaling.",
     category: "Life Stage",
     supplementIds: ["mag-glycinate", "d3k2", "omega3", "b-complex", "iron"],
+    optionalSupplementIds: ["inositol"],
     bestFor: ["PMS or PMDD symptoms", "Irregular cycles", "Mood swings", "Low energy through cycle", "Perimenopause"],
     warnings: ["Skip iron supplementation if not deficient — get a ferritin test first", "Consult a clinician if pregnant or planning pregnancy"],
     benefits: [
@@ -246,6 +257,7 @@ export const STACKS: PreMadeStack[] = [
     description: "Beauty isn't topical. This stack supports the cellular building blocks — collagen and keratin synthesis, antioxidant defense against oxidative damage, and the omega-3s that keep skin barrier intact.",
     category: "Persona",
     supplementIds: ["collagen", "biotin", "vit-c", "omega3", "zinc"],
+    optionalSupplementIds: ["astaxanthin"],
     bestFor: ["Skin elasticity concerns", "Hair thinning or shedding", "Brittle nails", "Slow wound healing"],
     benefits: [
       "Supports collagen synthesis from within",
@@ -266,6 +278,12 @@ export function getStack(slug: string): PreMadeStack | undefined {
 
 export function getStackSupplements(stack: PreMadeStack): Supplement[] {
   return stack.supplementIds
+    .map(id => SUPPLEMENT_DB.find(s => s.id === id))
+    .filter((s): s is Supplement => Boolean(s));
+}
+
+export function getStackOptionalSupplements(stack: PreMadeStack): Supplement[] {
+  return (stack.optionalSupplementIds ?? [])
     .map(id => SUPPLEMENT_DB.find(s => s.id === id))
     .filter((s): s is Supplement => Boolean(s));
 }
