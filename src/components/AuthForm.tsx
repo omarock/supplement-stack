@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase";
+import SuppdocLogo from "@/components/SuppdocLogo";
 
 const th = {
   bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
@@ -98,15 +99,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
       <div style={{
         padding: "20px var(--nav-pad-x)", borderBottom: `1px solid ${th.line}`,
       }}>
-        <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <svg width="22" height="22" viewBox="0 0 24 24">
-            <ellipse cx="12" cy="6" rx="3" ry="5.5" fill={th.sage} />
-            <ellipse cx="6.5" cy="14" rx="3" ry="5" transform="rotate(-50 6.5 14)" fill={th.sage} />
-            <ellipse cx="17.5" cy="14" rx="3" ry="5" transform="rotate(50 17.5 14)" fill={th.sage} />
-            <circle cx="12" cy="12" r="1.6" fill={th.burgundy} />
-          </svg>
-          <span style={{ ...S, fontSize: 22, color: th.ink, letterSpacing: "-0.01em" }}>phyla</span>
-        </Link>
+        <SuppdocLogo size={22} />
       </div>
 
       <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "48px 24px" }}>
@@ -235,7 +228,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
             marginTop: 28, textAlign: "center", fontSize: 14, color: th.inkSoft,
           }}>
             {mode === "signin" ? (
-              <>New to Phyla? <Link href="/signup" style={{ color: th.sage, fontWeight: 500 }}>Create account →</Link></>
+              <>New to suppdoc.io? <Link href="/signup" style={{ color: th.sage, fontWeight: 500 }}>Create account →</Link></>
             ) : (
               <>Already have an account? <Link href="/signin" style={{ color: th.sage, fontWeight: 500 }}>Sign in →</Link></>
             )}

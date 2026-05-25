@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { QuizData } from "@/types/quiz";
 import { trackEmailSignup } from "@/lib/track";
+import SuppdocLogo from "@/components/SuppdocLogo";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
@@ -712,15 +713,7 @@ export default function QuizPage() {
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "18px 32px", borderBottom: `1px solid ${th.line}`,
       }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
-          <svg width="20" height="20" viewBox="0 0 24 24">
-            <ellipse cx="12" cy="6" rx="3" ry="5.5" fill={th.sage} />
-            <ellipse cx="6.5" cy="14" rx="3" ry="5" transform="rotate(-50 6.5 14)" fill={th.sage} />
-            <ellipse cx="17.5" cy="14" rx="3" ry="5" transform="rotate(50 17.5 14)" fill={th.sage} />
-            <circle cx="12" cy="12" r="1.6" fill={th.burgundy} />
-          </svg>
-          <span style={{ ...S, fontSize: 18, color: th.ink }}>phyla</span>
-        </Link>
+        <SuppdocLogo size={18} />
         {!isGenerating && (
           <Link href="/" style={{
             fontSize: 13, color: th.inkMute, textDecoration: "none",

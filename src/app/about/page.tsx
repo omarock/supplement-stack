@@ -12,7 +12,7 @@ const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
   title: "About — suppdoc.io",
-  description: "Phyla composes AI-guided supplement rituals from clean, evidence-led ingredients. Built to help you understand your stack — not just sell it.",
+  description: "suppdoc.io composes AI-guided supplement rituals from clean, evidence-led ingredients. Built to help you understand your stack — not just sell it.",
 };
 
 export default function AboutPage() {
@@ -21,12 +21,12 @@ export default function AboutPage() {
       <SiteHeader />
 
       <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 48px", textAlign: "center" }}>
-        <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>— ABOUT PHYLA —</div>
+        <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>— ABOUT SUPPDOC —</div>
         <h1 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.025em", lineHeight: 1.05 }}>
           A quieter way to <em style={{ color: th.burgundy }}>supplement</em>.
         </h1>
         <p style={{ color: th.inkSoft, fontSize: 18, lineHeight: 1.6, maxWidth: 640, margin: "24px auto 0" }}>
-          Phyla composes personalised supplement rituals from clean, evidence-led ingredients. We exist because most supplement advice is either too generic or too aggressive — and the average person deserves better.
+          suppdoc.io composes personalised supplement rituals from clean, evidence-led ingredients. We exist because most supplement advice is either too generic or too aggressive — and the average person deserves better.
         </p>
       </section>
 

@@ -3,14 +3,14 @@ import LegalPage from "@/components/LegalPage";
 
 export const metadata: Metadata = {
   title: "Cookie Policy — suppdoc.io",
-  description: "Phyla uses minimal essential storage to remember your quiz progress. We don't use advertising or tracking cookies. Full details inside.",
+  description: "suppdoc.io uses minimal essential storage to remember your quiz progress. We don't use advertising or tracking cookies. Full details inside.",
 };
 
 export default function Page() {
   return (
     <LegalPage eyebrow="Legal" title="Cookie Policy" lastUpdated="May 2026">
       <p>
-        Phyla uses minimal browser storage to make the site work properly. We do <strong>not</strong> use advertising, cross-site tracking, or third-party marketing cookies.
+        suppdoc.io uses minimal browser storage to make the site work properly. We do <strong>not</strong> use advertising, cross-site tracking, or third-party marketing cookies.
       </p>
 
       <h2>What We Store</h2>

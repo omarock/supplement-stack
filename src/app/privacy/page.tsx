@@ -3,7 +3,7 @@ import LegalPage from "@/components/LegalPage";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — suppdoc.io",
-  description: "Phyla's privacy policy. We store quiz answers locally in your browser and never sell personal data. Read the full details.",
+  description: "suppdoc.io's privacy policy. We store quiz answers locally in your browser and never sell personal data. Read the full details.",
 };
 
 export default function Page() {
@@ -44,7 +44,7 @@ export default function Page() {
 
       <h2>5. Your Rights</h2>
       <p>
-        You can clear all data Phyla has stored in your browser at any time by clearing your browser&apos;s localStorage (Settings → Site Data → Clear). For any data we hold on our servers (e.g. contact emails), you may request access, correction, or deletion by emailing <a href="mailto:hello@suppdoc.io">hello@suppdoc.io</a>.
+        You can clear all data suppdoc.io has stored in your browser at any time by clearing your browser&apos;s localStorage (Settings → Site Data → Clear). For any data we hold on our servers (e.g. contact emails), you may request access, correction, or deletion by emailing <a href="mailto:hello@suppdoc.io">hello@suppdoc.io</a>.
       </p>
 
       <h2>6. Children</h2>

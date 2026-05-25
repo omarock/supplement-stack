@@ -3,14 +3,14 @@ import LegalPage from "@/components/LegalPage";
 
 export const metadata: Metadata = {
   title: "Medical Disclaimer — suppdoc.io",
-  description: "Phyla provides educational guidance only. This is not medical advice. Always consult a qualified healthcare professional before starting supplements.",
+  description: "suppdoc.io provides educational guidance only. This is not medical advice. Always consult a qualified healthcare professional before starting supplements.",
 };
 
 export default function Page() {
   return (
     <LegalPage eyebrow="Legal" title="Medical Disclaimer" lastUpdated="May 2026">
       <p>
-        <strong>Read this carefully before using Phyla&apos;s recommendations.</strong>
+        <strong>Read this carefully before using suppdoc.io&apos;s recommendations.</strong>
       </p>
 
       <h2>Educational Only</h2>
@@ -75,7 +75,7 @@ export default function Page() {
 
       <h2>Limitation of Liability</h2>
       <p>
-        By using Phyla, you accept full responsibility for your own health decisions. Phyla, its affiliates, and contributors are not liable for any health consequences arising from acting on information presented on this site.
+        By using suppdoc.io, you accept full responsibility for your own health decisions. suppdoc.io, its affiliates, and contributors are not liable for any health consequences arising from acting on information presented on this site.
       </p>
 
       <p>

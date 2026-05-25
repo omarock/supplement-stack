@@ -29,11 +29,7 @@ const TIMING_COLOR: Record<Supplement["timing"], string> = {
   morning: th.burgundy, midday: "#a87a52", "pre-train": th.sage, evening: th.sageDeep,
 };
 
-// ─── Header logo ─────────────────────────────────────────────────────────────
 import SuppdocLogo from "@/components/SuppdocLogo";
-function PhylaLogo() {
-  return <SuppdocLogo size={20} />;
-}
 
 function ScoreCard({ label, score, color }: { label: string; score: number; color: string }) {
   return (
@@ -101,7 +97,7 @@ export default function ResultsPage() {
         fontFamily: '"Inter", system-ui, sans-serif',
       }}>
         <div style={{ maxWidth: 480, textAlign: "center" }}>
-          <PhylaLogo />
+          <SuppdocLogo size={20} />
           <h1 style={{ ...S, fontSize: 52, margin: "40px 0 16px", letterSpacing: "-0.03em", lineHeight: 1 }}>
             No ritual yet.
           </h1>
@@ -140,7 +136,7 @@ export default function ResultsPage() {
         background: `${th.bg}cc`, backdropFilter: "blur(20px)",
         position: "sticky", top: 0, zIndex: 10,
       }}>
-        <PhylaLogo />
+        <SuppdocLogo size={20} />
         <Link href="/quiz" style={{
           fontSize: 13, color: th.inkMute, textDecoration: "none",
           padding: "8px 14px", borderRadius: 999, border: `1px solid ${th.line}`,

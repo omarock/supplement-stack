@@ -12,7 +12,7 @@ const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
   title: "Contact — suppdoc.io",
-  description: "Get in touch with the Phyla team. Questions about your stack, partnerships, or press inquiries — we reply within one business day.",
+  description: "Get in touch with the suppdoc team. Questions about your stack, partnerships, or press inquiries — we reply within one business day.",
 };
 
 export default function ContactPage() {

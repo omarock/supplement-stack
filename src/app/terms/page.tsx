@@ -3,19 +3,19 @@ import LegalPage from "@/components/LegalPage";
 
 export const metadata: Metadata = {
   title: "Terms of Service — suppdoc.io",
-  description: "Phyla's terms of service. By using the site, you agree to these terms covering use, intellectual property, disclaimers, and affiliate disclosure.",
+  description: "suppdoc.io's terms of service. By using the site, you agree to these terms covering use, intellectual property, disclaimers, and affiliate disclosure.",
 };
 
 export default function Page() {
   return (
     <LegalPage eyebrow="Legal" title="Terms of Service" lastUpdated="May 2026">
       <p>
-        These Terms of Service (&quot;Terms&quot;) govern your use of the Phyla website and services (the &quot;Service&quot;). By accessing or using the Service, you agree to be bound by these Terms.
+        These Terms of Service (&quot;Terms&quot;) govern your use of the suppdoc.io website and services (the &quot;Service&quot;). By accessing or using the Service, you agree to be bound by these Terms.
       </p>
 
       <h2>1. Use of the Service</h2>
       <p>
-        Phyla provides educational information about supplements based on user-submitted quiz responses. The Service is provided &quot;as is&quot; for personal, non-commercial use. You may not copy, scrape, redistribute, or use the content for any commercial purpose without explicit permission.
+        suppdoc.io provides educational information about supplements based on user-submitted quiz responses. The Service is provided &quot;as is&quot; for personal, non-commercial use. You may not copy, scrape, redistribute, or use the content for any commercial purpose without explicit permission.
       </p>
 
       <h2>2. No Medical Advice</h2>
@@ -33,7 +33,7 @@ export default function Page() {
 
       <h2>4. Intellectual Property</h2>
       <p>
-        All content on suppdoc.io — written articles, design, code, recommendation logic — is the property of Phyla or its licensors. You may share excerpts (with attribution) but may not reproduce articles in full without permission.
+        All content on suppdoc.io — written articles, design, code, recommendation logic — is the property of suppdoc.io or its licensors. You may share excerpts (with attribution) but may not reproduce articles in full without permission.
       </p>
 
       <h2>5. User Data</h2>
@@ -43,7 +43,7 @@ export default function Page() {
 
       <h2>6. Limitation of Liability</h2>
       <p>
-        To the maximum extent permitted by law, Phyla and its affiliates are not liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of the Service or any supplement you purchase based on its recommendations. You assume all responsibility for your own health decisions.
+        To the maximum extent permitted by law, suppdoc.io and its affiliates are not liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of the Service or any supplement you purchase based on its recommendations. You assume all responsibility for your own health decisions.
       </p>
 
       <h2>7. Changes to These Terms</h2>

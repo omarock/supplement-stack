@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import { getAdminSupabase, isAdminEmail } from "@/lib/supabase-admin";
+import SuppdocLogo from "@/components/SuppdocLogo";
 
 export const metadata: Metadata = {
   title: "Admin — suppdoc.io",
@@ -139,16 +140,10 @@ export default async function AdminDashboard() {
         padding: "18px 32px", borderBottom: `1px solid ${th.line}`,
         display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10,
       }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <svg width="22" height="22" viewBox="0 0 24 24">
-            <ellipse cx="12" cy="6" rx="3" ry="5.5" fill={th.sage} />
-            <ellipse cx="6.5" cy="14" rx="3" ry="5" transform="rotate(-50 6.5 14)" fill={th.sage} />
-            <ellipse cx="17.5" cy="14" rx="3" ry="5" transform="rotate(50 17.5 14)" fill={th.sage} />
-            <circle cx="12" cy="12" r="1.6" fill={th.burgundy} />
-          </svg>
-          <span style={{ ...S, fontSize: 22, color: th.ink }}>phyla</span>
-          <span style={{ fontSize: 11, ...MM, color: th.sage, letterSpacing: "0.1em", marginLeft: 8 }}>ADMIN</span>
-        </Link>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <SuppdocLogo size={22} />
+          <span style={{ fontSize: 11, ...MM, color: th.sage, letterSpacing: "0.1em", marginLeft: 4 }}>ADMIN</span>
+        </div>
         <div style={{ fontSize: 13, color: th.inkSoft }}>
           Signed in as <strong style={{ color: th.ink }}>{user.email}</strong>
         </div>
