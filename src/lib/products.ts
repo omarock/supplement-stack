@@ -21,6 +21,15 @@ export interface ProductOption {
   brandBg: string;         // soft background tint for branded card
   brandInk: string;        // brand-name text color
   imageUrl?: string;       // optional override: real product photo URL (Unsplash, iHerb CDN, or local)
+  // --- Rich product detail (optional, used by /products/[id] page) ---
+  form?: string;                  // e.g. "Capsules", "Softgels", "Powder", "Liquid", "Gummies"
+  ingredientForm?: string;        // e.g. "Magnesium Glycinate", "Acetyl-L-Carnitine HCl"
+  servingSize?: string;           // e.g. "1 capsule", "2 tablets"
+  servingsPerContainer?: number;  // e.g. 120
+  mgPerServing?: string;          // e.g. "500 mg"
+  certifications?: string[];      // e.g. ["Kosher", "Halal", "GMP", "Non-GMO", "USP", "NSF", "Vegan", "Gluten-Free"]
+  fullDescription?: string;       // multi-paragraph description for /products/[id] (overrides supplement.description)
+  amazonAsin?: string;            // optional Amazon ASIN for direct product link
 }
 
 // ─── Product Database ────────────────────────────────────────────────────────
@@ -33,6 +42,13 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       productPath: "/pr/now-foods-vitamin-d3-2-000-iu-120-softgels/8229",
       brandBg: "#fdebe1", brandInk: "#c2410c",
       imageUrl: "/products/d3k2.jpg",
+      form: "Veg Capsules",
+      ingredientForm: "Cholecalciferol (D3) + Menaquinone-7 (K2 MK-7)",
+      servingSize: "1 veg capsule",
+      servingsPerContainer: 120,
+      mgPerServing: "2,000 IU D3 + 100 mcg K2",
+      certifications: ["Non-GMO", "Vegetarian", "GMP", "Soy Free", "Kosher"],
+      fullDescription: "NOW Foods Vitamin D-3 & K-2 combines two synergistic nutrients into a single daily veg capsule. The D-3 (cholecalciferol) is the same form your skin produces from sunlight, while the K-2 is menaquinone-7 — the long-acting form derived from natto fermentation. Together they support bone density, immune resilience, and cardiovascular calcium routing. NOW Foods has been a family-owned supplement manufacturer since 1968, with an in-house lab in Bloomingdale, Illinois that conducts purity and potency testing on every batch. This product has over 11,000 reviews on iHerb and averages 4.8 stars — one of the top-rated D3/K2 combinations on the platform.",
     },
     {
       brand: "Sports Research", productName: "Vitamin D3 + K2", size: "60 softgels",
@@ -55,6 +71,13 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       productPath: "/pr/sports-research-alaskan-omega-3-fish-oil-triple-strength-180-softgels/72037",
       brandBg: "#fef3c7", brandInk: "#92400e",
       imageUrl: "/products/omega3.jpg",
+      form: "Softgels",
+      ingredientForm: "Wild Alaskan Fish Oil (Triglyceride form, IFOS 5-star certified)",
+      servingSize: "2 softgels",
+      servingsPerContainer: 45,
+      mgPerServing: "1,250 mg EPA+DHA (per 2 softgels)",
+      certifications: ["IFOS 5-Star", "Non-GMO", "GMP", "Wild Caught", "Gluten Free"],
+      fullDescription: "Sports Research Triple Strength Omega-3 delivers 1,250 mg of combined EPA and DHA in the natural triglyceride (TG) form — the same molecular structure as omega-3s in whole fish, with significantly better absorption and stability than the cheaper ethyl ester (EE) form found in mass-market supplements. The fish are wild-caught from sustainable Alaskan waters and certified by IFOS (International Fish Oil Standards) at the highest 5-star rating for purity, potency, and oxidation stability. This is the bestselling omega-3 on iHerb with over 15,000 reviews. Each batch is third-party tested for heavy metals, PCBs, and dioxins, with certificates of analysis available on request.",
     },
     {
       brand: "Nordic Naturals", productName: "Ultimate Omega", size: "60 softgels",
@@ -121,6 +144,13 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       productPath: "/pr/doctor-s-best-high-absorption-magnesium-120-tablets-100-mg-per-tablet/15",
       brandBg: "#dbeafe", brandInk: "#1e40af",
       imageUrl: "/products/mag-glycinate.jpg",
+      form: "Tablets",
+      ingredientForm: "Magnesium Glycinate Lysinate Chelate (Albion TRAACS)",
+      servingSize: "2 tablets",
+      servingsPerContainer: 120,
+      mgPerServing: "200 mg elemental magnesium (per 2 tablets)",
+      certifications: ["Non-GMO", "Gluten Free", "Soy Free", "GMP", "Vegan"],
+      fullDescription: "Doctor's Best High Absorption Magnesium uses the patented Albion TRAACS chelate — a glycinate-lysinate complex that is exceptionally well-absorbed and non-laxative even at high doses, making it suitable for evening sleep support. Albion is the same chelate technology used in most clinical magnesium studies, ensuring you get the form that researchers have validated. Each two-tablet serving delivers 200 mg of elemental magnesium; for a target of 400 mg/day, take two servings — one with dinner and one before bed. With over 32,000 reviews on iHerb, this is one of the most-recommended magnesium products on the platform.",
     },
     {
       brand: "NOW Foods", productName: "Magnesium Glycinate", size: "180 tablets",
@@ -143,6 +173,13 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       productPath: "/pr/jarrow-formulas-ashwagandha-300-mg-120-veggie-capsules/3302",
       brandBg: "#fef3c7", brandInk: "#92400e",
       imageUrl: "/products/ashwagandha.jpg",
+      form: "Veggie Capsules",
+      ingredientForm: "KSM-66 Ashwagandha Root Extract (5% withanolides)",
+      servingSize: "1 veggie capsule",
+      servingsPerContainer: 120,
+      mgPerServing: "300 mg KSM-66 (root only, full-spectrum)",
+      certifications: ["Vegetarian", "Non-GMO", "GMP", "Kosher", "Soy Free"],
+      fullDescription: "Jarrow Formulas Ashwagandha uses KSM-66 — the most clinically studied ashwagandha extract in the world, with over 20 published randomized controlled trials demonstrating effects on stress, cortisol, sleep, and exercise recovery. KSM-66 is made exclusively from ashwagandha roots (no leaf, which contains different bioactives) using a green-chemistry process that requires no chemical solvents. The 5% withanolide standardization ensures consistent dosing batch to batch. Take 1–2 capsules daily for 600 mg, the dose used in most clinical research. Effects typically emerge within 2–4 weeks. Best taken with a meal to maximize absorption.",
     },
     {
       brand: "NOW Foods", productName: "Ashwagandha", size: "180 veg capsules",
@@ -297,6 +334,13 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       productPath: "/pr/optimum-nutrition-micronized-creatine-powder-unflavored-1-32-lb-600-g/68616",
       brandBg: "#fef9c3", brandInk: "#854d0e",
       imageUrl: "/products/creatine.jpg",
+      form: "Powder (Unflavored)",
+      ingredientForm: "Creatine Monohydrate (micronized)",
+      servingSize: "1 rounded teaspoon (5 g)",
+      servingsPerContainer: 120,
+      mgPerServing: "5 g creatine monohydrate",
+      certifications: ["Informed Choice", "GMP", "Gluten Free"],
+      fullDescription: "Optimum Nutrition Micronized Creatine is the unflavored, micronized form of the most-researched performance supplement in the world. Micronization reduces particle size, improving dissolution in water and minimizing the rare gut discomfort that plain creatine can cause. Each 5 g serving delivers a clinically-effective daily dose of pure creatine monohydrate — no fillers, no stimulants, no flavors. The 600 g tub provides 120 daily servings (a 4-month supply), making this one of the best per-serving values on iHerb. Mix with water, juice, or a post-workout shake; effects build over 2–4 weeks as muscle phosphocreatine stores saturate.",
     },
     {
       brand: "NOW Foods", productName: "Creatine Monohydrate Pure Powder", size: "1 kg",

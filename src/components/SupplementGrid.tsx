@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import type { Supplement } from "@/lib/supplements";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { getProducts, getPrimaryProduct, type ProductOption } from "@/lib/products";
@@ -345,6 +346,18 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                     <path d="M7 17L17 7M7 7h10v10" />
                   </svg>
                 </a>
+                <Link
+                  href={`/products/${s.id}`}
+                  style={{
+                    display: "block", textAlign: "center",
+                    padding: "10px 16px", borderRadius: 10,
+                    background: "transparent", color: th.inkSoft, textDecoration: "none",
+                    fontSize: 13, fontWeight: 500,
+                    border: `1px solid ${th.line}`,
+                  }}
+                >
+                  View details
+                </Link>
               </div>
             </div>
           );
