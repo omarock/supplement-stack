@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { Supplement } from "@/lib/supplements";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { getProducts, getPrimaryProduct, type ProductOption } from "@/lib/products";
-import { amazonEnabled, amazonLink } from "@/lib/amazon";
+import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import { trackClick } from "@/lib/track";
 import BottleMockup from "@/components/BottleMockup";
 
@@ -293,7 +293,9 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
           const iherbHref = bestseller.productPath
             ? iherbProductLink(bestseller.productPath)
             : iherbLink(bestseller.searchQuery ?? `${bestseller.brand} ${bestseller.productName}`);
-          const amazonHref = amazonLink(`${bestseller.brand} ${bestseller.productName}`);
+          const amazonHref = bestseller.amazonAsin
+            ? amazonProductLink(bestseller.amazonAsin)
+            : amazonLink(`${bestseller.brand} ${bestseller.productName}`);
           const showAmazon = amazonEnabled();
 
           // Tag chips: form + count tag

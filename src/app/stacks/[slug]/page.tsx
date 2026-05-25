@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { STACKS, getStack, getStackSupplements, getStackOptionalSupplements, stackMonthlyCost } from "@/lib/stacks";
 import { PRODUCTS } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
-import { amazonEnabled, amazonLink } from "@/lib/amazon";
+import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SupplementGrid, { DailyRoutine } from "@/components/SupplementGrid";
@@ -265,7 +265,9 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                         const iherbHref = p.productPath
                           ? iherbProductLink(p.productPath)
                           : iherbLink(p.searchQuery ?? `${p.brand} ${p.productName}`);
-                        const amazonHref = amazonLink(`${p.brand} ${p.productName}`);
+                        const amazonHref = p.amazonAsin
+                          ? amazonProductLink(p.amazonAsin)
+                          : amazonLink(`${p.brand} ${p.productName}`);
                         return (
                           <div key={i} style={{
                             background: th.paper, border: `1px solid ${th.line}`, borderRadius: 12,

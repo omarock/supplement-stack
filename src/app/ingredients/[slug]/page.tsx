@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { SUPPLEMENT_DB, Supplement } from "@/lib/supplements";
 import { STACKS } from "@/lib/stacks";
 import { iherbLink } from "@/lib/iherb";
-import { amazonEnabled, amazonLink } from "@/lib/amazon";
+import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import { PRODUCTS } from "@/lib/products";
 import { iherbProductLink } from "@/lib/iherb";
 import SiteHeader from "@/components/SiteHeader";
@@ -233,7 +233,9 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
               </a>
               {showAmazon && (
                 <a
-                  href={amazonLink(supp.iherbSearch)}
+                  href={products[0]?.amazonAsin
+                    ? amazonProductLink(products[0].amazonAsin)
+                    : amazonLink(supp.iherbSearch)}
                   target="_blank" rel="noopener noreferrer sponsored"
                   style={{
                     display: "inline-flex", alignItems: "center", gap: 10,
