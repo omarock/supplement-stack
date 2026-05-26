@@ -34,6 +34,8 @@
   --grid-3-gap: 24px;
   --grid-2-cols: 1fr 1.4fr;
   --grid-2-gap: 48px;
+  --product-cols: minmax(0, 1fr) minmax(0, 1fr);
+  --ingredient-hero-cols: minmax(0, 1fr) 320px;
   --footer-cols: 2fr 1fr 1fr 1fr;
   --nav-pad-x: 40px;
   --nav-gap: 28px;
@@ -53,6 +55,8 @@
     --hero-cols: 1fr;
     --grid-3-cols: 1fr;
     --grid-2-cols: 1fr;
+    --product-cols: 1fr;
+    --ingredient-hero-cols: 1fr;
     --footer-cols: 1fr 1fr;
     --nav-pad-x: 22px;
     --nav-show: none;

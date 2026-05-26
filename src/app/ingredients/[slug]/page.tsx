@@ -147,7 +147,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
       <section style={{ padding: "0 var(--section-pad-x) 48px" }}>
         <div style={{
           maxWidth: 960, margin: "0 auto",
-          display: "grid", gridTemplateColumns: "minmax(0, 1fr) 320px", gap: 40,
+          display: "grid", gridTemplateColumns: "var(--ingredient-hero-cols, minmax(0, 1fr) 320px)", gap: "var(--grid-2-gap, 40px)",
         }}>
           {/* Description */}
           <div>

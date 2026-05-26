@@ -91,7 +91,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       <section style={{ padding: "24px var(--section-pad-x) 48px" }}>
         <div style={{
           maxWidth: 1200, margin: "0 auto",
-          display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: 40,
+          display: "grid", gridTemplateColumns: "var(--product-cols, minmax(0, 1fr) minmax(0, 1fr))", gap: "var(--grid-2-gap, 40px)",
           alignItems: "start",
         }}>
           {/* LEFT: Image gallery with hover zoom + thumbnails */}
