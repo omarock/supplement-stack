@@ -1,8 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { STACKS, stackMonthlyCost } from "@/lib/stacks";
+import { PRODUCTS } from "@/lib/products";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+
+function cleanIherbImageUrl(url?: string): string | undefined {
+  if (!url) return url;
+  if (!url.includes("cloudinary.images-iherb.com")) return url;
+  return url.replace(
+    /\/image\/upload\/([^/]+)\/images\//,
+    "/image/upload/$1,c_pad,b_white,w_240,h_240/images/"
+  );
+}
 
 const th = {
   bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
@@ -52,28 +62,73 @@ export default function StacksPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 18 }}>
             {sorted.map((stack, i) => {
               const cost = stackMonthlyCost(stack);
+              // Get up to 4 product preview images from the stack's supplements
+              const previewImages = stack.supplementIds
+                .slice(0, 4)
+                .map(id => PRODUCTS[id]?.[0])
+                .filter(Boolean)
+                .map(p => ({
+                  url: cleanIherbImageUrl(p!.imageUrl) ?? "",
+                  brand: p!.brand,
+                  bg: p!.brandBg,
+                }))
+                .filter(p => p.url);
               return (
                 <Link key={stack.id} href={`/stacks/${stack.slug}`} style={{ textDecoration: "none" }}>
                   <article style={{
                     background: th.paper, border: `1px solid ${th.line}`, borderRadius: 20,
                     overflow: "hidden", display: "flex", flexDirection: "column", height: "100%",
                     animation: `phyla-rise .5s ${i * 0.04}s ease-out both`,
+                    transition: "transform .2s ease, box-shadow .2s ease",
+                    boxShadow: "0 1px 3px rgba(10,37,64,0.04), 0 8px 24px rgba(10,37,64,0.06)",
                   }}>
-                    {/* Cover */}
+                    {/* Cover with gradient + glyph */}
                     <div style={{
-                      background: stack.coverBg, padding: "32px 24px", textAlign: "center",
+                      background: stack.coverBg, padding: "28px 24px 20px", textAlign: "center",
                       color: stack.coverInk, position: "relative",
                     }}>
-                      <div style={{ fontSize: 11, ...MM, opacity: 0.8, letterSpacing: "0.15em", marginBottom: 14 }}>
+                      <div style={{ fontSize: 11, ...MM, opacity: 0.85, letterSpacing: "0.15em", marginBottom: 10 }}>
                         {stack.category.toUpperCase()}
                       </div>
-                      <div style={{ ...S, fontSize: 80, lineHeight: 1, marginBottom: 14, letterSpacing: "-0.03em" }}>
+                      <div style={{ ...S, fontSize: 64, lineHeight: 1, marginBottom: 10, letterSpacing: "-0.03em" }}>
                         {stack.coverGlyph}
                       </div>
                       <div style={{ ...S, fontSize: 24, letterSpacing: "-0.01em", lineHeight: 1.15 }}>
                         {stack.name}
                       </div>
                     </div>
+
+                    {/* Product preview mosaic — shows the actual bottles in the stack */}
+                    {previewImages.length > 0 && (
+                      <div style={{
+                        display: "grid",
+                        gridTemplateColumns: `repeat(${previewImages.length}, 1fr)`,
+                        background: "#fafaf8",
+                        borderTop: `1px solid ${th.line}`,
+                        borderBottom: `1px solid ${th.line}`,
+                      }}>
+                        {previewImages.map((p, idx) => (
+                          <div key={idx} style={{
+                            background: "#ffffff",
+                            borderRight: idx < previewImages.length - 1 ? `1px solid ${th.line}` : "none",
+                            padding: "12px 8px",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            height: 90,
+                          }}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={p.url}
+                              alt={`${p.brand} product preview`}
+                              loading="lazy"
+                              style={{
+                                maxWidth: "100%", maxHeight: "100%",
+                                objectFit: "contain",
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     {/* Body */}
                     <div style={{ padding: 22, display: "flex", flexDirection: "column", flex: 1 }}>
@@ -103,9 +158,9 @@ export default function StacksPage() {
                       </div>
 
                       <div style={{
-                        marginTop: 14, padding: "10px 14px", borderRadius: 999,
+                        marginTop: 14, padding: "12px 14px", borderRadius: 999,
                         background: th.ink, color: th.bg, textAlign: "center",
-                        fontSize: 13, fontWeight: 500,
+                        fontSize: 13, fontWeight: 600,
                       }}>
                         Explore stack →
                       </div>
