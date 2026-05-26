@@ -28,7 +28,7 @@ export default function Page() {
 
       <h2>3. Affiliate Disclosure</h2>
       <p>
-        suppdoc.io is an affiliate of iHerb. Links to iHerb products carry our rewards code. If you make a purchase after clicking, we may earn a commission — at no extra cost to you. We do not pay attention to commissions when selecting recommendations; product picks are based purely on evidence and user fit.
+        suppdoc.io is an affiliate of iHerb, Amazon and other trusted retailers. Links to products may carry our affiliate or rewards code. If you make a purchase after clicking, we may earn a commission — at no extra cost to you. We do not pay attention to commissions when selecting recommendations; product picks are based purely on evidence and user fit.
       </p>
 
       <h2>4. Intellectual Property</h2>

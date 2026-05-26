@@ -242,7 +242,7 @@ function Hero() {
                 color: "white", borderRadius: 999, padding: "2px 8px",
                 fontSize: 11, fontWeight: 600,
               }}>New</span>
-              <span>Backed by 1,243 studies</span>
+              <span>Grounded in published research</span>
               <span style={{ color: TH.muted }}>·</span>
               <Link href="/journal" style={{ color: TH.sage, fontWeight: 600, textDecoration: "none" }}>
                 Read the science →
@@ -266,7 +266,7 @@ function Hero() {
               fontSize: 19, lineHeight: 1.55, color: TH.inkSoft,
               maxWidth: 480, marginBottom: 32, fontWeight: 400,
             }}>
-              Tell us how you sleep, train, and feel. Our AI builds your daily stack from clean, evidence-led ingredients — in sixty seconds.
+              Tell us how you sleep, train, and feel. We build your daily stack from clean, evidence-led ingredients — matched to the published research, in minutes.
             </p>
           </Reveal>
 
@@ -305,8 +305,8 @@ function Hero() {
             <div style={{ display: "flex", gap: 20, fontSize: 13, color: TH.muted, alignItems: "center", flexWrap: "wrap" }}>
               {[
                 "Free, no signup",
-                "60 seconds",
-                "12,000+ stacks",
+                "2-minute quiz",
+                "150+ researched ingredients",
               ].map(item => (
                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.5">
@@ -367,17 +367,27 @@ function Trust() {
       <div style={{ maxWidth: 1280, margin: "0 auto", textAlign: "center" }}>
         <Reveal>
           <p style={{ fontSize: 14, color: TH.muted, margin: "0 0 24px", fontWeight: 500 }}>
-            Trusted by people who care about getting it right
+            A different kind of supplement company
           </p>
           <div style={{
             display: "flex", justifyContent: "center", alignItems: "center",
-            flexWrap: "wrap", gap: "20px 32px",
+            flexWrap: "wrap", gap: "16px 28px",
           }}>
-            {["Wellbeing Weekly", "Longevity Lab", "iHerb", "Mindset Daily", "Recovery Room", "Protocol Mag"].map(n => (
+            {[
+              "We don't sell our own pills",
+              "Every pick is explained",
+              "Third-party-tested brands",
+              "Free · no signup",
+            ].map(n => (
               <div key={n} style={{
-                ...D, fontSize: 16, color: TH.muted, opacity: 0.7,
-                letterSpacing: "-0.01em",
-              }}>{n}</div>
+                display: "flex", alignItems: "center", gap: 8,
+                fontSize: 15, color: TH.inkSoft, fontWeight: 500,
+              }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.5">
+                  <path d="M5 12l5 5 9-11" />
+                </svg>
+                {n}
+              </div>
             ))}
           </div>
         </Reveal>
@@ -439,7 +449,7 @@ function HowVisual({ which, color }: { which: "intake" | "engine" | "ritual"; co
               style={{ animation: `sd-pulse 1.8s ease-in-out infinite ${i * 0.2}s` }} />
           ))}
           <circle cx="60" cy="60" r="16" fill={TH.surface} stroke={color} strokeWidth="1.5" />
-          <text x="60" y="65" textAnchor="middle" fontFamily={FONTS.display} fontSize="14" fill={color} fontWeight="600">AI</text>
+          <path d="M53 60l5 5 9-11" fill="none" stroke={color} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
     );
@@ -473,7 +483,7 @@ function HowVisual({ which, color }: { which: "intake" | "engine" | "ritual"; co
 function How() {
   const steps: { tag: string; title: string; body: string; illust: "intake" | "engine" | "ritual"; color: string }[] = [
     { tag: "Step 1", title: "Tell us about you.", body: "A two-minute reflection on how you sleep, train, eat, and feel. No medical jargon, no signup — just you.", illust: "intake", color: TH.sage },
-    { tag: "Step 2", title: "We do the science.", body: "Our AI cross-references your answers against 1,243 peer-reviewed studies and clinical guidelines.", illust: "engine", color: TH.amber },
+    { tag: "Step 2", title: "We match the evidence.", body: "We match your answers against the published research and clinical dosing guidance behind each ingredient.", illust: "engine", color: TH.amber },
     { tag: "Step 3", title: "Live the ritual.", body: "Your morning, midday, and evening plan — with exact doses, timing, and the reasoning behind every pick.", illust: "ritual", color: TH.coral },
   ];
   return (
@@ -530,9 +540,9 @@ function Stats() {
           display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 30,
         }}>
           {[
-            ["12,000+", "people built their stack"],
-            ["98%", "find it useful within a week"],
-            ["1,243", "studies behind the engine"],
+            ["150+", "researched ingredients in the library"],
+            ["11", "ready-made stacks to start from"],
+            ["$0", "to use — we never sell our own pills"],
           ].map(([n, l], i) => (
             <Reveal key={l} delay={i * 0.08}>
               <div>
@@ -711,7 +721,7 @@ function Sample() {
                   padding: "4px 10px", borderRadius: 999,
                   background: `${TH.sage}1a`, color: TH.sageDeep,
                   fontSize: 11, fontWeight: 600,
-                }}>5 items · 0.94 confidence</span>
+                }}>5 items · matched to her goals</span>
               </div>
 
               {[
@@ -767,9 +777,9 @@ function Sample() {
 
 function Testimonials() {
   const items = [
-    { q: "Finally something that adapts to my actual life. The morning energy difference is real.", n: "James T.", role: "Endurance runner", av: ["#f0b56b", "#e8a04a"] },
-    { q: "I understood for the first time WHY I'd take each thing. That's what changed it for me.", n: "Sarah M.", role: "Surgeon, NYC", av: ["#5ba373", "#3f7a52"] },
-    { q: "Sleep score jumped from 54 to 78 in six weeks. I wasn't expecting it to actually work.", n: "Priya V.", role: "Designer, London", av: ["#a78bfa", "#8d6ce8"] },
+    { title: "No private label", body: "We don't make or sell our own pills, so we have no reason to over-recommend. You buy proven, third-party-tested brands direct from the retailer.", c1: "#f0b56b", c2: "#e8a04a" },
+    { title: "Every pick is explained", body: "Each supplement comes with the dose, the timing, and the plain-language reason it's in your stack — with the evidence behind it.", c1: "#5ba373", c2: "#3f7a52" },
+    { title: "We'll tell you to stop", body: "When lifestyle alone is enough, or a supplement isn't worth it, we say so. The goal is fewer, better-chosen pills — not more.", c1: "#a78bfa", c2: "#8d6ce8" },
   ];
   return (
     <section style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
@@ -777,40 +787,39 @@ function Testimonials() {
         <Reveal>
           <div style={{ textAlign: "center", marginBottom: 48, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ fontSize: 14, color: TH.sage, fontWeight: 600, marginBottom: 12 }}>
-              From our community
+              What makes us different
             </div>
             <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.02, color: TH.ink, margin: 0 }}>
-              People feel the <span style={{ ...SI, color: TH.sageDeep }}>difference</span>.
+              Built to be <span style={{ ...SI, color: TH.sageDeep }}>trusted</span>.
             </h2>
           </div>
         </Reveal>
 
         <div style={{ display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 18 }}>
           {items.map((it, i) => (
-            <Reveal key={it.n} delay={i * 0.08}>
+            <Reveal key={it.title} delay={i * 0.08}>
               <div style={{
                 background: TH.surface, borderRadius: 22, padding: 32,
                 border: `1px solid ${TH.edge}`,
                 boxShadow: `0 4px 12px ${TH.ink}05`,
-                display: "flex", flexDirection: "column", gap: 22, minHeight: 260,
+                display: "flex", flexDirection: "column", gap: 18, minHeight: 260,
               }}>
-                <div style={{ display: "flex", gap: 2, color: TH.amber }}>
-                  {Array.from({ length: 5 }).map((_, j) => <span key={j} style={{ fontSize: 16 }}>★</span>)}
+                <div style={{
+                  width: 46, height: 46, borderRadius: 14,
+                  background: `linear-gradient(135deg, ${it.c1}, ${it.c2})`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: `0 8px 20px ${it.c1}40`,
+                }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.6">
+                    <path d="M5 12l5 5 9-11" />
+                  </svg>
                 </div>
+                <h3 style={{ ...D, fontSize: 22, letterSpacing: "-0.02em", color: TH.ink, margin: 0 }}>
+                  {it.title}
+                </h3>
                 <p style={{
-                  fontSize: 18, color: TH.ink, lineHeight: 1.45, margin: 0,
-                  fontWeight: 400, letterSpacing: "-0.01em",
-                }}>&ldquo;{it.q}&rdquo;</p>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: "auto" }}>
-                  <div style={{
-                    width: 38, height: 38, borderRadius: 999,
-                    background: `linear-gradient(135deg, ${it.av[0]}, ${it.av[1]})`,
-                  }} />
-                  <div>
-                    <div style={{ fontSize: 14, color: TH.ink, fontWeight: 600 }}>{it.n}</div>
-                    <div style={{ fontSize: 13, color: TH.muted }}>{it.role}</div>
-                  </div>
-                </div>
+                  fontSize: 16, color: TH.inkSoft, lineHeight: 1.5, margin: 0,
+                }}>{it.body}</p>
               </div>
             </Reveal>
           ))}
@@ -828,8 +837,8 @@ function FAQ() {
   const [open, setOpen] = useState(0);
   const faqs: [string, string][] = [
     ["Is this medical advice?", "No — suppdoc.io is for education and personal experimentation. We tell you what the research suggests and why. For diagnosis or treatment, please see a clinician."],
-    ["How does the AI actually work?", "Your answers are scored against 1,243 peer-reviewed studies and clinical guidelines. Every recommendation comes with the strength of evidence and a link to the studies behind it."],
-    ["Do I need a subscription?", "No subscription, no signup. You can get your stack for free. We make a small commission only when you choose to buy through iHerb — at no extra cost to you."],
+    ["How do the recommendations work?", "Your answers are matched against the published research and clinical dosing guidance for each ingredient, then filtered for your goals, diet, and safety flags. Every pick comes with the reasoning behind it."],
+    ["Do I need a subscription?", "No subscription, no signup. You can get your stack for free. We earn a small commission only when you choose to buy through one of our retail partners like iHerb or Amazon — at no extra cost to you."],
     ["What if I don't need supplements?", "Sometimes you don't — and we'll tell you. The engine surfaces where lifestyle alone is enough, and where a supplement might actually move the needle."],
     ["Can a beginner use this?", "Absolutely. Every recommendation comes with plain-language reasoning, exact dose, what form to look for, and the best time of day to take it."],
   ];
@@ -919,7 +928,7 @@ function CTA() {
             </Reveal>
             <Reveal delay={0.15}>
               <p style={{ color: "rgba(255,255,255,0.92)", fontSize: 18, lineHeight: 1.45, maxWidth: 540, margin: "0 0 28px" }}>
-                Build your stack in sixty seconds. Free, no signup, science-backed.
+                Build your stack in minutes. Free, no signup, evidence-led.
               </p>
             </Reveal>
             <Reveal delay={0.25}>

@@ -40,5 +40,5 @@ export const BRAND = {
   nameShort: "suppdoc",
   domain: "io",
   tagline: "The supplement stack made for just you.",
-  description: "Tell us how you sleep, train, and feel. Our AI builds your daily stack from clean, evidence-led ingredients — in sixty seconds.",
+  description: "Tell us how you sleep, train, and feel. We build your daily stack from clean, evidence-led ingredients — in minutes.",
 } as const;

@@ -38,7 +38,7 @@ export default function Page() {
 
       <h2>Third-Party Services</h2>
       <p>
-        When you click an iHerb link, you leave our site and iHerb&apos;s own cookie/privacy policy applies. We have no control over iHerb&apos;s cookies.
+        When you click a retailer link (such as iHerb or Amazon), you leave our site and that retailer&apos;s own cookie/privacy policy applies. We have no control over their cookies.
       </p>
 
       <h2>Analytics</h2>

@@ -112,7 +112,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               Get a stack matched to you.
             </h3>
             <p style={{ fontSize: 15, opacity: 0.85, margin: "0 0 22px", lineHeight: 1.5 }}>
-              60 seconds, evidence-led, free.
+              Quick, evidence-led, free.
             </p>
             <Link href="/quiz" style={{
               display: "inline-flex", alignItems: "center", gap: 8,

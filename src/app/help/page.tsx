@@ -12,7 +12,7 @@ const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
   title: "Help & FAQ — suppdoc.io",
-  description: "Frequently asked questions about suppdoc.io's quiz, supplement recommendations, iHerb affiliate links, and safety guidelines.",
+  description: "Frequently asked questions about suppdoc.io's quiz, supplement recommendations, affiliate links, and safety guidelines.",
 };
 
 const FAQ: { section: string; items: [string, string][] }[] = [
@@ -29,15 +29,15 @@ const FAQ: { section: string; items: [string, string][] }[] = [
     items: [
       ["How does suppdoc.io pick my supplements?", "Each supplement in our database is tagged with the goals and conditions it addresses. We build a profile from your quiz, score every supplement by how well it matches, apply safety filters (pregnancy, blood thinners, allergies), then pick the highest-scoring options within your budget."],
       ["Are the recommendations medical advice?", "No. suppdoc.io offers educational guidance based on your inputs and the published evidence. For diagnosis or treatment, please consult a qualified clinician."],
-      ["Can I trust the brands you suggest?", "Yes — we curate well-established brands available on iHerb (NOW Foods, Doctor's Best, Sports Research, Thorne, Jarrow, Garden of Life, etc.). All are widely trusted, third-party tested, and have decades of track record."],
+      ["Can I trust the brands you suggest?", "Yes — we curate well-established brands (NOW Foods, Doctor's Best, Sports Research, Thorne, Jarrow, Garden of Life, etc.). All are widely trusted, third-party tested, and have decades of track record."],
     ],
   },
   {
-    section: "Buying on iHerb",
+    section: "Buying your stack",
     items: [
-      ["Why iHerb?", "It's one of the largest, most trusted global retailers for supplements. They ship to most countries, offer competitive prices, and rigorously test for quality."],
-      ["Do I have to use iHerb?", "Not at all. You're free to buy your stack anywhere. The product information (brand, dose, form) is the same regardless of where you shop."],
-      ["What does 'affiliate' mean?", "If you click through to iHerb from our site and buy something, iHerb pays us a small commission — at no extra cost to you. It's how we fund building suppdoc.io without selling our own products."],
+      ["Where do I buy the supplements?", "We link to trusted global retailers like iHerb and Amazon, where you can compare brands, prices, and shipping. You buy direct from the retailer — we don't sell or ship anything ourselves."],
+      ["Do I have to use a specific retailer?", "Not at all. You're free to buy your stack anywhere. The product information (brand, dose, form) is the same regardless of where you shop."],
+      ["What does 'affiliate' mean?", "If you click through to a retailer from our site and buy something, the retailer pays us a small commission — at no extra cost to you. It's how we fund building suppdoc.io without selling our own products."],
     ],
   },
   {

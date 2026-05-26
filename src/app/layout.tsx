@@ -3,11 +3,11 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "suppdoc.io — AI-Powered Supplement Stack",
+  title: "suppdoc.io — Personalised, Evidence-Based Supplement Stacks",
   description:
-    "Tell us how you sleep, train, and feel. Our AI builds your daily supplement stack from clean, evidence-led ingredients — in sixty seconds. Free, no signup, backed by 1,243 studies.",
+    "Tell us how you sleep, train, and feel. We build your daily supplement stack from clean, evidence-led ingredients — in minutes. Free, no signup, grounded in published research.",
   keywords:
-    "supplement recommendations, personalized supplements, AI supplement stack, evidence-based supplements, suppdoc",
+    "supplement recommendations, personalized supplements, evidence-based supplements, supplement stack, suppdoc",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },

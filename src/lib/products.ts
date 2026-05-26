@@ -51,7 +51,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 120,
       mgPerServing: "2,000 IU D3 + 100 mcg K2",
       certifications: ["Non-GMO", "Vegetarian", "GMP", "Soy Free", "Kosher"],
-      fullDescription: "NOW Foods Vitamin D-3 & K-2 combines two synergistic nutrients into a single daily veg capsule. The D-3 (cholecalciferol) is the same form your skin produces from sunlight, while the K-2 is menaquinone-7 — the long-acting form derived from natto fermentation. Together they support bone density, immune resilience, and cardiovascular calcium routing. NOW Foods has been a family-owned supplement manufacturer since 1968, with an in-house lab in Bloomingdale, Illinois that conducts purity and potency testing on every batch. This product has over 11,000 reviews on iHerb and averages 4.8 stars — one of the top-rated D3/K2 combinations on the platform.",
+      fullDescription: "NOW Foods Vitamin D-3 & K-2 combines two synergistic nutrients into a single daily veg capsule. The D-3 (cholecalciferol) is the same form your skin produces from sunlight, while the K-2 is menaquinone-7 — the long-acting form derived from natto fermentation. Together they support bone density, immune resilience, and cardiovascular calcium routing. NOW Foods has been a family-owned supplement manufacturer since 1968, with an in-house lab in Bloomingdale, Illinois that conducts purity and potency testing on every batch. This product has over 11,000 reviews online and averages 4.8 stars — one of the top-rated D3/K2 combinations available.",
     },
     {
       brand: "Sports Research", productName: "Vitamin D3 + K2", size: "60 softgels",
@@ -82,7 +82,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 45,
       mgPerServing: "1,250 mg EPA+DHA (per 2 softgels)",
       certifications: ["IFOS 5-Star", "Non-GMO", "GMP", "Wild Caught", "Gluten Free"],
-      fullDescription: "Sports Research Triple Strength Omega-3 delivers 1,250 mg of combined EPA and DHA in the natural triglyceride (TG) form — the same molecular structure as omega-3s in whole fish, with significantly better absorption and stability than the cheaper ethyl ester (EE) form found in mass-market supplements. The fish are wild-caught from sustainable Alaskan waters and certified by IFOS (International Fish Oil Standards) at the highest 5-star rating for purity, potency, and oxidation stability. This is the bestselling omega-3 on iHerb with over 15,000 reviews. Each batch is third-party tested for heavy metals, PCBs, and dioxins, with certificates of analysis available on request.",
+      fullDescription: "Sports Research Triple Strength Omega-3 delivers 1,250 mg of combined EPA and DHA in the natural triglyceride (TG) form — the same molecular structure as omega-3s in whole fish, with significantly better absorption and stability than the cheaper ethyl ester (EE) form found in mass-market supplements. The fish are wild-caught from sustainable Alaskan waters and certified by IFOS (International Fish Oil Standards) at the highest 5-star rating for purity, potency, and oxidation stability. This is a bestselling omega-3 with over 15,000 reviews. Each batch is third-party tested for heavy metals, PCBs, and dioxins, with certificates of analysis available on request.",
     },
     {
       brand: "Nordic Naturals", productName: "Ultimate Omega", size: "60 softgels",
@@ -173,7 +173,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 120,
       mgPerServing: "200 mg elemental magnesium (per 2 tablets)",
       certifications: ["Non-GMO", "Gluten Free", "Soy Free", "GMP", "Vegan"],
-      fullDescription: "Doctor's Best High Absorption Magnesium uses the patented Albion TRAACS chelate — a glycinate-lysinate complex that is exceptionally well-absorbed and non-laxative even at high doses, making it suitable for evening sleep support. Albion is the same chelate technology used in most clinical magnesium studies, ensuring you get the form that researchers have validated. Each two-tablet serving delivers 200 mg of elemental magnesium; for a target of 400 mg/day, take two servings — one with dinner and one before bed. With over 32,000 reviews on iHerb, this is one of the most-recommended magnesium products on the platform.",
+      fullDescription: "Doctor's Best High Absorption Magnesium uses the patented Albion TRAACS chelate — a glycinate-lysinate complex that is exceptionally well-absorbed and non-laxative even at high doses, making it suitable for evening sleep support. Albion is the same chelate technology used in most clinical magnesium studies, ensuring you get the form that researchers have validated. Each two-tablet serving delivers 200 mg of elemental magnesium; for a target of 400 mg/day, take two servings — one with dinner and one before bed. With over 32,000 reviews online, this is one of the most-recommended magnesium products available.",
     },
     {
       brand: "NOW Foods", productName: "Magnesium Glycinate", size: "180 tablets",
@@ -418,7 +418,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 120,
       mgPerServing: "5 g creatine monohydrate",
       certifications: ["Informed Choice", "GMP", "Gluten Free"],
-      fullDescription: "Optimum Nutrition Micronized Creatine is the unflavored, micronized form of the most-researched performance supplement in the world. Micronization reduces particle size, improving dissolution in water and minimizing the rare gut discomfort that plain creatine can cause. Each 5 g serving delivers a clinically-effective daily dose of pure creatine monohydrate — no fillers, no stimulants, no flavors. The 600 g tub provides 120 daily servings (a 4-month supply), making this one of the best per-serving values on iHerb. Mix with water, juice, or a post-workout shake; effects build over 2–4 weeks as muscle phosphocreatine stores saturate.",
+      fullDescription: "Optimum Nutrition Micronized Creatine is the unflavored, micronized form of the most-researched performance supplement in the world. Micronization reduces particle size, improving dissolution in water and minimizing the rare gut discomfort that plain creatine can cause. Each 5 g serving delivers a clinically-effective daily dose of pure creatine monohydrate — no fillers, no stimulants, no flavors. The 600 g tub provides 120 daily servings (a 4-month supply), making this one of the best per-serving values available. Mix with water, juice, or a post-workout shake; effects build over 2–4 weeks as muscle phosphocreatine stores saturate.",
     },
     {
       brand: "NOW Foods", productName: "Creatine Monohydrate Pure Powder", size: "1 kg",

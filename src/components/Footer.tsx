@@ -18,7 +18,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-zinc-500 leading-relaxed max-w-xs">
-              AI-powered supplement recommendations personalized to your unique goals and lifestyle.
+              Evidence-based supplement recommendations personalized to your unique goals and lifestyle.
             </p>
           </div>
 

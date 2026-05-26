@@ -551,7 +551,7 @@ function StepGenerating({ data }: { data: QuizData }) {
 
   const steps = [
     "Analysing your wellness profile",
-    "Cross-referencing ingredients and studies",
+    "Matching ingredients to the evidence",
     "Filtering for safety and preferences",
     "Building your personalised stack",
   ];

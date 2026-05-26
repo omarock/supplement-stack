@@ -6,7 +6,7 @@ import { ImageResponse } from "next/og";
 export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "suppdoc.io — AI-Powered Personalised Supplement Stacks";
+export const alt = "suppdoc.io — Personalised, Evidence-Based Supplement Stacks";
 
 export default async function Image() {
   return new ImageResponse(
@@ -47,7 +47,7 @@ export default async function Image() {
           marginBottom: 28,
           display: "flex", flexDirection: "column",
         }}>
-          <span>AI-Powered</span>
+          <span>Evidence-Based</span>
           <span><i style={{ color: "#0a2540" }}>Personalised</i> Supplement Stacks</span>
         </div>
 
@@ -56,8 +56,8 @@ export default async function Image() {
           fontSize: 28, color: "#3c4858", lineHeight: 1.4, maxWidth: 900,
           marginBottom: 50,
         }}>
-          Take the 3-minute quiz. Get a curated stack of 5–9 evidence-based supplements
-          tailored to your goals, body, and budget. From iHerb's top-rated brands.
+          Take the quiz. Get a curated stack of 5–9 evidence-based supplements
+          tailored to your goals, body, and budget. From top-rated, third-party-tested brands.
         </div>
 
         {/* Bottom strip — stats + CTA */}
@@ -67,7 +67,7 @@ export default async function Image() {
           borderTop: "2px solid rgba(10,37,64,0.1)",
         }}>
           <div style={{ display: "flex", gap: 50, fontSize: 22, color: "#3c4858", fontWeight: 500 }}>
-            <span>📚 100 ingredients</span>
+            <span>📚 150+ ingredients</span>
             <span>🌿 11 ready-made stacks</span>
             <span>⚡ Evidence-based</span>
           </div>

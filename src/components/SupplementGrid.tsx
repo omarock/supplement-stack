@@ -229,7 +229,7 @@ function ProductModal({ supp, options, source, onClose }: {
             {supp.name}
           </h2>
           <p style={{ color: th.inkSoft, fontSize: 15, lineHeight: 1.5, margin: 0 }}>
-            Three top-rated options on iHerb. All include your affiliate code.
+            Three top-rated, third-party-tested options. Buy direct from the retailer.
             <br />
             <span style={{ color: th.inkMute, fontSize: 13 }}>Target dose: {supp.dose} · {supp.purpose}</span>
           </p>
@@ -246,7 +246,7 @@ function ProductModal({ supp, options, source, onClose }: {
           ))}
         </div>
         <p style={{ fontSize: 11, color: th.inkMute, textAlign: "center", marginTop: 24, lineHeight: 1.6 }}>
-          Prices are approximate and may vary on iHerb. We may earn a commission on qualifying purchases — at no extra cost to you.
+          Prices are approximate and may vary by retailer. We may earn a commission on qualifying purchases — at no extra cost to you.
         </p>
       </div>
     </div>
@@ -277,7 +277,7 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
         )}
         {showTotalCost && (
           <span style={{ fontSize: 13, color: th.inkMute, ...MM, fontWeight: 500 }}>
-            ~${totalCost}/MO · {supplements.length} ITEMS · VIA IHERB
+            ~${totalCost}/MO · {supplements.length} ITEMS
           </span>
         )}
       </div>

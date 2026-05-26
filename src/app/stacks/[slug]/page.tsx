@@ -85,7 +85,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
           }}>
             <span>{supplements.length} SUPPLEMENTS</span>
             <span>~${cost}/MO</span>
-            <span>VIA iHERB</span>
+            <span>EVIDENCE-LED</span>
           </div>
         </section>
 
@@ -215,7 +215,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
               All product options
             </h2>
             <p style={{ color: th.inkSoft, fontSize: 15, lineHeight: 1.6, margin: "0 0 24px", maxWidth: 640 }}>
-              Each supplement has multiple trusted brands. Compare quickly and pick what fits your budget — all available on iHerb with your affiliate credit applied automatically.
+              Each supplement has multiple trusted brands. Compare quickly and pick what fits your budget — all available from trusted retailers like iHerb and Amazon.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
               {supplements.map(s => {
@@ -341,7 +341,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                 Ready to adopt this stack?
               </h2>
               <p style={{ color: "rgba(251,246,236,0.85)", fontSize: 15, marginBottom: 22, maxWidth: 480, marginLeft: "auto", marginRight: "auto", lineHeight: 1.5 }}>
-                Click any supplement above to choose your preferred brand. All products ship globally via iHerb.
+                Click any supplement above to choose your preferred brand. Most products ship globally via iHerb and Amazon.
               </p>
               <Link href="/quiz" style={{
                 display: "inline-flex", alignItems: "center", gap: 10,
@@ -392,7 +392,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
             <strong>For informational purposes only. Not medical advice.</strong>{" "}
             Always consult a qualified healthcare professional before starting any supplement regimen.
             <br /><br />
-            <em>suppdoc.io is an iHerb affiliate. We may earn a commission on qualifying purchases through our links — at no extra cost to you.</em>
+            <em>suppdoc.io is an affiliate of iHerb, Amazon and other trusted retailers. We may earn a commission on qualifying purchases through our links — at no extra cost to you.</em>
           </p>
 
         </div>

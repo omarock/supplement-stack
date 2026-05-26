@@ -60,7 +60,7 @@ export default function Page() {
 
       <h2>Supplement Quality and Regulation</h2>
       <p>
-        In most countries (including the US), supplements are <strong>not regulated like pharmaceuticals</strong>. Quality, dose accuracy, and contamination can vary between brands. We recommend brands available on iHerb that have been independently tested, but we cannot guarantee the quality of any specific batch. Always purchase from reputable retailers and check for third-party testing certifications (e.g. USP, NSF, ConsumerLab).
+        In most countries (including the US), supplements are <strong>not regulated like pharmaceuticals</strong>. Quality, dose accuracy, and contamination can vary between brands. We recommend independently tested brands available from trusted retailers, but we cannot guarantee the quality of any specific batch. Always purchase from reputable retailers and check for third-party testing certifications (e.g. USP, NSF, ConsumerLab).
       </p>
 
       <h2>Adverse Effects</h2>

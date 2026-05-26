@@ -39,7 +39,7 @@ export default function Page() {
 
       <h2>4. Affiliate Links</h2>
       <p>
-        When you click an iHerb link, iHerb sees that the visit came from us (via the &quot;rcode&quot; parameter). This allows iHerb to credit us with a small commission if you purchase. iHerb&apos;s own privacy policy applies to your activity on their site.
+        When you click a retailer link (such as iHerb or Amazon), the retailer sees that the visit came from us (via an affiliate or rewards parameter). This allows them to credit us with a small commission if you purchase. The retailer&apos;s own privacy policy applies to your activity on their site.
       </p>
 
       <h2>5. Your Rights</h2>

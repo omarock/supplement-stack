@@ -160,7 +160,7 @@ export default function ResultsPage() {
             Your personalised <span style={{ fontFamily: '"Instrument Serif", Georgia, serif', fontStyle: "italic", fontWeight: 400, color: th.sageDeep }}>stack</span>.
           </h1>
           <p style={{ color: th.inkSoft, fontSize: 18, lineHeight: 1.55, maxWidth: 580, margin: "0 auto" }}>
-            {rec.supplements.length} bestseller-grade ingredients matched to your goals, lifestyle, and biology — sourced from iHerb's top brands.
+            {rec.supplements.length} bestseller-grade ingredients matched to your goals, lifestyle, and biology — from top-rated, third-party-tested brands.
           </p>
         </section>
 
@@ -286,17 +286,17 @@ export default function ResultsPage() {
           marginBottom: 28,
         }}>
           <h2 style={{ ...S, fontSize: 40, margin: "0 0 12px", letterSpacing: "-0.02em", lineHeight: 1.05 }}>
-            Browse iHerb directly?
+            Ready to shop your stack?
           </h2>
           <p style={{ color: "rgba(251,246,236,0.85)", fontSize: 15, marginBottom: 22, maxWidth: 480, marginLeft: "auto", marginRight: "auto", lineHeight: 1.5 }}>
-            New customers get extra discounts on their first iHerb order. All products ship globally.
+            Use the buy buttons on each item above to pick your preferred retailer — most are available on iHerb and Amazon, and ship globally. New iHerb customers get a first-order discount.
           </p>
           <a href={IHERB_HOME} target="_blank" rel="noopener noreferrer sponsored" style={{
             display: "inline-flex", alignItems: "center", gap: 10,
             padding: "16px 28px", borderRadius: 999, fontSize: 15, fontWeight: 600,
             background: "#ffffff", color: th.burgundyDeep, textDecoration: "none",
           }}>
-            Open iHerb →
+            Browse iHerb →
           </a>
         </section>
 
@@ -308,7 +308,7 @@ export default function ResultsPage() {
           <strong>For informational purposes only. Not medical advice.</strong>{" "}
           Recommendations are educational guidance based on your inputs. Always consult a qualified healthcare professional before starting any supplement regimen, particularly if you have medical conditions, take medications, are pregnant, or are nursing.
           <br /><br />
-          <em>suppdoc.io is an iHerb affiliate. We may earn a commission on qualifying purchases made through our links — at no extra cost to you.</em>
+          <em>suppdoc.io is an affiliate of iHerb, Amazon and other trusted retailers. We may earn a commission on qualifying purchases made through our links — at no extra cost to you.</em>
         </p>
       </div>
 

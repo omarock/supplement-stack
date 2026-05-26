@@ -6,7 +6,7 @@ import { TH } from "@/lib/theme";
 
 export const metadata: Metadata = {
   title: "Custom Stack Builder — Design your own supplement ritual | suppdoc.io",
-  description: "Build your own supplement stack from 150+ evidence-led ingredients. Live wellness preview, daily ritual timeline, interaction warnings, and one-click iHerb checkout.",
+  description: "Build your own supplement stack from 150+ evidence-led ingredients. Live wellness preview, daily ritual timeline, interaction warnings, and one-click checkout at trusted retailers.",
   keywords: "custom supplement stack, build supplement stack, supplement stack builder, personalized supplement protocol, supplement routine designer",
   openGraph: {
     title: "Custom Stack Builder — suppdoc.io",

@@ -44,7 +44,7 @@ export default function StacksPage() {
             Skip the quiz. <em style={{ color: th.burgundy }}>Pick a stack</em>.
           </h1>
           <p style={{ color: th.inkSoft, fontSize: 17, lineHeight: 1.6, maxWidth: 600, margin: "20px auto 0" }}>
-            {STACKS.length} thoughtful supplement routines, each built around a specific goal or persona. Every product is curated from iHerb&apos;s top-rated brands. Adopt one today.
+            {STACKS.length} thoughtful supplement routines, each built around a specific goal or persona. Every product is curated from top-rated, third-party-tested brands. Adopt one today.
           </p>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 24, flexWrap: "wrap" }}>
             <Link href="/build" style={{
@@ -191,7 +191,7 @@ export default function StacksPage() {
               Want a stack <em style={{ color: th.burgundy }}>uniquely</em> yours?
             </h2>
             <p style={{ color: th.inkSoft, fontSize: 15, lineHeight: 1.55, margin: "0 0 20px" }}>
-              The 60-second quiz builds a personalised stack from your goals, lifestyle, and budget.
+              The quiz builds a personalised stack from your goals, lifestyle, and budget.
             </p>
             <Link href="/quiz" style={{
               display: "inline-flex", alignItems: "center", gap: 8,

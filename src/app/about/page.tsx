@@ -12,7 +12,7 @@ const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
   title: "About — suppdoc.io",
-  description: "suppdoc.io composes AI-guided supplement rituals from clean, evidence-led ingredients. Built to help you understand your stack — not just sell it.",
+  description: "suppdoc.io composes personalised supplement rituals from clean, evidence-led ingredients. Built to help you understand your stack — not just sell it.",
 };
 
 export default function AboutPage() {
@@ -47,7 +47,7 @@ export default function AboutPage() {
               Why we don&apos;t sell supplements directly
             </h2>
             <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.7 }}>
-              We&apos;d rather you buy proven, third-party-tested brands from a trusted global retailer than from us. So instead of launching our own private label, we curate the top three products on iHerb for each recommendation — established brands like NOW Foods, Doctor&apos;s Best, Thorne, Sports Research, and Garden of Life. You buy direct. We earn a small affiliate commission. Your stack stays honest.
+              We&apos;d rather you buy proven, third-party-tested brands from trusted global retailers than from us. So instead of launching our own private label, we curate top-rated products for each recommendation — established brands like NOW Foods, Doctor&apos;s Best, Thorne, Sports Research, and Garden of Life — and link you out to retailers like iHerb and Amazon. You buy direct. We earn a small affiliate commission. Your stack stays honest.
             </p>
           </div>
 
@@ -62,7 +62,7 @@ export default function AboutPage() {
               <li>· Peer-reviewed evidence (mostly RCTs or strong observational data)</li>
               <li>· A clear mechanism of action</li>
               <li>· A reasonable safety profile at common doses</li>
-              <li>· Available in clean forms from multiple brands on iHerb</li>
+              <li>· Available in clean forms from multiple trusted brands</li>
             </ul>
             <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.7, marginTop: 16 }}>
               If a supplement doesn&apos;t pass all four — even if it&apos;s trendy — we don&apos;t recommend it.
@@ -86,7 +86,7 @@ export default function AboutPage() {
               Ready to start?
             </h2>
             <p style={{ color: th.inkSoft, fontSize: 15, lineHeight: 1.55, margin: "0 0 20px" }}>
-              The 60-second quiz takes you from question to ritual.
+              The quiz takes you from question to ritual.
             </p>
             <Link href="/quiz" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
