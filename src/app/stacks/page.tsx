@@ -44,9 +44,16 @@ export default function StacksPage() {
             Skip the quiz. <em style={{ color: th.burgundy }}>Pick a stack</em>.
           </h1>
           <p style={{ color: th.inkSoft, fontSize: 17, lineHeight: 1.6, maxWidth: 600, margin: "20px auto 0" }}>
-            11 thoughtful supplement routines, each built around a specific goal or persona. Every product is curated from iHerb&apos;s top-rated brands. Adopt one today.
+            {STACKS.length} thoughtful supplement routines, each built around a specific goal or persona. Every product is curated from iHerb&apos;s top-rated brands. Adopt one today.
           </p>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 24, flexWrap: "wrap" }}>
+            <Link href="/build" style={{
+              padding: "12px 22px", borderRadius: 999, fontSize: 14, fontWeight: 500,
+              background: th.ink, color: "#fff", border: `1.5px solid ${th.ink}`,
+              textDecoration: "none",
+            }}>
+              Build your own from scratch →
+            </Link>
             <Link href="/quiz" style={{
               padding: "12px 22px", borderRadius: 999, fontSize: 14, fontWeight: 500,
               background: "transparent", color: th.ink, border: `1.5px solid ${th.line}`,

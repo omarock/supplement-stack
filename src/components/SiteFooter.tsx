@@ -5,6 +5,7 @@ import { TH } from "@/lib/theme";
 const COLS: [string, [string, string][]][] = [
   ["Product", [
     ["Pre-made stacks", "/stacks"],
+    ["Build your own", "/build"],
     ["Take the quiz", "/quiz"],
     ["How it works", "/#how-it-works"],
     ["Ingredients", "/ingredients"],
