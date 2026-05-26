@@ -680,12 +680,12 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
 
   iron: [
     {
-      brand: "Solgar", productName: "Gentle Iron Bisglycinate 25mg", size: "180 veg capsules",
-      approxPrice: 16, rating: 4.8, reviewCount: 4200, badge: "Bestseller",
+      brand: "Solgar", productName: "Gentle Iron Bisglycinate 25mg", size: "90 veg capsules",
+      approxPrice: 14, rating: 4.8, reviewCount: 4200, badge: "Bestseller",
     amazonAsin: "B0001OP028",
-      productPath: "/pr/solgar-gentle-iron-25-mg-180-veg-capsules/16823",
+      productPath: "/pr/solgar-gentle-iron-25-mg-90-vegetable-capsules/69609",
       brandBg: "#fef3c7", brandInk: "#92400e",
-      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/hnp/hnp68380/v/0.jpg",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sol/sol01249/v/127.jpg",
       form: "Veg Capsules",
       ingredientForm: "Iron Bisglycinate (Ferrochel, by Albion)",
       servingSize: "1 veg capsule",
