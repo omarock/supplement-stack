@@ -301,6 +301,17 @@ export default function BuildClient() {
         </p>
       </header>
 
+      {/* AI mode — describe in plain English */}
+      {selected.length === 0 && (
+        <AIDescribeMode
+          onApply={ids => {
+            const valid = ids.filter(id => SUPPLEMENT_DB.some(s => s.id === id));
+            setSelectedIds(valid);
+            toast(`${valid.length} supplements added from your description.`);
+          }}
+        />
+      )}
+
       {/* Quick templates (only on empty stack) */}
       {selected.length === 0 && (
         <section style={{
@@ -309,7 +320,7 @@ export default function BuildClient() {
           animation: "sd-fade-in .5s ease-out",
         }}>
           <div style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.1em", marginBottom: 12 }}>
-            QUICK START · TAP A TEMPLATE
+            OR PICK A READY-MADE TEMPLATE
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 230px), 1fr))", gap: 10 }}>
             {QUICK_TEMPLATES.map(t => (
@@ -834,6 +845,136 @@ function DailyTimeline({ supps, onRemove }: { supps: Supplement[]; onRemove: (id
         );
       })}
     </div>
+  );
+}
+
+function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
+  const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+
+  const examples = [
+    "I want more energy, better focus, and improved sleep.",
+    "I'm vegan and want a foundational stack for longevity.",
+    "Help me recover faster from training and reduce joint stiffness.",
+    "I'm 45 and starting to feel burnt out — calmer baseline, deeper sleep.",
+  ];
+
+  const run = useCallback(async () => {
+    const t = text.trim();
+    if (t.length < 5) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/generate-stack", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ text: t, budget: "medium" }),
+      });
+      const body = await res.json();
+      if (!body.ok) {
+        setError(body.error ?? "Couldn't generate a stack.");
+      } else {
+        onApply((body.stack as { id: string }[]).map(s => s.id));
+        setText("");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Network error");
+    } finally {
+      setLoading(false);
+    }
+  }, [text, onApply]);
+
+  return (
+    <section style={{
+      background: `linear-gradient(135deg, ${TH.surface} 0%, ${TH.bg} 100%)`,
+      border: `1px solid ${TH.edge}`,
+      borderRadius: 20, padding: "22px 24px", marginBottom: 22,
+      animation: "sd-fade-in .5s ease-out",
+      boxShadow: "0 1px 3px rgba(10,37,64,0.04), 0 10px 28px rgba(10,37,64,0.06)",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+        <span style={{
+          ...MM, fontSize: 10, padding: "3px 8px", borderRadius: 999,
+          background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
+          color: TH.surface, fontWeight: 600, letterSpacing: "0.06em",
+        }}>AI</span>
+        <h2 style={{ ...D, fontSize: 18, color: TH.ink, margin: 0, letterSpacing: "-0.015em" }}>
+          Describe your goals — we&apos;ll compose the stack
+        </h2>
+      </div>
+
+      <div style={{ position: "relative" }}>
+        <textarea
+          value={text}
+          onChange={e => setText(e.target.value)}
+          onFocus={() => setExpanded(true)}
+          placeholder='e.g. "I want more energy, better focus, and improved sleep."'
+          rows={expanded ? 3 : 2}
+          style={{
+            width: "100%", boxSizing: "border-box",
+            padding: "14px 16px",
+            border: `1.5px solid ${TH.edge}`, borderRadius: 14,
+            fontSize: 15, lineHeight: 1.55,
+            fontFamily: FONTS.body, color: TH.ink, background: TH.surface,
+            outline: "none", resize: "vertical",
+            transition: "border-color .2s, box-shadow .2s",
+          }}
+          onBlur={e => { e.currentTarget.style.borderColor = TH.edge; e.currentTarget.style.boxShadow = "none"; }}
+        />
+      </div>
+
+      {expanded && (
+        <div style={{ marginTop: 10, display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {examples.map(ex => (
+            <button key={ex} type="button" onClick={() => setText(ex)}
+              style={{
+                padding: "5px 10px", background: TH.surface,
+                border: `1px solid ${TH.edge}`, borderRadius: 999,
+                fontSize: 12, color: TH.inkSoft, cursor: "pointer",
+              }}>
+              {ex}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div style={{
+        marginTop: 12, display: "flex", justifyContent: "space-between",
+        alignItems: "center", gap: 10, flexWrap: "wrap",
+      }}>
+        <span style={{ fontSize: 12, color: TH.muted }}>
+          Plain English. We&apos;ll pick {`{4–8}`} ingredients within a medium budget.
+        </span>
+        <button onClick={run} disabled={loading || text.trim().length < 5}
+          style={{
+            padding: "10px 18px", borderRadius: 999, border: "none",
+            background: loading ? TH.muted : TH.ink, color: TH.surface,
+            fontFamily: FONTS.body, fontWeight: 500, fontSize: 13.5,
+            cursor: loading || text.trim().length < 5 ? "not-allowed" : "pointer",
+            opacity: text.trim().length < 5 ? 0.5 : 1,
+            display: "inline-flex", alignItems: "center", gap: 8,
+          }}>
+          {loading ? (
+            <>
+              <span style={{
+                width: 12, height: 12, border: `2px solid ${TH.surface}`,
+                borderTopColor: "transparent", borderRadius: 999,
+                animation: "sd-spin 0.7s linear infinite",
+              }} />
+              Composing…
+            </>
+          ) : "Generate stack →"}
+        </button>
+      </div>
+      {error && (
+        <div role="alert" style={{
+          marginTop: 10, padding: "8px 12px", background: "#fef2f2",
+          borderRadius: 10, color: "#991b1b", fontSize: 12.5,
+        }}>{error}</div>
+      )}
+    </section>
   );
 }
 

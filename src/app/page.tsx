@@ -216,145 +216,267 @@ function HeroProofCard() {
 function Hero() {
   return (
     <section id="engine" style={{
-      position: "relative", minHeight: "calc(100vh - 64px)",
-      padding: "var(--hero-pad-y) var(--hero-pad-x) 80px",
+      position: "relative",
+      padding: "var(--hero-pad-y) var(--hero-pad-x) 56px",
       overflow: "hidden",
     }}>
       <GradientMesh />
 
-      <div style={{
-        position: "relative", maxWidth: 1280, margin: "0 auto",
-        display: "grid", gridTemplateColumns: "var(--hero-cols)",
-        gap: 48, alignItems: "center",
-      }}>
-        {/* Left — copy */}
-        <div>
-          <Reveal>
-            <div style={{
-              display: "inline-flex", alignItems: "center", gap: 10,
-              padding: "7px 14px 7px 8px", borderRadius: 999,
-              background: TH.surface, border: `1px solid ${TH.edge}`,
-              color: TH.inkSoft, fontSize: 13, fontWeight: 500,
-              marginBottom: 28, boxShadow: `0 4px 12px ${TH.ink}0a`,
-              flexWrap: "wrap",
-            }}>
-              <span style={{
-                background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
-                color: "white", borderRadius: 999, padding: "2px 8px",
-                fontSize: 11, fontWeight: 600,
-              }}>New</span>
-              <span>Grounded in published research</span>
-              <span style={{ color: TH.muted }}>·</span>
-              <Link href="/journal" style={{ color: TH.sage, fontWeight: 600, textDecoration: "none" }}>
-                Read the science →
-              </Link>
-            </div>
-          </Reveal>
-
-          <h1 style={{
-            ...D, fontSize: "var(--hero-h1)", lineHeight: "var(--hero-h1-line)",
-            letterSpacing: "-0.04em", margin: "0 0 24px", color: TH.ink,
+      {/* Centred intro */}
+      <div style={{ position: "relative", maxWidth: 1180, margin: "0 auto", textAlign: "center" }}>
+        <Reveal>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 10,
+            padding: "7px 14px 7px 8px", borderRadius: 999,
+            background: TH.surface, border: `1px solid ${TH.edge}`,
+            color: TH.inkSoft, fontSize: 13, fontWeight: 500,
+            marginBottom: 28, boxShadow: `0 4px 12px ${TH.ink}0a`,
+            flexWrap: "wrap",
           }}>
-            <WordReveal text="The supplement" /><br />
-            <WordReveal text="stack made for" delay={0.1} /><br />
-            <span style={{ ...SI, color: TH.sageDeep }}>
-              <WordReveal text="just you." delay={0.2} />
-            </span>
-          </h1>
+            <span aria-hidden style={{
+              background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
+              color: "white", borderRadius: 999, padding: "2px 8px",
+              fontSize: 11, fontWeight: 600,
+            }}>AI</span>
+            <span>The AI clinic for your supplement stack</span>
+            <span style={{ color: TH.muted }}>·</span>
+            <Link href="/journal" style={{ color: TH.sage, fontWeight: 600, textDecoration: "none" }}>
+              How it works →
+            </Link>
+          </div>
+        </Reveal>
 
-          <Reveal delay={0.4}>
-            <p style={{
-              fontSize: 19, lineHeight: 1.55, color: TH.inkSoft,
-              maxWidth: 480, marginBottom: 32, fontWeight: 400,
-            }}>
-              Tell us how you sleep, train, and feel. We build your daily stack from clean, evidence-led ingredients — matched to the published research, in minutes.
-            </p>
-          </Reveal>
+        <h1 style={{
+          ...D, fontSize: "var(--hero-h1)", lineHeight: "var(--hero-h1-line)",
+          letterSpacing: "-0.04em", margin: "0 auto 22px", color: TH.ink,
+          maxWidth: 980,
+        }}>
+          <WordReveal text="Your supplements," />{" "}
+          <span style={{ ...SI, color: TH.sageDeep }}>
+            <WordReveal text="reviewed by AI" delay={0.1} />
+          </span>{" "}
+          <WordReveal text="and matched to the science." delay={0.2} />
+        </h1>
 
-          <Reveal delay={0.5}>
-            <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 28, flexWrap: "wrap" }}>
-              <Link href="/quiz" style={{
-                background: TH.ink, color: TH.surface, textDecoration: "none",
-                padding: "16px 26px", borderRadius: 999,
-                fontFamily: FONTS.body, fontSize: 15, fontWeight: 500,
-                display: "inline-flex", alignItems: "center", gap: 10,
-                boxShadow: `0 8px 24px ${TH.ink}22`,
-              }}>
-                Build my stack
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                  <path d="M5 12h14M13 5l7 7-7 7" />
-                </svg>
-              </Link>
-              <Link href="/stacks" style={{
-                background: "transparent", color: TH.ink, textDecoration: "none",
-                padding: "16px 8px", borderRadius: 999,
-                fontFamily: FONTS.body, fontSize: 15, fontWeight: 500,
-                display: "inline-flex", alignItems: "center", gap: 8,
-              }}>
-                <span style={{
-                  width: 28, height: 28, borderRadius: 999,
-                  background: TH.surface, border: `1px solid ${TH.edge}`,
-                  display: "inline-flex", alignItems: "center", justifyContent: "center",
-                  color: TH.ink, fontSize: 13,
-                }}>▸</span>
-                Browse 11 stacks
-              </Link>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.6}>
-            <div style={{ display: "flex", gap: 20, fontSize: 13, color: TH.muted, alignItems: "center", flexWrap: "wrap" }}>
-              {[
-                "Free, no signup",
-                "2-minute quiz",
-                "150+ researched ingredients",
-              ].map(item => (
-                <div key={item} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.5">
-                    <path d="M5 12l5 5 9-11" />
-                  </svg>
-                  {item}
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Right — product card + decoration */}
-        <div style={{ position: "relative", minHeight: 460, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <Reveal delay={0.3}>
-            <div style={{ position: "relative" }}>
-              <div style={{ position: "absolute", top: -40, left: -50, animation: "sd-float 6s ease-in-out infinite" }}>
-                <PillIcon c1="#a78bfa" c2="#8d6ce8" w={28} h={44} />
-              </div>
-              <div style={{ position: "absolute", top: 30, right: -40, animation: "sd-float 7s ease-in-out infinite 1s" }}>
-                <PillIcon c1="#f0b56b" c2="#e8a04a" w={26} h={40} />
-              </div>
-              <div style={{ position: "absolute", bottom: -10, left: -60, animation: "sd-float 8s ease-in-out infinite 2s" }}>
-                <PillIcon c1="#ffa580" c2="#ff8b6b" w={32} h={48} />
-              </div>
-
-              <HeroStackCard />
-
-              <div style={{
-                position: "absolute", bottom: -30, right: -40,
-                animation: "sd-float 6s ease-in-out infinite 0.5s",
-                display: "none",
-              }} className="sd-proof-card-desktop">
-                <HeroProofCard />
-              </div>
-            </div>
-          </Reveal>
-        </div>
+        <Reveal delay={0.4}>
+          <p style={{
+            fontSize: 19, lineHeight: 1.55, color: TH.inkSoft,
+            maxWidth: 640, margin: "0 auto 36px",
+          }}>
+            Get a personalised stack, build your own, or audit what you&apos;re already taking — all powered by AI and grounded in the published research.
+          </p>
+        </Reveal>
       </div>
 
-      {/* show proof card only on large screens */}
+      {/* 3-service entry grid */}
+      <div style={{
+        position: "relative", maxWidth: 1180, margin: "0 auto",
+      }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
+          gap: 18,
+        }}>
+          <Reveal delay={0.15}>
+            <ServiceCard
+              kind="quiz"
+              tag="Service 01"
+              title="Take the AI quiz"
+              tagline="The fastest way in."
+              body="Answer a few questions about how you sleep, eat, and feel. Our engine matches you to evidence-backed ingredients."
+              cta="Start the quiz"
+              href="/quiz"
+              meta="Express: 2 min · Complete: 5 min"
+              accent={TH.sage}
+              accentDeep={TH.sageDeep}
+            />
+          </Reveal>
+          <Reveal delay={0.25}>
+            <ServiceCard
+              kind="build"
+              tag="Service 02"
+              title="Build your stack"
+              tagline="Describe it in plain English."
+              body={'"I want better sleep, more energy, and less stress." — we compose the stack instantly. Or pick from 15 ready-made stacks.'}
+              cta="Start building"
+              href="/build"
+              meta="151 ingredients · 15 ready-made"
+              accent={TH.amber}
+              accentDeep={TH.amberDeep}
+            />
+          </Reveal>
+          <Reveal delay={0.35}>
+            <ServiceCard
+              kind="audit"
+              tag="Service 03"
+              title="Audit my current stack"
+              tagline="Already taking supplements?"
+              body="Paste what you take. AI finds interactions, redundancies, missing nutrients, and timing issues — then suggests a cleaner version."
+              cta="Audit my stack"
+              href="/audit"
+              meta="Free · instant report"
+              accent={TH.coral}
+              accentDeep="#c9543a"
+              badge="NEW"
+            />
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.5}>
+          <div style={{
+            display: "flex", justifyContent: "center", gap: 22,
+            marginTop: 28, fontSize: 13, color: TH.muted,
+            alignItems: "center", flexWrap: "wrap",
+          }}>
+            {[
+              "Free, no signup required",
+              "151 evidence-led ingredients",
+              "Honest — we don't sell our own pills",
+            ].map(item => (
+              <div key={item} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.5">
+                  <path d="M5 12l5 5 9-11" />
+                </svg>
+                {item}
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// ─── Service card ─────────────────────────────────────────────────────────
+function ServiceCard({
+  kind, tag, title, tagline, body, cta, href, meta, accent, accentDeep, badge,
+}: {
+  kind: "quiz" | "build" | "audit";
+  tag: string;
+  title: string;
+  tagline: string;
+  body: string;
+  cta: string;
+  href: string;
+  meta: string;
+  accent: string;
+  accentDeep: string;
+  badge?: string;
+}) {
+  return (
+    <Link href={href} style={{ textDecoration: "none", color: "inherit", display: "block", height: "100%" }}>
+      <article
+        className="sd-service-card"
+        style={{
+          position: "relative", height: "100%",
+          padding: "28px 26px 22px",
+          background: TH.surface,
+          border: `1px solid ${TH.edge}`,
+          borderRadius: 22,
+          boxShadow: "0 1px 3px rgba(10,37,64,0.04), 0 10px 28px rgba(10,37,64,0.06)",
+          display: "flex", flexDirection: "column",
+          transition: "transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, border-color .25s",
+          overflow: "hidden",
+        }}
+      >
+        {/* Subtle gradient corner */}
+        <div aria-hidden style={{
+          position: "absolute", top: -60, right: -60, width: 180, height: 180,
+          background: `radial-gradient(circle at 30% 30%, ${accent}1f, transparent 70%)`,
+          pointerEvents: "none",
+        }} />
+
+        {badge && (
+          <span style={{
+            position: "absolute", top: 16, right: 16,
+            fontSize: 10, ...MM, letterSpacing: "0.08em",
+            background: `${accent}22`, color: accentDeep,
+            padding: "3px 8px", borderRadius: 999, fontWeight: 600,
+          }}>{badge}</span>
+        )}
+
+        <ServiceGlyph kind={kind} accent={accent} accentDeep={accentDeep} />
+
+        <div style={{
+          ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.12em",
+          marginTop: 18, textTransform: "uppercase",
+        }}>{tag}</div>
+
+        <h3 style={{
+          ...D, fontSize: 26, color: TH.ink, lineHeight: 1.15,
+          letterSpacing: "-0.025em", margin: "6px 0 4px",
+        }}>{title}</h3>
+
+        <div style={{ ...SI, fontStyle: "italic", fontSize: 17, color: accentDeep, marginBottom: 12 }}>
+          {tagline}
+        </div>
+
+        <p style={{
+          fontSize: 14.5, lineHeight: 1.55, color: TH.inkSoft,
+          margin: "0 0 18px", flex: 1,
+        }}>{body}</p>
+
+        <div style={{
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          paddingTop: 14, borderTop: `1px solid ${TH.edge}`,
+        }}>
+          <span style={{ ...MM, fontSize: 11, color: TH.muted }}>{meta}</span>
+          <span style={{
+            display: "inline-flex", alignItems: "center", gap: 6,
+            color: accentDeep, fontWeight: 600, fontSize: 14,
+          }}>
+            {cta}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </article>
+
       <style>{`
-        @media (min-width: 1024px) {
-          .sd-proof-card-desktop { display: block !important; }
+        .sd-service-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 4px 12px rgba(10,37,64,0.08), 0 24px 50px rgba(10,37,64,0.12);
+          border-color: ${TH.edgeStrong};
         }
       `}</style>
-    </section>
+    </Link>
+  );
+}
+
+// ─── Service-specific glyph ───────────────────────────────────────────────
+function ServiceGlyph({ kind, accent, accentDeep }: { kind: "quiz" | "build" | "audit"; accent: string; accentDeep: string }) {
+  if (kind === "quiz") {
+    return (
+      <svg width="46" height="46" viewBox="0 0 48 48" fill="none" aria-hidden>
+        <rect x="6" y="10" width="36" height="28" rx="6" fill={accent} fillOpacity="0.12" stroke={accent} strokeWidth="1.5" />
+        <circle cx="14" cy="20" r="2.2" fill={accentDeep} />
+        <rect x="20" y="18.5" width="18" height="3" rx="1.5" fill={accentDeep} fillOpacity="0.7" />
+        <circle cx="14" cy="28" r="2.2" fill={accent} />
+        <rect x="20" y="26.5" width="14" height="3" rx="1.5" fill={accent} fillOpacity="0.55" />
+      </svg>
+    );
+  }
+  if (kind === "build") {
+    return (
+      <svg width="46" height="46" viewBox="0 0 48 48" fill="none" aria-hidden>
+        <circle cx="14" cy="24" r="6" fill={accent} fillOpacity="0.25" />
+        <circle cx="14" cy="24" r="6" stroke={accentDeep} strokeWidth="1.5" />
+        <circle cx="34" cy="14" r="5" fill={accentDeep} fillOpacity="0.18" />
+        <circle cx="34" cy="14" r="5" stroke={accentDeep} strokeWidth="1.5" />
+        <circle cx="34" cy="34" r="5" fill={accent} fillOpacity="0.18" />
+        <circle cx="34" cy="34" r="5" stroke={accent} strokeWidth="1.5" />
+        <path d="M20 22 L29 16 M20 26 L29 32" stroke={accent} strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    );
+  }
+  // audit
+  return (
+    <svg width="46" height="46" viewBox="0 0 48 48" fill="none" aria-hidden>
+      <circle cx="22" cy="22" r="13" stroke={accentDeep} strokeWidth="1.5" fill={accent} fillOpacity="0.12" />
+      <path d="M16 22 L20 26 L29 17" stroke={accentDeep} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M32 32 L40 40" stroke={accentDeep} strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
   );
 }
 

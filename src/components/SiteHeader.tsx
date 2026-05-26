@@ -6,12 +6,11 @@ import SuppdocLogo from "@/components/SuppdocLogo";
 import { TH, FONTS } from "@/lib/theme";
 
 const LINKS: [string, string][] = [
-  ["Stacks", "/stacks"],
+  ["Quiz", "/quiz"],
   ["Build", "/build"],
-  ["Ingredients", "/ingredients"],
-  ["How it works", "/#how-it-works"],
+  ["Audit", "/audit"],
+  ["Stacks", "/stacks"],
   ["Journal", "/journal"],
-  ["About", "/about"],
 ];
 
 export default function SiteHeader() {

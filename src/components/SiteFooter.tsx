@@ -4,10 +4,10 @@ import { TH } from "@/lib/theme";
 
 const COLS: [string, [string, string][]][] = [
   ["Product", [
-    ["Pre-made stacks", "/stacks"],
-    ["Build your own", "/build"],
     ["Take the quiz", "/quiz"],
-    ["How it works", "/#how-it-works"],
+    ["Build your own", "/build"],
+    ["Audit my stack", "/audit"],
+    ["Pre-made stacks", "/stacks"],
     ["Ingredients", "/ingredients"],
   ]],
   ["Company", [
