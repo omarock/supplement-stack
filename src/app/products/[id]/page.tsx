@@ -7,6 +7,7 @@ import { iherbProductLink, iherbLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import ProductImageGallery from "@/components/ProductImageGallery";
 
 const th = {
   bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
@@ -86,118 +87,125 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <span style={{ color: th.ink }}>{bestseller.brand}</span>
       </div>
 
-      {/* Product hero — image + key info */}
+      {/* Product hero — iHerb-style: image gallery (left) + info cards (right) */}
       <section style={{ padding: "24px var(--section-pad-x) 48px" }}>
         <div style={{
-          maxWidth: 1100, margin: "0 auto",
-          display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.2fr)", gap: 48,
+          maxWidth: 1200, margin: "0 auto",
+          display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: 40,
           alignItems: "start",
         }}>
-          {/* Product image */}
-          <div style={{
-            background: bestseller.brandBg, borderRadius: 24, padding: 32,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            minHeight: 420,
-          }}>
-            {bestseller.imageUrl ? (
-              <img
-                src={bestseller.imageUrl}
-                alt={`${bestseller.brand} ${bestseller.productName}`}
-                style={{ maxWidth: "100%", maxHeight: 360, objectFit: "contain" }}
-              />
-            ) : (
-              <div style={{
-                width: 160, height: 280, background: "#fff", borderRadius: 16,
-                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                color: bestseller.brandInk, padding: 24, textAlign: "center",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-              }}>
-                <div style={{ ...D, fontSize: 14, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: 8 }}>
-                  {bestseller.brand}
-                </div>
-                <div style={{ fontSize: 11, ...MM, lineHeight: 1.4 }}>
-                  {bestseller.productName}
-                </div>
-              </div>
-            )}
-          </div>
+          {/* LEFT: Image gallery with hover zoom + thumbnails */}
+          <ProductImageGallery
+            images={[
+              ...(bestseller.imageUrl ? [bestseller.imageUrl] : []),
+              ...(bestseller.imageUrls ?? []),
+            ]}
+            alt={`${bestseller.brand} ${bestseller.productName} — ${bestseller.size}`}
+          />
 
-          {/* Product info */}
-          <div>
-            <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
-              <span style={{
-                padding: "5px 12px", borderRadius: 999, fontSize: 10, ...MM, fontWeight: 600,
-                background: bestseller.brandBg, color: bestseller.brandInk, letterSpacing: "0.08em",
-              }}>
-                {bestseller.badge.toUpperCase()}
-              </span>
-              <span style={{
-                padding: "5px 12px", borderRadius: 999, fontSize: 10, ...MM, fontWeight: 600,
-                background: th.sageGlow, color: th.sageDeep, letterSpacing: "0.08em",
-              }}>
-                {supp.category?.toUpperCase() ?? "SUPPLEMENT"}
-              </span>
-            </div>
+          {/* RIGHT: Stacked info cards */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
-            <div style={{ fontSize: 13, color: th.inkMute, ...MM, letterSpacing: "0.03em", marginBottom: 6 }}>
-              {bestseller.brand.toUpperCase()}
-            </div>
-
-            <h1 style={{
-              ...D, fontSize: "clamp(28px, 4vw, 40px)", margin: "0 0 14px",
-              letterSpacing: "-0.02em", lineHeight: 1.15, fontWeight: 600,
-            }}>
-              {bestseller.productName}
-            </h1>
-
-            {/* Tag chips: form + ingredient form + key certifications */}
-            <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 18 }}>
-              {bestseller.form && (
-                <span style={tagChipStyle}>{bestseller.form}</span>
-              )}
-              {bestseller.ingredientForm && (
-                <span style={{ ...tagChipStyle, background: "#dbeafe", color: "#1e40af" }}>
-                  {bestseller.ingredientForm}
+            {/* Brand + Title + Rating */}
+            <div>
+              <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
+                <span style={{
+                  padding: "5px 12px", borderRadius: 999, fontSize: 10, ...MM, fontWeight: 600,
+                  background: bestseller.brandBg, color: bestseller.brandInk, letterSpacing: "0.08em",
+                }}>
+                  {bestseller.badge.toUpperCase()}
                 </span>
+                <span style={{
+                  padding: "5px 12px", borderRadius: 999, fontSize: 10, ...MM, fontWeight: 600,
+                  background: th.sageGlow, color: th.sageDeep, letterSpacing: "0.08em",
+                }}>
+                  {supp.category?.toUpperCase() ?? "SUPPLEMENT"}
+                </span>
+              </div>
+
+              <div style={{ fontSize: 13, color: th.inkMute, ...MM, letterSpacing: "0.03em", marginBottom: 6 }}>
+                {bestseller.brand.toUpperCase()}
+              </div>
+
+              <h1 style={{
+                ...D, fontSize: "clamp(26px, 3.5vw, 36px)", margin: "0 0 12px",
+                letterSpacing: "-0.02em", lineHeight: 1.15, fontWeight: 600,
+              }}>
+                {bestseller.productName}
+              </h1>
+
+              {bestseller.reviewCount > 0 && (
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13 }}>
+                  <span style={{ color: "#ff9900", fontSize: 16, letterSpacing: "1px" }}>
+                    {"★".repeat(Math.round(bestseller.rating))}
+                    <span style={{ color: "#e5e7eb" }}>{"★".repeat(5 - Math.round(bestseller.rating))}</span>
+                  </span>
+                  <span style={{ color: th.ink, fontWeight: 600 }}>{bestseller.rating.toFixed(1)}</span>
+                  <span style={{ color: "#0066c0" }}>({bestseller.reviewCount.toLocaleString()} reviews)</span>
+                </div>
               )}
-              {(bestseller.certifications ?? []).slice(0, 4).map(c => (
-                <span key={c} style={{ ...tagChipStyle, background: "#f3f4f6", color: "#374151" }}>{c}</span>
-              ))}
             </div>
 
-            {/* Rating */}
-            {bestseller.reviewCount > 0 && (
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 22, fontSize: 14, color: th.inkSoft }}>
-                <span style={{ color: th.amber, ...MM, letterSpacing: "0.05em" }}>★ {bestseller.rating}</span>
-                <span style={{ color: th.inkMute }}>·</span>
-                <span>{bestseller.reviewCount.toLocaleString()} reviews on iHerb</span>
-              </div>
+            {/* Key Information card */}
+            <Card title="KEY INFORMATION">
+              <KvRow label="Serving Size" value={bestseller.servingSize ?? supp.dose} />
+              <KvRow label="Total Servings" value={bestseller.servingsPerContainer ? `${bestseller.servingsPerContainer}` : "—"} />
+              <KvRow label="Per Serving" value={bestseller.mgPerServing ?? supp.dose} />
+              <KvRow label="Best Time" value={timingLabel(supp.timing)} last />
+            </Card>
+
+            {/* Certifications & Diet card */}
+            {(bestseller.certifications && bestseller.certifications.length > 0) && (
+              <Card title="CERTIFICATIONS & DIET">
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", paddingTop: 4 }}>
+                  {bestseller.certifications.map(c => (
+                    <span key={c} style={{
+                      display: "inline-flex", alignItems: "center", gap: 6,
+                      padding: "7px 12px", borderRadius: 8,
+                      fontSize: 13, fontWeight: 500,
+                      background: "#f3f4f6", color: "#374151",
+                      border: "1px solid #e5e7eb",
+                    }}>
+                      <span style={{ color: th.sage, fontWeight: 700 }}>✓</span> {c}
+                    </span>
+                  ))}
+                </div>
+              </Card>
             )}
 
-            {/* Serving facts */}
+            {/* Specifications card */}
+            {(bestseller.form || bestseller.ingredientForm) && (
+              <Card title="SPECIFICATIONS">
+                {bestseller.form && <KvRow label="Form" value={bestseller.form} />}
+                {bestseller.ingredientForm && <KvRow label="Active Ingredient" value={bestseller.ingredientForm} last={!bestseller.size} />}
+                {bestseller.size && <KvRow label="Container" value={bestseller.size} last />}
+              </Card>
+            )}
+
+            {/* Price + Buy buttons */}
             <div style={{
               background: th.paper, border: `1px solid ${th.line}`, borderRadius: 14,
-              padding: 18, marginBottom: 22,
+              padding: 20,
             }}>
-              <FactGridRow label="Serving Size" value={bestseller.servingSize ?? supp.dose} />
-              <FactGridRow label="Per Serving" value={bestseller.mgPerServing ?? supp.dose} />
-              {bestseller.servingsPerContainer && (
-                <FactGridRow label="Total Servings" value={`${bestseller.servingsPerContainer} per container`} />
-              )}
-              <FactGridRow label="Approx. price" value={`$${bestseller.approxPrice}`} last />
-            </div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 16 }}>
+                <span style={{ fontSize: 14, color: th.ink, fontWeight: 500 }}>$</span>
+                <span style={{ fontSize: 36, color: th.ink, fontWeight: 700, letterSpacing: "-0.025em" }}>
+                  {bestseller.approxPrice}
+                </span>
+                <span style={{ fontSize: 12, color: th.inkMute, marginLeft: 6 }}>~/month</span>
+              </div>
 
-            {/* Buy buttons */}
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 14 }}>
               <a
                 href={buyUrl}
                 target="_blank" rel="noopener noreferrer sponsored"
+                aria-label={`Buy ${bestseller.brand} ${bestseller.productName} on iHerb`}
                 style={{
-                  flex: "1 1 200px",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-                  padding: "16px 24px", borderRadius: 12, fontSize: 15, fontWeight: 600,
+                  padding: "16px 24px", borderRadius: 999, fontSize: 15, fontWeight: 700,
                   background: th.burgundy, color: "#fff", textDecoration: "none",
                   boxShadow: "0 6px 18px rgba(10,37,64,0.22)",
+                  marginBottom: showAmazon ? 10 : 0,
+                  minHeight: 52,
                 }}
               >
                 Buy on iHerb →
@@ -206,45 +214,26 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 <a
                   href={amazonUrl}
                   target="_blank" rel="noopener noreferrer sponsored"
+                  aria-label={`Buy ${bestseller.brand} ${bestseller.productName} on Amazon`}
                   style={{
-                    flex: "1 1 200px",
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-                    padding: "16px 24px", borderRadius: 12, fontSize: 15, fontWeight: 600,
-                    background: th.amazonOrange, color: "#fff", textDecoration: "none",
-                    boxShadow: "0 6px 18px rgba(255,153,0,0.25)",
+                    padding: "15px 24px", borderRadius: 999, fontSize: 15, fontWeight: 700,
+                    background: "#ffd814", color: "#0f1111", textDecoration: "none",
+                    boxShadow: "0 4px 12px rgba(255,216,20,0.35)",
+                    border: "1px solid #fcd200",
+                    minHeight: 52,
                   }}
                 >
                   Buy on Amazon →
                 </a>
               )}
+              <p style={{ fontSize: 11, color: th.inkMute, lineHeight: 1.5, margin: "14px 0 0", textAlign: "center" }}>
+                Affiliate disclosure: links may earn us a commission at no extra cost to you.
+              </p>
             </div>
-            <p style={{ fontSize: 12, color: th.inkMute, lineHeight: 1.5, margin: 0 }}>
-              Affiliate disclosure: links may earn us a commission at no extra cost to you.
-            </p>
           </div>
         </div>
       </section>
-
-      {/* All certifications row (if many) */}
-      {(bestseller.certifications?.length ?? 0) > 4 && (
-        <section style={{ padding: "0 var(--section-pad-x) 32px" }}>
-          <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-            <h3 style={{ fontSize: 12, ...MM, color: th.sage, letterSpacing: "0.1em", marginBottom: 12 }}>
-              ALL CERTIFICATIONS
-            </h3>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              {bestseller.certifications!.map(c => (
-                <span key={c} style={{
-                  padding: "8px 14px", borderRadius: 999, fontSize: 13, fontWeight: 500,
-                  background: th.paper, border: `1px solid ${th.line}`, color: th.ink,
-                }}>
-                  ✓ {c}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Description */}
       <section style={{ padding: "0 var(--section-pad-x) 56px" }}>
@@ -370,27 +359,44 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-const tagChipStyle: React.CSSProperties = {
-  padding: "5px 11px", borderRadius: 999, fontSize: 12, fontWeight: 500,
-  background: "#fef3c7", color: "#92400e",
-  display: "inline-flex", alignItems: "center",
-};
+function Card({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div style={{
+      background: "#ffffff", border: "1px solid rgba(10,37,64,0.08)", borderRadius: 14,
+      padding: "16px 18px",
+    }}>
+      <div style={{
+        fontSize: 11, color: "#5ba373",
+        fontFamily: '"JetBrains Mono", monospace', letterSpacing: "0.1em",
+        fontWeight: 600, marginBottom: 10,
+      }}>
+        {title}
+      </div>
+      {children}
+    </div>
+  );
+}
 
-function FactGridRow({ label, value, last }: { label: string; value: string; last?: boolean }) {
+function KvRow({ label, value, last }: { label: string; value: string; last?: boolean }) {
   return (
     <div style={{
       display: "flex", justifyContent: "space-between", alignItems: "baseline",
-      padding: "10px 0",
+      padding: "8px 0",
       borderBottom: last ? "none" : "1px solid rgba(10,37,64,0.06)",
+      gap: 12,
     }}>
-      <span style={{ fontSize: 12, color: "#6b7280", fontFamily: '"JetBrains Mono", monospace', letterSpacing: "0.03em" }}>
+      <span style={{ fontSize: 12, color: "#6b7280", fontWeight: 500 }}>
         {label}
       </span>
-      <span style={{ fontSize: 14, color: "#0a2540", fontWeight: 500, textAlign: "right", maxWidth: "60%" }}>
+      <span style={{ fontSize: 14, color: "#0a2540", fontWeight: 500, textAlign: "right" }}>
         {value}
       </span>
     </div>
   );
+}
+
+function timingLabel(t: "morning" | "midday" | "evening" | "pre-train"): string {
+  return ({ morning: "Morning", midday: "Midday", evening: "Evening", "pre-train": "Pre-workout" } as const)[t];
 }
 
 function warningLabel(w: string): string {

@@ -21,6 +21,7 @@ export interface ProductOption {
   brandBg: string;         // soft background tint for branded card
   brandInk: string;        // brand-name text color
   imageUrl?: string;       // optional override: real product photo URL (Unsplash, iHerb CDN, or local)
+  imageUrls?: string[];    // additional gallery views (back, label, supplement facts, etc.)
   // --- Rich product detail (optional, used by /products/[id] page) ---
   form?: string;                  // e.g. "Capsules", "Softgels", "Powder", "Liquid", "Gummies"
   ingredientForm?: string;        // e.g. "Magnesium Glycinate", "Acetyl-L-Carnitine HCl"
