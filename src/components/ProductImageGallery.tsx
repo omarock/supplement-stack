@@ -40,7 +40,7 @@ export default function ProductImageGallery({ images, alt }: Props) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      {/* Main image with hover-zoom */}
+      {/* Main image with hover-zoom — slightly smaller than full square */}
       <div
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
@@ -48,12 +48,14 @@ export default function ProductImageGallery({ images, alt }: Props) {
         style={{
           position: "relative",
           width: "100%",
+          maxWidth: 520,
           aspectRatio: "1 / 1",
           background: "#ffffff",
           border: "1px solid #e5e7eb",
           borderRadius: 14,
           overflow: "hidden",
           cursor: hovering ? "zoom-in" : "default",
+          margin: "0 auto",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -88,7 +90,7 @@ export default function ProductImageGallery({ images, alt }: Props) {
 
       {/* Thumbnail strip — only shown if 2+ images */}
       {gallery.length > 1 && (
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", maxWidth: 520, margin: "0 auto" }}>
           {gallery.map((url, i) => (
             <button
               key={i}

@@ -16,14 +16,17 @@ while IFS='|' read -r id base_url _; do
   start=$(echo "$base_url" | grep -oE '/v/[0-9]+\.jpg' | grep -oE '[0-9]+')
 
   urls=()
-  for offset in 0 5 10 15 20; do
+  # Try wider offset range — iHerb image numbering varies, products can have
+  # photos at negative or larger positive offsets from the primary
+  for offset in -20 -15 -10 -5 0 5 10 15 20 25 30; do
     n=$((start + offset))
+    if [ "$n" -lt 0 ]; then continue; fi
     url="${prefix}/v/${n}.jpg"
     code=$(curl -sI -o /dev/null -w "%{http_code}" -A "$UA" "$url")
     if [ "$code" = "200" ]; then
       urls+=("$url")
     fi
-    sleep 0.15
+    sleep 0.12
   done
 
   if [ ${#urls[@]} -gt 0 ]; then
