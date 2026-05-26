@@ -16,7 +16,8 @@ const pairs = fs.readFileSync(INPUT_FILE, "utf8")
   .filter(Boolean)
   .map(line => {
     const [id, urlsCsv] = line.split("|");
-    const urls = (urlsCsv ?? "").split(",").map(u => u.trim()).filter(Boolean);
+    // Delimiter is ; (URLs contain commas in their Cloudinary transformation segment)
+    const urls = (urlsCsv ?? "").split(";").map(u => u.trim()).filter(Boolean);
     return { id, urls };
   })
   .filter(p => p.urls.length > 0);

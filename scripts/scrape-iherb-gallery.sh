@@ -27,7 +27,8 @@ while IFS='|' read -r id base_url _; do
   done
 
   if [ ${#urls[@]} -gt 0 ]; then
-    IFS=','
+    # Use ; as delimiter since URLs contain commas (f_auto,q_auto:eco)
+    IFS=';'
     echo "${id}|${urls[*]}"
   fi
 done < scripts/iherb_images.txt
