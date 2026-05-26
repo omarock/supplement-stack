@@ -16,7 +16,8 @@ const th = {
   sage: "#5ba373", sageGlow: "rgba(91,163,115,0.10)",
   burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
-const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
+// `S` retained as a name for backward compat — now points to Bricolage display (admin has no decorative serif glyphs)
+const S = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 const exportBtnStyle: React.CSSProperties = {

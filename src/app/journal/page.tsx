@@ -10,6 +10,7 @@ const th = {
   sage: "#5ba373", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
+const D = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
@@ -31,8 +32,8 @@ export default function JournalPage() {
           <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>
             — THE JOURNAL —
           </div>
-          <h1 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.05, color: th.ink }}>
-            Read before you <em style={{ color: th.burgundy }}>supplement</em>.
+          <h1 style={{ ...D, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.025em", lineHeight: 1.02, color: th.ink }}>
+            Read before you <em style={{ ...S, fontStyle: "italic", color: th.burgundy }}>supplement</em>.
           </h1>
           <p style={{ color: th.inkSoft, fontSize: 17, lineHeight: 1.6, maxWidth: 580, margin: "20px auto 0" }}>
             Plain-language guides to what works, what doesn&apos;t, and how to spend your supplement budget where it matters most.
@@ -60,7 +61,7 @@ export default function JournalPage() {
                 <div style={{ fontSize: 11, ...MM, color: th.sage, letterSpacing: "0.1em", marginBottom: 12 }}>
                   FEATURED · {first.category.toUpperCase()}
                 </div>
-                <h2 style={{ ...S, fontSize: 38, color: th.ink, margin: 0, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+                <h2 style={{ ...D, fontSize: 38, color: th.ink, margin: 0, letterSpacing: "-0.025em", lineHeight: 1.1 }}>
                   {first.title}
                 </h2>
                 <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.6, marginTop: 14 }}>
@@ -97,7 +98,7 @@ export default function JournalPage() {
                     <div style={{ fontSize: 11, ...MM, color: th.sage, letterSpacing: "0.1em", marginBottom: 10 }}>
                       {post.category.toUpperCase()}
                     </div>
-                    <h3 style={{ ...S, fontSize: 22, color: th.ink, margin: 0, letterSpacing: "-0.01em", lineHeight: 1.2 }}>
+                    <h3 style={{ ...D, fontSize: 20, color: th.ink, margin: 0, letterSpacing: "-0.015em", lineHeight: 1.25 }}>
                       {post.title}
                     </h3>
                     <p style={{ color: th.inkSoft, fontSize: 14, lineHeight: 1.55, marginTop: 10, marginBottom: 0 }}>

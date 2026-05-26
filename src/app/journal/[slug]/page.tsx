@@ -11,6 +11,7 @@ const th = {
   sage: "#5ba373", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
+const D = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export async function generateStaticParams() {
@@ -71,8 +72,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </div>
 
           <h1 style={{
-            ...S, fontSize: "var(--section-h2)", lineHeight: 1.05, margin: "0 auto",
-            maxWidth: 800, letterSpacing: "-0.025em",
+            ...D, fontSize: "var(--section-h2)", lineHeight: 1.05, margin: "0 auto",
+            maxWidth: 800, letterSpacing: "-0.03em",
           }}>
             {post.title}
           </h1>
@@ -108,7 +109,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             borderRadius: 20, padding: "32px 36px", color: "#ffffff",
             textAlign: "center",
           }}>
-            <h3 style={{ ...S, fontSize: 32, margin: "0 0 10px", letterSpacing: "-0.02em", lineHeight: 1 }}>
+            <h3 style={{ ...D, fontSize: 28, margin: "0 0 10px", letterSpacing: "-0.025em", lineHeight: 1.05 }}>
               Get a stack matched to you.
             </h3>
             <p style={{ fontSize: 15, opacity: 0.85, margin: "0 0 22px", lineHeight: 1.5 }}>
@@ -128,7 +129,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         {/* Related posts */}
         <section style={{ padding: "0 var(--section-pad-x) var(--section-pad-y)" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-            <h2 style={{ ...S, fontSize: 36, margin: "0 0 24px", letterSpacing: "-0.02em", color: th.ink, textAlign: "center" }}>
+            <h2 style={{ ...D, fontSize: 32, margin: "0 0 24px", letterSpacing: "-0.025em", color: th.ink, textAlign: "center" }}>
               Keep reading
             </h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 18 }}>
@@ -145,7 +146,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                       <div style={{ fontSize: 10, ...MM, color: th.sage, letterSpacing: "0.1em", marginBottom: 8 }}>
                         {p.category.toUpperCase()}
                       </div>
-                      <h3 style={{ ...S, fontSize: 18, color: th.ink, margin: 0, letterSpacing: "-0.01em", lineHeight: 1.25 }}>
+                      <h3 style={{ ...D, fontSize: 17, color: th.ink, margin: 0, letterSpacing: "-0.015em", lineHeight: 1.3 }}>
                         {p.title}
                       </h3>
                     </div>
