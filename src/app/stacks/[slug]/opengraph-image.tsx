@@ -6,8 +6,10 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = "Pre-made supplement stack from suppdoc.io";
 
-export default async function Image({ params }: { params: { slug: string } }) {
-  const stack = getStack(params.slug);
+// Next.js 16: dynamic-route params are async (a Promise)
+export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const stack = getStack(slug);
   if (!stack) {
     return new ImageResponse(<div>Not found</div>, { ...size });
   }

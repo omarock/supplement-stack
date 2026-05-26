@@ -6,8 +6,10 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = "Supplement ingredient guide from suppdoc.io";
 
-export default async function Image({ params }: { params: { slug: string } }) {
-  const supp = SUPPLEMENT_DB.find(s => s.id === params.slug);
+// Next.js 16: dynamic-route params are async (a Promise)
+export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const supp = SUPPLEMENT_DB.find(s => s.id === slug);
   if (!supp) {
     return new ImageResponse(<div>Not found</div>, { ...size });
   }
