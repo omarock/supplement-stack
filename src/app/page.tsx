@@ -5,6 +5,7 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { TH, FONTS, D, SI, MM } from "@/lib/theme";
+import { STACKS } from "@/lib/stacks";
 
 // ════════════════════════════════════════════════════════════════════════════
 // Motion primitives
@@ -541,7 +542,7 @@ function Stats() {
         }}>
           {[
             ["150+", "researched ingredients in the library"],
-            ["11", "ready-made stacks to start from"],
+            [`${STACKS.length}`, "ready-made stacks to start from"],
             ["$0", "to use — we never sell our own pills"],
           ].map(([n, l], i) => (
             <Reveal key={l} delay={i * 0.08}>
@@ -590,7 +591,7 @@ function Ingredients() {
               color: TH.ink, fontWeight: 500, fontSize: 15, textDecoration: "none",
               display: "flex", alignItems: "center", gap: 6,
             }}>
-              Browse 11 ready-made stacks <span>→</span>
+              Browse {STACKS.length} ready-made stacks <span>→</span>
             </Link>
           </div>
         </Reveal>

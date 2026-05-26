@@ -39,7 +39,7 @@ export interface Recommendation {
   notes: string[];          // safety notes / advisories
 }
 
-// ─── Supplement Database (25 supplements, all available on iHerb) ────────────
+// ─── Supplement Database (151 ingredients, sourced from trusted retailers) ───
 export const SUPPLEMENT_DB: Supplement[] = [
   // ── Foundational ─────────────────────────────────────────────────────────
   {

@@ -23,7 +23,7 @@ const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
   title: "Pre-made Stacks — suppdoc.io",
-  description: "11 ready-to-adopt supplement stacks composed by suppdoc.io. Sleep, energy, focus, stress, recovery, immunity, vegan, longevity, hormonal balance, beauty, and a foundational starter.",
+  description: "15 ready-to-adopt supplement stacks composed by suppdoc.io. Sleep, energy, focus, stress, recovery, immunity, vegan, longevity, hormonal balance, beauty, menopause support, gut reset, athletic performance, and a foundational starter.",
   keywords: "supplement stacks, best supplements for sleep, best supplements for energy, vegan supplements, supplement routines",
 };
 

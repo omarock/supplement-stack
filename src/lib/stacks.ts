@@ -20,7 +20,7 @@ export interface PreMadeStack {
   popularity?: number; // 1 (most popular) → high (less)
 }
 
-// ─── 11 pre-made stacks ──────────────────────────────────────────────────────
+// ─── 15 pre-made stacks ──────────────────────────────────────────────────────
 export const STACKS: PreMadeStack[] = [
   {
     id: "foundation",

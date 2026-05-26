@@ -68,7 +68,7 @@ export default async function Image() {
         }}>
           <div style={{ display: "flex", gap: 50, fontSize: 22, color: "#3c4858", fontWeight: 500 }}>
             <span>📚 150+ ingredients</span>
-            <span>🌿 11 ready-made stacks</span>
+            <span>🌿 15 ready-made stacks</span>
             <span>⚡ Evidence-based</span>
           </div>
           <div style={{

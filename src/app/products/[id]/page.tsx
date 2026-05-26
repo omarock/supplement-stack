@@ -341,7 +341,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             Not sure where to start?
           </h2>
           <p style={{ fontSize: 17, opacity: 0.95, margin: "12px auto 24px", maxWidth: 520, lineHeight: 1.5 }}>
-            Take our 3-minute quiz. We'll compose a complete stack that fits your goals, body, and budget.
+            Take our quiz. We&apos;ll compose a complete stack that fits your goals, body, and budget — in minutes.
           </p>
           <Link href="/quiz" style={{
             display: "inline-flex", padding: "16px 36px", borderRadius: 999, fontSize: 15, fontWeight: 600,
