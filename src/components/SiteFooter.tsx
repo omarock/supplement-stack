@@ -13,6 +13,7 @@ const COLS: [string, [string, string][]][] = [
     ["About", "/about"],
     ["Journal", "/journal"],
     ["Contact", "/contact"],
+    ["Your profile", "/me"],
   ]],
   ["Resources", [
     ["Help & FAQ", "/help"],

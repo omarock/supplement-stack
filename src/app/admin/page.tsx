@@ -19,6 +19,13 @@ const th = {
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
+const exportBtnStyle: React.CSSProperties = {
+  padding: "8px 16px", borderRadius: 999, fontSize: 12, fontWeight: 600,
+  background: th.ink, color: "#fff", textDecoration: "none",
+  fontFamily: '"Inter", system-ui, sans-serif',
+  boxShadow: "0 2px 6px rgba(10,37,64,0.18)",
+};
+
 // ─── Auth check (server-side) ────────────────────────────────────────────────
 async function checkAdmin() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -165,7 +172,7 @@ export default async function AdminDashboard() {
         </div>
 
         {/* KPI cards */}
-        <section style={{ marginBottom: 32 }}>
+        <section style={{ marginBottom: 24 }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 12 }}>
             <StatCard label="User signups" value={totalSignups ?? 0} sub="all-time, via Supabase auth" />
             <StatCard label="Quizzes completed" value={totalQuizzes ?? 0} sub="across users + anon" />
@@ -173,6 +180,23 @@ export default async function AdminDashboard() {
             <StatCard label="Email signups" value={totalEmails ?? 0} sub="captured in quiz" />
             <StatCard label="Avg. stack cost" value={`$${avgCost}`} sub="per month" />
             <StatCard label="Quiz → click rate" value={`${conversion}%`} sub="rough conversion" />
+          </div>
+        </section>
+
+        {/* Data export bar */}
+        <section style={{
+          marginBottom: 32, padding: "14px 18px",
+          background: th.paper, border: `1px solid ${th.line}`, borderRadius: 12,
+          display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: th.inkSoft }}>
+            <span style={{ fontSize: 16 }}>📥</span>
+            <span><strong style={{ color: th.ink }}>Export raw data</strong> as CSV (max 10,000 rows)</span>
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <a href="/admin/export/quizzes" download style={exportBtnStyle}>Quizzes CSV</a>
+            <a href="/admin/export/clicks" download style={exportBtnStyle}>Clicks CSV</a>
+            <a href="/admin/export/signups" download style={exportBtnStyle}>Email signups CSV</a>
           </div>
         </section>
 
