@@ -110,6 +110,136 @@ function stripJsonPreamble(text: string): string {
   return candidate.slice(start).trim();
 }
 
+// ─── Streaming ─────────────────────────────────────────────────────────────
+
+export interface ClaudeStreamOptions extends Omit<ClaudeOptions, "expectJson"> {
+  /** Called for each incremental text delta from the model. */
+  onDelta: (text: string) => void | Promise<void>;
+  /** Called when the stream finishes normally. */
+  onDone?: (info: { model?: string; stopReason?: string }) => void | Promise<void>;
+  /** Called on stream error. */
+  onError?: (err: string) => void | Promise<void>;
+  /** Optional AbortSignal to cancel the stream. */
+  signal?: AbortSignal;
+}
+
+/**
+ * Stream a Claude response as content_block_delta SSE events.
+ * Returns when the stream completes (or aborts).
+ *
+ * Falls back to fallback models on 404. Bubbles up errors via onError.
+ */
+export async function streamClaude(opts: ClaudeStreamOptions): Promise<void> {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    await opts.onError?.("ANTHROPIC_API_KEY not set");
+    return;
+  }
+
+  const tryModel = async (model: string): Promise<"ok" | "retry" | "error"> => {
+    let res: Response;
+    try {
+      res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model,
+          max_tokens: opts.maxTokens ?? 800,
+          system: opts.system,
+          messages: opts.messages,
+          stream: true,
+        }),
+        signal: opts.signal,
+      });
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") return "ok";
+      await opts.onError?.(err instanceof Error ? err.message : String(err));
+      return "error";
+    }
+
+    if (res.status === 404 || (res.status === 400 && /model/i.test(await peekError(res)))) {
+      return "retry";
+    }
+    if (!res.ok || !res.body) {
+      const text = await res.text().catch(() => "");
+      await opts.onError?.(`HTTP ${res.status}: ${text.slice(0, 200)}`);
+      return "error";
+    }
+
+    // Parse SSE
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let info: { model?: string; stopReason?: string } = {};
+
+    try {
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        // SSE events are separated by \n\n
+        let idx;
+        while ((idx = buffer.indexOf("\n\n")) >= 0) {
+          const raw = buffer.slice(0, idx);
+          buffer = buffer.slice(idx + 2);
+          // Each event is a set of "field: value" lines
+          let event = "";
+          let data = "";
+          for (const line of raw.split("\n")) {
+            if (line.startsWith("event:")) event = line.slice(6).trim();
+            else if (line.startsWith("data:")) data += line.slice(5).trim();
+          }
+          if (!data) continue;
+          let parsed: Record<string, unknown>;
+          try { parsed = JSON.parse(data); } catch { continue; }
+          if (event === "content_block_delta") {
+            const delta = parsed.delta as { type?: string; text?: string } | undefined;
+            if (delta?.type === "text_delta" && typeof delta.text === "string") {
+              await opts.onDelta(delta.text);
+            }
+          } else if (event === "message_start") {
+            const message = parsed.message as { model?: string } | undefined;
+            info.model = message?.model;
+          } else if (event === "message_delta") {
+            const md = parsed.delta as { stop_reason?: string } | undefined;
+            if (md?.stop_reason) info.stopReason = md.stop_reason;
+          } else if (event === "error") {
+            const errInfo = parsed.error as { message?: string } | undefined;
+            await opts.onError?.(errInfo?.message ?? "stream error");
+            return "error";
+          }
+        }
+      }
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") return "ok";
+      await opts.onError?.(err instanceof Error ? err.message : String(err));
+      return "error";
+    }
+
+    await opts.onDone?.(info);
+    return "ok";
+  };
+
+  const primary = await tryModel(opts.model ?? DEFAULT_MODEL);
+  if (primary !== "retry") return;
+  for (const m of FALLBACK_MODELS) {
+    const r = await tryModel(m);
+    if (r !== "retry") return;
+  }
+  await opts.onError?.("no compatible Claude model available");
+}
+
+async function peekError(res: Response): Promise<string> {
+  // Clone-and-peek: we already consumed nothing, but res.text() drains the body
+  try { return await res.clone().text(); } catch { return ""; }
+}
+
 /**
  * Safe JSON parse for Claude's output. Returns null on failure.
  */
