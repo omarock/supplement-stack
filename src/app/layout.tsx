@@ -4,6 +4,7 @@ import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.suppdoc.io"),
   title: "suppdoc.io — Personalised, Evidence-Based Supplement Stacks",
   description:
     "Tell us how you sleep, train, and feel. We build your daily supplement stack from clean, evidence-led ingredients — in minutes. Free, no signup, grounded in published research.",

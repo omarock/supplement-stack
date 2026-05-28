@@ -139,6 +139,15 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                 CORE INGREDIENT
               </span>
             )}
+            <Link href={`/ingredients/${slug}/research`} style={{
+              padding: "6px 14px", borderRadius: 999, fontSize: 12, fontWeight: 600,
+              background: "#0a2540", color: "#fff", textDecoration: "none",
+              ...MM, letterSpacing: "0.04em",
+              display: "inline-flex", alignItems: "center", gap: 6,
+            }}>
+              READ THE RESEARCH
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+            </Link>
           </div>
         </div>
       </section>
