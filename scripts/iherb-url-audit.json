@@ -1,0 +1,242 @@
+[
+  {
+    "id": "d3k2",
+    "status": "ok",
+    "similarity": 1,
+    "brand": "NOW Foods",
+    "productName": "Vitamin D-3 & K-2",
+    "size": "120 veg capsules",
+    "productPath": "/pr/now-foods-vitamin-d3-2-000-iu-120-softgels/8229",
+    "livePage": "NOW Foods, Vitamin D3, 2,000 IU, 120 Softgels"
+  },
+  {
+    "id": "omega3",
+    "status": "ok",
+    "similarity": 1,
+    "brand": "Sports Research",
+    "productName": "Triple Strength Omega-3 Fish Oil",
+    "size": "90 softgels",
+    "productPath": "/pr/sports-research-alaskan-omega-3-fish-oil-triple-strength-180-softgels/72037",
+    "livePage": "Sports Research, Alaskan Omega-3 Fish Oil, Triple Strength, 180 Softgels"
+  },
+  {
+    "id": "omega3-algae",
+    "status": "ok",
+    "similarity": 0.75,
+    "brand": "Ovega-3",
+    "productName": "Plant-Based Omega-3",
+    "size": "60 softgels",
+    "productPath": "/pr/swanson-vitamins-plant-based-omega-3-120-liquid-vegan-capsules/149122",
+    "livePage": "Swanson Vitamins, Plant Based Omega-3 , 120 Liquid Vegan Capsules"
+  },
+  {
+    "id": "multivit",
+    "status": "ok",
+    "similarity": 0.6,
+    "brand": "Garden of Life",
+    "productName": "mykind Organics Multivitamin",
+    "size": "60 tablets",
+    "productPath": "/pr/garden-of-life-organics-women-s-multi-60-vegan-tablets/106223",
+    "livePage": "Garden of Life, Organics, Women&#x27;s Multi, 60 Vegan Tablets"
+  },
+  {
+    "id": "mag-glycinate",
+    "status": "ok",
+    "similarity": 0.6666666666666666,
+    "brand": "Doctor's Best",
+    "productName": "High Absorption Magnesium Glycinate",
+    "size": "240 tablets",
+    "productPath": "/pr/doctor-s-best-high-absorption-magnesium-120-tablets-100-mg-per-tablet/15",
+    "livePage": "Doctor&#x27;s Best, High Absorption Magnesium, 120 Tablets"
+  },
+  {
+    "id": "ashwagandha",
+    "status": "ok",
+    "similarity": 0.75,
+    "brand": "Jarrow Formulas",
+    "productName": "Ashwagandha KSM-66",
+    "size": "120 veg capsules",
+    "productPath": "/pr/jarrow-formulas-ashwagandha-300-mg-120-veggie-capsules/3302",
+    "livePage": "Jarrow Formulas, Ashwagandha, 300 mg, 120 Veggie Capsules"
+  },
+  {
+    "id": "l-theanine",
+    "status": "ok",
+    "similarity": 0.5,
+    "brand": "NOW Foods",
+    "productName": "L-Theanine 200mg with Suntheanine",
+    "size": "120 veg capsules",
+    "productPath": "/pr/now-foods-l-theanine-120-veg-capsules/54096",
+    "livePage": "NOW Foods, L-Theanine, 120 Veg Capsules"
+  },
+  {
+    "id": "glycine",
+    "status": "ok",
+    "similarity": 0.4,
+    "brand": "NOW Foods",
+    "productName": "Glycine Pure Powder",
+    "size": "454 g",
+    "productPath": "/pr/now-foods-glycine-pure-powder-1-lb-454-g/688",
+    "livePage": "NOW Foods, Nutritional Yeast Flakes, 10 oz (284 g)"
+  },
+  {
+    "id": "b12",
+    "status": "ok",
+    "similarity": 0.75,
+    "brand": "Jarrow Formulas",
+    "productName": "Methyl B-12 1000mcg",
+    "size": "100 lozenges",
+    "productPath": "/pr/jarrow-formulas-methyl-b-12-fruit-500-mcg-100-chewable-tablets/43808",
+    "livePage": "Jarrow Formulas, Methyl B-12, Fruit, 500 mcg, 100 Chewable Tablets"
+  },
+  {
+    "id": "b-complex",
+    "status": "ok",
+    "similarity": 1,
+    "brand": "Thorne",
+    "productName": "Basic B Complex",
+    "size": "60 capsules",
+    "productPath": "/pr/thorne-basic-b-complex-60-capsules/18791",
+    "livePage": "Thorne, Basic B Complex, 60 Capsules"
+  },
+  {
+    "id": "rhodiola",
+    "status": "ok",
+    "similarity": 0.75,
+    "brand": "NOW Foods",
+    "productName": "Rhodiola 500mg",
+    "size": "120 veg capsules",
+    "productPath": "/pr/now-foods-rhodiola-500-mg-120-veg-capsules/123463",
+    "livePage": "NOW Foods, Rhodiola, 500 mg , 120 Veg Capsules"
+  },
+  {
+    "id": "lions-mane",
+    "status": "ok",
+    "similarity": 0.75,
+    "brand": "Host Defense",
+    "productName": "Lion's Mane",
+    "size": "60 capsules",
+    "productPath": "/pr/host-defense-mushrooms-lion-s-mane-60-capsules-0-5-g-per-capsule/21455",
+    "livePage": "Host Defense, Mushrooms&#x2122;, Lion&#x27;s Mane, 60 Capsules (0.5 g per Capsule)"
+  },
+  {
+    "id": "creatine",
+    "status": "ok",
+    "similarity": 0.8,
+    "brand": "Optimum Nutrition",
+    "productName": "Creatine Monohydrate Powder",
+    "size": "600 g",
+    "productPath": "/pr/optimum-nutrition-micronized-creatine-powder-unflavored-1-32-lb-600-g/68616",
+    "livePage": "Optimum Nutrition, Micronized Creatine Powder, Unflavored, 1.32 lb (600 g)"
+  },
+  {
+    "id": "collagen",
+    "status": "ok",
+    "similarity": 0.5,
+    "brand": "Sports Research",
+    "productName": "Collagen Peptides",
+    "size": "454 g",
+    "productPath": "/pr/sports-research-collagen-peptides-unflavored-1-lb-454-g/72035",
+    "livePage": "Sports Research, Sweet Sweat&#xAE;, Arm Trimmers, Medium, Black &amp; Yellow, 1 Pair"
+  },
+  {
+    "id": "curcumin",
+    "status": "ok",
+    "similarity": 0.5714285714285714,
+    "brand": "Doctor's Best",
+    "productName": "High Absorption Curcumin with BioPerine",
+    "size": "180 capsules",
+    "productPath": "/pr/doctor-s-best-curcumin-from-turmeric-root-with-c3-complex-bioperine-500-mg-120-veggie-caps/13",
+    "livePage": "Doctor&#x27;s Best, High Absorption Curcumin, 120 Veggie Caps"
+  },
+  {
+    "id": "glucosamine",
+    "status": "ok",
+    "similarity": 1,
+    "brand": "NOW Foods",
+    "productName": "Glucosamine & Chondroitin with MSM",
+    "size": "180 veg capsules",
+    "productPath": "/pr/now-foods-glucosamine-chondroitin-with-msm-90-capsules/37832",
+    "livePage": "NOW Foods, Glucosamine &amp; Chondroitin with MSM, 90 Capsules"
+  },
+  {
+    "id": "vit-c",
+    "status": "ok",
+    "similarity": 0.8571428571428571,
+    "brand": "NOW Foods",
+    "productName": "Vitamin C-1000 with Rose Hips",
+    "size": "250 tablets",
+    "productPath": "/pr/now-foods-c-1000-with-rose-hips-100-tablets/39672",
+    "livePage": "NOW Foods, C-1000 With Rose Hips, 100 Tablets"
+  },
+  {
+    "id": "zinc",
+    "status": "ok",
+    "similarity": 0.75,
+    "brand": "Thorne",
+    "productName": "Zinc Picolinate 15mg",
+    "size": "60 capsules",
+    "productPath": "/pr/thorne-zinc-picolinate-30-mg-60-capsules/103185",
+    "livePage": "Thorne, Zinc Picolinate, 30 mg, 60 Capsules"
+  },
+  {
+    "id": "elderberry",
+    "status": "ok",
+    "similarity": 1,
+    "brand": "Sambucol",
+    "productName": "Black Elderberry Original",
+    "size": "120 ml",
+    "productPath": "/pr/sambucol-black-elderberry-immune-syrup-original-formula-4-fl-oz-120-ml/68251",
+    "livePage": "Sambucol, Black Elderberry Immune Syrup, Original Formula, 4 fl oz (120 ml)"
+  },
+  {
+    "id": "probiotic",
+    "status": "ok",
+    "similarity": 0.8,
+    "brand": "Garden of Life",
+    "productName": "Dr. Formulated Probiotics Mood+",
+    "size": "60 capsules",
+    "productPath": "/pr/garden-of-life-dr-formulated-probiotics-once-daily-30-vegetarian-capsules/64433",
+    "livePage": "Garden of Life, Dr. Formulated Probiotics, Once Daily, 30 Vegetarian Capsules"
+  },
+  {
+    "id": "digestive-enzymes",
+    "status": "ok",
+    "similarity": 0.5,
+    "brand": "Enzymedica",
+    "productName": "Digest Gold + ATPro",
+    "size": "120 capsules",
+    "productPath": "/pr/enzymedica-digest-gold-with-atpro-maximum-strength-240-capsules/16790",
+    "livePage": "Enzymedica, Digest Gold&#xAE; with ATPro&#xAE;, Maximum Strength, 240 Capsules"
+  },
+  {
+    "id": "iron",
+    "status": "ok",
+    "similarity": 0.6,
+    "brand": "Solgar",
+    "productName": "Gentle Iron Bisglycinate 25mg",
+    "size": "90 veg capsules",
+    "productPath": "/pr/solgar-gentle-iron-25-mg-90-vegetable-capsules/69609",
+    "livePage": "Solgar, Gentle Iron, 25 mg, 90 Capsules"
+  },
+  {
+    "id": "coq10",
+    "status": "mismatch",
+    "similarity": 0.2,
+    "brand": "Doctor's Best",
+    "productName": "Ubiquinol with Kaneka",
+    "size": "60 softgels",
+    "productPath": "/pr/doctor-s-best-high-absorption-coq10-100-mg-60-veggie-caps/20",
+    "livePage": "Doctor&#x27;s Best, High Absorption CoQ10 , 100 mg, 60 Veggie Caps"
+  },
+  {
+    "id": "biotin",
+    "status": "ok",
+    "similarity": 0.42857142857142855,
+    "brand": "Sports Research",
+    "productName": "Biotin 5000mcg with Coconut Oil",
+    "size": "120 softgels",
+    "productPath": "/pr/sports-research-biotin-with-coconut-oil-5-000-mcg-120-veggie-softgels/71109",
+    "livePage": "Sports Research, Biotin, 5,000 mcg, 120 Veggie Softgels"
+  }
+]
