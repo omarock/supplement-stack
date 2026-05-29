@@ -6,16 +6,42 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.suppdoc.io"),
-  title: "suppdoc.io — Personalised, Evidence-Based Supplement Stacks",
+  title: "suppdoc.io — AI supplement stacks, audit & bloodwork analysis",
   description:
-    "Tell us how you sleep, train, and feel. We build your daily supplement stack from clean, evidence-led ingredients — in minutes. Free, no signup, grounded in published research.",
+    "suppdoc is the evidence-graded AI supplement platform. Get a personalised stack, check your supplements for interactions, and turn your bloodwork into a plan — free, grounded in published research. We don't sell our own pills.",
+  applicationName: "suppdoc.io",
   keywords:
-    "supplement recommendations, personalized supplements, evidence-based supplements, supplement stack, suppdoc",
+    "suppdoc, suppdoc.io, AI supplement stack, supplement audit, supplement interaction checker, bloodwork supplement analysis, evidence-based supplements, personalized supplements",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
     ],
   },
+};
+
+// Brand entity for Google + AI search ("suppdoc" knowledge). Add real social
+// profile URLs to `sameAs` once they exist to strengthen the brand panel.
+const BRAND_JSONLD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.suppdoc.io/#org",
+      name: "suppdoc",
+      alternateName: "suppdoc.io",
+      url: "https://www.suppdoc.io",
+      logo: "https://www.suppdoc.io/favicon.svg",
+      description: "Evidence-graded AI supplement platform. Personalised stacks, interaction checking, and bloodwork analysis — we don't sell our own supplements.",
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.suppdoc.io/#website",
+      url: "https://www.suppdoc.io",
+      name: "suppdoc.io",
+      publisher: { "@id": "https://www.suppdoc.io/#org" },
+      inLanguage: "en",
+    },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -30,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BRAND_JSONLD) }} />
         {children}
         <ChatAssistant />
         <CookieConsent />

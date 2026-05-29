@@ -4,6 +4,7 @@ import { STACKS } from "@/lib/stacks";
 import { POSTS } from "@/lib/blog";
 import { COMPETITORS } from "@/lib/competitors";
 import { RESEARCH } from "@/lib/research";
+import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
 
 const BASE = "https://www.suppdoc.io";
 
@@ -67,6 +68,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entries.push({
       url: `${BASE}/journal/${post.slug}`,
       lastModified: new Date(post.date), changeFrequency: "monthly", priority: 0.7,
+    });
+  }
+
+  // ─── Tier 4b: interaction checker (index + programmatic pairs) ─────────
+  entries.push({
+    url: `${BASE}/interactions`,
+    lastModified: now, changeFrequency: "monthly", priority: 0.85,
+  });
+  for (const it of INTERACTIONS) {
+    entries.push({
+      url: `${BASE}/interactions/${interactionSlug(it.a, it.b)}`,
+      lastModified: now, changeFrequency: "monthly", priority: 0.7,
     });
   }
 

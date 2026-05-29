@@ -22,6 +22,7 @@ const NAV: NavGroup[] = [
     label: "Learn",
     items: [
       { label: "Ingredients", href: "/ingredients", desc: "151 evidence-graded guides" },
+      { label: "Interactions", href: "/interactions", desc: "What works together & what to separate" },
       { label: "Stacks", href: "/stacks", desc: "15 ready-made protocols" },
       { label: "Journal", href: "/journal", desc: "Evidence-led articles" },
     ],
