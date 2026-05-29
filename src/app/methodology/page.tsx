@@ -43,6 +43,26 @@ export default function MethodologyPage() {
           }}>
             Most supplement sites won&apos;t tell you how they decide what to recommend. We will. This page documents exactly how the suppdoc.io engine evaluates evidence, matches you to ingredients, and applies safety filters, so you can decide for yourself whether to trust it.
           </p>
+
+          {/* Trust stats */}
+          <div style={{
+            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 14,
+            marginTop: 30,
+          }}>
+            {[
+              { n: "151", l: "ingredients evidence-graded", c: TH.sageDeep },
+              { n: "4", l: "transparent evidence tiers", c: TH.amberDeep },
+              { n: "100%", l: "of claims linked to studies", c: "#4338ca" },
+              { n: "0", l: "own-brand pills we sell", c: TH.ink },
+            ].map(s => (
+              <div key={s.l} style={{
+                background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 16, padding: "18px 18px",
+              }}>
+                <div style={{ ...D, fontSize: 34, lineHeight: 1, letterSpacing: "-0.03em", color: s.c }}>{s.n}</div>
+                <div style={{ fontSize: 12.5, color: TH.muted, marginTop: 8, lineHeight: 1.4 }}>{s.l}</div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* TLDR strip */}
@@ -87,7 +107,7 @@ export default function MethodologyPage() {
             <P>Every supplement in our 151-ingredient catalog is rated with one of four evidence labels. These are <strong>conservative</strong>, we'd rather under-claim and earn trust than over-claim and lose it.</P>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, margin: "16px 0 20px" }}>
               <TierCard
-                tier="Very strong"
+                tier="Very strong" strength={4} delay={0}
                 color="#15803d"
                 bg="#dcfce7"
                 examples="Vitamin D, Omega-3, Creatine, Magnesium glycinate, Zinc, B12"
@@ -99,7 +119,7 @@ export default function MethodologyPage() {
                 ]}
               />
               <TierCard
-                tier="Strong"
+                tier="Strong" strength={3} delay={0.12}
                 color="#a16207"
                 bg="#fef3c7"
                 examples="Ashwagandha, L-theanine, Collagen peptides, Curcumin, CoQ10"
@@ -110,7 +130,7 @@ export default function MethodologyPage() {
                 ]}
               />
               <TierCard
-                tier="Moderate"
+                tier="Moderate" strength={2} delay={0.24}
                 color="#4338ca"
                 bg="#e0e7ff"
                 examples="Rhodiola, Lion's mane, 5-HTP, Bacopa"
@@ -121,7 +141,7 @@ export default function MethodologyPage() {
                 ]}
               />
               <TierCard
-                tier="Emerging"
+                tier="Emerging" strength={1} delay={0.36}
                 color="#5b21b6"
                 bg="#ede9fe"
                 examples="NMN, Fisetin, Urolithin A (Mitopure), Spermidine"
@@ -138,6 +158,7 @@ export default function MethodologyPage() {
           {/* Profile matching */}
           <Section number="02" title="How your profile gets matched">
             <P>The quiz, build, and audit tools all run the same engine under the hood. Here&apos;s the simplified flow.</P>
+            <ScoreFlow />
             <Ol items={[
               "Your answers (goals, lifestyle, sleep, stress, diet, conditions) become a set of tags, e.g. low-sleep, high-stress, vegan, joint-pain.",
               "Each ingredient is scored: tag-matches × 2 + evidence boost + priority. Ingredients with no tag overlap score zero.",
@@ -244,6 +265,54 @@ export default function MethodologyPage() {
         </section>
       </main>
       <SiteFooter />
+
+      <style>{`
+        @keyframes tier-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+        @keyframes flow-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        .tier-card { transition: transform .16s ease, box-shadow .16s ease; }
+        .tier-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -16px rgba(10,37,64,0.28); }
+        .flow-node { transition: transform .16s ease, box-shadow .16s ease; }
+        .flow-node:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -14px rgba(10,37,64,0.30); }
+      `}</style>
+    </div>
+  );
+}
+
+// ─── Scoring flow diagram ───────────────────────────────────────────────────
+function ScoreFlow() {
+  const steps = [
+    { label: "Your answers", sub: "goals · sleep · diet", color: TH.sage },
+    { label: "Tags", sub: "low-sleep, vegan…", color: TH.amber },
+    { label: "Score", sub: "match × 2 + evidence", color: "#4338ca" },
+    { label: "Safety filter", sub: "warnings removed", color: "#b91c1c" },
+    { label: "Your stack", sub: "within budget", color: TH.sageDeep },
+  ];
+  return (
+    <div style={{
+      display: "flex", alignItems: "stretch", gap: 8, flexWrap: "wrap",
+      margin: "8px 0 18px", padding: "18px 16px",
+      background: `linear-gradient(135deg, ${TH.surface} 0%, ${TH.bg} 100%)`,
+      border: `1px solid ${TH.edge}`, borderRadius: 16,
+    }}>
+      {steps.map((s, i) => (
+        <div key={s.label} style={{ display: "contents" }}>
+          <div className="flow-node" style={{
+            flex: "1 1 120px", minWidth: 0,
+            background: TH.surface, border: `1px solid ${TH.edge}`, borderTop: `3px solid ${s.color}`,
+            borderRadius: 12, padding: "12px 12px", textAlign: "center",
+            animation: `flow-in .45s ease-out ${i * 0.1}s both`,
+          }}>
+            <div style={{ ...MM, fontSize: 10, color: s.color, fontWeight: 700, letterSpacing: "0.04em", marginBottom: 4 }}>
+              {String(i + 1).padStart(2, "0")}
+            </div>
+            <div style={{ fontSize: 13.5, fontWeight: 600, color: TH.ink, lineHeight: 1.2 }}>{s.label}</div>
+            <div style={{ fontSize: 11, color: TH.muted, marginTop: 3, lineHeight: 1.3 }}>{s.sub}</div>
+          </div>
+          {i < steps.length - 1 && (
+            <div aria-hidden style={{ display: "flex", alignItems: "center", color: TH.mutedDim, fontSize: 16, flexShrink: 0 }}>→</div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }
@@ -287,19 +356,37 @@ function Ol({ items }: { items: string[] }) {
   );
 }
 
-function TierCard({ tier, color, bg, examples, criteria }: { tier: string; color: string; bg: string; examples: string; criteria: string[] }) {
+function TierCard({ tier, color, bg, examples, criteria, strength, delay }: { tier: string; color: string; bg: string; examples: string; criteria: string[]; strength: number; delay: number }) {
   return (
-    <div style={{
+    <div className="tier-card" style={{
       padding: "16px 18px", background: TH.surface,
-      border: `1px solid ${TH.edge}`, borderRadius: 14,
+      border: `1px solid ${TH.edge}`, borderRadius: 14, borderLeft: `4px solid ${color}`,
     }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12, flexWrap: "wrap" }}>
         <span style={{
           padding: "4px 12px", background: bg, color, ...MM, fontSize: 11.5,
           fontWeight: 700, letterSpacing: "0.05em", borderRadius: 999, textTransform: "uppercase",
         }}>{tier}</span>
-        <span style={{ fontSize: 13, color: TH.muted, fontStyle: "italic" }}>e.g. {examples}</span>
+        {/* Animated evidence-strength meter (4 segments) */}
+        <span aria-label={`Evidence strength ${strength} of 4`} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+          {[0, 1, 2, 3].map(i => (
+            <span key={i} style={{
+              width: 22, height: 6, borderRadius: 999, overflow: "hidden",
+              background: TH.edge, position: "relative",
+            }}>
+              {i < strength && (
+                <span style={{
+                  position: "absolute", inset: 0, background: color, borderRadius: 999,
+                  transformOrigin: "left center",
+                  animation: `tier-fill .5s cubic-bezier(.2,.7,.2,1) ${delay + i * 0.09}s both`,
+                }} />
+              )}
+            </span>
+          ))}
+        </span>
+        <span style={{ ...MM, fontSize: 11, color, fontWeight: 600 }}>{strength}/4</span>
       </div>
+      <div style={{ fontSize: 13, color: TH.muted, fontStyle: "italic", marginBottom: 10 }}>e.g. {examples}</div>
       <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, color: TH.inkSoft, lineHeight: 1.6 }}>
         {criteria.map((c, i) => <li key={i}>{c}</li>)}
       </ul>
