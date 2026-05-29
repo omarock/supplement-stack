@@ -131,7 +131,14 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
   const [isSample, setIsSample] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const reset = () => { setStage("idle"); setError(null); setResult(null); setFileName(null); setPasted(""); setPasteMode(false); setIsSample(false); };
+  const reset = () => {
+    setStage("idle"); setError(null); setResult(null); setFileName(null); setPasted(""); setPasteMode(false); setIsSample(false);
+    // Bring the uploader back into view, otherwise the user is left scrolled
+    // down where the result used to be, with the dropzone off-screen.
+    setTimeout(() => {
+      document.getElementById("bw-upload")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
+  };
 
   const showSample = useCallback(() => {
     setIsSample(true); setSourceKind("text"); setResult(SAMPLE_ANALYSIS); setStage("done");
@@ -176,20 +183,21 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
     <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
       <div style={{ maxWidth: 920, margin: "0 auto" }}>
 
-        <header style={{ textAlign: "center", marginBottom: 34, animation: "sd-fade-in .5s ease-out" }}>
-          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", marginBottom: 14, textTransform: "uppercase" }}>
+        <header style={{ textAlign: "center", marginBottom: 22, animation: "sd-fade-in .5s ease-out" }}>
+          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", marginBottom: 12, textTransform: "uppercase" }}>
             Advanced · Bloodwork Analysis
           </div>
-          <h1 style={{ ...D, fontSize: "clamp(34px, 6vw, 58px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 16px" }}>
+          <h1 style={{ ...D, fontSize: "clamp(28px, 5vw, 44px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 12px" }}>
             Turn your labs into a <span style={SI}>plan</span>.
           </h1>
-          <p style={{ fontSize: 18, color: TH.inkSoft, maxWidth: 600, margin: "0 auto", lineHeight: 1.55 }}>
+          <p style={{ fontSize: 16, color: TH.inkSoft, maxWidth: 560, margin: "0 auto", lineHeight: 1.5 }}>
             Upload a blood test, PDF or photo. Our AI reads your biomarkers, flags what&apos;s low or high, and suggests evidence-led, targeted supplements. Private and educational, never a diagnosis.
           </p>
         </header>
 
         {stage !== "done" && (
-          <section style={{
+          <section id="bw-upload" style={{
+            scrollMarginTop: 80,
             background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, padding: "26px 26px",
             boxShadow: "0 1px 3px rgba(10,37,64,0.04), 0 14px 36px rgba(10,37,64,0.08)",
           }}>
@@ -231,7 +239,15 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
                     Drop your lab report here
                   </div>
                   <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.5 }}>
-                    or <span style={{ color: TH.sageDeep, fontWeight: 600 }}>browse files</span> · PDF or photo · up to ~3.5 MB
+                    or <span style={{ color: TH.sageDeep, fontWeight: 600 }}>browse files</span> to upload
+                  </div>
+                  <div style={{ display: "inline-flex", gap: 6, marginTop: 12, flexWrap: "wrap", justifyContent: "center" }}>
+                    {["PDF", "JPG", "PNG", "≤ 3.5 MB"].map(f => (
+                      <span key={f} style={{
+                        ...MM, fontSize: 10.5, color: TH.inkSoft, background: TH.surface,
+                        border: `1px solid ${TH.edge}`, borderRadius: 999, padding: "3px 10px",
+                      }}>{f}</span>
+                    ))}
                   </div>
                 </div>
 

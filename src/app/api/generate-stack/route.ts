@@ -14,11 +14,33 @@ interface GenerateRequest {
 export interface GenerateResponse {
   ok: boolean;
   goals: string[];        // extracted goals as short tags
+  stackName: string;      // a short, human stack name e.g. "Calm Focus Foundation"
+  summary: string;        // 1-2 sentences: why this stack works together
+  synergy?: string;       // how the picks complement each other
   stack: { id: string; name: string; reason: string }[];
   monthlyCost: number;
   poweredBy: "claude" | "rules";
   notes?: string[];
   error?: string;
+}
+
+// Build a friendly stack name + summary from detected goals (used by both
+// the rules fallback and as a guaranteed default if Claude omits them).
+const GOAL_LABELS: Record<string, string> = {
+  sleep: "Sleep", energy: "Energy", focus: "Focus", stress: "Calm",
+  recovery: "Recovery", immune: "Immunity", longevity: "Longevity",
+  beauty: "Skin & Hair", gut: "Gut", joint: "Joint", heart: "Heart",
+  "hormone-female": "Hormone Balance", "hormone-male": "Vitality",
+};
+function composeNameAndSummary(goals: string[], count: number): { stackName: string; summary: string } {
+  const labels = goals.map(g => GOAL_LABELS[g]).filter(Boolean);
+  const focus = labels.length === 0 ? "Foundation"
+    : labels.length === 1 ? `${labels[0]}`
+    : labels.length === 2 ? `${labels[0]} & ${labels[1]}`
+    : `${labels[0]}, ${labels[1]} & more`;
+  const stackName = labels.length === 0 ? "Daily Foundation Stack" : `${focus} Stack`;
+  const summary = `A focused ${count}-supplement routine built around your goal${labels.length ? `: ${labels.join(", ").toLowerCase()}` : ""}. Each pick is evidence-graded and dosed to work together, not to pad the list.`;
+  return { stackName, summary };
 }
 
 const GOAL_KEYWORDS: { goal: string; tags: string[]; keywords: string[] }[] = [
@@ -84,9 +106,13 @@ function rulesBasedGenerate(req: GenerateRequest): GenerateResponse {
     total += d3.monthlyCost;
   }
 
+  const goals = Array.from(detectedGoals);
+  const { stackName, summary } = composeNameAndSummary(goals, chosen.length);
   return {
     ok: true,
-    goals: Array.from(detectedGoals),
+    goals,
+    stackName,
+    summary,
     stack: chosen,
     monthlyCost: total,
     poweredBy: "rules",
@@ -107,19 +133,24 @@ async function claudeGenerate(req: GenerateRequest): Promise<GenerateResponse> {
   }));
   const cap = BUDGET_CAP[req.budget ?? "medium"];
 
-  const system = `You are an evidence-led supplement coach for suppdoc.io. The user describes what they want in plain English; you select 4-8 supplements from a fixed catalog that match their goals.
+  const system = `You are an evidence-led supplement coach for suppdoc.io. The user describes what they want in plain English; you design a COMPLETE, optimized supplement stack of 4-8 items from a fixed catalog, like a thoughtful clinician would, not just a list of ingredients.
 
 Rules:
 1. ONLY use ids that appear in the provided catalog
 2. Prioritize "very strong" and "strong" evidence over "moderate"
 3. Stay within the budget cap${req.veganOnly ? "\n4. ONLY include vegan: true items" : ""}
 5. Note any goals you couldn't address with confidence
-6. Return ONLY valid JSON, no preamble, no markdown fences
+6. Give the stack a short, memorable, human name (2-4 words, e.g. "Calm Focus Foundation")
+7. Explain why the stack works AS A WHOLE and how the picks complement each other (synergy)
+8. Return ONLY valid JSON, no preamble, no markdown fences
 
 JSON shape:
 {
+  "stackName": "<2-4 word stack name>",
+  "summary": "<1-2 sentences: who this is for and why it works as a whole>",
+  "synergy": "<1-2 sentences: how these specific picks complement / reinforce each other>",
   "goals": ["<short tag>", "..."],
-  "stack": [{"id": "<catalog id>", "name": "<exact name>", "reason": "<plain English 1 sentence why>"}],
+  "stack": [{"id": "<catalog id>", "name": "<exact name>", "reason": "<plain English 1 sentence why it's in the stack>"}],
   "notes": ["<optional caveat or recommendation>", "..."]
 }`;
 
@@ -143,6 +174,9 @@ Return the JSON stack now.`;
   }
 
   const parsed = safeParseJson<{
+    stackName?: string;
+    summary?: string;
+    synergy?: string;
     goals?: string[];
     stack?: { id: string; name: string; reason: string }[];
     notes?: string[];
@@ -159,9 +193,14 @@ Return the JSON stack now.`;
     return sum + (s?.monthlyCost ?? 0);
   }, 0);
 
+  const goals = parsed.goals ?? [];
+  const fallback = composeNameAndSummary(goals, validStack.length);
   return {
     ok: true,
-    goals: parsed.goals ?? [],
+    goals,
+    stackName: (parsed.stackName ?? "").trim() || fallback.stackName,
+    summary: (parsed.summary ?? "").trim() || fallback.summary,
+    synergy: (parsed.synergy ?? "").trim() || undefined,
     stack: validStack,
     monthlyCost: total,
     poweredBy: "claude",
@@ -170,18 +209,22 @@ Return the JSON stack now.`;
 }
 
 export async function POST(req: NextRequest) {
+  const err = (error: string) => Response.json(
+    { ok: false, error, goals: [], stackName: "", summary: "", stack: [], monthlyCost: 0, poweredBy: "rules" } satisfies GenerateResponse,
+    { status: 400 }
+  );
   let body: GenerateRequest;
   try {
     body = await req.json();
   } catch {
-    return Response.json({ ok: false, error: "invalid json", goals: [], stack: [], monthlyCost: 0, poweredBy: "rules" } satisfies GenerateResponse, { status: 400 });
+    return err("invalid json");
   }
   const text = (body?.text ?? "").trim();
   if (!text || text.length < 5) {
-    return Response.json({ ok: false, error: "describe your goals (5+ chars)", goals: [], stack: [], monthlyCost: 0, poweredBy: "rules" } satisfies GenerateResponse, { status: 400 });
+    return err("describe your goals (5+ chars)");
   }
   if (text.length > 2000) {
-    return Response.json({ ok: false, error: "too long (max 2000 chars)", goals: [], stack: [], monthlyCost: 0, poweredBy: "rules" } satisfies GenerateResponse, { status: 400 });
+    return err("too long (max 2000 chars)");
   }
 
   const result = anthropicEnabled() ? await claudeGenerate(body) : rulesBasedGenerate(body);

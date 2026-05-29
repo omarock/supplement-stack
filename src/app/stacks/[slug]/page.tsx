@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { STACKS, getStack, getStackSupplements, getStackOptionalSupplements, stackMonthlyCost } from "@/lib/stacks";
 import { GOALS } from "@/lib/goals";
-import { PRODUCTS } from "@/lib/products";
+import { PRODUCTS, cleanIherbImageUrl } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import SiteHeader from "@/components/SiteHeader";
@@ -283,19 +283,38 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                         const amazonHref = p.amazonAsin
                           ? amazonProductLink(p.amazonAsin)
                           : amazonLink(`${p.brand} ${p.productName}`);
+                        const img = cleanIherbImageUrl(p.imageUrl);
                         return (
                           <div key={i} style={{
                             background: th.paper, border: `1px solid ${th.line}`, borderRadius: 12,
                             padding: 14, display: "flex", flexDirection: "column", gap: 8,
                           }}>
-                            <span style={{
-                              alignSelf: "flex-start",
-                              padding: "3px 9px", borderRadius: 999,
-                              fontSize: 10, ...MM, fontWeight: 600, letterSpacing: "0.08em",
-                              background: p.brandBg, color: p.brandInk,
+                            {/* Product image (clean white canvas) with a tidy fallback */}
+                            <div style={{
+                              position: "relative", height: 140, borderRadius: 10, overflow: "hidden",
+                              background: "#ffffff", border: `1px solid ${th.line}`,
+                              display: "flex", alignItems: "center", justifyContent: "center",
                             }}>
-                              {p.badge.toUpperCase()}
-                            </span>
+                              {img ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img src={img} alt={`${p.brand} ${p.productName}`} loading="lazy"
+                                  style={{ width: "100%", height: "100%", objectFit: "contain", padding: 12 }} />
+                              ) : (
+                                <div aria-hidden style={{
+                                  width: 46, height: 72, borderRadius: 23,
+                                  background: `linear-gradient(135deg, ${s.hue}, ${s.hue}cc)`,
+                                  boxShadow: `0 10px 24px ${s.hue}40`,
+                                }} />
+                              )}
+                              <span style={{
+                                position: "absolute", top: 8, left: 8,
+                                padding: "3px 9px", borderRadius: 999,
+                                fontSize: 10, ...MM, fontWeight: 600, letterSpacing: "0.08em",
+                                background: p.brandBg, color: p.brandInk,
+                              }}>
+                                {p.badge.toUpperCase()}
+                              </span>
+                            </div>
                             <div style={{
                               fontFamily: '"Bricolage Grotesque", system-ui, sans-serif', fontWeight: 600,
                               fontSize: 14, color: th.ink, lineHeight: 1.3, letterSpacing: "-0.01em",

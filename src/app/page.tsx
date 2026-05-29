@@ -176,11 +176,12 @@ function Hero() {
           <span style={{ flex: 1, height: 1, background: TH.edge }} />
         </div>
 
-        {/* 3 guided paths */}
+        {/* 3 guided paths, Quiz is the recommended primary entry point */}
         <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
           <PathCard
-            href="/quiz" recommended badge="Most start here"
-            title="Take the AI quiz" meta="3 MIN · THE MOST THOROUGH PATH"
+            href="/quiz" recommended badge="Recommended"
+            title="Take the AI quiz" meta="3 MIN · THE MOST ACCURATE, PERSONALIZED PATH"
+            note="Answer a few questions, get a stack matched to how you sleep, train, and feel."
             icon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke={TH.sageDeep} strokeWidth="1.4" strokeLinejoin="round" /></svg>}
             arrow={arrow}
           />
@@ -212,35 +213,44 @@ function Hero() {
   );
 }
 
-function PathCard({ href, recommended = false, badge, title, meta, icon, arrow }: {
+function PathCard({ href, recommended = false, badge, title, meta, note, icon, arrow }: {
   href: string; recommended?: boolean; badge?: string; title: string; meta: string;
-  icon: React.ReactNode; arrow: (c: string, s?: number) => React.ReactNode;
+  note?: string; icon: React.ReactNode; arrow: (c: string, s?: number) => React.ReactNode;
 }) {
   return (
     <Link href={href} className="sd-path" style={{
-      display: "flex", alignItems: "center", gap: 13, textDecoration: "none", color: "inherit",
-      background: recommended ? `linear-gradient(180deg, ${TH.surface}, #fbfdfb)` : TH.surface,
-      border: `1px solid ${recommended ? TH.sage + "59" : TH.edge}`,
-      borderRadius: 15, padding: "13px 14px", boxShadow: "0 1px 2px rgba(10,37,64,0.04)",
+      display: "flex", alignItems: recommended ? "flex-start" : "center", gap: 13, textDecoration: "none", color: "inherit",
+      background: recommended ? `linear-gradient(180deg, ${TH.sage}0f, ${TH.surface} 55%)` : TH.surface,
+      border: `${recommended ? 1.5 : 1}px solid ${recommended ? TH.sage + "80" : TH.edge}`,
+      borderRadius: 15, padding: recommended ? "15px 15px" : "13px 14px",
+      boxShadow: recommended ? `0 2px 4px rgba(10,37,64,0.04), 0 14px 30px -18px ${TH.sage}99` : "0 1px 2px rgba(10,37,64,0.04)",
       transition: "transform .14s, box-shadow .14s, border-color .14s",
     }}>
       <span style={{
-        width: 38, height: 38, borderRadius: 11, flexShrink: 0,
+        width: recommended ? 42 : 38, height: recommended ? 42 : 38, borderRadius: 12, flexShrink: 0,
         display: "flex", alignItems: "center", justifyContent: "center",
         background: recommended ? TH.accentGlow : TH.bg,
+        marginTop: recommended ? 1 : 0,
       }}>{icon}</span>
-      <span style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 3 }}>
-        <span style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 14.5, fontWeight: 600, color: TH.ink, letterSpacing: "-0.01em" }}>
+      <span style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: recommended ? 4 : 3 }}>
+        <span style={{ display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap", fontSize: recommended ? 15.5 : 14.5, fontWeight: 600, color: TH.ink, letterSpacing: "-0.01em" }}>
           {title}
-          {badge && <span style={{ ...MM, fontSize: 8.5, fontWeight: 500, color: TH.sageDeep, background: TH.accentGlow, padding: "2px 6px", borderRadius: 5, letterSpacing: "0.04em", textTransform: "uppercase" }}>{badge}</span>}
+          {badge && <span style={{
+            ...MM, fontSize: 8.5, fontWeight: 600,
+            color: recommended ? "#fff" : TH.sageDeep,
+            background: recommended ? TH.sage : TH.accentGlow,
+            padding: "2px 7px", borderRadius: 5, letterSpacing: "0.05em", textTransform: "uppercase",
+          }}>{badge}</span>}
         </span>
         <span style={{ ...MM, fontSize: 10, color: TH.muted, letterSpacing: "0.02em" }}>{meta}</span>
+        {note && <span style={{ fontSize: 12.5, color: TH.inkSoft, lineHeight: 1.4, marginTop: 1 }}>{note}</span>}
       </span>
       <span style={{
-        width: 27, height: 27, borderRadius: 999, flexShrink: 0,
+        width: recommended ? 30 : 27, height: recommended ? 30 : 27, borderRadius: 999, flexShrink: 0,
         display: "flex", alignItems: "center", justifyContent: "center",
         background: recommended ? TH.sage : TH.bg,
         boxShadow: recommended ? `0 2px 6px ${TH.sage}73` : "none",
+        marginTop: recommended ? 1 : 0,
       }}>{arrow(recommended ? "#fff" : TH.inkSoft, 12)}</span>
     </Link>
   );
