@@ -7,6 +7,7 @@ import { PRODUCTS } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { TH, FONTS } from "@/lib/theme";
 import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
+import EvidenceBadge from "@/components/EvidenceBadge";
 import { encodeShareToken } from "@/lib/share";
 
 // ─── Constants ─────────────────────────────────────────────────────────────
@@ -725,12 +726,7 @@ function SuppCard({ supp, added, flashed, onAdd }: {
       <div style={{ fontSize: 12, color: TH.muted, lineHeight: 1.4, flex: 1 }}>{supp.purpose}</div>
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4 }}>
-        <span style={{
-          fontSize: 10.5, ...MM, color: supp.evidence === "very strong" ? TH.sageDeep : supp.evidence === "strong" ? "#0a6a3e" : TH.muted,
-          textTransform: "uppercase", letterSpacing: "0.06em",
-        }}>
-          {supp.evidence === "very strong" ? "★★★" : supp.evidence === "strong" ? "★★" : "★"} {supp.evidence}
-        </span>
+        <EvidenceBadge tier={supp.evidence} size="sm" />
         <span aria-hidden style={{
           width: 24, height: 24, borderRadius: 999,
           background: added ? TH.sage : "transparent",

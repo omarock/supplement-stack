@@ -4,7 +4,10 @@ import { useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { TH, FONTS } from "@/lib/theme";
 import ThinkingMessages from "@/components/ThinkingMessages";
-import { STATUS_META, type BloodworkAnalysis, type ExtractedBiomarker, type BiomarkerStatus } from "@/lib/biomarkers";
+import { STATUS_META, rangeBarModel, type BloodworkAnalysis, type ExtractedBiomarker, type BiomarkerStatus } from "@/lib/biomarkers";
+import { SUPPLEMENT_DB } from "@/lib/supplements";
+import ConfidenceCard from "@/components/ConfidenceCard";
+import type { EvidenceTier } from "@/components/EvidenceBadge";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
 const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWeight: 400 };
@@ -77,6 +80,44 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
+// Realistic demo analysis shown by "See an example" — uses real biomarker keys
+// (so range bars render) and real catalog supplement ids.
+const SAMPLE_ANALYSIS: BloodworkAnalysis = {
+  ok: true,
+  poweredBy: "claude",
+  confidence: "high",
+  summary: "Most markers look healthy. Two are worth attention — your ferritin (iron stores) is low and your vitamin D is on the low side — and a few metabolic markers are drifting up. None are alarming, but a few targeted changes could help your energy and long-term health.",
+  biomarkers: [
+    { key: "ferritin", name: "Ferritin", value: 28, unit: "ng/mL", refRange: "30–400", status: "low", category: "blood", note: "Iron storage. Low ferritin is a leading cause of fatigue, especially in menstruating women." },
+    { key: "vitamin_d", name: "Vitamin D (25-OH)", value: 24, unit: "ng/mL", refRange: "30–100", status: "borderline-low", category: "vitamins", note: "Drives immune function, mood, bone health, and calcium handling." },
+    { key: "hba1c", name: "HbA1c", value: 5.8, unit: "%", refRange: "<5.7", status: "borderline-high", category: "metabolic", note: "Average blood sugar over ~3 months. 5.7–6.4% is the prediabetic range." },
+    { key: "ldl", name: "LDL Cholesterol", value: 142, unit: "mg/dL", refRange: "<100", status: "borderline-high", category: "lipids", note: "The cholesterol carrier most associated with cardiovascular risk." },
+    { key: "b12", name: "Vitamin B12", value: 560, unit: "pg/mL", refRange: "300–900", status: "optimal", category: "vitamins", note: "Essential for nerve function, energy, and red blood cells." },
+    { key: "magnesium", name: "Magnesium (serum)", value: 2.1, unit: "mg/dL", refRange: "1.8–2.4", status: "optimal", category: "minerals", note: "Cofactor in 300+ reactions." },
+  ],
+  findings: [
+    { title: "Low iron stores", detail: "Ferritin of 28 is below range. Combined with fatigue, this is worth discussing with your doctor — and a simple recheck in 8–12 weeks.", severity: "flag", biomarkers: ["Ferritin"] },
+    { title: "Metabolic markers drifting up", detail: "HbA1c (5.8%) and LDL (142) are both just over the ideal line. Diet, movement, and a couple of supplements can often nudge these back.", severity: "watch", biomarkers: ["HbA1c", "LDL Cholesterol"] },
+    { title: "This is not a diagnosis", detail: "This analysis is educational and based only on the values shown. Lab ranges vary by lab, age, sex, and medications. Review results with a qualified clinician.", severity: "info" },
+  ],
+  recommendations: [
+    { supplementId: "iron", name: "Iron Bisglycinate (Gentle)", reason: "Targets your low ferritin. The bisglycinate form is gentle on digestion. Pair with vitamin C and recheck in ~3 months.", biomarker: "Ferritin" },
+    { supplementId: "vit-c", name: "Vitamin C (Buffered)", reason: "Boosts iron absorption when taken alongside it.", biomarker: "Ferritin" },
+    { supplementId: "d3k2", name: "Vitamin D3 + K2", reason: "Brings your vitamin D into the optimal range; K2 routes calcium to bone, not arteries.", biomarker: "Vitamin D (25-OH)" },
+    { supplementId: "berberine", name: "Berberine HCl", reason: "Well-evidenced for nudging fasting glucose and HbA1c down, alongside diet.", biomarker: "HbA1c" },
+    { supplementId: "omega3", name: "Omega-3 Fish Oil", reason: "Supports a healthier lipid profile and lowers triglycerides.", biomarker: "LDL Cholesterol" },
+  ],
+  lifestyle: [
+    "Add an iron-rich food (red meat, lentils, spinach) with a squeeze of lemon for absorption.",
+    "A 10–15 minute walk after meals blunts post-meal blood-sugar spikes.",
+    "Swap refined carbs and sugary drinks for whole grains and water to bring HbA1c down.",
+  ],
+  seeClinicianFor: [
+    "A ferritin of 28 ng/mL with fatigue — ask whether an iron panel and a cause check are warranted.",
+    "HbA1c of 5.8% (prediabetic range) — worth a conversation about prevention.",
+  ],
+};
+
 export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
   const [stage, setStage] = useState<Stage>("idle");
   const [error, setError] = useState<string | null>(null);
@@ -86,9 +127,15 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
   const [dragOver, setDragOver] = useState(false);
   const [pasteMode, setPasteMode] = useState(false);
   const [pasted, setPasted] = useState("");
+  const [isSample, setIsSample] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const reset = () => { setStage("idle"); setError(null); setResult(null); setFileName(null); setPasted(""); setPasteMode(false); };
+  const reset = () => { setStage("idle"); setError(null); setResult(null); setFileName(null); setPasted(""); setPasteMode(false); setIsSample(false); };
+
+  const showSample = useCallback(() => {
+    setIsSample(true); setSourceKind("text"); setResult(SAMPLE_ANALYSIS); setStage("done");
+    setTimeout(() => document.getElementById("bw-result")?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
+  }, []);
 
   const analyze = useCallback(async (payload: Record<string, unknown>) => {
     setStage("analyzing"); setError(null);
@@ -187,15 +234,23 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
                 </div>
 
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 16, flexWrap: "wrap", gap: 10 }}>
-                  <div style={{ fontSize: 12.5, color: TH.muted, lineHeight: 1.5, maxWidth: 420 }}>
+                  <div style={{ fontSize: 12.5, color: TH.muted, lineHeight: 1.5, maxWidth: 360 }}>
                     <strong style={{ color: TH.inkSoft }}>Private:</strong> we don&apos;t store your file — it&apos;s read once and discarded.
                   </div>
-                  <button onClick={() => setPasteMode(true)} style={{
-                    background: "transparent", border: `1px solid ${TH.edge}`, borderRadius: 999, padding: "8px 16px",
-                    color: TH.inkSoft, fontSize: 13, fontWeight: 500, cursor: "pointer",
-                  }}>
-                    Or paste values as text
-                  </button>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    <button onClick={showSample} style={{
+                      background: "transparent", border: `1px solid ${TH.edge}`, borderRadius: 999, padding: "8px 16px",
+                      color: TH.sageDeep, fontSize: 13, fontWeight: 600, cursor: "pointer",
+                    }}>
+                      See an example
+                    </button>
+                    <button onClick={() => setPasteMode(true)} style={{
+                      background: "transparent", border: `1px solid ${TH.edge}`, borderRadius: 999, padding: "8px 16px",
+                      color: TH.inkSoft, fontSize: 13, fontWeight: 500, cursor: "pointer",
+                    }}>
+                      Paste values
+                    </button>
+                  </div>
                 </div>
 
                 {error && stage === "error" && (
@@ -214,7 +269,7 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
         {/* Result */}
         {stage === "done" && result && (
           <section id="bw-result" style={{ animation: "sd-fade-in .4s ease-out" }}>
-            <AnalysisReport data={result} sourceKind={sourceKind} signedIn={signedIn} onReset={reset} />
+            <AnalysisReport data={result} sourceKind={sourceKind} signedIn={signedIn} onReset={reset} isSample={isSample} />
           </section>
         )}
       </div>
@@ -293,12 +348,23 @@ function HowItWorks() {
       <p style={{ fontSize: 12.5, color: TH.muted, lineHeight: 1.6, marginTop: 22, textAlign: "center", maxWidth: 600, marginInline: "auto" }}>
         Supported markers include vitamin D, ferritin, B12, magnesium, TSH, fasting glucose, HbA1c, a full lipid panel, hs-CRP, homocysteine, testosterone, and more.
       </p>
+
+      {/* Transparency note */}
+      <div style={{
+        maxWidth: 600, marginInline: "auto", marginTop: 16, background: TH.surface,
+        border: `1px solid ${TH.edge}`, borderRadius: 14, padding: "14px 18px",
+      }}>
+        <div style={{ ...MM, fontSize: 10, color: TH.sageDeep, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 6 }}>How we read your labs</div>
+        <p style={{ fontSize: 12.5, color: TH.muted, lineHeight: 1.6, margin: 0 }}>
+          We extract only the values printed on your report and compare them to your lab&apos;s own reference ranges where shown. Every supplement we suggest links to the evidence behind it. We don&apos;t diagnose, and we&apos;ll always tell you when something is worth a conversation with your doctor.
+        </p>
+      </div>
     </section>
   );
 }
 
 // ─── Analysis report ──────────────────────────────────────────────────────────
-function AnalysisReport({ data, sourceKind, signedIn, onReset }: { data: BloodworkAnalysis; sourceKind: "pdf" | "image" | "text"; signedIn: boolean; onReset: () => void }) {
+function AnalysisReport({ data, sourceKind, signedIn, onReset, isSample = false }: { data: BloodworkAnalysis; sourceKind: "pdf" | "image" | "text"; signedIn: boolean; onReset: () => void; isSample?: boolean }) {
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -321,6 +387,17 @@ function AnalysisReport({ data, sourceKind, signedIn, onReset }: { data: Bloodwo
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 22, marginTop: 8 }}>
+      {isSample && (
+        <div style={{
+          display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", borderRadius: 14,
+          background: TH.accentGlow, border: `1px solid ${TH.sage}40`,
+        }}>
+          <span style={{ ...MM, fontSize: 10, fontWeight: 600, color: "#fff", background: TH.sageDeep, padding: "3px 9px", borderRadius: 999, letterSpacing: "0.06em", textTransform: "uppercase" }}>Example</span>
+          <span style={{ fontSize: 13, color: TH.inkSoft, lineHeight: 1.45 }}>
+            This is a sample analysis to show how it works. <strong style={{ color: TH.ink }}>Upload your own labs</strong> for a real reading.
+          </span>
+        </div>
+      )}
       {/* Summary header */}
       <div style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, padding: "26px 28px", boxShadow: "0 1px 3px rgba(10,37,64,0.04), 0 14px 36px rgba(10,37,64,0.08)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 14, flexWrap: "wrap" }}>
@@ -373,24 +450,18 @@ function AnalysisReport({ data, sourceKind, signedIn, onReset }: { data: Bloodwo
           <p style={{ fontSize: 13, color: TH.muted, margin: "0 0 16px" }}>Educational suggestions, not prescriptions. Confirm with your clinician before starting anything new.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {data.recommendations.map((r, i) => {
-              const inner = (
-                <>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 14.5, fontWeight: 600, color: TH.ink }}>{r.name}</div>
-                    <div style={{ fontSize: 12.5, color: TH.muted, lineHeight: 1.5, marginTop: 2 }}>{r.reason}</div>
-                  </div>
-                  {r.biomarker && <span style={{ ...MM, fontSize: 10.5, color: TH.sageDeep, background: TH.accentGlow, padding: "3px 9px", borderRadius: 999, whiteSpace: "nowrap" }}>{r.biomarker}</span>}
-                  {r.supplementId && <span style={{ color: TH.sageDeep, fontSize: 13 }}>→</span>}
-                </>
-              );
-              return r.supplementId ? (
-                <Link key={i} href={`/ingredients/${r.supplementId}`} style={recRow(true)}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = TH.sage; e.currentTarget.style.transform = "translateX(2px)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = TH.edge; e.currentTarget.style.transform = "none"; }}>
-                  {inner}
-                </Link>
-              ) : (
-                <div key={i} style={recRow(false)}>{inner}</div>
+              const supp = r.supplementId ? SUPPLEMENT_DB.find(s => s.id === r.supplementId) : undefined;
+              const caution = (supp?.warnings?.length ?? 0) > 0;
+              return (
+                <ConfidenceCard
+                  key={i}
+                  name={r.name}
+                  supplementId={r.supplementId}
+                  evidence={supp?.evidence as EvidenceTier | undefined}
+                  reason={r.reason}
+                  basis={r.biomarker ? [r.biomarker] : undefined}
+                  interaction={{ level: caution ? "caution" : "low", note: caution ? "Check with your clinician" : undefined }}
+                />
               );
             })}
           </div>
@@ -422,7 +493,11 @@ function AnalysisReport({ data, sourceKind, signedIn, onReset }: { data: Bloodwo
 
       {/* Actions */}
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
-        {signedIn ? (
+        {isSample ? (
+          <button onClick={onReset} style={{ padding: "13px 24px", borderRadius: 999, border: "none", background: TH.sage, color: "#fff", ...D, fontWeight: 600, fontSize: 14, cursor: "pointer", boxShadow: `0 8px 22px -6px ${TH.sage}80` }}>
+            Analyze my own labs →
+          </button>
+        ) : signedIn ? (
           <button onClick={save} disabled={saving || saved} style={{
             padding: "13px 22px", borderRadius: 999, border: "none", background: saved ? TH.sage : TH.ink, color: "#fff",
             ...D, fontWeight: 600, fontSize: 14, cursor: saved ? "default" : saving ? "wait" : "pointer",
@@ -434,9 +509,11 @@ function AnalysisReport({ data, sourceKind, signedIn, onReset }: { data: Bloodwo
             Sign in to save this
           </Link>
         )}
-        <button onClick={onReset} style={{ padding: "13px 22px", borderRadius: 999, background: TH.bg, border: `1px solid ${TH.edge}`, color: TH.ink, fontSize: 14, fontWeight: 500, cursor: "pointer" }}>
-          Analyze another report
-        </button>
+        {!isSample && (
+          <button onClick={onReset} style={{ padding: "13px 22px", borderRadius: 999, background: TH.bg, border: `1px solid ${TH.edge}`, color: TH.ink, fontSize: 14, fontWeight: 500, cursor: "pointer" }}>
+            Analyze another report
+          </button>
+        )}
         <Link href="/track" style={{ padding: "13px 22px", borderRadius: 999, background: "transparent", border: `1px solid ${TH.edge}`, color: TH.inkSoft, textDecoration: "none", fontSize: 14, fontWeight: 500 }}>
           Track progress over time →
         </Link>
@@ -460,6 +537,7 @@ function Tally({ n, label, hue }: { n: number; label: string; hue: string }) {
 
 function BiomarkerCard({ b }: { b: ExtractedBiomarker }) {
   const meta = STATUS_META[b.status as BiomarkerStatus] ?? STATUS_META.unknown;
+  const bar = rangeBarModel(b.key, b.value);
   return (
     <div style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: "14px 16px", borderTop: `3px solid ${meta.hue}` }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
@@ -471,15 +549,33 @@ function BiomarkerCard({ b }: { b: ExtractedBiomarker }) {
         {b.unit && <span style={{ fontSize: 12, color: TH.muted }}>{b.unit}</span>}
       </div>
       {b.refRange && <div style={{ ...MM, fontSize: 10.5, color: TH.mutedDim, marginTop: 2 }}>ref: {b.refRange}</div>}
-      {b.note && <div style={{ fontSize: 12, color: TH.muted, lineHeight: 1.5, marginTop: 8 }}>{b.note}</div>}
+
+      {/* Healthy-range bar — Function/Levels style */}
+      {bar && (
+        <div style={{ marginTop: 12 }}>
+          <div style={{ position: "relative", height: 7, borderRadius: 999, overflow: "hidden", background: TH.edge }}>
+            {bar.zones.map((z, i) => (
+              <span key={i} style={{
+                position: "absolute", top: 0, bottom: 0,
+                left: `${z.from}%`, width: `${z.to - z.from}%`, background: z.color,
+              }} />
+            ))}
+          </div>
+          {/* marker */}
+          <div style={{ position: "relative", height: 0 }}>
+            <span style={{
+              position: "absolute", top: -11, left: `${bar.markerPct}%`, transform: "translateX(-50%)",
+              width: 12, height: 12, borderRadius: 999, background: "#fff",
+              border: `2.5px solid ${meta.hue}`, boxShadow: "0 1px 3px rgba(10,37,64,0.25)",
+            }} aria-hidden />
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, ...MM, fontSize: 9, color: TH.mutedDim, letterSpacing: "0.04em", textTransform: "uppercase" }}>
+            <span>Low</span><span>Optimal</span><span>High</span>
+          </div>
+        </div>
+      )}
+
+      {b.note && <div style={{ fontSize: 12, color: TH.muted, lineHeight: 1.5, marginTop: 10 }}>{b.note}</div>}
     </div>
   );
-}
-
-function recRow(isLink: boolean): React.CSSProperties {
-  return {
-    display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", background: TH.surface,
-    borderRadius: 12, border: `1px solid ${TH.edge}`, textDecoration: "none", color: "inherit",
-    transition: isLink ? "border-color .15s, transform .15s" : undefined,
-  };
 }
