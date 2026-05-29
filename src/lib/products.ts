@@ -2577,6 +2577,20 @@ export function getProducts(supplementId: string): ProductOption[] {
 }
 
 /**
+ * Insert a Cloudinary white-pad transform into iHerb CDN URLs so every bottle
+ * image sits on a clean white 500x500 canvas regardless of the original photo's
+ * lifestyle props. Non-iHerb URLs are returned unchanged.
+ */
+export function cleanIherbImageUrl(url: string | undefined): string | undefined {
+  if (!url) return url;
+  if (!url.includes("cloudinary.images-iherb.com")) return url;
+  return url.replace(
+    /\/image\/upload\/([^/]+)\/images\//,
+    "/image/upload/$1,c_pad,b_white,w_500,h_500/images/"
+  );
+}
+
+/**
  * Get the primary (top recommended) product for a supplement.
  */
 export function getPrimaryProduct(supplementId: string): ProductOption | null {

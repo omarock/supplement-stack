@@ -3,13 +3,38 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Link from "next/link";
 import { SUPPLEMENT_DB, type Supplement } from "@/lib/supplements";
-import { PRODUCTS } from "@/lib/products";
+import { getPrimaryProduct, cleanIherbImageUrl, type ProductOption } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
+import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import { TH, FONTS } from "@/lib/theme";
 import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
 import EvidenceBadge from "@/components/EvidenceBadge";
 import { track } from "@/lib/analytics";
 import { encodeShareToken } from "@/lib/share";
+import type { GenerateResponse } from "@/app/api/generate-stack/route";
+
+// Narrative metadata that turns a list of ids into a "complete stack"
+type GeneratedMeta = {
+  stackName: string;
+  summary: string;
+  synergy?: string;
+  goals: string[];
+  notes?: string[];
+  reasons: Record<string, string>; // supplement id -> one-line reason
+  poweredBy: "claude" | "rules" | "template";
+};
+
+// Resolve the best iHerb + Amazon links for a supplement's primary product
+function buyLinks(supp: Supplement): { product: ProductOption | null; iherb: string; amazon: string; image?: string } {
+  const p = getPrimaryProduct(supp.id);
+  const iherb = p?.productPath
+    ? iherbProductLink(p.productPath)
+    : iherbLink(p?.searchQuery ?? supp.iherbSearch);
+  const amazon = p?.amazonAsin
+    ? amazonProductLink(p.amazonAsin)
+    : amazonLink(p ? `${p.brand} ${p.productName}` : supp.name);
+  return { product: p, iherb, amazon, image: cleanIherbImageUrl(p?.imageUrl) };
+}
 
 // ─── Constants ─────────────────────────────────────────────────────────────
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -142,8 +167,12 @@ export default function BuildClient() {
   const [stackDrawerOpen, setStackDrawerOpen] = useState(false);
   const [justAdded, setJustAdded] = useState<string | null>(null);
   const [savedToast, setSavedToast] = useState<string | null>(null);
+  const [generated, setGenerated] = useState<GeneratedMeta | null>(null);
+  const [buyOpen, setBuyOpen] = useState(false);
+  const [canUndo, setCanUndo] = useState(false);
   const justAddedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const undoRef = useRef<{ ids: string[]; name: string; gen: GeneratedMeta | null } | null>(null);
 
   // Hydrate from URL hash or localStorage on mount
   useEffect(() => {
@@ -160,10 +189,11 @@ export default function BuildClient() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const parsed = JSON.parse(raw) as { ids: string[]; name?: string };
+        const parsed = JSON.parse(raw) as { ids: string[]; name?: string; gen?: GeneratedMeta };
         if (Array.isArray(parsed.ids)) {
           setSelectedIds(parsed.ids.filter(id => SUPPLEMENT_DB.some(s => s.id === id)));
           if (parsed.name) setStackName(parsed.name);
+          if (parsed.gen) setGenerated(parsed.gen);
         }
       }
     } catch { /* ignore */ }
@@ -173,9 +203,9 @@ export default function BuildClient() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ids: selectedIds, name: stackName }));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ids: selectedIds, name: stackName, gen: generated }));
     } catch { /* ignore */ }
-  }, [selectedIds, stackName]);
+  }, [selectedIds, stackName, generated]);
 
   const selected = useMemo(
     () => selectedIds
@@ -249,14 +279,52 @@ export default function BuildClient() {
   const toggleSupp = useCallback((id: string) => {
     setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : (prev.length >= MAX_SUPPS ? (toast(`Stack is at the cap of ${MAX_SUPPS}.`), prev) : (flashAdded(id), [...prev, id])));
   }, [flashAdded, toast]);
+  // Clear EVERYTHING: stack, generated narrative, name, search + all filters,
+  // and the mobile drawer. Offers a one-tap undo instead of a blocking confirm.
   const clearAll = useCallback(() => {
-    if (selectedIds.length === 0) return;
-    if (window.confirm("Clear your entire stack?")) setSelectedIds([]);
-  }, [selectedIds.length]);
-  const loadTemplate = useCallback((ids: string[]) => {
-    const valid = ids.filter(id => SUPPLEMENT_DB.some(s => s.id === id));
+    if (selectedIds.length === 0 && !generated) return;
+    undoRef.current = { ids: selectedIds, name: stackName, gen: generated };
+    setSelectedIds([]);
+    setGenerated(null);
+    setStackName("My Custom Stack");
+    setSearch("");
+    setActiveGoal("all");
+    setEvidenceFilter("all");
+    setVeganOnly(false);
+    setBudgetCap(0);
+    setCategoryFilter("all");
+    setStackDrawerOpen(false);
+    setBuyOpen(false);
+    setCanUndo(true);
+    toast("Stack cleared");
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => { setSavedToast(null); setCanUndo(false); }, 4000);
+  }, [selectedIds, generated, stackName, toast]);
+
+  const undoClear = useCallback(() => {
+    const snap = undoRef.current;
+    if (!snap) return;
+    setSelectedIds(snap.ids);
+    setStackName(snap.name);
+    setGenerated(snap.gen);
+    setCanUndo(false);
+    setSavedToast(null);
+  }, []);
+
+  const loadTemplate = useCallback((tpl: { name: string; description: string; ids: string[] }) => {
+    const valid = tpl.ids.filter(id => SUPPLEMENT_DB.some(s => s.id === id));
     setSelectedIds(valid);
-    toast("Template loaded, tweak from here.");
+    setStackName(tpl.name);
+    setGenerated({
+      stackName: tpl.name,
+      summary: tpl.description,
+      goals: [],
+      reasons: Object.fromEntries(
+        valid.map(id => [id, SUPPLEMENT_DB.find(s => s.id === id)?.why ?? ""])
+      ),
+      poweredBy: "template",
+    });
+    toast("Stack loaded, tweak from here.");
   }, [toast]);
 
   // Share / copy URL, uses /share/[token] for a clean URL with a custom OG preview
@@ -276,12 +344,19 @@ export default function BuildClient() {
     }
   }, [selectedIds, stackName, toast]);
 
-  // Buy all, open each iHerb link in a new tab (with affiliate code)
-  const buyAll = useCallback(() => {
+  // Open the premium "buy full stack" review modal (per-product links avoid the
+  // popup-blocker problem that killed the old open-N-tabs approach).
+  const openBuy = useCallback(() => {
+    if (selected.length === 0) return;
+    track("checkout_click", { count: selected.length, total: totalCost });
+    setBuyOpen(true);
+  }, [selected.length, totalCost]);
+
+  // Triggered by a direct click inside the modal, opens every iHerb product tab.
+  const openAllIherb = useCallback(() => {
+    if (typeof window === "undefined") return;
     for (const s of selected) {
-      const p = PRODUCTS[s.id]?.[0];
-      const href = p?.productPath ? iherbProductLink(p.productPath) : iherbLink(s.iherbSearch);
-      if (typeof window !== "undefined") window.open(href, "_blank", "noopener,noreferrer");
+      window.open(buyLinks(s).iherb, "_blank", "noopener,noreferrer");
     }
   }, [selected]);
 
@@ -308,14 +383,35 @@ export default function BuildClient() {
         </p>
       </header>
 
-      {/* AI mode, describe in plain English */}
+      {/* AI mode, describe in plain English. Only when no stack exists yet. */}
       {selected.length === 0 && (
         <AIDescribeMode
-          onApply={ids => {
-            const valid = ids.filter(id => SUPPLEMENT_DB.some(s => s.id === id));
-            setSelectedIds(valid);
-            toast(`${valid.length} supplements added from your description.`);
+          onApply={(res: GenerateResponse) => {
+            const valid = res.stack.filter(item => SUPPLEMENT_DB.some(s => s.id === item.id));
+            setSelectedIds(valid.map(s => s.id));
+            setStackName(res.stackName || "My Custom Stack");
+            setGenerated({
+              stackName: res.stackName || "My Custom Stack",
+              summary: res.summary || "",
+              synergy: res.synergy,
+              goals: res.goals ?? [],
+              notes: res.notes,
+              reasons: Object.fromEntries(valid.map(item => [item.id, item.reason])),
+              poweredBy: res.poweredBy,
+            });
+            toast(`Your ${valid.length}-supplement stack is ready.`);
           }}
+        />
+      )}
+
+      {/* AI-generated / template result, the "complete stack" presentation */}
+      {generated && selected.length > 0 && (
+        <GeneratedStackResult
+          meta={generated}
+          supps={selected}
+          total={totalCost}
+          onBuy={openBuy}
+          onClear={clearAll}
         />
       )}
 
@@ -331,7 +427,7 @@ export default function BuildClient() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 230px), 1fr))", gap: 10 }}>
             {QUICK_TEMPLATES.map(t => (
-              <button key={t.name} onClick={() => loadTemplate(t.ids)}
+              <button key={t.name} onClick={() => loadTemplate(t)}
                 style={{
                   textAlign: "left", padding: "14px 16px",
                   background: TH.bg, border: `1px solid ${TH.edge}`,
@@ -359,7 +455,9 @@ export default function BuildClient() {
         alignItems: "start",
       }}>
         {/* ─── Library column ─── */}
-        <section>
+        {/* minWidth:0 prevents the classic CSS grid blowout, without it the
+            ingredient cards force the column wider than the viewport on mobile. */}
+        <section style={{ minWidth: 0 }}>
           {/* Search + filters */}
           <div style={{
             position: "sticky", top: 76, zIndex: 5, background: TH.bg,
@@ -490,7 +588,7 @@ export default function BuildClient() {
         </section>
 
         {/* ─── Stack panel ─── */}
-        <aside style={{
+        <aside data-stack-panel style={{
           position: "sticky", top: 88,
           maxHeight: "calc(100vh - 104px)",
           display: "flex", flexDirection: "column",
@@ -547,14 +645,15 @@ export default function BuildClient() {
               borderTop: `1px solid ${TH.edge}`, padding: "14px 18px",
               display: "flex", flexDirection: "column", gap: 8, background: TH.bg,
             }}>
-              <button onClick={buyAll} style={{
-                padding: "13px 16px", background: TH.ink, color: TH.surface,
+              <button onClick={openBuy} style={{
+                padding: "14px 16px", background: TH.ink, color: TH.surface,
                 border: "none", borderRadius: 12, cursor: "pointer",
-                fontSize: 14, fontWeight: 500,
+                fontSize: 14.5, fontWeight: 600, minHeight: 48,
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                boxShadow: `0 8px 20px ${TH.ink}22`,
               }}>
-                Buy all on iHerb
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                Buy full stack · ${totalCost}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
               </button>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                 <button onClick={shareUrl} style={secondaryBtn()}>Share link</button>
@@ -619,10 +718,10 @@ export default function BuildClient() {
               )}
             </div>
             <div style={{ borderTop: `1px solid ${TH.edge}`, padding: "14px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
-              <button onClick={buyAll} style={{
-                padding: "14px 16px", background: TH.ink, color: TH.surface,
-                border: "none", borderRadius: 12, cursor: "pointer", fontSize: 15, fontWeight: 500,
-              }}>Buy all on iHerb</button>
+              <button onClick={() => { setStackDrawerOpen(false); openBuy(); }} style={{
+                padding: "15px 16px", background: TH.ink, color: TH.surface,
+                border: "none", borderRadius: 12, cursor: "pointer", fontSize: 15, fontWeight: 600, minHeight: 50,
+              }}>Buy full stack · ${totalCost}</button>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                 <button onClick={shareUrl} style={secondaryBtn()}>Share</button>
                 <button onClick={clearAll} style={secondaryBtn("#b91c1c")}>Clear</button>
@@ -632,17 +731,46 @@ export default function BuildClient() {
         </div>
       )}
 
-      {/* Toast */}
+      {/* Buy full stack modal */}
+      {buyOpen && (
+        <BuyAllModal
+          supps={selected}
+          name={stackName}
+          total={totalCost}
+          onOpenAll={openAllIherb}
+          onClose={() => setBuyOpen(false)}
+        />
+      )}
+
+      {/* Toast (with one-tap undo after clearing) */}
       {savedToast && (
         <div role="status" style={{
           position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)",
-          background: TH.ink, color: TH.surface, padding: "12px 18px", borderRadius: 999,
+          background: TH.ink, color: TH.surface, padding: "10px 12px 10px 18px", borderRadius: 999,
           fontSize: 13.5, fontWeight: 500, zIndex: 120,
           boxShadow: "0 14px 38px rgba(10,37,64,0.32)",
           animation: "sd-rise .25s ease-out",
+          display: "flex", alignItems: "center", gap: 12,
         }}>
           {savedToast}
+          {canUndo && (
+            <button onClick={undoClear} style={{
+              background: TH.sage, color: "#fff", border: "none", borderRadius: 999,
+              padding: "6px 14px", fontSize: 13, fontWeight: 600, cursor: "pointer",
+              fontFamily: FONTS.body,
+            }}>Undo</button>
+          )}
         </div>
+      )}
+
+      {/* On mobile, lift the global chat launcher above the floating stack CTA so
+          they never overlap (the launcher is a fixed bottom-right button). */}
+      {selected.length > 0 && (
+        <style>{`
+          @media (max-width: 1100px) {
+            :root { --chat-launcher-bottom: 92px !important; }
+          }
+        `}</style>
       )}
 
       {/* Responsive layout variables (scoped to /build only) */}
@@ -850,7 +978,7 @@ function DailyTimeline({ supps, onRemove }: { supps: Supplement[]; onRemove: (id
   );
 }
 
-function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
+function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void }) {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -874,13 +1002,12 @@ function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ text: t, budget: "medium" }),
       });
-      const body = await res.json();
+      const body = (await res.json()) as GenerateResponse;
       if (!body.ok) {
         setError(body.error ?? "Couldn't generate a stack.");
       } else {
-        const ids = (body.stack as { id: string }[]).map(s => s.id);
-        track("stack_generate", { count: ids.length });
-        onApply(ids);
+        track("stack_generate", { count: body.stack.length, poweredBy: body.poweredBy });
+        onApply(body);
         setText("");
       }
     } catch (err) {
@@ -892,10 +1019,13 @@ function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
 
   const run = useCallback(() => runWith(text), [runWith, text]);
 
-  // Prefill + auto-compose when arriving from the homepage goal search (/build?goal=…)
+  // Prefill + auto-compose when arriving from the homepage goal search
+  // (/build?goal=…). Consume the param immediately so that clearing the stack,
+  // which re-mounts this component, does NOT silently regenerate the same stack.
   useEffect(() => {
     const g = new URLSearchParams(window.location.search).get("goal");
     if (g && g.trim().length >= 3) {
+      window.history.replaceState({}, "", "/build");
       setText(g);
       runWith(g);
     }
@@ -984,6 +1114,288 @@ function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
         }}>{error}</div>
       )}
     </section>
+  );
+}
+
+// ─── Generated "complete stack" presentation ───────────────────────────────
+function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
+  meta: GeneratedMeta; supps: Supplement[]; total: number;
+  onBuy: () => void; onClear: () => void;
+}) {
+  const sourceLabel =
+    meta.poweredBy === "claude" ? "AI-composed for you" :
+    meta.poweredBy === "template" ? "Ready-made stack" : "Composed for you";
+  // The strongest evidence tier present, surfaced as a headline trust signal
+  const tierRank = { "very strong": 3, strong: 2, moderate: 1 } as const;
+  const topTier = supps.reduce<Supplement["evidence"]>((acc, s) =>
+    tierRank[s.evidence] > tierRank[acc] ? s.evidence : acc, "moderate");
+
+  return (
+    <section style={{
+      background: TH.surface, border: `1px solid ${TH.edge}`,
+      borderRadius: 24, marginBottom: 22, overflow: "hidden",
+      boxShadow: "0 2px 6px rgba(10,37,64,0.05), 0 22px 50px -28px rgba(10,37,64,0.22)",
+      animation: "sd-fade-in .5s ease-out",
+    }}>
+      {/* Header band */}
+      <div style={{
+        padding: "var(--gen-pad)",
+        background: `linear-gradient(135deg, ${TH.sage}12, ${TH.amber}10 60%, ${TH.coral}08)`,
+        borderBottom: `1px solid ${TH.edge}`,
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+          <span style={{
+            ...MM, fontSize: 10, padding: "3px 9px", borderRadius: 999,
+            background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
+            color: "#fff", fontWeight: 700, letterSpacing: "0.06em",
+          }}>{meta.poweredBy === "template" ? "STACK" : "AI"}</span>
+          <span style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.04em", textTransform: "uppercase" }}>
+            {sourceLabel}
+          </span>
+        </div>
+        <h2 style={{ ...D, fontSize: "var(--gen-h2)", letterSpacing: "-0.025em", lineHeight: 1.05, color: TH.ink, margin: 0 }}>
+          {meta.stackName}
+        </h2>
+        {meta.summary && (
+          <p style={{ fontSize: 15.5, lineHeight: 1.55, color: TH.inkSoft, margin: "12px 0 0", maxWidth: 720 }}>
+            {meta.summary}
+          </p>
+        )}
+        {/* Quick stats */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 16 }}>
+          <Stat label="Supplements" value={`${supps.length}`} />
+          <Stat label="Monthly cost" value={`$${total}`} />
+          <Stat label="Evidence" value={topTier === "very strong" ? "Very strong" : topTier === "strong" ? "Strong" : "Moderate"} />
+        </div>
+      </div>
+
+      {/* Body */}
+      <div style={{ padding: "var(--gen-pad)" }}>
+        {meta.synergy && (
+          <div style={{
+            display: "flex", gap: 12, padding: "14px 16px", marginBottom: 18,
+            background: TH.bg, borderRadius: 14, border: `1px solid ${TH.edge}`,
+          }}>
+            <span aria-hidden style={{ fontSize: 16, lineHeight: 1.3 }}>🧬</span>
+            <div>
+              <div style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>
+                Why this stack works
+              </div>
+              <p style={{ fontSize: 14, lineHeight: 1.55, color: TH.inkSoft, margin: 0 }}>{meta.synergy}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Supplement breakdown */}
+        <div style={{ display: "grid", gridTemplateColumns: "var(--gen-cols)", gap: 12 }}>
+          {supps.map(s => {
+            const t = TIMING_META[s.timing];
+            const reason = meta.reasons[s.id] || s.why;
+            return (
+              <div key={s.id} style={{
+                border: `1px solid ${TH.edge}`, borderRadius: 16, padding: 16,
+                display: "flex", flexDirection: "column", gap: 9, background: TH.surface,
+              }}>
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+                    <span style={{ width: 10, height: 10, borderRadius: 999, background: s.hue, flexShrink: 0 }} />
+                    <Link href={`/ingredients/${s.id}`} style={{ ...D, fontSize: 15.5, color: TH.ink, textDecoration: "none", lineHeight: 1.25 }}>
+                      {s.name}
+                    </Link>
+                  </div>
+                  <span style={{
+                    ...MM, fontSize: 10, padding: "3px 8px", borderRadius: 999,
+                    background: t.bg, color: t.ink, fontWeight: 600, flexShrink: 0,
+                    display: "inline-flex", alignItems: "center", gap: 4,
+                  }}><span aria-hidden>{t.icon}</span>{t.label}</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                  <span style={{ ...MM, fontSize: 12, color: TH.ink, background: TH.bg, padding: "3px 9px", borderRadius: 8 }}>{s.dose}</span>
+                  <EvidenceBadge tier={s.evidence} size="sm" />
+                  <span style={{ ...MM, fontSize: 11.5, color: TH.muted }}>${s.monthlyCost}/mo</span>
+                </div>
+                <p style={{ fontSize: 13.5, lineHeight: 1.5, color: TH.inkSoft, margin: 0 }}>{reason}</p>
+                {s.warnings && s.warnings.length > 0 && (
+                  <div style={{
+                    fontSize: 12, color: "#92400e", background: "#fef3c7",
+                    borderRadius: 8, padding: "7px 10px", lineHeight: 1.4,
+                  }}>
+                    ⚠ Check with a clinician if you have: {s.warnings.join(", ").replace(/-/g, " ")}.
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {meta.notes && meta.notes.length > 0 && (
+          <ul style={{ listStyle: "none", padding: 0, margin: "18px 0 0", display: "flex", flexDirection: "column", gap: 8 }}>
+            {meta.notes.map((n, i) => (
+              <li key={i} style={{
+                padding: "10px 12px", background: "#f3f4f6", color: TH.inkSoft,
+                borderRadius: 10, fontSize: 12.5, lineHeight: 1.45, display: "flex", gap: 8,
+              }}><span aria-hidden>ℹ</span><span>{n}</span></li>
+            ))}
+          </ul>
+        )}
+
+        {/* Actions */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 20 }}>
+          <button onClick={onBuy} style={{
+            flex: "1 1 240px", minHeight: 52, padding: "0 22px", borderRadius: 999, border: "none",
+            background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
+            fontFamily: FONTS.body, fontWeight: 600, fontSize: 15.5, cursor: "pointer",
+            display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
+            boxShadow: `0 10px 22px -6px ${TH.sage}80`,
+          }}>
+            Buy full stack · ${total}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+          <button onClick={onClear} style={{
+            minHeight: 52, padding: "0 22px", borderRadius: 999,
+            background: TH.surface, color: TH.inkSoft, border: `1px solid ${TH.edgeStrong}`,
+            fontFamily: FONTS.body, fontWeight: 500, fontSize: 14.5, cursor: "pointer",
+          }}>Start over</button>
+        </div>
+        <p style={{ fontSize: 12, color: TH.muted, margin: "12px 0 0", lineHeight: 1.5 }}>
+          Fine-tune it below, add or remove any ingredient, the stack panel updates live.
+        </p>
+      </div>
+
+      <style>{`
+        :root { --gen-pad: 30px; --gen-h2: 30px; --gen-cols: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
+        @media (max-width: 640px) { :root { --gen-pad: 20px; --gen-h2: 24px; } }
+      `}</style>
+    </section>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <div style={{ ...D, fontSize: 22, color: TH.ink, letterSpacing: "-0.02em", lineHeight: 1 }}>{value}</div>
+      <div style={{ ...MM, fontSize: 10, color: TH.muted, letterSpacing: "0.06em", textTransform: "uppercase", marginTop: 4 }}>{label}</div>
+    </div>
+  );
+}
+
+// ─── Buy full stack modal ───────────────────────────────────────────────────
+function BuyAllModal({ supps, name, total, onOpenAll, onClose }: {
+  supps: Supplement[]; name: string; total: number;
+  onOpenAll: () => void; onClose: () => void;
+}) {
+  const showAmazon = amazonEnabled();
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", handler); document.body.style.overflow = ""; };
+  }, [onClose]);
+
+  return (
+    <div onClick={onClose} style={{
+      position: "fixed", inset: 0, zIndex: 130,
+      background: "rgba(10,37,64,0.55)", backdropFilter: "blur(8px)",
+      display: "flex", alignItems: "flex-start", justifyContent: "center",
+      padding: "var(--buy-pad)", overflowY: "auto", animation: "sd-fade-in .25s ease-out",
+    }}>
+      <div onClick={e => e.stopPropagation()} style={{
+        background: TH.bg, borderRadius: 24, maxWidth: 620, width: "100%",
+        boxShadow: "0 30px 80px rgba(10,37,64,0.3)", animation: "sd-rise .3s cubic-bezier(.4,0,.2,1)",
+        position: "relative", display: "flex", flexDirection: "column", overflow: "hidden",
+      }}>
+        {/* Header */}
+        <div style={{ padding: "22px 24px", borderBottom: `1px solid ${TH.edge}`, background: TH.surface }}>
+          <button onClick={onClose} aria-label="Close" style={{
+            position: "absolute", top: 16, right: 16, width: 34, height: 34, borderRadius: 999,
+            background: TH.bg, border: `1px solid ${TH.edge}`, cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: TH.ink,
+          }}>×</button>
+          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 6 }}>
+            Buy your full stack
+          </div>
+          <h2 style={{ ...D, fontSize: 24, color: TH.ink, margin: 0, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{name}</h2>
+          <div style={{ fontSize: 13.5, color: TH.inkSoft, marginTop: 6 }}>
+            {supps.length} {supps.length === 1 ? "product" : "products"} · ~${total}/month · third-party-tested brands
+          </div>
+        </div>
+
+        {/* One-tap open all */}
+        <div style={{ padding: "16px 24px 0" }}>
+          <button onClick={onOpenAll} style={{
+            width: "100%", minHeight: 52, borderRadius: 14, border: "none", cursor: "pointer",
+            background: TH.ink, color: "#fff", fontFamily: FONTS.body, fontWeight: 600, fontSize: 15,
+            display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
+            boxShadow: `0 8px 20px ${TH.ink}22`,
+          }}>
+            Open all {supps.length} on iHerb
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </button>
+          <p style={{ fontSize: 11.5, color: TH.muted, textAlign: "center", margin: "8px 0 0" }}>
+            Opens a tab per product, if your browser blocks them, use the buttons below.
+          </p>
+        </div>
+
+        {/* Per-product list */}
+        <div style={{ padding: "16px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
+          {supps.map(s => {
+            const { product, iherb, amazon, image } = buyLinks(s);
+            const t = TIMING_META[s.timing];
+            return (
+              <div key={s.id} style={{
+                display: "flex", gap: 12, padding: 12, background: TH.surface,
+                border: `1px solid ${TH.edge}`, borderRadius: 14, alignItems: "center",
+              }}>
+                {/* Image / fallback */}
+                <div style={{
+                  width: 56, height: 56, borderRadius: 10, flexShrink: 0, overflow: "hidden",
+                  background: "#fff", border: `1px solid ${TH.edge}`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  {image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={image} alt={s.name} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 4 }} />
+                  ) : (
+                    <span style={{ width: 18, height: 30, borderRadius: 9, background: s.hue }} />
+                  )}
+                </div>
+                {/* Info */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ ...D, fontSize: 14, color: TH.ink, lineHeight: 1.2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {product ? product.productName : s.name}
+                  </div>
+                  <div style={{ fontSize: 11.5, color: TH.muted, marginTop: 2 }}>
+                    {product ? `${product.brand} · ` : ""}{s.dose} · <span style={{ color: t.ink }}>{t.label}</span>
+                  </div>
+                </div>
+                {/* Buttons */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }}>
+                  <a href={iherb} target="_blank" rel="noopener noreferrer sponsored" style={{
+                    padding: "8px 12px", borderRadius: 999, background: TH.ink, color: "#fff",
+                    textDecoration: "none", fontSize: 12, fontWeight: 600, textAlign: "center", minWidth: 92,
+                  }}>iHerb{product ? ` · $${product.approxPrice}` : ""}</a>
+                  {showAmazon && (
+                    <a href={amazon} target="_blank" rel="noopener noreferrer sponsored" style={{
+                      padding: "8px 12px", borderRadius: 999, background: "#ffd814", color: "#0f1111",
+                      textDecoration: "none", fontSize: 12, fontWeight: 600, textAlign: "center",
+                      border: "1px solid #fcd200",
+                    }}>Amazon</a>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <p style={{ fontSize: 11, color: TH.muted, textAlign: "center", padding: "0 24px 22px", lineHeight: 1.6, margin: 0 }}>
+          Prices are approximate and may vary. We may earn a commission on qualifying purchases, at no extra cost to you.
+        </p>
+      </div>
+      <style>{`
+        :root { --buy-pad: 40px 16px; }
+        @media (max-width: 640px) { :root { --buy-pad: 0; } }
+      `}</style>
+    </div>
   );
 }
 

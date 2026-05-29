@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Supplement } from "@/lib/supplements";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
-import { getProducts, getPrimaryProduct, type ProductOption } from "@/lib/products";
+import { getProducts, getPrimaryProduct, cleanIherbImageUrl, type ProductOption } from "@/lib/products";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import { trackClick } from "@/lib/track";
 import BottleMockup from "@/components/BottleMockup";
@@ -34,19 +34,6 @@ const TIMING_COLOR: Record<Supplement["timing"], string> = {
 function productHref(p: ProductOption): string {
   if (p.productPath) return iherbProductLink(p.productPath);
   return iherbLink(p.searchQuery ?? `${p.brand} ${p.productName}`);
-}
-
-// Insert Cloudinary white-pad transformation into iHerb CDN URLs so all
-// bottle images sit on a clean white background regardless of the original
-// photo's lifestyle props.
-function cleanIherbImageUrl(url: string | undefined): string | undefined {
-  if (!url) return url;
-  if (!url.includes("cloudinary.images-iherb.com")) return url;
-  // Insert `c_pad,b_white,w_500,h_500` (pad to 500x500 with white bg) right after the existing transforms
-  return url.replace(
-    /\/image\/upload\/([^/]+)\/images\//,
-    "/image/upload/$1,c_pad,b_white,w_500,h_500/images/"
-  );
 }
 
 // ─── Product visual: clean Amazon-style image area ──────────────────────────
