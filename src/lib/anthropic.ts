@@ -31,9 +31,14 @@ export interface ClaudeResult {
   stopReason?: string;
 }
 
-const DEFAULT_MODEL = "claude-sonnet-4-7-20250115";
-// Falls back to whatever is current if the default 404s.
-const FALLBACK_MODELS = ["claude-sonnet-4-5-20241022", "claude-3-7-sonnet-20250219"];
+// Verified against /v1/models on 2026-05-28. Sonnet 4.6 is the best quality
+// /cost balance for chat + audit + stack generation. Fallbacks degrade
+// gracefully to older snapshots if Anthropic deprecates 4.6.
+const DEFAULT_MODEL = "claude-sonnet-4-6";
+const FALLBACK_MODELS = [
+  "claude-sonnet-4-5-20250929",
+  "claude-haiku-4-5-20251001",
+];
 
 export function anthropicEnabled(): boolean {
   return Boolean(process.env.ANTHROPIC_API_KEY);
