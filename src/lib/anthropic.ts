@@ -8,9 +8,16 @@
  * deterministic rules-based response (see /api/audit-stack and /api/generate-stack).
  */
 
+// Content blocks — used for multimodal input (bloodwork PDFs + lab photos).
+// The Messages API accepts either a plain string or an array of these blocks.
+export type ContentBlock =
+  | { type: "text"; text: string }
+  | { type: "image"; source: { type: "base64"; media_type: string; data: string } }
+  | { type: "document"; source: { type: "base64"; media_type: "application/pdf"; data: string } };
+
 export interface ClaudeMessage {
   role: "user" | "assistant";
-  content: string;
+  content: string | ContentBlock[];
 }
 
 export interface ClaudeOptions {

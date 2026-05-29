@@ -126,6 +126,35 @@ export default async function ProfilePage() {
           <StatCard label="CURRENT STACK SIZE" value={lastQuiz?.supplement_count ?? "—"} sub={lastQuiz ? `~$${lastQuiz.total_monthly_cost}/mo` : "Take the quiz"} />
         </section>
 
+        {/* Feature cards: tracker + bloodwork */}
+        <section style={{
+          display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          gap: 16, marginBottom: 36,
+        }}>
+          <Link href="/track" style={{
+            display: "block", textDecoration: "none", color: "inherit",
+            background: "linear-gradient(135deg, #fff7ed 0%, #ffffff 100%)",
+            border: "1px solid #f5d3a8", borderRadius: 16, padding: "20px 22px",
+          }}>
+            <div style={{ fontSize: 24, marginBottom: 8 }} aria-hidden>🔥</div>
+            <div style={{ ...D, fontWeight: 600, fontSize: 18, color: th.ink, marginBottom: 4 }}>Daily tracker</div>
+            <div style={{ fontSize: 13.5, color: th.inkMute, lineHeight: 1.5 }}>
+              Log a 60-second check-in, build a streak, and watch your wellness trends. <span style={{ color: th.sage, fontWeight: 600 }}>Open →</span>
+            </div>
+          </Link>
+          <Link href="/bloodwork" style={{
+            display: "block", textDecoration: "none", color: "inherit",
+            background: "linear-gradient(135deg, #f0f9f3 0%, #ffffff 100%)",
+            border: `1px solid ${th.sage}44`, borderRadius: 16, padding: "20px 22px",
+          }}>
+            <div style={{ fontSize: 24, marginBottom: 8 }} aria-hidden>🩸</div>
+            <div style={{ ...D, fontWeight: 600, fontSize: 18, color: th.ink, marginBottom: 4 }}>Bloodwork analysis</div>
+            <div style={{ fontSize: 13.5, color: th.inkMute, lineHeight: 1.5 }}>
+              Upload a lab report — AI flags deficiencies and matches targeted supplements. <span style={{ color: th.sage, fontWeight: 600 }}>Analyze →</span>
+            </div>
+          </Link>
+        </section>
+
         {/* Quick actions */}
         <section style={{ marginBottom: 40, display: "flex", gap: 12, flexWrap: "wrap" }}>
           <Link href="/quiz" style={primaryBtn}>Take a new quiz →</Link>

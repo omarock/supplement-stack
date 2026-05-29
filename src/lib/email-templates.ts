@@ -276,6 +276,80 @@ This is the last automated email we'll send. We only write again if it's genuine
   };
 }
 
+// ── WEEKLY TRACKER DIGEST ───────────────────────────────────────────────────
+export interface WeeklyDigestData {
+  firstName?: string;
+  headline: string;
+  insights: string[];
+  suggestions: string[];
+  streak: number;
+  adherence: number;     // 0-100
+  daysTracked: number;   // in the last 7
+}
+
+export function weeklyDigestEmail(d: WeeklyDigestData): EmailPayload {
+  const greeting = d.firstName ? `Hi ${escapeHtml(d.firstName)},` : "Hey there,";
+  const insightsHtml = d.insights.length
+    ? `<ul style="font-size:15px;line-height:1.65;color:#3c4858;padding-left:20px;margin:0 0 22px;">
+        ${d.insights.map(i => `<li style="margin-bottom:8px;">${escapeHtml(i)}</li>`).join("")}
+       </ul>`
+    : "";
+  const suggestionsHtml = d.suggestions.length
+    ? `<div style="background:#f6f5f1;border-radius:12px;padding:18px 20px;margin:0 0 8px;">
+        <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#3f7a52;font-weight:700;margin-bottom:10px;">Try this week</div>
+        ${d.suggestions.map(s => `<p style="font-size:14px;line-height:1.55;color:#3c4858;margin:0 0 8px;">→ ${escapeHtml(s)}</p>`).join("")}
+       </div>`
+    : "";
+
+  const html = wrap(
+    [
+      row(`
+        <div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#5ba373;font-weight:700;margin-bottom:10px;">Your week in review</div>
+        <h1 style="font-size:28px;line-height:1.15;letter-spacing:-0.02em;margin:0 0 18px;color:#0a2540;">
+          ${escapeHtml(d.headline)}
+        </h1>
+        <p style="font-size:16px;line-height:1.6;color:#3c4858;margin:0 0 20px;">${greeting}</p>
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin:0 0 24px;">
+          <tr>
+            <td align="center" style="padding:14px;background:#fff7ed;border-radius:12px;width:33%;">
+              <div style="font-size:30px;font-weight:700;color:#b5751e;line-height:1;">${d.streak}🔥</div>
+              <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.06em;margin-top:6px;">Day streak</div>
+            </td>
+            <td style="width:8px;"></td>
+            <td align="center" style="padding:14px;background:#f0f9f3;border-radius:12px;width:33%;">
+              <div style="font-size:30px;font-weight:700;color:#3f7a52;line-height:1;">${d.adherence}%</div>
+              <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.06em;margin-top:6px;">Adherence</div>
+            </td>
+            <td style="width:8px;"></td>
+            <td align="center" style="padding:14px;background:#f6f5f1;border-radius:12px;width:33%;">
+              <div style="font-size:30px;font-weight:700;color:#0a2540;line-height:1;">${d.daysTracked}</div>
+              <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.06em;margin-top:6px;">Days logged</div>
+            </td>
+          </tr>
+        </table>
+        ${insightsHtml}
+        ${suggestionsHtml}
+      `),
+      row(`${button("Open my tracker", `${BASE}/track`, "#5ba373")}`),
+    ].join(""),
+    `${d.headline} — your weekly suppdoc.io tracker summary.`,
+  );
+
+  const text = `${greeting}
+
+${d.headline}
+
+This week: ${d.streak}-day streak · ${d.adherence}% adherence · ${d.daysTracked} days logged.
+
+${d.insights.map(i => `• ${i}`).join("\n")}
+
+${d.suggestions.length ? "Try this week:\n" + d.suggestions.map(s => `→ ${s}`).join("\n") + "\n\n" : ""}Open your tracker: ${BASE}/track
+
+— The suppdoc.io team`;
+
+  return { subject: `Your week: ${d.streak}-day streak, ${d.adherence}% adherence`, html, text };
+}
+
 // ── Stage selector ────────────────────────────────────────────────────────
 export type DripStage = "welcome" | "day3" | "day7" | "day14";
 

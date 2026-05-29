@@ -9,6 +9,8 @@ const LINKS: [string, string][] = [
   ["Quiz", "/quiz"],
   ["Build", "/build"],
   ["Audit", "/audit"],
+  ["Bloodwork", "/bloodwork"],
+  ["Track", "/track"],
   ["Stacks", "/stacks"],
   ["Journal", "/journal"],
 ];
