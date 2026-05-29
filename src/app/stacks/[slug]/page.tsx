@@ -9,6 +9,7 @@ import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SupplementGrid, { DailyRoutine } from "@/components/SupplementGrid";
+import BottleMockup from "@/components/BottleMockup";
 
 const th = {
   bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
@@ -300,11 +301,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                                 <img src={img} alt={`${p.brand} ${p.productName}`} loading="lazy"
                                   style={{ width: "100%", height: "100%", objectFit: "contain", padding: 12 }} />
                               ) : (
-                                <div aria-hidden style={{
-                                  width: 46, height: 72, borderRadius: 23,
-                                  background: `linear-gradient(135deg, ${s.hue}, ${s.hue}cc)`,
-                                  boxShadow: `0 10px 24px ${s.hue}40`,
-                                }} />
+                                <BottleMockup option={p} height={140} showBackgroundScene={false} />
                               )}
                               <span style={{
                                 position: "absolute", top: 8, left: 8,
@@ -348,8 +345,9 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                                 target="_blank" rel="noopener noreferrer sponsored"
                                 style={{
                                   display: "block", textAlign: "center",
-                                  padding: "8px 12px", borderRadius: 9, fontSize: 12, fontWeight: 500,
-                                  background: "#ff9900", color: "#fff", textDecoration: "none",
+                                  padding: "9px 12px", borderRadius: 9, fontSize: 12, fontWeight: 600,
+                                  background: "#ffd814", color: "#0f1111", textDecoration: "none",
+                                  border: "1px solid #fcd200",
                                 }}
                               >
                                 Buy on Amazon →

@@ -13,6 +13,7 @@ import { BIOMARKERS } from "@/lib/biomarkers";
 import { RESEARCH } from "@/lib/research";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import BottleMockup from "@/components/BottleMockup";
 
 const th = {
   bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
@@ -310,11 +311,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                       <img src={img} alt={`${p.brand} ${p.productName}`} loading="lazy"
                         style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} />
                     ) : (
-                      <div aria-hidden style={{
-                        width: 50, height: 78, borderRadius: 25,
-                        background: `linear-gradient(135deg, ${supp.hue}, ${supp.hue}cc)`,
-                        boxShadow: `0 10px 24px ${supp.hue}40`,
-                      }} />
+                      <BottleMockup option={p} height={150} showBackgroundScene={false} />
                     )}
                     <span style={{
                       position: "absolute", top: 10, left: 10,
@@ -336,12 +333,26 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                     target="_blank" rel="noopener noreferrer sponsored"
                     style={{
                       display: "block", textAlign: "center",
-                      padding: "10px 14px", borderRadius: 10, fontSize: 13, fontWeight: 500,
+                      padding: "11px 14px", borderRadius: 10, fontSize: 13, fontWeight: 600,
                       background: th.burgundy, color: "#fff", textDecoration: "none",
                     }}
                   >
                     View on iHerb →
                   </a>
+                  {amazonEnabled() && (
+                    <a
+                      href={p.amazonAsin ? amazonProductLink(p.amazonAsin) : amazonLink(`${p.brand} ${p.productName}`)}
+                      target="_blank" rel="noopener noreferrer sponsored"
+                      style={{
+                        display: "block", textAlign: "center", marginTop: 8,
+                        padding: "11px 14px", borderRadius: 10, fontSize: 13, fontWeight: 600,
+                        background: "#ffd814", color: "#0f1111", textDecoration: "none",
+                        border: "1px solid #fcd200",
+                      }}
+                    >
+                      Buy on Amazon →
+                    </a>
+                  )}
                 </div>
                 );
               })}
