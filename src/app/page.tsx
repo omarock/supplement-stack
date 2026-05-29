@@ -202,9 +202,9 @@ function Hero() {
       </div>
 
       <style>{`
-        :root { --hh-pad-y: 44px; --hh-pad-b: 56px; --hh-h1: 46px; --hh-sub: 15.5px; }
-        @media (max-width: 1024px) { :root { --hh-pad-y: 32px; --hh-pad-b: 44px; --hh-h1: 40px; } }
-        @media (max-width: 640px)  { :root { --hh-pad-y: 20px; --hh-pad-b: 36px; --hh-h1: 32px; --hh-sub: 14px; } }
+        :root { --hh-pad-y: 22px; --hh-pad-b: 56px; --hh-h1: 46px; --hh-sub: 15.5px; }
+        @media (max-width: 1024px) { :root { --hh-pad-y: 14px; --hh-pad-b: 44px; --hh-h1: 40px; } }
+        @media (max-width: 640px)  { :root { --hh-pad-y: 6px; --hh-pad-b: 36px; --hh-h1: 32px; --hh-sub: 14px; } }
       `}</style>
     </section>
   );
