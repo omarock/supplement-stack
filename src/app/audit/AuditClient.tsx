@@ -6,6 +6,7 @@ import { TH, FONTS } from "@/lib/theme";
 import type { AuditResponse, AuditFinding } from "@/app/api/audit-stack/route";
 import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
 import TrackStackCTA from "@/components/TrackStackCTA";
+import { track } from "@/lib/analytics";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
 const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWeight: 400 };
@@ -42,6 +43,7 @@ export default function AuditClient() {
         setError(body.error ?? "Something went wrong.");
       } else {
         setResult(body);
+        track("audit_run", { score: body.score ?? 0, poweredBy: body.poweredBy ?? "rules", detected: body.detected?.length ?? 0 });
         // Smooth-scroll to result
         setTimeout(() => {
           document.getElementById("audit-result")?.scrollIntoView({ behavior: "smooth", block: "start" });

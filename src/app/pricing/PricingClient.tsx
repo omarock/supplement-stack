@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { track } from "@/lib/analytics";
 import { TH, FONTS } from "@/lib/theme";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -29,6 +30,7 @@ export default function PricingClient({ signedIn, isPremium, billingEnabled }: {
   const [error, setError] = useState<string | null>(null);
 
   const upgrade = useCallback(async () => {
+    track("checkout_click", { plan, signedIn });
     if (!signedIn) { router.push("/signin?redirect=/pricing"); return; }
     if (!billingEnabled) { setError("Checkout isn't switched on yet — check back shortly."); return; }
     setBusy(true); setError(null);

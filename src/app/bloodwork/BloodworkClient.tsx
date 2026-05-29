@@ -8,6 +8,7 @@ import { STATUS_META, rangeBarModel, type BloodworkAnalysis, type ExtractedBioma
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import ConfidenceCard from "@/components/ConfidenceCard";
 import type { EvidenceTier } from "@/components/EvidenceBadge";
+import { track } from "@/lib/analytics";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
 const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWeight: 400 };
@@ -146,6 +147,7 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
       const body: BloodworkAnalysis = await res.json();
       if (!body.ok) { setError(body.error || "We couldn't read that. Try a clearer photo or paste your values."); setStage("error"); return; }
       setResult(body); setStage("done");
+      track("bloodwork_analyze", { markers: body.biomarkers?.length ?? 0, poweredBy: body.poweredBy ?? "rules" });
       setTimeout(() => document.getElementById("bw-result")?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
     } catch { setError("Network error. Please try again."); setStage("error"); }
   }, []);
@@ -381,7 +383,7 @@ function AnalysisReport({ data, sourceKind, signedIn, onReset, isSample = false 
         body: JSON.stringify({ biomarkers: data.biomarkers, analysis: { summary: data.summary, findings: data.findings, recommendations: data.recommendations, lifestyle: data.lifestyle, seeClinicianFor: data.seeClinicianFor }, confidence: data.confidence, sourceKind }),
       });
       const body = await res.json();
-      if (body.ok) setSaved(true);
+      if (body.ok) { setSaved(true); track("bloodwork_save", { markers: data.biomarkers.length }); }
     } finally { setSaving(false); }
   };
 

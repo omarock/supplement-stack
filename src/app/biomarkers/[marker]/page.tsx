@@ -6,6 +6,8 @@ import SiteFooter from "@/components/SiteFooter";
 import EvidenceBadge, { type EvidenceTier } from "@/components/EvidenceBadge";
 import { BIOMARKERS, type BiomarkerDef } from "@/lib/biomarkers";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
+import ReviewedBy from "@/components/ReviewedBy";
+import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import { TH, FONTS } from "@/lib/theme";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -79,7 +81,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "MedicalWebPage", name: `${b.label}: what it means & how to optimize`, description: b.blurb, url: `${BASE}/biomarkers/${marker}`, lastReviewed: new Date().toISOString().slice(0, 10), about: { "@type": "MedicalSignOrSymptom", name: b.label } },
+      { "@type": "MedicalWebPage", name: `${b.label}: what it means & how to optimize`, description: b.blurb, url: `${BASE}/biomarkers/${marker}`, lastReviewed: new Date().toISOString().slice(0, 10), author: authorSchema(), ...(reviewedBySchema() ? { reviewedBy: reviewedBySchema() } : {}), about: { "@type": "MedicalSignOrSymptom", name: b.label } },
       { "@type": "FAQPage", mainEntity: faq.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) },
       { "@type": "BreadcrumbList", itemListElement: [
         { "@type": "ListItem", position: 1, name: "Biomarkers", item: `${BASE}/biomarkers` },
@@ -102,7 +104,9 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
           <h1 style={{ ...D, fontSize: "clamp(28px, 5vw, 42px)", lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 0 14px" }}>
             {b.label}: what it <span style={SI}>means</span>.
           </h1>
-          <p style={{ fontSize: 18, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 24px" }}>{b.blurb}</p>
+          <p style={{ fontSize: 18, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 14px" }}>{b.blurb}</p>
+          <ReviewedBy />
+          <div style={{ height: 10 }} />
 
           {/* Range bands */}
           <section style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 16, padding: "18px 20px", marginBottom: 24 }}>

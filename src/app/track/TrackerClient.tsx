@@ -17,6 +17,7 @@ import {
   lastNDateKeys,
   scoreTier,
 } from "@/lib/tracker";
+import { track } from "@/lib/analytics";
 
 const MILESTONES = [1, 3, 7, 14, 21, 30, 50, 75, 100, 150, 200, 365];
 
@@ -113,6 +114,7 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
             // Celebrate the streak — only on a brand-new check-in for today, at a milestone.
             if (!wasLoggedToday) {
               const { current } = computeStreak(next, today);
+              track("checkin_save", { streak: current, took: c.took_stack });
               if (MILESTONES.includes(current)) setCelebrate(current);
             }
           }}
@@ -254,6 +256,7 @@ function EnrollIntro({ onEnrolled }: { onEnrolled: (e: TrackerEnrollment) => voi
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ reminderOptIn: true, weeklyDigestOptIn: true }),
       });
+      track("track_enroll", { source: "intro" });
       onEnrolled({ stack_name: null, stack_ids: null, reminder_opt_in: true, weekly_digest_opt_in: true, started_at: new Date().toISOString() });
     } finally { setBusy(false); }
   }, [onEnrolled]);

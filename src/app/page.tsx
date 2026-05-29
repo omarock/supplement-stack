@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, type CSSProperties } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { track } from "@/lib/analytics";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import HeroSpotlight from "@/components/HeroSpotlight";
@@ -65,6 +66,7 @@ function Hero() {
 
   function build() {
     const finalGoal = (goal.trim() || picked.join(", ")).trim();
+    track("home_goal_build", { hasGoal: finalGoal.length > 0, chips: picked.length });
     router.push(finalGoal ? `/build?goal=${encodeURIComponent(finalGoal)}` : "/build");
   }
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { STACKS, getStack, getStackSupplements, getStackOptionalSupplements, stackMonthlyCost } from "@/lib/stacks";
+import { GOALS } from "@/lib/goals";
 import { PRODUCTS } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
@@ -87,6 +88,20 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
             <span>~${cost}/MO</span>
             <span>EVIDENCE-LED</span>
           </div>
+          {(() => {
+            const goal = GOALS.find(g => g.stackSlug === stack.slug);
+            return goal ? (
+              <div style={{ marginTop: 22 }}>
+                <Link href={`/best/${goal.slug}`} style={{
+                  display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 18px", borderRadius: 999,
+                  background: "transparent", border: `1px solid ${stack.coverInk}`, color: stack.coverInk, opacity: 0.92,
+                  textDecoration: "none", fontSize: 13.5, fontWeight: 600,
+                }}>
+                  See the full evidence guide: best supplements for {goal.label} →
+                </Link>
+              </div>
+            ) : null;
+          })()}
         </section>
 
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "56px 24px 32px" }}>

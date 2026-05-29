@@ -7,6 +7,10 @@ import { iherbLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import { PRODUCTS } from "@/lib/products";
 import { iherbProductLink } from "@/lib/iherb";
+import { GOALS } from "@/lib/goals";
+import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
+import { BIOMARKERS } from "@/lib/biomarkers";
+import { RESEARCH } from "@/lib/research";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -18,6 +22,14 @@ const th = {
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const D = { fontFamily: '"Bricolage Grotesque", system-ui, sans-serif' } as const;
+
+function chip(): React.CSSProperties {
+  return {
+    display: "inline-flex", alignItems: "center", padding: "7px 14px", borderRadius: 999,
+    background: "#ffffff", border: "1px solid rgba(10,37,64,0.08)", color: "#3c4858",
+    fontSize: 13, fontWeight: 500, textDecoration: "none",
+  };
+}
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 const CATEGORY_LABEL: Record<string, string> = {
@@ -80,6 +92,13 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
 
   // Product options for this supplement
   const products = PRODUCTS[supp.id] ?? [];
+
+  // ── Internal-linking web: connect this ingredient to the hub pages ──────────
+  const nameOf = (id: string) => SUPPLEMENT_DB.find(s => s.id === id)?.name.split(" (")[0] ?? id;
+  const relatedGoals = GOALS.filter(g => (g.tags ?? []).some(t => supp.tags.includes(t)) || (g.ids ?? []).includes(supp.id)).slice(0, 6);
+  const relatedInteractions = INTERACTIONS.filter(i => i.a === supp.id || i.b === supp.id).slice(0, 6);
+  const relatedBiomarkers = BIOMARKERS.filter(b => (b.supplementsForLow ?? []).includes(supp.id) || (b.supplementsForHigh ?? []).includes(supp.id)).slice(0, 6);
+  const hasResearch = Boolean(RESEARCH[supp.id]);
 
   const categoryLabel = supp.category ? CATEGORY_LABEL[supp.category] : "Supplement";
   const evidenceBadge = EVIDENCE_BADGE[supp.evidence];
@@ -332,6 +351,45 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {/* Explore further — internal-linking web to goal / interaction / biomarker hubs */}
+      {(relatedGoals.length > 0 || relatedInteractions.length > 0 || relatedBiomarkers.length > 0 || hasResearch) && (
+        <section style={{ padding: "0 var(--section-pad-x) 56px" }}>
+          <div style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: 20 }}>
+            {relatedGoals.length > 0 && (
+              <div>
+                <h3 style={{ ...D, fontWeight: 600, fontSize: 15, color: th.ink, margin: "0 0 10px" }}>Best for your goal</h3>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {relatedGoals.map(g => (
+                    <Link key={g.slug} href={`/best/${g.slug}`} style={chip()}>{g.label}</Link>
+                  ))}
+                </div>
+              </div>
+            )}
+            {relatedInteractions.length > 0 && (
+              <div>
+                <h3 style={{ ...D, fontWeight: 600, fontSize: 15, color: th.ink, margin: "0 0 10px" }}>Interactions</h3>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {relatedInteractions.map(i => {
+                    const other = i.a === supp.id ? i.b : i.a;
+                    return <Link key={interactionSlug(i.a, i.b)} href={`/interactions/${interactionSlug(i.a, i.b)}`} style={chip()}>with {nameOf(other)}</Link>;
+                  })}
+                </div>
+              </div>
+            )}
+            {relatedBiomarkers.length > 0 && (
+              <div>
+                <h3 style={{ ...D, fontWeight: 600, fontSize: 15, color: th.ink, margin: "0 0 10px" }}>Related biomarkers</h3>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {relatedBiomarkers.map(b => (
+                    <Link key={b.key} href={`/biomarkers/${b.key.replace(/_/g, "-")}`} style={chip()}>{b.label}</Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}

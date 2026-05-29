@@ -8,6 +8,7 @@ import { IHERB_HOME } from "@/lib/iherb";
 import { trackQuizSubmission } from "@/lib/track";
 import SupplementGrid from "@/components/SupplementGrid";
 import TrackStackCTA from "@/components/TrackStackCTA";
+import { track } from "@/lib/analytics";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
@@ -84,6 +85,7 @@ export default function ResultsPage() {
         if (!sessionStorage.getItem(submissionKey)) {
           sessionStorage.setItem(submissionKey, "1");
           trackQuizSubmission(safeData, r).catch(() => { /* silent */ });
+          track("quiz_complete", { supplements: r.supplements.length, cost: r.totalMonthlyCost });
         }
       } catch { /* ignore */ }
     }

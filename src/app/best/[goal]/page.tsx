@@ -6,6 +6,8 @@ import SiteFooter from "@/components/SiteFooter";
 import EvidenceBadge, { type EvidenceTier } from "@/components/EvidenceBadge";
 import { GOALS, goalBySlug, ingredientsForGoal } from "@/lib/goals";
 import { STACKS } from "@/lib/stacks";
+import ReviewedBy from "@/components/ReviewedBy";
+import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import { TH, FONTS } from "@/lib/theme";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -42,7 +44,7 @@ export default async function BestForGoalPage({ params }: { params: Promise<{ go
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "MedicalWebPage", name: g.h1, description: g.intro, url: `${BASE}/best/${g.slug}`, lastReviewed: new Date().toISOString().slice(0, 10) },
+      { "@type": "MedicalWebPage", name: g.h1, description: g.intro, url: `${BASE}/best/${g.slug}`, lastReviewed: new Date().toISOString().slice(0, 10), author: authorSchema(), ...(reviewedBySchema() ? { reviewedBy: reviewedBySchema() } : {}) },
       {
         "@type": "ItemList", name: g.h1,
         itemListElement: items.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: s.name, url: `${BASE}/ingredients/${s.id}` })),
@@ -69,8 +71,9 @@ export default async function BestForGoalPage({ params }: { params: Promise<{ go
           <h1 style={{ ...D, fontSize: "clamp(30px, 5.5vw, 46px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 14px" }}>
             Best supplements for <span style={SI}>{g.label}</span>.
           </h1>
-          <p style={{ fontSize: 17, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 8px", maxWidth: 620 }}>{g.intro}</p>
-          <div style={{ ...MM, fontSize: 11, color: TH.muted, marginBottom: 26 }}>Each pick is evidence-graded · we don&apos;t sell supplements</div>
+          <p style={{ fontSize: 17, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 14px", maxWidth: 620 }}>{g.intro}</p>
+          <ReviewedBy />
+          <div style={{ ...MM, fontSize: 11, color: TH.muted, margin: "10px 0 26px" }}>Each pick is evidence-graded · we don&apos;t sell supplements</div>
 
           {/* Ranked list */}
           <ol style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>

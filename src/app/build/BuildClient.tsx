@@ -8,6 +8,7 @@ import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { TH, FONTS } from "@/lib/theme";
 import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
 import EvidenceBadge from "@/components/EvidenceBadge";
+import { track } from "@/lib/analytics";
 import { encodeShareToken } from "@/lib/share";
 
 // ─── Constants ─────────────────────────────────────────────────────────────
@@ -877,7 +878,9 @@ function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
       if (!body.ok) {
         setError(body.error ?? "Couldn't generate a stack.");
       } else {
-        onApply((body.stack as { id: string }[]).map(s => s.id));
+        const ids = (body.stack as { id: string }[]).map(s => s.id);
+        track("stack_generate", { count: ids.length });
+        onApply(ids);
         setText("");
       }
     } catch (err) {

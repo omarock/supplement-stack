@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { getSupabase } from "@/lib/supabase";
+import { track } from "@/lib/analytics";
 import { TH, FONTS } from "@/lib/theme";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -36,6 +37,7 @@ export default function TrackStackCTA({
 
   const start = useCallback(async () => {
     setBusy(true);
+    track("track_cta_click", { source, signedIn: Boolean(signedIn) });
     try {
       if (signedIn) {
         await fetch("/api/track/enroll", {

@@ -5,6 +5,8 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { INTERACTIONS, interactionSlug, interactionBySlug, KIND_META } from "@/lib/interactions";
+import ReviewedBy from "@/components/ReviewedBy";
+import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import { TH, FONTS } from "@/lib/theme";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -58,6 +60,8 @@ export default async function InteractionPage({ params }: { params: Promise<{ pa
         description: it.summary,
         url: `${BASE}/interactions/${pair}`,
         lastReviewed: new Date().toISOString().slice(0, 10),
+        author: authorSchema(),
+        ...(reviewedBySchema() ? { reviewedBy: reviewedBySchema() } : {}),
         about: [a, b].map(n => ({ "@type": "Substance", name: n })),
       },
       {
@@ -92,6 +96,9 @@ export default async function InteractionPage({ params }: { params: Promise<{ pa
           <h1 style={{ ...D, fontSize: "clamp(28px, 5vw, 42px)", lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 0 14px" }}>
             Does {a} interact with <span style={SI}>{b}</span>?
           </h1>
+
+          <ReviewedBy />
+
 
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 9, padding: "8px 16px", borderRadius: 999,
