@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import Link from "next/link";
 import { TH, FONTS } from "@/lib/theme";
 import {
@@ -11,11 +11,14 @@ import {
   METRIC_META,
   localDateKey,
   computeStats,
+  computeStreak,
   allTrends,
   metricSeries,
   lastNDateKeys,
   scoreTier,
 } from "@/lib/tracker";
+
+const MILESTONES = [1, 3, 7, 14, 21, 30, 50, 75, 100, 150, 200, 365];
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
 const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWeight: 400 };
@@ -40,6 +43,7 @@ const SLIDER_HINT: Record<WellnessMetric, [string, string]> = {
 export default function TrackerClient({ initialCheckins, initialEnrollment, email }: Props) {
   const [checkins, setCheckins] = useState<Checkin[]>(initialCheckins);
   const [enrollment, setEnrollment] = useState<TrackerEnrollment | null>(initialEnrollment);
+  const [celebrate, setCelebrate] = useState<number | null>(null);
   const today = useMemo(() => localDateKey(), []);
 
   const todayCheckin = checkins.find(c => c.date === today) ?? null;
@@ -47,6 +51,25 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
   const trends = useMemo(() => allTrends(checkins, 14, today), [checkins, today]);
 
   const enrolled = enrollment !== null || checkins.length > 0;
+
+  // Pick up a stack the user chose to track before signing in (set by TrackStackCTA).
+  useEffect(() => {
+    let raw: string | null = null;
+    try { raw = localStorage.getItem("pendingTrackStack"); } catch { return; }
+    if (!raw) return;
+    try { localStorage.removeItem("pendingTrackStack"); } catch {}
+    let pending: { stackName?: string; stackIds?: string[] };
+    try { pending = JSON.parse(raw); } catch { return; }
+    fetch("/api/track/enroll", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify(pending),
+    }).then(r => r.ok ? r.json() : null).then(() => {
+      setEnrollment(prev => prev ?? {
+        stack_name: pending.stackName ?? null, stack_ids: pending.stackIds ?? null,
+        reminder_opt_in: true, weekly_digest_opt_in: true, started_at: new Date().toISOString(),
+      });
+    }).catch(() => {});
+  }, []);
 
   return (
     <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
@@ -81,11 +104,16 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
           today={today}
           existing={todayCheckin}
           onSaved={(c) => {
-            setCheckins(prev => {
-              const without = prev.filter(p => p.date !== c.date);
-              return [...without, c].sort((a, b) => a.date.localeCompare(b.date));
-            });
+            const wasLoggedToday = checkins.some(p => p.date === c.date);
+            const without = checkins.filter(p => p.date !== c.date);
+            const next = [...without, c].sort((a, b) => a.date.localeCompare(b.date));
+            setCheckins(next);
             if (!enrollment) setEnrollment({ stack_name: null, stack_ids: null, reminder_opt_in: true, weekly_digest_opt_in: true, started_at: new Date().toISOString() });
+            // Celebrate the streak — only on a brand-new check-in for today, at a milestone.
+            if (!wasLoggedToday) {
+              const { current } = computeStreak(next, today);
+              if (MILESTONES.includes(current)) setCelebrate(current);
+            }
           }}
         />
 
@@ -106,8 +134,94 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
           Educational use only — not medical advice. Wellness check-ins are subjective and reflect how you feel, not a diagnosis.
         </p>
       </div>
+
+      {celebrate !== null && <Celebration streak={celebrate} onClose={() => setCelebrate(null)} />}
     </main>
   );
+}
+
+// ─── Celebration overlay ──────────────────────────────────────────────────────
+function Celebration({ streak, onClose }: { streak: number; onClose: () => void }) {
+  useEffect(() => {
+    const t = setTimeout(onClose, 3400);
+    return () => clearTimeout(t);
+  }, [onClose]);
+
+  const msg = streak === 1
+    ? "Streak started — see you tomorrow."
+    : streak >= 30 ? "Incredible consistency."
+    : streak >= 7 ? "A full week. This is how change sticks."
+    : "Keep it going.";
+
+  const confetti = Array.from({ length: 18 });
+  const hues = [TH.sage, TH.amber, TH.coral, TH.lavender, TH.sageDeep];
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed", inset: 0, zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center",
+        background: "rgba(10,37,64,0.28)", backdropFilter: "blur(3px)", animation: "sd-fade-in .25s ease-out", padding: 24,
+      }}
+    >
+      {/* confetti */}
+      {confetti.map((_, i) => {
+        const left = (i * 53) % 100;
+        const delay = (i % 6) * 0.12;
+        const dur = 1.6 + (i % 5) * 0.25;
+        return (
+          <span key={i} style={{
+            position: "fixed", top: -16, left: `${left}%`, width: 8, height: 8, borderRadius: i % 2 ? 999 : 2,
+            background: hues[i % hues.length],
+            animation: `sd-confetti ${dur}s cubic-bezier(.2,.6,.4,1) ${delay}s forwards`,
+          }} />
+        );
+      })}
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          position: "relative", background: TH.surface, borderRadius: 24, padding: "32px 36px", textAlign: "center",
+          boxShadow: "0 30px 80px rgba(10,37,64,0.3)", maxWidth: 320, animation: "sd-pop .4s cubic-bezier(.2,.9,.3,1.2)",
+        }}
+      >
+        <div style={{ fontSize: 44, marginBottom: 4 }} aria-hidden>🔥</div>
+        <div style={{ ...D, fontSize: 52, color: TH.amberDeep, lineHeight: 1, letterSpacing: "-0.03em" }}>
+          <CountUp value={streak} duration={700} />
+        </div>
+        <div style={{ ...D, fontSize: 20, color: TH.ink, marginTop: 6 }}>
+          {streak === 1 ? "Day one" : `${streak}-day streak`}
+        </div>
+        <p style={{ fontSize: 14, color: TH.inkSoft, margin: "8px 0 0", lineHeight: 1.45 }}>{msg}</p>
+      </div>
+      <style>{`
+        @keyframes sd-pop { from { opacity: 0; transform: scale(.8) translateY(10px); } to { opacity: 1; transform: none; } }
+        @keyframes sd-confetti { to { transform: translateY(104vh) rotate(540deg); opacity: 0; } }
+      `}</style>
+    </div>
+  );
+}
+
+// Animated number count-up. Re-animates whenever `value` changes.
+function CountUp({ value, duration = 600 }: { value: number; duration?: number }) {
+  const [display, setDisplay] = useState(value);
+  const fromRef = useRef(value);
+  useEffect(() => {
+    const from = fromRef.current;
+    const to = value;
+    if (from === to) { setDisplay(to); return; }
+    const start = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setDisplay(Math.round(from + (to - from) * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+      else fromRef.current = to;
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [value, duration]);
+  return <>{display}</>;
 }
 
 // ─── Enroll intro (first run) ─────────────────────────────────────────────────
@@ -187,7 +301,7 @@ function StreakTile({ streak, longest }: { streak: number; longest: number }) {
         Current streak
       </div>
       <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-        <span style={{ ...D, fontSize: 44, lineHeight: 1, color: hot ? TH.amberDeep : TH.ink, letterSpacing: "-0.02em" }}>{streak}</span>
+        <span style={{ ...D, fontSize: 44, lineHeight: 1, color: hot ? TH.amberDeep : TH.ink, letterSpacing: "-0.02em" }}><CountUp value={streak} /></span>
         <span style={{ fontSize: 22 }} aria-hidden>{hot ? "🔥" : "🌱"}</span>
       </div>
       <div style={{ fontSize: 12, color: TH.muted, marginTop: 6 }}>

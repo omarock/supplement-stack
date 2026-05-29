@@ -5,6 +5,7 @@ import Link from "next/link";
 import { TH, FONTS } from "@/lib/theme";
 import type { AuditResponse, AuditFinding } from "@/app/api/audit-stack/route";
 import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
+import TrackStackCTA from "@/components/TrackStackCTA";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
 const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWeight: 400 };
@@ -353,6 +354,13 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
           </div>
         </div>
       )}
+
+      {/* WOW → HOOK: track the audited stack over time */}
+      <TrackStackCTA
+        stackName="My audited stack"
+        stackIds={data.detected.filter(d => d.matched && d.id).map(d => d.id!)}
+        source="audit"
+      />
 
       {/* CTA */}
       <div style={{

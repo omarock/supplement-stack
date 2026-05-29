@@ -7,6 +7,7 @@ import { recommend, Recommendation, Supplement } from "@/lib/supplements";
 import { IHERB_HOME } from "@/lib/iherb";
 import { trackQuizSubmission } from "@/lib/track";
 import SupplementGrid from "@/components/SupplementGrid";
+import TrackStackCTA from "@/components/TrackStackCTA";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
@@ -186,12 +187,21 @@ export default function ResultsPage() {
         </section>
 
         {/* ─── Stack ─── */}
-        <section style={{ marginBottom: 64 }}>
+        <section style={{ marginBottom: 28 }}>
           <SupplementGrid
             supplements={rec.supplements}
             source="results"
             title="Your stack"
             showTotalCost
+          />
+        </section>
+
+        {/* WOW → HOOK: turn this stack into the daily tracking loop */}
+        <section style={{ marginBottom: 64 }}>
+          <TrackStackCTA
+            stackName="My quiz stack"
+            stackIds={rec.supplements.map(s => s.id)}
+            source="results"
           />
         </section>
 
