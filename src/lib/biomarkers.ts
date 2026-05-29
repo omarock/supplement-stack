@@ -238,6 +238,59 @@ export const STATUS_META: Record<BiomarkerStatus, { label: string; hue: string; 
   "unknown":         { label: "Noted", hue: "#6b7280", bg: "#f6f5f1" },
 };
 
+export interface RangeBarZone { from: number; to: number; color: string }
+export interface RangeBarModel { markerPct: number; zones: RangeBarZone[]; domainMin: number; domainMax: number }
+
+const ZONE_RED = "#fca5a5";
+const ZONE_AMBER = "#fcd34d";
+const ZONE_GREEN = "#86c79a";
+
+/**
+ * Build a visual healthy-range bar for a biomarker value (Function-Health style).
+ * Returns null when the marker isn't in our catalog or lacks enough thresholds.
+ * markerPct + each zone's from/to are percentages (0-100) along the bar.
+ */
+export function rangeBarModel(key: string | undefined, value: number | null): RangeBarModel | null {
+  if (!key || value === null || Number.isNaN(value)) return null;
+  const def = BIOMARKERS.find(b => b.key === key);
+  if (!def) return null;
+
+  const edges = [def.low, def.borderlineLow, def.optimalMin, def.optimalMax, def.borderlineHigh, def.high]
+    .filter((n): n is number => typeof n === "number");
+  if (edges.length < 2) return null;
+
+  const lo = Math.min(...edges);
+  const hi = Math.max(...edges);
+  const span = hi - lo || 1;
+  const domainMin = Math.max(0, lo - span * 0.35);
+  const domainMax = hi + span * 0.35;
+  const P = (v: number) => Math.max(0, Math.min(100, ((v - domainMin) / (domainMax - domainMin)) * 100));
+
+  const zones: RangeBarZone[] = [];
+  if (def.lowerIsBetter) {
+    const okMax = def.optimalMax ?? def.borderlineHigh ?? hi;
+    const bh = def.borderlineHigh ?? okMax;
+    const h = def.high ?? hi;
+    zones.push({ from: 0, to: P(bh), color: ZONE_GREEN });
+    zones.push({ from: P(bh), to: P(h), color: ZONE_AMBER });
+    zones.push({ from: P(h), to: 100, color: ZONE_RED });
+  } else {
+    const lowT = def.low ?? lo;
+    const omin = def.optimalMin ?? def.borderlineLow ?? lowT;
+    const omax = def.optimalMax ?? hi;
+    const h = def.high ?? def.borderlineHigh ?? hi;
+    zones.push({ from: 0, to: P(lowT), color: ZONE_RED });
+    zones.push({ from: P(lowT), to: P(omin), color: ZONE_AMBER });
+    zones.push({ from: P(omin), to: P(omax), color: ZONE_GREEN });
+    if (def.borderlineHigh !== undefined || def.high !== undefined) {
+      zones.push({ from: P(omax), to: P(h), color: ZONE_AMBER });
+      zones.push({ from: P(h), to: 100, color: ZONE_RED });
+    }
+  }
+
+  return { markerPct: P(value), zones: zones.filter(z => z.to > z.from), domainMin, domainMax };
+}
+
 /** Compact catalog string injected into Claude's system prompt for grounding. */
 export function biomarkerCatalogForPrompt(): string {
   return BIOMARKERS.map(b => {

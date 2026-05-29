@@ -866,8 +866,8 @@ function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
     "I'm 45 and starting to feel burnt out — calmer baseline, deeper sleep.",
   ];
 
-  const run = useCallback(async () => {
-    const t = text.trim();
+  const runWith = useCallback(async (raw: string) => {
+    const t = raw.trim();
     if (t.length < 5) return;
     setLoading(true);
     setError(null);
@@ -889,7 +889,19 @@ function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
     } finally {
       setLoading(false);
     }
-  }, [text, onApply]);
+  }, [onApply]);
+
+  const run = useCallback(() => runWith(text), [runWith, text]);
+
+  // Prefill + auto-compose when arriving from the homepage goal search (/build?goal=…)
+  useEffect(() => {
+    const g = new URLSearchParams(window.location.search).get("goal");
+    if (g && g.trim().length >= 3) {
+      setText(g);
+      runWith(g);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section style={{

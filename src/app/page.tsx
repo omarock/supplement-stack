@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef, type CSSProperties } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import HeroSpotlight from "@/components/HeroSpotlight";
@@ -42,584 +43,204 @@ function Reveal({ children, delay = 0, y = 24, style }: {
   );
 }
 
-function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
-  const { ref, seen } = useInView();
-  const words = text.split(" ");
-  return (
-    <span ref={ref} style={{ display: "inline-block" }}>
-      {words.map((w, i) => (
-        <span key={i} style={{
-          display: "inline-block", overflow: "hidden",
-          paddingBottom: "0.12em", marginRight: "0.28em", verticalAlign: "bottom",
-        }}>
-          <span style={{
-            display: "inline-block",
-            transform: seen ? "translateY(0%)" : "translateY(110%)",
-            transition: `transform .9s cubic-bezier(.2,.7,.2,1) ${delay + i * 0.04}s`,
-          }}>{w}</span>
-        </span>
-      ))}
-    </span>
-  );
-}
-
-// ════════════════════════════════════════════════════════════════════════════
-// Decorative components
-// ════════════════════════════════════════════════════════════════════════════
-
-function GradientMesh() {
-  return (
-    <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
-      <div style={{
-        position: "absolute", top: "-10%", left: "-5%", width: "50%", height: "70%",
-        background: `radial-gradient(circle, ${TH.sage}33, transparent 70%)`,
-        filter: "blur(60px)", animation: "sd-drift-a 22s ease-in-out infinite",
-      }} />
-      <div style={{
-        position: "absolute", top: "20%", right: "-5%", width: "45%", height: "60%",
-        background: `radial-gradient(circle, ${TH.amber}33, transparent 70%)`,
-        filter: "blur(70px)", animation: "sd-drift-b 28s ease-in-out infinite",
-      }} />
-      <div style={{
-        position: "absolute", bottom: "-10%", left: "20%", width: "55%", height: "60%",
-        background: `radial-gradient(circle, ${TH.coral}22, transparent 70%)`,
-        filter: "blur(80px)", animation: "sd-drift-c 25s ease-in-out infinite",
-      }} />
-      <div style={{
-        position: "absolute", top: "10%", left: "40%", width: "35%", height: "50%",
-        background: `radial-gradient(circle, ${TH.lavender}22, transparent 70%)`,
-        filter: "blur(70px)", animation: "sd-drift-a 30s ease-in-out infinite reverse",
-      }} />
-    </div>
-  );
-}
-
-function PillIcon({ c1, c2, w = 36, h = 56 }: { c1: string; c2: string; w?: number; h?: number }) {
-  return (
-    <div style={{
-      width: w, height: h, borderRadius: w / 2,
-      background: `linear-gradient(135deg, ${c1}, ${c2})`,
-      position: "relative", overflow: "hidden",
-      boxShadow: `0 8px 20px ${c1}33, inset 0 1px 0 rgba(255,255,255,0.4)`,
-    }}>
-      <div style={{
-        position: "absolute", top: 4, left: 4, right: 4, height: "30%", borderRadius: w / 2,
-        background: "linear-gradient(180deg, rgba(255,255,255,0.4), transparent)",
-      }} />
-    </div>
-  );
-}
-
 // ════════════════════════════════════════════════════════════════════════════
 // Hero
 // ════════════════════════════════════════════════════════════════════════════
 
-function HeroStackCard() {
-  const items = [
-    { name: "Vitamin D3 + K2", dose: "2000 IU", time: "Morning", c1: "#f0b56b", c2: "#e8a04a", taken: true },
-    { name: "Omega-3", dose: "1g EPA/DHA", time: "Morning", c1: "#ffa580", c2: "#ff8b6b", taken: true },
-    { name: "Magnesium Glycinate", dose: "400 mg", time: "Evening", c1: "#7eb5d4", c2: "#5d97b8", taken: false },
-    { name: "Ashwagandha", dose: "600 mg", time: "Evening", c1: "#a78bfa", c2: "#8d6ce8", taken: false },
-  ];
-  return (
-    <div style={{
-      background: TH.surface, borderRadius: 24, padding: 24,
-      boxShadow: `0 30px 80px ${TH.ink}14, 0 0 0 1px ${TH.edge}`,
-      width: "100%", maxWidth: 380, position: "relative", boxSizing: "border-box",
-    }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 22 }}>
-        <div>
-          <div style={{ fontSize: 12, color: TH.muted, fontWeight: 500, marginBottom: 2 }}>Today · Tuesday</div>
-          <div style={{ ...D, fontSize: 22, color: TH.ink, letterSpacing: "-0.02em" }}>Your stack</div>
-        </div>
-        <div style={{
-          padding: "5px 10px", borderRadius: 999, background: `${TH.sage}1a`,
-          color: TH.sageDeep, fontSize: 11, fontWeight: 600,
-          display: "flex", alignItems: "center", gap: 5,
-        }}>
-          <span style={{ width: 6, height: 6, borderRadius: 999, background: TH.sage, animation: "sd-pulse 1.6s infinite" }} />
-          Live
-        </div>
-      </div>
-
-      {items.map((s, i) => (
-        <div key={s.name} style={{
-          display: "flex", alignItems: "center", gap: 14,
-          padding: "11px 0", borderTop: i ? `1px solid ${TH.edge}` : "none",
-          animation: `sd-rise .6s cubic-bezier(.2,.7,.2,1) ${0.2 + i * 0.1}s both`,
-        }}>
-          <PillIcon c1={s.c1} c2={s.c2} w={26} h={40} />
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 14, color: TH.ink, fontWeight: 500 }}>{s.name}</div>
-            <div style={{ fontSize: 12, color: TH.muted, marginTop: 2 }}>{s.dose} · {s.time}</div>
-          </div>
-          <div style={{
-            width: 22, height: 22, borderRadius: 999,
-            border: `1.5px solid ${s.taken ? TH.sage : TH.edgeStrong}`,
-            background: s.taken ? TH.sage : "transparent",
-            display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-          }}>
-            {s.taken && (
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-                <path d="M5 12l5 5 9-11" />
-              </svg>
-            )}
-          </div>
-        </div>
-      ))}
-
-      <div style={{
-        marginTop: 14, padding: "11px 13px", borderRadius: 12,
-        background: `linear-gradient(135deg, ${TH.sage}14, ${TH.amber}14)`,
-        display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8,
-      }}>
-        <div style={{ fontSize: 12, color: TH.ink, lineHeight: 1.4 }}>
-          <span style={{ fontWeight: 600 }}>Sleep tonight: </span>
-          <span style={{ color: TH.muted }}>magnesium 30m before bed</span>
-        </div>
-        <span style={{ color: TH.sage, fontSize: 16, flexShrink: 0 }}>↗</span>
-      </div>
-    </div>
-  );
-}
-
-function HeroProofCard() {
-  return (
-    <div style={{
-      background: TH.surface, borderRadius: 18, padding: 16,
-      boxShadow: `0 20px 50px ${TH.ink}10, 0 0 0 1px ${TH.edge}`,
-      width: 200,
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-        <div style={{
-          width: 30, height: 30, borderRadius: 999,
-          background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
-        }} />
-        <div style={{ fontSize: 12, color: TH.muted, fontWeight: 500 }}>Sleep score</div>
-        <span style={{
-          marginLeft: "auto", fontSize: 10, color: TH.sageDeep, fontWeight: 600,
-          background: `${TH.sage}1a`, padding: "3px 8px", borderRadius: 999,
-        }}>+18%</span>
-      </div>
-      <div style={{ ...D, fontSize: 32, color: TH.ink, letterSpacing: "-0.03em" }}>
-        78<span style={{ color: TH.muted, fontSize: 16, fontWeight: 400 }}>/100</span>
-      </div>
-      <svg width="160" height="36" viewBox="0 0 160 36" style={{ display: "block", marginTop: 4, maxWidth: "100%" }}>
-        <path d="M0 26 L20 22 L40 24 L60 18 L80 16 L100 12 L120 14 L140 8 L160 6"
-          fill="none" stroke={TH.sage} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-          style={{ strokeDasharray: 300, strokeDashoffset: 300, animation: "sd-draw 1.6s ease-out .3s forwards" }} />
-        <circle cx="160" cy="6" r="3" fill={TH.sage} />
-      </svg>
-    </div>
-  );
-}
+const GOAL_CHIPS = ["Sleep", "Energy", "Focus", "Stress", "Longevity"];
 
 function Hero() {
-  return (
-    <section id="engine" style={{
-      position: "relative",
-      padding: "var(--hero-pad-y-new) var(--hero-pad-x) var(--hero-pad-bottom)",
-      overflow: "hidden",
-    }}>
-      <GradientMesh />
+  const router = useRouter();
+  const [goal, setGoal] = useState("");
+  const [picked, setPicked] = useState<string[]>([]);
 
-      {/* Centred intro — tightened for mobile-first */}
-      <div style={{ position: "relative", maxWidth: 1180, margin: "0 auto", textAlign: "center" }}>
+  function toggleChip(chip: string) {
+    setPicked(prev => {
+      const next = prev.includes(chip) ? prev.filter(c => c !== chip) : [...prev, chip];
+      // Mirror chips into the input unless the user typed something custom
+      if (goal === "" || goal === prev.join(", ")) setGoal(next.join(", "));
+      return next;
+    });
+  }
+
+  function build() {
+    const finalGoal = (goal.trim() || picked.join(", ")).trim();
+    router.push(finalGoal ? `/build?goal=${encodeURIComponent(finalGoal)}` : "/build");
+  }
+
+  const arrow = (c: string, s = 12) => (
+    <svg width={s} height={s} viewBox="0 0 14 14" fill="none">
+      <path d="M3 7h8m-3-3l3 3-3 3" stroke={c} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+
+  return (
+    <section id="engine" style={{ position: "relative", padding: "var(--hh-pad-y) var(--hero-pad-x) var(--hh-pad-b)" }}>
+      <div style={{ maxWidth: 600, margin: "0 auto" }}>
+
+        {/* Credibility pill — refined credential cluster. Real names/photos slot in once reviewers are recruited. */}
         <Reveal>
           <div style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            padding: "5px 12px 5px 5px", borderRadius: 999,
-            background: TH.surface, border: `1px solid ${TH.edge}`,
-            color: TH.inkSoft, fontSize: 12.5, fontWeight: 500,
-            marginBottom: "var(--hero-chip-mb)", boxShadow: `0 4px 12px ${TH.ink}0a`,
+            display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 18,
+            padding: "6px 14px 6px 7px", background: TH.surface,
+            border: `1px solid ${TH.edge}`, borderRadius: 999, boxShadow: `0 1px 2px ${TH.ink}0d`,
           }}>
-            <span aria-hidden style={{
-              background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
-              color: "white", borderRadius: 999, padding: "2px 8px",
-              fontSize: 10.5, fontWeight: 700, letterSpacing: "0.04em",
-            }}>AI</span>
-            <span style={{ whiteSpace: "nowrap" }}>Evidence-led · Free</span>
+            <div style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+              {["MD", "RD", "Rx"].map((l, i) => (
+                <span key={l} style={{
+                  width: 24, height: 24, borderRadius: 999, background: TH.surface, color: TH.ink,
+                  border: `1.5px solid ${TH.edge}`, marginLeft: i === 0 ? 0 : -8,
+                  ...MM, fontSize: 8.5, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: `0 1px 2px ${TH.ink}10`, position: "relative", zIndex: 3 - i,
+                }}>{l}</span>
+              ))}
+              <span style={{
+                width: 24, height: 24, borderRadius: 999, background: TH.sage, marginLeft: -8,
+                border: `1.5px solid ${TH.surface}`, display: "inline-flex", alignItems: "center", justifyContent: "center",
+                boxShadow: `0 2px 5px ${TH.sage}66`,
+              }} aria-hidden>
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5 11.5 4" stroke="#fff" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </span>
+            </div>
+            <span style={{ fontSize: 12.5, color: TH.inkSoft, fontWeight: 500 }}>
+              Evidence-graded <span style={{ color: TH.muted, fontWeight: 400 }}>· every claim cited</span>
+            </span>
           </div>
         </Reveal>
 
-        <h1 style={{
-          ...D, fontSize: "var(--hero-h1-new)", lineHeight: "var(--hero-h1-line-new)",
-          letterSpacing: "-0.035em", margin: "0 auto var(--hero-h1-mb)", color: TH.ink,
-          maxWidth: 880,
-        }}>
-          <WordReveal text="Your stack," />{" "}
-          <span style={{ ...SI, color: TH.sageDeep }}>
-            <WordReveal text="reviewed by AI." delay={0.1} />
-          </span>
+        {/* Headline */}
+        <h1 style={{ ...D, fontWeight: 500, fontSize: "var(--hh-h1)", lineHeight: 1.03, letterSpacing: "-0.04em", color: TH.ink, margin: 0 }}>
+          The supplement stack{" "}
+          <span style={{ ...SI, color: TH.sageDeep, letterSpacing: "-0.01em" }}>built for you</span>.
         </h1>
-
-        <Reveal delay={0.3}>
-          <p style={{
-            fontSize: "var(--hero-sub-size)", lineHeight: 1.5, color: TH.inkSoft,
-            maxWidth: 520, margin: "0 auto var(--hero-cards-gap)",
-            fontWeight: 400,
-          }}>
-            Personalised in 2 minutes — pick your path.
+        <Reveal delay={0.1}>
+          <p style={{ fontSize: "var(--hh-sub)", lineHeight: 1.45, color: TH.inkSoft, maxWidth: 420, margin: "12px 0 0" }}>
+            Tell us your goal — our evidence-graded AI builds your stack from 151 researched ingredients, and tells you what to{" "}
+            <span style={{ ...SI, color: TH.sageDeep }}>skip</span>.
           </p>
         </Reveal>
-      </div>
 
-      {/* 3-service entry grid — Quiz is featured */}
-      <div style={{
-        position: "relative", maxWidth: 1180, margin: "0 auto",
-      }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "var(--service-grid-cols)",
-          gap: "var(--service-grid-gap)",
-        }}>
-          <Reveal delay={0.15}>
-            <ServiceCard
-              featured
-              kind="quiz"
-              tag="01 · Recommended"
-              title="Take the AI quiz"
-              tagline="The fastest way in."
-              body="Answer a few questions about how you sleep, eat, and feel. We match you to evidence-backed ingredients."
-              cta="Start the quiz"
-              href="/quiz"
-              meta="2 min · personalised"
-              accent={TH.sage}
-              accentDeep={TH.sageDeep}
-            />
-          </Reveal>
-          <Reveal delay={0.25}>
-            <ServiceCard
-              kind="build"
-              tag="02"
-              title="Build your stack"
-              tagline="Describe goals in plain English."
-              body="Or pick from 15 ready-made stacks across 151 ingredients."
-              cta="Start building"
-              href="/build"
-              meta="151 ingredients"
-              accent={TH.amber}
-              accentDeep={TH.amberDeep}
-            />
-          </Reveal>
-          <Reveal delay={0.35}>
-            <ServiceCard
-              kind="audit"
-              tag="03"
-              title="Audit my stack"
-              tagline="Already taking supplements?"
-              body="Paste yours. We flag interactions, redundancies, gaps, and timing."
-              cta="Audit my stack"
-              href="/audit"
-              meta="Free · instant"
-              accent={TH.coral}
-              accentDeep="#c9543a"
-              badge="NEW"
-            />
-          </Reveal>
-        </div>
-
-        {/* Compact trust strip — sits inside hero on mobile so it's still above the fold */}
-        <Reveal delay={0.45}>
+        {/* Goal search — the focal element */}
+        <Reveal delay={0.15}>
           <div style={{
-            display: "flex", justifyContent: "center", gap: "var(--trust-strip-gap)",
-            marginTop: "var(--trust-strip-mt)", fontSize: 12.5, color: TH.muted,
-            alignItems: "center", flexWrap: "wrap",
+            marginTop: 20, background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, padding: 18,
+            boxShadow: "0 2px 4px rgba(10,37,64,0.04), 0 16px 36px -20px rgba(10,37,64,0.16)",
           }}>
-            {[
-              "Free · no signup",
-              "151 researched ingredients",
-              "We don't sell our own pills",
-            ].map(item => (
-              <div key={item} style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.8">
-                  <path d="M5 12l5 5 9-11" />
-                </svg>
-                {item}
-              </div>
-            ))}
+            <div style={{ ...MM, fontSize: 10, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.mutedDim, marginBottom: 9 }}>
+              What do you want to improve?
+            </div>
+            <textarea
+              value={goal}
+              onChange={e => setGoal(e.target.value)}
+              rows={1}
+              placeholder="better sleep and steadier energy…"
+              onKeyDown={e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) build(); }}
+              style={{
+                width: "100%", boxSizing: "border-box", border: "none", outline: "none", resize: "none",
+                fontFamily: FONTS.body, fontSize: 16, lineHeight: 1.4, color: TH.ink, background: "transparent", minHeight: 26,
+              }}
+            />
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginTop: 12 }}>
+              {GOAL_CHIPS.map(chip => {
+                const on = picked.includes(chip);
+                return (
+                  <button key={chip} type="button" onClick={() => toggleChip(chip)} style={{
+                    height: 30, padding: "0 13px", borderRadius: 999, cursor: "pointer",
+                    border: `1px solid ${on ? TH.sage : TH.edgeStrong}`,
+                    background: on ? TH.accentGlow : "transparent",
+                    color: on ? TH.sageDeep : TH.inkSoft, fontFamily: FONTS.body, fontSize: 12.5, fontWeight: on ? 600 : 500,
+                    transition: "all .15s",
+                  }}>{chip}</button>
+                );
+              })}
+            </div>
+            <button type="button" onClick={build} style={{
+              marginTop: 14, width: "100%", height: 52, border: "none", borderRadius: 999, cursor: "pointer",
+              background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
+              fontFamily: FONTS.body, fontWeight: 600, fontSize: 15.5, letterSpacing: "-0.01em",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 9,
+              boxShadow: `0 1px 0 rgba(255,255,255,.25) inset, 0 10px 22px -6px ${TH.sage}80`,
+            }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
+              Build my stack
+            </button>
           </div>
         </Reveal>
+
+        {/* Divider */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "18px 2px 14px" }}>
+          <span style={{ flex: 1, height: 1, background: TH.edge }} />
+          <span style={{ ...MM, fontSize: 9.5, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.mutedDim }}>or choose a path</span>
+          <span style={{ flex: 1, height: 1, background: TH.edge }} />
+        </div>
+
+        {/* 3 guided paths */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+          <PathCard
+            href="/quiz" recommended badge="Most start here"
+            title="Take the AI quiz" meta="3 MIN · THE MOST THOROUGH PATH"
+            icon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke={TH.sageDeep} strokeWidth="1.4" strokeLinejoin="round" /></svg>}
+            arrow={arrow}
+          />
+          <PathCard
+            href="/build"
+            title="Build a stack myself" meta="BROWSE 151 EVIDENCE-GRADED INGREDIENTS"
+            icon={<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="2.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="8.5" y="2.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="2.5" y="8.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="8.5" y="8.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /></svg>}
+            arrow={arrow}
+          />
+          <PathCard
+            href="/audit"
+            title="Audit what I take · or my labs" meta="SCORE INTERACTIONS, DOSES & GAPS · 2 MIN"
+            icon={<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke={TH.inkSoft} strokeWidth="1.4" /><path d="M10.5 10.5l3 3" stroke={TH.inkSoft} strokeWidth="1.6" strokeLinecap="round" /></svg>}
+            arrow={arrow}
+          />
+        </div>
+
+        <div style={{ marginTop: 18, textAlign: "center", ...MM, fontSize: 10, letterSpacing: "0.03em", color: TH.muted }}>
+          Free · no card · <span style={{ color: TH.sageDeep, fontWeight: 500 }}>we don&apos;t sell supplements</span>
+        </div>
       </div>
 
-      {/* Mobile-first hero sizing tokens — override the global ones for this section only */}
       <style>{`
-        :root {
-          --hero-pad-y-new: 72px;
-          --hero-pad-bottom: 64px;
-          --hero-h1-new: 64px;
-          --hero-h1-line-new: 1.04;
-          --hero-h1-mb: 18px;
-          --hero-sub-size: 18px;
-          --hero-chip-mb: 22px;
-          --hero-cards-gap: 30px;
-          --service-grid-cols: 1.45fr 1fr 1fr;
-          --service-grid-gap: 14px;
-          --trust-strip-gap: 22px;
-          --trust-strip-mt: 24px;
-        }
-        @media (max-width: 1024px) {
-          :root {
-            --hero-pad-y-new: 48px;
-            --hero-pad-bottom: 48px;
-            --hero-h1-new: 48px;
-            --hero-h1-mb: 14px;
-            --hero-sub-size: 16px;
-            --hero-chip-mb: 18px;
-            --hero-cards-gap: 22px;
-            --service-grid-cols: 1fr;
-            --service-grid-gap: 11px;
-            --trust-strip-gap: 14px;
-            --trust-strip-mt: 18px;
-          }
-        }
-        @media (max-width: 640px) {
-          :root {
-            --hero-pad-y-new: 28px;
-            --hero-pad-bottom: 36px;
-            --hero-h1-new: 38px;
-            --hero-h1-line-new: 1.06;
-            --hero-h1-mb: 10px;
-            --hero-sub-size: 15px;
-            --hero-chip-mb: 14px;
-            --hero-cards-gap: 18px;
-            --service-grid-gap: 10px;
-            --trust-strip-gap: 12px;
-            --trust-strip-mt: 14px;
-          }
-        }
+        :root { --hh-pad-y: 44px; --hh-pad-b: 56px; --hh-h1: 46px; --hh-sub: 15.5px; }
+        @media (max-width: 1024px) { :root { --hh-pad-y: 32px; --hh-pad-b: 44px; --hh-h1: 40px; } }
+        @media (max-width: 640px)  { :root { --hh-pad-y: 20px; --hh-pad-b: 36px; --hh-h1: 32px; --hh-sub: 14px; } }
       `}</style>
     </section>
   );
 }
 
-// ─── Service card ─────────────────────────────────────────────────────────
-// Two variants:
-//   featured = tall, recommended-look card with glyph + body + meta (used for Quiz)
-//   compact  = single-row horizontal card with just title + tagline + arrow (Build/Audit)
-//
-// On desktop the grid is 1.45fr / 1fr / 1fr so featured commands more space.
-// On mobile both render with mobile-optimised compact heights (~140px each) so all 3 fit above the fold.
-function ServiceCard({
-  featured = false,
-  kind, tag, title, tagline, body, cta, href, meta, accent, accentDeep, badge,
-}: {
-  featured?: boolean;
-  kind: "quiz" | "build" | "audit";
-  tag: string;
-  title: string;
-  tagline: string;
-  body: string;
-  cta: string;
-  href: string;
-  meta: string;
-  accent: string;
-  accentDeep: string;
-  badge?: string;
+function PathCard({ href, recommended = false, badge, title, meta, icon, arrow }: {
+  href: string; recommended?: boolean; badge?: string; title: string; meta: string;
+  icon: React.ReactNode; arrow: (c: string, s?: number) => React.ReactNode;
 }) {
-  // The compact card and the featured card share the same Link wrapper + accent
-  // but the inner layout differs. We branch on `featured` for the article body.
-  const cardClass = featured ? "sd-service-card sd-service-featured" : "sd-service-card sd-service-compact";
-
   return (
-    <Link href={href} style={{ textDecoration: "none", color: "inherit", display: "block", height: "100%" }}>
-      <article
-        className={cardClass}
-        style={{
-          position: "relative", height: "100%",
-          background: TH.surface,
-          border: featured ? `2px solid ${accent}` : `1px solid ${TH.edge}`,
-          borderRadius: 18,
-          boxShadow: featured
-            ? `0 1px 3px rgba(10,37,64,0.05), 0 14px 38px ${accent}26`
-            : "0 1px 3px rgba(10,37,64,0.04), 0 6px 18px rgba(10,37,64,0.05)",
-          display: "flex",
-          transition: "transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, border-color .25s",
-          overflow: "hidden",
-          padding: featured ? "var(--card-pad-featured)" : "var(--card-pad-compact)",
-          flexDirection: featured ? "column" : "row",
-          alignItems: featured ? "stretch" : "center",
-          gap: featured ? 0 : 14,
-          minHeight: featured ? "var(--card-h-featured)" : "var(--card-h-compact)",
-        }}
-      >
-        {/* Subtle gradient corner */}
-        <div aria-hidden style={{
-          position: "absolute", top: -60, right: -60, width: 180, height: 180,
-          background: `radial-gradient(circle at 30% 30%, ${accent}24, transparent 70%)`,
-          pointerEvents: "none",
-        }} />
-
-        {badge && (
-          <span style={{
-            position: "absolute", top: 12, right: 12,
-            fontSize: 9.5, ...MM, letterSpacing: "0.1em",
-            background: `${accent}22`, color: accentDeep,
-            padding: "2px 7px", borderRadius: 999, fontWeight: 700,
-          }}>{badge}</span>
-        )}
-
-        {featured ? (
-          /* FEATURED LAYOUT — Quiz card */
-          <>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-              <ServiceGlyph kind={kind} accent={accent} accentDeep={accentDeep} size={42} />
-              <span style={{
-                fontSize: 10.5, ...MM, letterSpacing: "0.12em",
-                background: accent, color: TH.surface,
-                padding: "4px 10px", borderRadius: 999, fontWeight: 700,
-                textTransform: "uppercase",
-              }}>
-                ★ {tag}
-              </span>
-            </div>
-
-            <h3 style={{
-              ...D, fontSize: "var(--card-title-featured)", color: TH.ink, lineHeight: 1.1,
-              letterSpacing: "-0.025em", margin: "0 0 4px",
-            }}>{title}</h3>
-
-            <div style={{ ...SI, fontStyle: "italic", fontSize: 17, color: accentDeep, marginBottom: 10 }}>
-              {tagline}
-            </div>
-
-            <p style={{
-              fontSize: 14.5, lineHeight: 1.5, color: TH.inkSoft,
-              margin: "0 0 16px", flex: 1,
-            }}>{body}</p>
-
-            <div style={{
-              display: "flex", justifyContent: "space-between", alignItems: "center",
-              paddingTop: 12, borderTop: `1px solid ${TH.edge}`,
-            }}>
-              <span style={{ ...MM, fontSize: 11, color: TH.muted }}>{meta}</span>
-              <span style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
-                color: TH.surface, background: accentDeep,
-                padding: "8px 14px", borderRadius: 999,
-                fontWeight: 600, fontSize: 13.5,
-              }}>
-                {cta}
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6">
-                  <path d="M5 12h14M13 5l7 7-7 7" />
-                </svg>
-              </span>
-            </div>
-          </>
-        ) : (
-          /* COMPACT LAYOUT — Build, Audit cards */
-          <>
-            <div style={{
-              flexShrink: 0,
-              width: 46, height: 46, borderRadius: 12,
-              background: `${accent}14`,
-              display: "inline-flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <ServiceGlyph kind={kind} accent={accent} accentDeep={accentDeep} size={28} />
-            </div>
-
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
-                <span style={{
-                  ...MM, fontSize: 10, color: TH.muted, letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                }}>{tag}</span>
-              </div>
-              <h3 style={{
-                ...D, fontSize: "var(--card-title-compact)", color: TH.ink, lineHeight: 1.18,
-                letterSpacing: "-0.02em", margin: "0 0 3px",
-              }}>{title}</h3>
-              <p style={{
-                fontSize: 13, lineHeight: 1.4, color: TH.muted,
-                margin: 0,
-              }}>{tagline}</p>
-            </div>
-
-            <span aria-hidden style={{
-              flexShrink: 0,
-              width: 32, height: 32, borderRadius: 999,
-              background: TH.bg,
-              display: "inline-flex", alignItems: "center", justifyContent: "center",
-              color: accentDeep,
-              transition: "transform .2s, background .2s",
-            }} className="sd-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6">
-                <path d="M5 12h14M13 5l7 7-7 7" />
-              </svg>
-            </span>
-          </>
-        )}
-      </article>
-
-      <style>{`
-        :root {
-          --card-pad-featured: 22px 22px 18px;
-          --card-pad-compact: 14px 16px;
-          --card-h-featured: 220px;
-          --card-h-compact: 84px;
-          --card-title-featured: 26px;
-          --card-title-compact: 17px;
-        }
-        @media (max-width: 640px) {
-          :root {
-            --card-pad-featured: 18px 18px 16px;
-            --card-pad-compact: 14px 16px;
-            --card-h-featured: auto;
-            --card-h-compact: 78px;
-            --card-title-featured: 23px;
-            --card-title-compact: 16.5px;
-          }
-        }
-        .sd-service-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 4px 12px rgba(10,37,64,0.08), 0 24px 50px rgba(10,37,64,0.12);
-          border-color: ${TH.edgeStrong};
-        }
-        .sd-service-featured:hover {
-          box-shadow: 0 4px 12px rgba(10,37,64,0.08), 0 24px 50px ${accent}3a;
-        }
-        .sd-service-compact:hover .sd-arrow {
-          transform: translateX(3px);
-          background: ${accent}1f;
-        }
-      `}</style>
+    <Link href={href} className="sd-path" style={{
+      display: "flex", alignItems: "center", gap: 13, textDecoration: "none", color: "inherit",
+      background: recommended ? `linear-gradient(180deg, ${TH.surface}, #fbfdfb)` : TH.surface,
+      border: `1px solid ${recommended ? TH.sage + "59" : TH.edge}`,
+      borderRadius: 15, padding: "13px 14px", boxShadow: "0 1px 2px rgba(10,37,64,0.04)",
+      transition: "transform .14s, box-shadow .14s, border-color .14s",
+    }}>
+      <span style={{
+        width: 38, height: 38, borderRadius: 11, flexShrink: 0,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        background: recommended ? TH.accentGlow : TH.bg,
+      }}>{icon}</span>
+      <span style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+        <span style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 14.5, fontWeight: 600, color: TH.ink, letterSpacing: "-0.01em" }}>
+          {title}
+          {badge && <span style={{ ...MM, fontSize: 8.5, fontWeight: 500, color: TH.sageDeep, background: TH.accentGlow, padding: "2px 6px", borderRadius: 5, letterSpacing: "0.04em", textTransform: "uppercase" }}>{badge}</span>}
+        </span>
+        <span style={{ ...MM, fontSize: 10, color: TH.muted, letterSpacing: "0.02em" }}>{meta}</span>
+      </span>
+      <span style={{
+        width: 27, height: 27, borderRadius: 999, flexShrink: 0,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        background: recommended ? TH.sage : TH.bg,
+        boxShadow: recommended ? `0 2px 6px ${TH.sage}73` : "none",
+      }}>{arrow(recommended ? "#fff" : TH.inkSoft, 12)}</span>
     </Link>
-  );
-}
-
-// ─── Service-specific glyph ───────────────────────────────────────────────
-function ServiceGlyph({ kind, accent, accentDeep, size = 46 }: { kind: "quiz" | "build" | "audit"; accent: string; accentDeep: string; size?: number }) {
-  if (kind === "quiz") {
-    return (
-      <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
-        <rect x="6" y="10" width="36" height="28" rx="6" fill={accent} fillOpacity="0.12" stroke={accent} strokeWidth="1.5" />
-        <circle cx="14" cy="20" r="2.2" fill={accentDeep} />
-        <rect x="20" y="18.5" width="18" height="3" rx="1.5" fill={accentDeep} fillOpacity="0.7" />
-        <circle cx="14" cy="28" r="2.2" fill={accent} />
-        <rect x="20" y="26.5" width="14" height="3" rx="1.5" fill={accent} fillOpacity="0.55" />
-      </svg>
-    );
-  }
-  if (kind === "build") {
-    return (
-      <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
-        <circle cx="14" cy="24" r="6" fill={accent} fillOpacity="0.25" />
-        <circle cx="14" cy="24" r="6" stroke={accentDeep} strokeWidth="1.5" />
-        <circle cx="34" cy="14" r="5" fill={accentDeep} fillOpacity="0.18" />
-        <circle cx="34" cy="14" r="5" stroke={accentDeep} strokeWidth="1.5" />
-        <circle cx="34" cy="34" r="5" fill={accent} fillOpacity="0.18" />
-        <circle cx="34" cy="34" r="5" stroke={accent} strokeWidth="1.5" />
-        <path d="M20 22 L29 16 M20 26 L29 32" stroke={accent} strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    );
-  }
-  // audit
-  return (
-    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
-      <circle cx="22" cy="22" r="13" stroke={accentDeep} strokeWidth="1.5" fill={accent} fillOpacity="0.12" />
-      <path d="M16 22 L20 26 L29 17" stroke={accentDeep} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M32 32 L40 40" stroke={accentDeep} strokeWidth="2.2" strokeLinecap="round" />
-    </svg>
   );
 }
 
@@ -709,8 +330,8 @@ function HowVisual({ which, color }: { which: "intake" | "engine" | "ritual"; co
             style={{ animation: "sd-spin 8s linear infinite reverse", transformOrigin: "center" }} />
           {[0, 60, 120, 180, 240, 300].map((a, i) => (
             <circle key={i}
-              cx={60 + 40 * Math.cos(a * Math.PI / 180)}
-              cy={60 + 40 * Math.sin(a * Math.PI / 180)}
+              cx={Number((60 + 40 * Math.cos(a * Math.PI / 180)).toFixed(3))}
+              cy={Number((60 + 40 * Math.sin(a * Math.PI / 180)).toFixed(3))}
               r="3" fill={color}
               style={{ animation: `sd-pulse 1.8s ease-in-out infinite ${i * 0.2}s` }} />
           ))}
