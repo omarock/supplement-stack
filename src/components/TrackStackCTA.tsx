@@ -70,7 +70,7 @@ export default function TrackStackCTA({
           Is it actually working? Track it.
         </h3>
         <p style={{ fontSize: 14, opacity: 0.85, margin: 0, lineHeight: 1.5, maxWidth: 440 }}>
-          A 60-second daily check-in turns this stack into a measurable wellness trend — energy, sleep, mood — with a streak to keep you honest.
+          A 60-second daily check-in turns this stack into a measurable wellness trend, energy, sleep, mood, with a streak to keep you honest.
         </p>
       </div>
       <button

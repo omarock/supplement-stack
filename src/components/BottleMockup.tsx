@@ -5,7 +5,7 @@ import type { ProductOption } from "@/lib/products";
 
 /**
  * SVG mockup of a supplement bottle.
- * Designed to look like a real product photograph — 3D shading, label, cap.
+ * Designed to look like a real product photograph, 3D shading, label, cap.
  * Fully deterministic, no external image loads, never 404s.
  */
 

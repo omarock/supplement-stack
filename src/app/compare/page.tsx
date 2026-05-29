@@ -10,7 +10,7 @@ const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWe
 const MM = { fontFamily: FONTS.mono } as const;
 
 export const metadata: Metadata = {
-  title: "suppdoc.io vs the alternatives — honest comparisons | suppdoc.io",
+  title: "suppdoc.io vs the alternatives, honest comparisons | suppdoc.io",
   description: "Honest head-to-head comparisons of suppdoc.io vs Persona Nutrition, Ritual, HUM, Thorne, my-stack.ai, Examine.com, Hims & Hers, and Care/of. What each does best.",
   keywords: "suppdoc vs persona, ritual alternative, hum nutrition review, supplement service comparison, care of alternative",
 };

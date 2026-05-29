@@ -36,7 +36,7 @@ export default function Panel({ open, onClose, onClear, children, hasHistory }: 
 
   return (
     <>
-      {/* Backdrop — mobile only */}
+      {/* Backdrop, mobile only */}
       {open && (
         <div
           onClick={onClose}

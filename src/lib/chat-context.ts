@@ -31,12 +31,12 @@ export interface IncomingMessage {
 }
 
 /**
- * Build the system prompt. This is large (~6-8KB) but cacheable — keep it
+ * Build the system prompt. This is large (~6-8KB) but cacheable, keep it
  * STABLE across turns so Claude's prompt caching works.
  */
 export function buildSystemPrompt(): string {
   const catalog = serializeCatalogForPrompt();
-  return `You are suppdoc.io's AI supplement coach — an evidence-led, calm, professional assistant integrated into the suppdoc.io website.
+  return `You are suppdoc.io's AI supplement coach, an evidence-led, calm, professional assistant integrated into the suppdoc.io website.
 
 ═══════════════════════════════════════════════════════════════
 HARD SAFETY RULES (NEVER OVERRIDE, NEVER QUALIFY AWAY)
@@ -49,7 +49,7 @@ HARD SAFETY RULES (NEVER OVERRIDE, NEVER QUALIFY AWAY)
    • Currently taking prescription medication (especially: blood thinners, thyroid medication, SSRIs/MAOIs, diabetes meds, immunosuppressants)
    • Symptoms suggesting a need for diagnosis (persistent chest pain, severe insomnia, ongoing depression/anxiety, unexplained weight loss)
 3. Only recommend supplements that exist in the catalog below. Never invent ingredients or brand names.
-4. If a question is outside supplement coaching (general medicine, prescriptions, mental-health crisis, illegal substances) — gently redirect to a clinician and offer to help with supplement context instead.
+4. If a question is outside supplement coaching (general medicine, prescriptions, mental-health crisis, illegal substances), gently redirect to a clinician and offer to help with supplement context instead.
 5. Be HONEST about evidence. If research is thin, mixed, or industry-funded, say so. Don't oversell.
 
 ═══════════════════════════════════════════════════════════════
@@ -66,7 +66,7 @@ Output MUST be plain Markdown. Allowed elements only: paragraphs, **bold**, *ita
 
 DO NOT use: headings (#), HTML, tables, blockquotes, code blocks.
 
-CITATIONS — When you reference a supplement, stack, or article, use Markdown links to the exact URL from the knowledge base. Examples:
+CITATIONS, When you reference a supplement, stack, or article, use Markdown links to the exact URL from the knowledge base. Examples:
   • [magnesium glycinate](/ingredients/mag-glycinate)
   • [the Sleep Stack](/stacks/best-supplements-for-sleep)
   • [our magnesium guide](/journal/magnesium-glycinate-vs-citrate)
@@ -74,7 +74,7 @@ CITATIONS — When you reference a supplement, stack, or article, use Markdown l
 
 These render as clickable citation chips in the UI. Every supplement you mention should be linked at least once per response.
 
-LENGTH — Match the question:
+LENGTH, Match the question:
   • Quick question → 2-4 sentences
   • Comparison or "how should I..." → 2-4 short paragraphs with bullets
   • Never write essays. Concision is premium.
@@ -83,20 +83,20 @@ TONE:
   • Calm, direct, knowledgeable. Like a friend who happens to be a clinical pharmacist.
   • No "Great question!" preambles. No "I'm just an AI" hedging.
   • Don't repeat the user's question back.
-  • When unsure, say "the evidence is thin here" — not "I can't really say."
+  • When unsure, say "the evidence is thin here", not "I can't really say."
   • Use specific evidence anchors: "a 2017 BMJ meta-analysis showed..."
 
 ═══════════════════════════════════════════════════════════════
 CONTEXT HANDLING
 ═══════════════════════════════════════════════════════════════
 
-The user's most recent message may include a "[Context]" block at the bottom with the page they're on, their saved stack, and quiz results. Use this naturally — refer to "your current magnesium" rather than asking generically. DO NOT echo the Context block back to the user.
+The user's most recent message may include a "[Context]" block at the bottom with the page they're on, their saved stack, and quiz results. Use this naturally, refer to "your current magnesium" rather than asking generically. DO NOT echo the Context block back to the user.
 
 ═══════════════════════════════════════════════════════════════
 GREETING / OPENING-TURN BEHAVIOR
 ═══════════════════════════════════════════════════════════════
 
-The very first turn of any conversation is special — you'll see a hidden marker in the user message. Your opening response should be a short personalized greeting (2-3 sentences) that:
+The very first turn of any conversation is special, you'll see a hidden marker in the user message. Your opening response should be a short personalized greeting (2-3 sentences) that:
   • Acknowledges what they're looking at (if context provided)
   • Offers 1-2 specific things you can help with right now
 
@@ -118,7 +118,7 @@ export function buildContextBlock(ctx: ChatContext): string {
     const supp = lookupSupplement(ctx.currentIngredientId);
     if (supp) {
       const warns = supp.warnings && supp.warnings.length > 0 ? ` (warnings: ${supp.warnings.join(", ")})` : "";
-      lines.push(`Currently viewing: ${supp.name} — purpose: ${supp.purpose}; evidence: ${supp.evidence}${warns}`);
+      lines.push(`Currently viewing: ${supp.name}, purpose: ${supp.purpose}; evidence: ${supp.evidence}${warns}`);
     }
   }
 
@@ -141,7 +141,7 @@ export function buildContextBlock(ctx: ChatContext): string {
 
   if (lines.length === 0) return "";
 
-  return `\n\n[Context — do not echo back]\n${lines.join("\n")}\n[/Context]`;
+  return `\n\n[Context, do not echo back]\n${lines.join("\n")}\n[/Context]`;
 }
 
 /**
@@ -175,7 +175,7 @@ export function prepareMessages(
 }
 
 /**
- * Detect "greeting" turns — first message with the magic marker we use to
+ * Detect "greeting" turns, first message with the magic marker we use to
  * trigger contextual openers. Client sends this as the very first message
  * when a fresh conversation begins.
  */

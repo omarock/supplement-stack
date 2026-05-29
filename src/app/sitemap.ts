@@ -47,7 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE}/ingredients/${s.id}`,
       lastModified: now, changeFrequency: "monthly", priority: 0.7,
     });
-    // Research subpages — only the curated ones get higher priority
+    // Research subpages, only the curated ones get higher priority
     if (RESEARCH[s.id]) {
       entries.push({
         url: `${BASE}/ingredients/${s.id}/research`,

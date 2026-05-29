@@ -9,11 +9,11 @@ const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWe
 const MM = { fontFamily: FONTS.mono } as const;
 
 export const metadata: Metadata = {
-  title: "Methodology — How We Score Evidence | suppdoc.io",
+  title: "Methodology, How We Score Evidence | suppdoc.io",
   description: "How suppdoc.io evaluates supplement evidence, builds personalised recommendations, and decides which ingredients to recommend. Our public methodology in plain English.",
   keywords: "suppdoc methodology, supplement evidence scoring, how supplement quizzes work, transparent supplement recommendations",
   openGraph: {
-    title: "How we score evidence — suppdoc.io",
+    title: "How we score evidence, suppdoc.io",
     description: "Our public methodology for evaluating supplement evidence and building personalised recommendations.",
   },
 };
@@ -41,7 +41,7 @@ export default function MethodologyPage() {
             fontSize: 18, color: TH.inkSoft, lineHeight: 1.6, margin: 0,
             maxWidth: 680,
           }}>
-            Most supplement sites won&apos;t tell you how they decide what to recommend. We will. This page documents exactly how the suppdoc.io engine evaluates evidence, matches you to ingredients, and applies safety filters — so you can decide for yourself whether to trust it.
+            Most supplement sites won&apos;t tell you how they decide what to recommend. We will. This page documents exactly how the suppdoc.io engine evaluates evidence, matches you to ingredients, and applies safety filters, so you can decide for yourself whether to trust it.
           </p>
         </section>
 
@@ -64,7 +64,7 @@ export default function MethodologyPage() {
                 "Your answers build a profile. We score each supplement against that profile, then filter for safety.",
                 "Evidence tiers are based on the quality and quantity of human RCTs and meta-analyses.",
                 "We don't sell our own pills, so we have no incentive to over-recommend.",
-                "When the answer is 'fix sleep first, no supplement needed' — we say that too.",
+                "When the answer is 'fix sleep first, no supplement needed', we say that too.",
               ].map(item => (
                 <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.55 }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.5" style={{ marginTop: 4, flexShrink: 0 }}>
@@ -84,7 +84,7 @@ export default function MethodologyPage() {
         }}>
           {/* Evidence tiers */}
           <Section number="01" title="The four evidence tiers">
-            <P>Every supplement in our 151-ingredient catalog is rated with one of four evidence labels. These are <strong>conservative</strong> — we'd rather under-claim and earn trust than over-claim and lose it.</P>
+            <P>Every supplement in our 151-ingredient catalog is rated with one of four evidence labels. These are <strong>conservative</strong>, we'd rather under-claim and earn trust than over-claim and lose it.</P>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, margin: "16px 0 20px" }}>
               <TierCard
                 tier="Very strong"
@@ -139,19 +139,19 @@ export default function MethodologyPage() {
           <Section number="02" title="How your profile gets matched">
             <P>The quiz, build, and audit tools all run the same engine under the hood. Here&apos;s the simplified flow.</P>
             <Ol items={[
-              "Your answers (goals, lifestyle, sleep, stress, diet, conditions) become a set of tags — e.g. low-sleep, high-stress, vegan, joint-pain.",
+              "Your answers (goals, lifestyle, sleep, stress, diet, conditions) become a set of tags, e.g. low-sleep, high-stress, vegan, joint-pain.",
               "Each ingredient is scored: tag-matches × 2 + evidence boost + priority. Ingredients with no tag overlap score zero.",
               "Safety filter removes any ingredient whose warnings overlap your conditions or allergies (pregnancy, thyroid meds, blood thinners, etc.).",
               "Vegan filter removes non-vegan options if you've opted in.",
               "The top-scoring ingredients are selected greedily within your monthly budget cap, with a stack-size limit by tier.",
-              "We add a baseline (e.g. D3) if nothing matched well — and we tell you when that happens.",
+              "We add a baseline (e.g. D3) if nothing matched well, and we tell you when that happens.",
             ]} />
             <P>For the <Link href="/audit" style={linkStyle}>audit tool</Link>, the same engine runs in reverse: detect what you take, score against your goals, then flag overlaps, gaps, and timing issues.</P>
           </Section>
 
           {/* Safety filter */}
           <Section number="03" title="The safety filter">
-            <P>Some ingredients have hard-coded warnings that exclude them automatically when relevant. We never override these — even if a supplement scores extremely well on goal-match, the safety filter wins.</P>
+            <P>Some ingredients have hard-coded warnings that exclude them automatically when relevant. We never override these, even if a supplement scores extremely well on goal-match, the safety filter wins.</P>
             <div style={{
               padding: "16px 18px", background: TH.surface,
               border: `1px solid ${TH.edge}`, borderRadius: 14, margin: "14px 0",
@@ -168,7 +168,7 @@ export default function MethodologyPage() {
                 <li><strong>Bipolar disorder:</strong> rhodiola, mucuna (mood-modulating)</li>
               </ul>
             </div>
-            <P>For anything outside the auto-excluded list — and there are always edge cases — we recommend consulting a clinician before starting. This is on every result page, not buried.</P>
+            <P>For anything outside the auto-excluded list, and there are always edge cases, we recommend consulting a clinician before starting. This is on every result page, not buried.</P>
           </Section>
 
           {/* What we won't recommend */}
@@ -187,7 +187,7 @@ export default function MethodologyPage() {
           {/* Conflict of interest */}
           <Section number="05" title="How we make money (and how we don't)">
             <P>This matters because every supplement quiz on the internet recommends products from the company that owns it. We don&apos;t.</P>
-            <P><strong>What we earn:</strong> a small affiliate commission when you buy a recommended product from iHerb, Amazon, or other trusted retailers via our links. We never pay attention to commission rate when selecting recommendations — we have no commercial reason to push one brand over another.</P>
+            <P><strong>What we earn:</strong> a small affiliate commission when you buy a recommended product from iHerb, Amazon, or other trusted retailers via our links. We never pay attention to commission rate when selecting recommendations, we have no commercial reason to push one brand over another.</P>
             <P><strong>What we don&apos;t do:</strong> sell our own private label, run a subscription, white-label other companies&apos; products, or accept payment from manufacturers to feature their brands.</P>
             <P>If a supplement that would be best for you happens to have no affiliate program at all, we still recommend it. The <Link href="/ingredients/melatonin" style={linkStyle}>melatonin</Link> and <Link href="/ingredients/methylfolate" style={linkStyle}>methylfolate</Link> entries are examples.</P>
           </Section>
@@ -196,19 +196,19 @@ export default function MethodologyPage() {
           <Section number="06" title="Editorial process">
             <P>Every ingredient page, research summary, and blog article is written or reviewed by the suppdoc.io editorial team. We&apos;re building toward an external advisory board (clinical pharmacist + RD + sports physician); for now, every recommendation is grounded in:</P>
             <Ol items={[
-              "Peer-reviewed primary literature — preferably meta-analyses and large RCTs, accessible via PubMed",
+              "Peer-reviewed primary literature, preferably meta-analyses and large RCTs, accessible via PubMed",
               "Authoritative guidelines (ISSN, AHA, NICE, WHO) where available",
               "Cross-reference against Examine.com and other independent references",
               "Pharmacist + dietitian consultation for tier assignments",
             ]} />
-            <P>When we get something wrong — and we will — we update the article and add a note to the <Link href="/changelog" style={linkStyle}>changelog</Link>. We don&apos;t silently revise.</P>
+            <P>When we get something wrong, and we will, we update the article and add a note to the <Link href="/changelog" style={linkStyle}>changelog</Link>. We don&apos;t silently revise.</P>
           </Section>
 
           {/* AI specifically */}
           <Section number="07" title="What 'AI' actually means here">
             <P>We use the word AI honestly. Specifically, two things qualify:</P>
             <Ul items={[
-              "Our recommendation engine is an algorithmic tag-matching + scoring system. It runs on every quiz, build, and audit. This is the same kind of system that powers a recommendation engine on a streaming service — it's not a language model.",
+              "Our recommendation engine is an algorithmic tag-matching + scoring system. It runs on every quiz, build, and audit. This is the same kind of system that powers a recommendation engine on a streaming service, it's not a language model.",
               "Our chat assistant, audit explainer, and plain-English stack builder use Claude Sonnet 4.6 (Anthropic) at request time, grounded in our 151-ingredient knowledge base. When you click a citation chip, it links to a real internal page.",
             ]} />
             <P>What we don&apos;t do: claim our AI has read 1,243 studies, claim it's been "trained on medical data", or claim it&apos;s smarter than a clinician. It&apos;s a tool. A good one. Not a replacement for human judgement on your own health.</P>
@@ -217,7 +217,7 @@ export default function MethodologyPage() {
           {/* Updates */}
           <Section number="08" title="When this changes">
             <P>This page is the canonical source. If we update our scoring criteria, safety rules, or evidence tiers, we update this page first and post a note in the <Link href="/changelog" style={linkStyle}>changelog</Link>. The current version of the methodology was last revised on the date in the page metadata.</P>
-            <P>Question, disagreement, or correction? Email <a href="mailto:hello@suppdoc.io" style={linkStyle}>hello@suppdoc.io</a> — we read every one.</P>
+            <P>Question, disagreement, or correction? Email <a href="mailto:hello@suppdoc.io" style={linkStyle}>hello@suppdoc.io</a>, we read every one.</P>
           </Section>
         </article>
 

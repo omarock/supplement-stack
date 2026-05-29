@@ -66,11 +66,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!supp) return { title: "Not found" };
   const desc = (supp.description ?? supp.why).slice(0, 155);
   return {
-    title: `${supp.name} — Benefits, Dosage, Best Brands | suppdoc.io`,
+    title: `${supp.name}, Benefits, Dosage, Best Brands | suppdoc.io`,
     description: desc,
     keywords: [supp.name, ...supp.tags.slice(0, 6), "benefits", "dosage", "iHerb"].join(", "),
     openGraph: {
-      title: `${supp.name} — Benefits, Dosage, Best Brands`,
+      title: `${supp.name}, Benefits, Dosage, Best Brands`,
       description: desc,
       type: "article",
     },
@@ -121,7 +121,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
       <section style={{ padding: "32px var(--section-pad-x) 48px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
           <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 12 }}>
-            — {categoryLabel.toUpperCase()} —
+          {categoryLabel.toUpperCase()}
           </div>
           <h1 style={{
             ...D, fontSize: "clamp(40px, 6vw, 64px)", margin: 0,
@@ -211,7 +211,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             <FactRow label="Standard dose" value={supp.dose} />
             <FactRow label="When to take" value={timingLabel(supp.timing)} />
             <FactRow label="Approx. monthly cost" value={`$${supp.monthlyCost}`} />
-            <FactRow label="Common form" value={`${supp.brand} — ${supp.name}`} />
+            <FactRow label="Common form" value={`${supp.brand}, ${supp.name}`} />
             {supp.warnings && supp.warnings.length > 0 && (
               <div style={{ marginTop: 18, paddingTop: 18, borderTop: `1px solid ${th.line}` }}>
                 <div style={{ fontSize: 11, ...MM, color: "#b91c1c", letterSpacing: "0.08em", marginBottom: 6 }}>
@@ -240,7 +240,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                 RECOMMENDED
               </div>
               <div style={{ ...D, fontSize: 22, fontWeight: 600, color: th.ink, marginBottom: 4 }}>
-                {supp.brand} — {supp.name.split(" (")[0]}
+                {supp.brand}, {supp.name.split(" (")[0]}
               </div>
               <div style={{ color: th.inkSoft, fontSize: 15 }}>
                 {supp.dose} · {timingLabel(supp.timing)} · ~${supp.monthlyCost}/month
@@ -355,7 +355,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
         </section>
       )}
 
-      {/* Explore further — internal-linking web to goal / interaction / biomarker hubs */}
+      {/* Explore further, internal-linking web to goal / interaction / biomarker hubs */}
       {(relatedGoals.length > 0 || relatedInteractions.length > 0 || relatedBiomarkers.length > 0 || hasResearch) && (
         <section style={{ padding: "0 var(--section-pad-x) 56px" }}>
           <div style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: 20 }}>
@@ -431,7 +431,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             Not sure if {supp.name.split(" (")[0]} is right for you?
           </h2>
           <p style={{ fontSize: 17, opacity: 0.95, margin: "12px auto 24px", maxWidth: 520, lineHeight: 1.5 }}>
-            Take our quiz. We&apos;ll compose a personalised stack that fits your goals, body, and budget — in minutes.
+            Take our quiz. We&apos;ll compose a personalised stack that fits your goals, body, and budget, in minutes.
           </p>
           <Link href="/quiz" style={{
             display: "inline-flex", padding: "16px 36px", borderRadius: 999, fontSize: 15, fontWeight: 600,

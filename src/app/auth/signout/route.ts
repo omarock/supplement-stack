@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 /**
- * POST /auth/signout — clears the user's Supabase session and redirects home.
+ * POST /auth/signout, clears the user's Supabase session and redirects home.
  * Used by the "Sign out" button on the profile page.
  */
 export async function POST(request: Request) {
@@ -31,6 +31,6 @@ export async function POST(request: Request) {
 
   await supabase.auth.signOut();
 
-  // 303 forces the browser to issue a GET to the destination — required after POST
+  // 303 forces the browser to issue a GET to the destination, required after POST
   return NextResponse.redirect(`${origin}/`, { status: 303 });
 }

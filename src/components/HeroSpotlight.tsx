@@ -48,7 +48,7 @@ export default function HeroSpotlight() {
 
   return (
     <>
-      {/* Pulse glow on the featured card — uses the class we already attach */}
+      {/* Pulse glow on the featured card, uses the class we already attach */}
       <style>{`
         .sd-service-featured {
           animation: sd-spotlight-pulse 1.6s ease-in-out 2 !important;

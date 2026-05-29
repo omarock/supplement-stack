@@ -12,7 +12,7 @@ const TIER: Record<EvidenceTier, { filled: number; label: string; hue: string }>
 
 /**
  * Consistent evidence-grade badge used wherever an ingredient appears.
- * Three pips (filled by tier) + an optional label. Honest, discrete signal —
+ * Three pips (filled by tier) + an optional label. Honest, discrete signal
  * not a fabricated score.
  */
 export default function EvidenceBadge({

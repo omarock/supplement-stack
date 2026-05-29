@@ -10,7 +10,7 @@ const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWe
 const MM = { fontFamily: FONTS.mono } as const;
 
 export const metadata: Metadata = {
-  title: "Best Supplements for Every Goal — evidence-graded | suppdoc.io",
+  title: "Best Supplements for Every Goal, evidence-graded | suppdoc.io",
   description: "Evidence-graded guides to the best supplements for sleep, energy, focus, stress, immunity, longevity and more. Honest, cited, and we don't sell supplements.",
   keywords: "best supplements, best supplements for sleep, best supplements for energy, best supplements for stress, evidence-based supplement guides",
   alternates: { canonical: "https://www.suppdoc.io/best" },
@@ -28,7 +28,7 @@ export default function BestIndex() {
               Best supplements for <span style={SI}>your goal</span>.
             </h1>
             <p style={{ fontSize: 18, color: TH.inkSoft, maxWidth: 580, margin: "0 auto", lineHeight: 1.55 }}>
-              Evidence-graded picks for what you actually want to improve — each cited, and honest about what works and what doesn&apos;t.
+              Evidence-graded picks for what you actually want to improve, each cited, and honest about what works and what doesn&apos;t.
             </p>
           </header>
 

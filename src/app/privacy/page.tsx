@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — suppdoc.io",
+  title: "Privacy Policy, suppdoc.io",
   description: "suppdoc.io's privacy policy. We store quiz answers locally in your browser and never sell personal data. Read the full details.",
 };
 
@@ -34,7 +34,7 @@ export default function Page() {
 
       <h2>3. Cookies</h2>
       <p>
-        We use essential cookies/localStorage to make the site work — for example, remembering your quiz progress between sessions. See our <a href="/cookies">Cookie Policy</a> for full details.
+        We use essential cookies/localStorage to make the site work, for example, remembering your quiz progress between sessions. See our <a href="/cookies">Cookie Policy</a> for full details.
       </p>
 
       <h2>4. Affiliate Links</h2>

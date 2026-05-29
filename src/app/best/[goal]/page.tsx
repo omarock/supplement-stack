@@ -22,8 +22,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ goal: string }> }): Promise<Metadata> {
   const { goal } = await params;
   const g = goalBySlug(goal);
-  if (!g) return { title: "Best supplements — suppdoc.io" };
-  const title = `${g.h1} (2026, evidence-graded) — suppdoc.io`;
+  if (!g) return { title: "Best supplements, suppdoc.io" };
+  const title = `${g.h1} (2026, evidence-graded), suppdoc.io`;
   const description = `${g.intro}`.slice(0, 155);
   return {
     title, description,
@@ -122,7 +122,7 @@ export default async function BestForGoalPage({ params }: { params: Promise<{ go
           </section>
 
           <p style={{ fontSize: 12, color: TH.muted, lineHeight: 1.6, textAlign: "center", marginTop: 30 }}>
-            Educational use only — not medical advice. Always consult a qualified clinician before starting supplements, especially if you take medication or are pregnant or nursing.
+            Educational use only, not medical advice. Always consult a qualified clinician before starting supplements, especially if you take medication or are pregnant or nursing.
           </p>
         </div>
       </main>

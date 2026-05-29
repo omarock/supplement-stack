@@ -114,7 +114,7 @@ Rules:
 2. Prioritize "very strong" and "strong" evidence over "moderate"
 3. Stay within the budget cap${req.veganOnly ? "\n4. ONLY include vegan: true items" : ""}
 5. Note any goals you couldn't address with confidence
-6. Return ONLY valid JSON — no preamble, no markdown fences
+6. Return ONLY valid JSON, no preamble, no markdown fences
 
 JSON shape:
 {

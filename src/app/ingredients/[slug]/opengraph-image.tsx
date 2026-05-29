@@ -49,7 +49,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             fontSize: 18, color: "#5ba373", letterSpacing: "0.2em",
             marginBottom: 16, fontWeight: 600, display: "flex",
           }}>
-            — {supp.category.toUpperCase().replace(/-/g, " ")} —
+          {supp.category.toUpperCase().replace(/-/g, " ")}
           </div>
         )}
 

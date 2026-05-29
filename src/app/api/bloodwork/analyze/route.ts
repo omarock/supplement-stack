@@ -73,7 +73,7 @@ function rulesAnalyze(text: string): BloodworkAnalysis {
     ok: true,
     biomarkers,
     summary: biomarkers.length
-      ? `Recognized ${biomarkers.length} marker${biomarkers.length === 1 ? "" : "s"}${flagged.length ? `, ${flagged.length} outside the typical range` : ""}. This is a basic rule-based reading — connect an AI key for full report parsing.`
+      ? `Recognized ${biomarkers.length} marker${biomarkers.length === 1 ? "" : "s"}${flagged.length ? `, ${flagged.length} outside the typical range` : ""}. This is a basic rule-based reading, connect an AI key for full report parsing.`
       : "We couldn't recognize specific biomarkers in the text. Try pasting lines like 'Vitamin D 22 ng/mL'.",
     findings: [DISCLAIMER_FINDING],
     recommendations: [...recMap.values()].map(r => ({ supplementId: SUPPLEMENT_DB.find(s => s.name === r.name)?.id, ...r })),

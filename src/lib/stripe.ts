@@ -1,5 +1,5 @@
 /**
- * Minimal Stripe client — no SDK, just the REST API + Node crypto for webhook
+ * Minimal Stripe client, no SDK, just the REST API + Node crypto for webhook
  * signature verification. Matches the dependency-light approach in anthropic.ts.
  *
  * Env vars (all server-only):

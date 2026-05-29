@@ -80,7 +80,7 @@ function Hero() {
     <section id="engine" style={{ position: "relative", padding: "var(--hh-pad-y) var(--hero-pad-x) var(--hh-pad-b)" }}>
       <div style={{ maxWidth: 600, margin: "0 auto" }}>
 
-        {/* Credibility pill — refined credential cluster. Real names/photos slot in once reviewers are recruited. */}
+        {/* Credibility pill, refined credential cluster. Real names/photos slot in once reviewers are recruited. */}
         <Reveal>
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 18,
@@ -117,12 +117,12 @@ function Hero() {
         </h1>
         <Reveal delay={0.1}>
           <p style={{ fontSize: "var(--hh-sub)", lineHeight: 1.45, color: TH.inkSoft, maxWidth: 420, margin: "12px 0 0" }}>
-            Tell us your goal — our evidence-graded AI builds your stack from 151 researched ingredients, and tells you what to{" "}
+            Tell us your goal, our evidence-graded AI builds your stack from 151 researched ingredients, and tells you what to{" "}
             <span style={{ ...SI, color: TH.sageDeep }}>skip</span>.
           </p>
         </Reveal>
 
-        {/* Goal search — the focal element */}
+        {/* Goal search, the focal element */}
         <Reveal delay={0.15}>
           <div style={{
             marginTop: 20, background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, padding: 18,
@@ -286,7 +286,7 @@ function Trust() {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// How it works — 3 cards
+// How it works, 3 cards
 // ════════════════════════════════════════════════════════════════════════════
 
 function HowVisual({ which, color }: { which: "intake" | "engine" | "ritual"; color: string }) {
@@ -371,9 +371,9 @@ function HowVisual({ which, color }: { which: "intake" | "engine" | "ritual"; co
 
 function How() {
   const steps: { tag: string; title: string; body: string; illust: "intake" | "engine" | "ritual"; color: string }[] = [
-    { tag: "Step 1", title: "Tell us about you.", body: "A two-minute reflection on how you sleep, train, eat, and feel. No medical jargon, no signup — just you.", illust: "intake", color: TH.sage },
+    { tag: "Step 1", title: "Tell us about you.", body: "A two-minute reflection on how you sleep, train, eat, and feel. No medical jargon, no signup, just you.", illust: "intake", color: TH.sage },
     { tag: "Step 2", title: "We match the evidence.", body: "We match your answers against the published research and clinical dosing guidance behind each ingredient.", illust: "engine", color: TH.amber },
-    { tag: "Step 3", title: "Live the ritual.", body: "Your morning, midday, and evening plan — with exact doses, timing, and the reasoning behind every pick.", illust: "ritual", color: TH.coral },
+    { tag: "Step 3", title: "Live the ritual.", body: "Your morning, midday, and evening plan, with exact doses, timing, and the reasoning behind every pick.", illust: "ritual", color: TH.coral },
   ];
   return (
     <section id="how-it-works" style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
@@ -431,7 +431,7 @@ function Stats() {
           {[
             ["150+", "researched ingredients in the library"],
             [`${STACKS.length}`, "ready-made stacks to start from"],
-            ["$0", "to use — we never sell our own pills"],
+            ["$0", "to use, we never sell our own pills"],
           ].map(([n, l], i) => (
             <Reveal key={l} delay={i * 0.08}>
               <div>
@@ -667,8 +667,8 @@ function Sample() {
 function Testimonials() {
   const items = [
     { title: "No private label", body: "We don't make or sell our own pills, so we have no reason to over-recommend. You buy proven, third-party-tested brands direct from the retailer.", c1: "#f0b56b", c2: "#e8a04a" },
-    { title: "Every pick is explained", body: "Each supplement comes with the dose, the timing, and the plain-language reason it's in your stack — with the evidence behind it.", c1: "#5ba373", c2: "#3f7a52" },
-    { title: "We'll tell you to stop", body: "When lifestyle alone is enough, or a supplement isn't worth it, we say so. The goal is fewer, better-chosen pills — not more.", c1: "#a78bfa", c2: "#8d6ce8" },
+    { title: "Every pick is explained", body: "Each supplement comes with the dose, the timing, and the plain-language reason it's in your stack, with the evidence behind it.", c1: "#5ba373", c2: "#3f7a52" },
+    { title: "We'll tell you to stop", body: "When lifestyle alone is enough, or a supplement isn't worth it, we say so. The goal is fewer, better-chosen pills, not more.", c1: "#a78bfa", c2: "#8d6ce8" },
   ];
   return (
     <section style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
@@ -725,10 +725,10 @@ function Testimonials() {
 function FAQ() {
   const [open, setOpen] = useState(0);
   const faqs: [string, string][] = [
-    ["Is this medical advice?", "No — suppdoc.io is for education and personal experimentation. We tell you what the research suggests and why. For diagnosis or treatment, please see a clinician."],
+    ["Is this medical advice?", "No, suppdoc.io is for education and personal experimentation. We tell you what the research suggests and why. For diagnosis or treatment, please see a clinician."],
     ["How do the recommendations work?", "Your answers are matched against the published research and clinical dosing guidance for each ingredient, then filtered for your goals, diet, and safety flags. Every pick comes with the reasoning behind it."],
-    ["Do I need a subscription?", "No subscription, no signup. You can get your stack for free. We earn a small commission only when you choose to buy through one of our retail partners like iHerb or Amazon — at no extra cost to you."],
-    ["What if I don't need supplements?", "Sometimes you don't — and we'll tell you. The engine surfaces where lifestyle alone is enough, and where a supplement might actually move the needle."],
+    ["Do I need a subscription?", "No subscription, no signup. You can get your stack for free. We earn a small commission only when you choose to buy through one of our retail partners like iHerb or Amazon, at no extra cost to you."],
+    ["What if I don't need supplements?", "Sometimes you don't, and we'll tell you. The engine surfaces where lifestyle alone is enough, and where a supplement might actually move the needle."],
     ["Can a beginner use this?", "Absolutely. Every recommendation comes with plain-language reasoning, exact dose, what form to look for, and the best time of day to take it."],
   ];
   return (

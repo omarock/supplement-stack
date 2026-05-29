@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 // POST: save a parsed bloodwork report for the signed-in user.
-// We store ONLY the structured results — never the original file.
+// We store ONLY the structured results, never the original file.
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
   if (!user) return Response.json({ ok: false, error: "not_signed_in" }, { status: 401 });

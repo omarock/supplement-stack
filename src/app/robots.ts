@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 // Private surfaces that should never be indexed or trained on.
 const DISALLOW = ["/api/", "/admin", "/admin/", "/auth/", "/me", "/me/", "/track"];
 
-// AI crawlers we explicitly welcome — being citable by ChatGPT, Claude,
+// AI crawlers we explicitly welcome, being citable by ChatGPT, Claude,
 // Perplexity, and Google AI Overviews is a core part of the GEO strategy.
 const AI_BOTS = [
   "GPTBot", "ChatGPT-User", "OAI-SearchBot",      // OpenAI

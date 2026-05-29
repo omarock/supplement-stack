@@ -65,7 +65,7 @@ export default function SiteHeader() {
       }}>
         <SuppdocLogo size={20} />
 
-        {/* Desktop nav — grouped dropdowns */}
+        {/* Desktop nav, grouped dropdowns */}
         <div
           style={{ display: "var(--nav-show)", gap: "var(--nav-gap)", alignItems: "center" }}
           onMouseLeave={() => setOpenGroup(null)}
@@ -154,7 +154,7 @@ export default function SiteHeader() {
         </button>
       </nav>
 
-      {/* Mobile menu overlay — grouped */}
+      {/* Mobile menu overlay, grouped */}
       {openMobile && (
         <div
           style={{

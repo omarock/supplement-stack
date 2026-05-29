@@ -98,7 +98,7 @@ function suggestPrompts(ctx: GatheredContext): { label: string; text: string }[]
   // Default cold-start
   return [
     { label: "Best for sleep", text: "What are the best supplements for sleep, without sedation?" },
-    { label: "Brain fog", text: "I have brain fog in the afternoon — what should I try?" },
+    { label: "Brain fog", text: "I have brain fog in the afternoon, what should I try?" },
     { label: "Vegan essentials", text: "What supplements should every vegan take?" },
     { label: "Audit my stack", text: "How do I check whether my supplements interact?" },
   ];
@@ -220,7 +220,7 @@ export default function ChatAssistant() {
               : m));
           } else if (event === "error") {
             setMessages(prev => prev.map(m => m.id === assistantMsg.id
-              ? { ...m, streaming: false, errored: true, content: accumulated || "Sorry — something went wrong. Please try again." }
+              ? { ...m, streaming: false, errored: true, content: accumulated || "Sorry, something went wrong. Please try again." }
               : m));
             return;
           }
@@ -229,15 +229,15 @@ export default function ChatAssistant() {
 
       // Finalize
       setMessages(prev => prev.map(m => m.id === assistantMsg.id
-        ? { ...m, streaming: false, content: accumulated.trim() || "Sorry — I didn't get a response. Please try again." }
+        ? { ...m, streaming: false, content: accumulated.trim() || "Sorry, I didn't get a response. Please try again." }
         : m));
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") {
-        // User stopped — finalize whatever we got
+        // User stopped, finalize whatever we got
         setMessages(prev => prev.map(m => m.id === assistantMsg.id ? { ...m, streaming: false } : m));
       } else {
         setMessages(prev => prev.map(m => m.id === assistantMsg.id
-          ? { ...m, streaming: false, errored: true, content: "Network error — please check your connection and try again." }
+          ? { ...m, streaming: false, errored: true, content: "Network error, please check your connection and try again." }
           : m));
       }
     } finally {

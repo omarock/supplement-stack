@@ -14,7 +14,7 @@ const D = { fontFamily: '"Bricolage Grotesque", system-ui, sans-serif' } as cons
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
-  title: "Supplement Ingredients A–Z — suppdoc.io",
+  title: "Supplement Ingredients A–Z, suppdoc.io",
   description: `Browse ${SUPPLEMENT_DB.length}+ evidence-based supplement ingredients. Benefits, dosage, safety, and where to buy each one. Vitamins, minerals, amino acids, adaptogens, nootropics, and more.`,
   keywords: "supplement ingredients, supplement encyclopedia, supplement library, vitamins, minerals, adaptogens, nootropics, amino acids",
 };
@@ -25,14 +25,14 @@ const CATEGORY_ORDER: { key: string; label: string; tagline: string }[] = [
   { key: "omega-fats", label: "Omega & Essential Fats", tagline: "Structural fats your cells, brain, and joints depend on." },
   { key: "amino-acids", label: "Amino Acids", tagline: "Building blocks of protein with specialised individual roles." },
   { key: "adaptogens", label: "Adaptogens", tagline: "Botanicals that help the body adapt to physical and mental stress." },
-  { key: "nootropics", label: "Nootropics", tagline: "Cognitive support — focus, memory, neuroplasticity." },
+  { key: "nootropics", label: "Nootropics", tagline: "Cognitive support, focus, memory, neuroplasticity." },
   { key: "antioxidants", label: "Antioxidants", tagline: "Compounds that neutralise oxidative stress at the cellular level." },
   { key: "sleep", label: "Sleep & Relaxation", tagline: "Targeted support for deeper sleep and a calmer nervous system." },
   { key: "joint", label: "Joint & Connective Tissue", tagline: "Comfort, cartilage support, and connective recovery." },
   { key: "gut", label: "Gut & Digestive", tagline: "Microbiome balance, gut barrier, digestion, and enzymes." },
   { key: "hormonal", label: "Hormonal Support", tagline: "Balance for the endocrine system, libido, and reproductive health." },
   { key: "heart", label: "Heart & Circulation", tagline: "Cardiovascular function, blood pressure, and lipid balance." },
-  { key: "performance", label: "Performance & Recovery", tagline: "Power, endurance, recovery — for active bodies." },
+  { key: "performance", label: "Performance & Recovery", tagline: "Power, endurance, recovery, for active bodies." },
   { key: "greens", label: "Whole-Food Greens", tagline: "Nutrient-dense algae and plant concentrates." },
   { key: "specialty", label: "Specialty", tagline: "Targeted compounds with focused, evidence-based use cases." },
 ];
@@ -62,7 +62,7 @@ export default function IngredientsIndexPage() {
       {/* Hero */}
       <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 24px", textAlign: "center" }}>
         <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>
-          — INGREDIENT LIBRARY —
+          INGREDIENT LIBRARY
         </div>
         <h1 style={{
           ...S, fontSize: "var(--section-h2)", margin: 0,
@@ -71,7 +71,7 @@ export default function IngredientsIndexPage() {
           The <em style={{ color: th.burgundy }}>supplements</em> we trust.
         </h1>
         <p style={{ color: th.inkSoft, fontSize: 18, lineHeight: 1.6, maxWidth: 640, margin: "20px auto 0" }}>
-          A growing reference of {totalCount} evidence-backed ingredients — what they do, who benefits, how to dose, and where to source the cleanest version.
+          A growing reference of {totalCount} evidence-backed ingredients, what they do, who benefits, how to dose, and where to source the cleanest version.
         </p>
         <div style={{
           display: "inline-flex", alignItems: "center", gap: 14, marginTop: 24,

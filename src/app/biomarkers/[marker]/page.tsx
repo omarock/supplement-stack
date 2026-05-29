@@ -31,8 +31,8 @@ function findByParam(marker: string): BiomarkerDef | undefined {
 export async function generateMetadata({ params }: { params: Promise<{ marker: string }> }): Promise<Metadata> {
   const { marker } = await params;
   const b = findByParam(marker);
-  if (!b) return { title: "Biomarker — suppdoc.io" };
-  const title = `${b.label}: what it means & how to optimize — suppdoc.io`;
+  if (!b) return { title: "Biomarker, suppdoc.io" };
+  const title = `${b.label}: what it means & how to optimize, suppdoc.io`;
   const description = `${b.blurb} See the optimal range and the evidence-led supplements that help.`.slice(0, 155);
   return {
     title, description,
@@ -74,7 +74,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
   const faq = [
     { q: `What does a ${outOfRange} ${b.label} mean?`, a: `${b.blurb} A ${outOfRange} result is worth discussing with your clinician, who can look at the full picture and your lab's own reference range.` },
     actionSupps.length
-      ? { q: `What supplements help ${actionVerb} ${b.label}?`, a: `Evidence-led options include ${actionSupps.map(s => s!.name.split(" (")[0]).join(", ")}. They support — but don't replace — diet, lifestyle, and medical care.` }
+      ? { q: `What supplements help ${actionVerb} ${b.label}?`, a: `Evidence-led options include ${actionSupps.map(s => s!.name.split(" (")[0]).join(", ")}. They support, but don't replace, diet, lifestyle, and medical care.` }
       : { q: `How is ${b.label} best supported?`, a: `Through diet, lifestyle, and addressing the underlying cause with your clinician. Upload your labs to suppdoc for a tailored read.` },
   ];
 
@@ -121,7 +121,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
               ))}
             </div>
             <div style={{ fontSize: 12, color: TH.mutedDim, marginTop: 12, lineHeight: 1.5 }}>
-              Ranges vary by laboratory, age, and sex — your lab&apos;s own reference range always takes precedence.
+              Ranges vary by laboratory, age, and sex, your lab&apos;s own reference range always takes precedence.
             </div>
           </section>
 
@@ -131,7 +131,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
               <h2 style={{ ...D, fontSize: 22, color: TH.ink, margin: "0 0 6px", letterSpacing: "-0.02em" }}>
                 Supplements that help {actionVerb} {b.label}
               </h2>
-              <p style={{ fontSize: 13, color: TH.muted, margin: "0 0 14px" }}>Evidence-led, and only a piece of the picture — diet, lifestyle, and your clinician matter most.</p>
+              <p style={{ fontSize: 13, color: TH.muted, margin: "0 0 14px" }}>Evidence-led, and only a piece of the picture, diet, lifestyle, and your clinician matter most.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {actionSupps.map(s => (
                   <Link key={s!.id} href={`/ingredients/${s!.id}`} style={{
@@ -153,7 +153,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
           {/* CTA to bloodwork */}
           <div style={{ background: TH.ink, color: "#fff", borderRadius: 18, padding: "24px 26px", textAlign: "center", marginBottom: 22 }}>
             <h2 style={{ ...D, fontSize: 21, margin: "0 0 8px", letterSpacing: "-0.02em" }}>See your own {b.label}</h2>
-            <p style={{ fontSize: 14, opacity: 0.85, margin: "0 0 16px" }}>Upload your blood test — our AI reads {b.label.toLowerCase()} and your other markers, then matches evidence-led supplements.</p>
+            <p style={{ fontSize: 14, opacity: 0.85, margin: "0 0 16px" }}>Upload your blood test, our AI reads {b.label.toLowerCase()} and your other markers, then matches evidence-led supplements.</p>
             <Link href="/bloodwork" style={{
               display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 999,
               background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14.5,
@@ -174,7 +174,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
           </section>
 
           <p style={{ fontSize: 12, color: TH.muted, lineHeight: 1.6, textAlign: "center" }}>
-            Educational use only — not medical advice or diagnosis. Always interpret lab results with a qualified clinician.
+            Educational use only, not medical advice or diagnosis. Always interpret lab results with a qualified clinician.
           </p>
         </div>
       </main>

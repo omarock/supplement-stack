@@ -30,12 +30,12 @@ export function rulesSummary(checkins: Checkin[], enrollment: TrackerEnrollment 
   const suggestions: string[] = [];
 
   if (stats.currentStreak >= 2) {
-    insights.push(`You're on a ${stats.currentStreak}-day check-in streak — consistency is the whole game.`);
+    insights.push(`You're on a ${stats.currentStreak}-day check-in streak, consistency is the whole game.`);
   }
   if (stats.adherence >= 80) {
     insights.push(`You took your stack on ${stats.adherence}% of tracked days. That's the kind of consistency that lets effects actually build.`);
   } else if (stats.totalCheckins >= 3 && stats.adherence < 60) {
-    suggestions.push(`Your adherence is ${stats.adherence}%. Try anchoring your stack to an existing habit — next to your toothbrush or coffee — to make it automatic.`);
+    suggestions.push(`Your adherence is ${stats.adherence}%. Try anchoring your stack to an existing habit, next to your toothbrush or coffee, to make it automatic.`);
   }
 
   const improving = trends
@@ -46,21 +46,21 @@ export function rulesSummary(checkins: Checkin[], enrollment: TrackerEnrollment 
     .sort((a, b) => (a.deltaPct ?? 0) - (b.deltaPct ?? 0));
 
   for (const t of improving.slice(0, 2)) {
-    insights.push(`${t.label} is trending up — about ${Math.abs(t.deltaPct!)}% better than the start of the window.`);
+    insights.push(`${t.label} is trending up, about ${Math.abs(t.deltaPct!)}% better than the start of the window.`);
   }
   for (const t of declining.slice(0, 1)) {
-    suggestions.push(`${t.label} has dipped recently. Worth noting what changed — sleep, stress, or a missed dose often shows up here first.`);
+    suggestions.push(`${t.label} has dipped recently. Worth noting what changed, sleep, stress, or a missed dose often shows up here first.`);
   }
 
   if (stats.totalCheckins < 5) {
-    suggestions.push("Keep checking in daily — once you have a week of data, the trends get much more meaningful.");
+    suggestions.push("Keep checking in daily, once you have a week of data, the trends get much more meaningful.");
   }
   if (insights.length === 0) {
-    insights.push("You've started tracking — that's the hardest step. A clear picture takes about a week of daily check-ins.");
+    insights.push("You've started tracking, that's the hardest step. A clear picture takes about a week of daily check-ins.");
   }
 
   const headline = stats.currentStreak >= 3
-    ? `${stats.currentStreak} days strong — here's your week.`
+    ? `${stats.currentStreak} days strong, here's your week.`
     : improving.length > 0
       ? `${improving[0].label} is moving in the right direction.`
       : "Your first week of tracking, summarized.";
@@ -97,7 +97,7 @@ export async function generateSummary(checkins: Checkin[], enrollment: TrackerEn
     recentNotes: checkins.filter(c => c.note).slice(-5).map(c => ({ date: c.date, note: c.note })),
   };
 
-  const system = `You are an encouraging, evidence-led wellness coach for suppdoc.io. You write a short weekly summary of a user's supplement-tracking data. You are supportive and specific, never clinical or alarmist. You are educational, not medical — never diagnose, never promise outcomes, and gently suggest a clinician for anything concerning.
+  const system = `You are an encouraging, evidence-led wellness coach for suppdoc.io. You write a short weekly summary of a user's supplement-tracking data. You are supportive and specific, never clinical or alarmist. You are educational, not medical, never diagnose, never promise outcomes, and gently suggest a clinician for anything concerning.
 
 Return VALID JSON ONLY (no markdown, no preamble):
 {
@@ -110,7 +110,7 @@ Rules:
 - Reference real numbers from the data (streak, adherence, % changes).
 - 'stress' uses higherIsBetter=false, so a positive changePct already means stress IMPROVED (went down). Trust the sign.
 - Never invent data. If samples are low, say the picture is still forming.
-- Correlation is not causation — say "alongside" not "because of" when linking the stack to a change.
+- Correlation is not causation, say "alongside" not "because of" when linking the stack to a change.
 - Keep each string under ~22 words. Plain, warm English.`;
 
   const userPrompt = `Here is the user's tracking data for the last 14 days:\n${JSON.stringify(compact)}\n\nWrite the JSON summary now.`;

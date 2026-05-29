@@ -113,7 +113,7 @@ export default function Composer({ value, onChange, onSend, onStop, disabled, st
         padding: "0 4px",
       }}>
         <span style={{ fontFamily: FONTS.mono, letterSpacing: "0.04em" }}>
-          Educational use only — not medical advice.
+          Educational use only, not medical advice.
         </span>
         {value.length > 2000 && (
           <span style={{ fontFamily: FONTS.mono, color: value.length > 2800 ? "#b91c1c" : TH.muted }}>

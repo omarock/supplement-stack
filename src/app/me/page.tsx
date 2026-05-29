@@ -8,7 +8,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Your Profile — suppdoc.io",
+  title: "Your Profile, suppdoc.io",
   robots: "noindex,nofollow",
 };
 
@@ -106,7 +106,7 @@ export default async function ProfilePage() {
         {/* Welcome hero */}
         <section style={{ marginBottom: 36 }}>
           <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 8 }}>
-            — YOUR PROFILE —
+           YOUR PROFILE
           </div>
           <h1 style={{ ...S, fontSize: 48, margin: "0 0 8px", letterSpacing: "-0.025em", lineHeight: 1.05 }}>
             Welcome back.
@@ -150,7 +150,7 @@ export default async function ProfilePage() {
             <div style={{ fontSize: 24, marginBottom: 8 }} aria-hidden>🩸</div>
             <div style={{ ...D, fontWeight: 600, fontSize: 18, color: th.ink, marginBottom: 4 }}>Bloodwork analysis</div>
             <div style={{ fontSize: 13.5, color: th.inkMute, lineHeight: 1.5 }}>
-              Upload a lab report — AI flags deficiencies and matches targeted supplements. <span style={{ color: th.sage, fontWeight: 600 }}>Analyze →</span>
+              Upload a lab report, AI flags deficiencies and matches targeted supplements. <span style={{ color: th.sage, fontWeight: 600 }}>Analyze →</span>
             </div>
           </Link>
         </section>

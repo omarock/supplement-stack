@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Cookie Policy — suppdoc.io",
+  title: "Cookie Policy, suppdoc.io",
   description: "suppdoc.io uses minimal essential storage to remember your quiz progress. We don't use advertising or tracking cookies. Full details inside.",
 };
 
@@ -18,8 +18,8 @@ export default function Page() {
         We use the browser&apos;s <strong>localStorage</strong> to remember:
       </p>
       <ul>
-        <li><strong>phylaQuizDraft</strong> — Your in-progress quiz answers, so you can return and continue.</li>
-        <li><strong>phylaQuizData</strong> — Your completed quiz answers, so the results page can show your personalised stack.</li>
+        <li><strong>phylaQuizDraft</strong>, Your in-progress quiz answers, so you can return and continue.</li>
+        <li><strong>phylaQuizData</strong>, Your completed quiz answers, so the results page can show your personalised stack.</li>
       </ul>
       <p>
         That&apos;s it. No tracking IDs, no advertising data, no third-party scripts injected.

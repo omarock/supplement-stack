@@ -11,7 +11,7 @@ const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } 
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
-  title: "Help & FAQ — suppdoc.io",
+  title: "Help & FAQ, suppdoc.io",
   description: "Frequently asked questions about suppdoc.io's quiz, supplement recommendations, affiliate links, and safety guidelines.",
 };
 
@@ -19,9 +19,9 @@ const FAQ: { section: string; items: [string, string][] }[] = [
   {
     section: "About the quiz",
     items: [
-      ["How long does the quiz take?", "About 3 minutes. We ask 10 short questions about your goals, lifestyle, body, and budget. You can save progress and come back later — answers are stored in your browser."],
+      ["How long does the quiz take?", "About 3 minutes. We ask 10 short questions about your goals, lifestyle, body, and budget. You can save progress and come back later, answers are stored in your browser."],
       ["Do I need an account?", "No. Your answers stay on your device. We don't collect emails unless you opt in to save your results."],
-      ["What if I'm not sure how to answer a question?", "Pick the closest match. The recommendation engine works on a profile across all answers — no single question dominates the output."],
+      ["What if I'm not sure how to answer a question?", "Pick the closest match. The recommendation engine works on a profile across all answers, no single question dominates the output."],
     ],
   },
   {
@@ -29,22 +29,22 @@ const FAQ: { section: string; items: [string, string][] }[] = [
     items: [
       ["How does suppdoc.io pick my supplements?", "Each supplement in our database is tagged with the goals and conditions it addresses. We build a profile from your quiz, score every supplement by how well it matches, apply safety filters (pregnancy, blood thinners, allergies), then pick the highest-scoring options within your budget."],
       ["Are the recommendations medical advice?", "No. suppdoc.io offers educational guidance based on your inputs and the published evidence. For diagnosis or treatment, please consult a qualified clinician."],
-      ["Can I trust the brands you suggest?", "Yes — we curate well-established brands (NOW Foods, Doctor's Best, Sports Research, Thorne, Jarrow, Garden of Life, etc.). All are widely trusted, third-party tested, and have decades of track record."],
+      ["Can I trust the brands you suggest?", "Yes, we curate well-established brands (NOW Foods, Doctor's Best, Sports Research, Thorne, Jarrow, Garden of Life, etc.). All are widely trusted, third-party tested, and have decades of track record."],
     ],
   },
   {
     section: "Buying your stack",
     items: [
-      ["Where do I buy the supplements?", "We link to trusted global retailers like iHerb and Amazon, where you can compare brands, prices, and shipping. You buy direct from the retailer — we don't sell or ship anything ourselves."],
+      ["Where do I buy the supplements?", "We link to trusted global retailers like iHerb and Amazon, where you can compare brands, prices, and shipping. You buy direct from the retailer, we don't sell or ship anything ourselves."],
       ["Do I have to use a specific retailer?", "Not at all. You're free to buy your stack anywhere. The product information (brand, dose, form) is the same regardless of where you shop."],
-      ["What does 'affiliate' mean?", "If you click through to a retailer from our site and buy something, the retailer pays us a small commission — at no extra cost to you. It's how we fund building suppdoc.io without selling our own products."],
+      ["What does 'affiliate' mean?", "If you click through to a retailer from our site and buy something, the retailer pays us a small commission, at no extra cost to you. It's how we fund building suppdoc.io without selling our own products."],
     ],
   },
   {
     section: "Safety",
     items: [
-      ["I'm pregnant or nursing — is this safe?", "Our engine automatically removes supplements that aren't recommended during pregnancy (e.g. ashwagandha). However, you should ALWAYS consult your obstetrician before starting any new supplement during pregnancy or lactation."],
-      ["I take prescription medications. What should I do?", "Talk to your doctor or pharmacist before starting any new supplement. Several common supplements interact with medications — particularly blood thinners, thyroid medication, and antidepressants."],
+      ["I'm pregnant or nursing, is this safe?", "Our engine automatically removes supplements that aren't recommended during pregnancy (e.g. ashwagandha). However, you should ALWAYS consult your obstetrician before starting any new supplement during pregnancy or lactation."],
+      ["I take prescription medications. What should I do?", "Talk to your doctor or pharmacist before starting any new supplement. Several common supplements interact with medications, particularly blood thinners, thyroid medication, and antidepressants."],
       ["What if I have allergies?", "We ask about common allergies in the quiz and filter the stack accordingly. Always double-check product labels for trace ingredients before purchasing."],
     ],
   },
@@ -101,7 +101,7 @@ export default function HelpPage() {
               Didn&apos;t find your answer?
             </h3>
             <p style={{ color: th.inkSoft, fontSize: 15, margin: "0 0 18px" }}>
-              Reach us by email — we reply within one business day.
+              Reach us by email, we reply within one business day.
             </p>
             <Link href="/contact" style={{
               display: "inline-flex", alignItems: "center", gap: 8,

@@ -11,7 +11,7 @@ import { STATUS_META, type ExtractedBiomarker, type BiomarkerStatus } from "@/li
 import { TH, FONTS } from "@/lib/theme";
 
 export const metadata: Metadata = {
-  title: "Bloodwork history & re-test comparison — suppdoc.io",
+  title: "Bloodwork history & re-test comparison, suppdoc.io",
   robots: "noindex,nofollow",
 };
 
@@ -48,7 +48,7 @@ export default async function BloodworkHistoryPage() {
           {!premium ? (
             <Paywall
               title="Track your biomarkers over time"
-              desc="Save every lab you upload and watch the numbers move — see exactly how your stack is working, retest after retest."
+              desc="Save every lab you upload and watch the numbers move, see exactly how your stack is working, retest after retest."
               bullets={["Saved history of every analysis", "Side-by-side re-test comparison", "Per-marker change: ferritin 18 → 47"]}
             />
           ) : (

@@ -1,5 +1,5 @@
 /**
- * Stack Tracker — shared types + analytics.
+ * Stack Tracker, shared types + analytics.
  *
  * Pure functions only (no React, no Supabase) so they can run identically in
  * the browser, in API routes, and in the weekly-digest cron.
@@ -43,7 +43,7 @@ export const METRIC_META: Record<WellnessMetric, { label: string; hue: string; h
 
 // ─── Date helpers ─────────────────────────────────────────────────────────────
 
-/** Local calendar date as YYYY-MM-DD (NOT UTC — uses the runtime's local day). */
+/** Local calendar date as YYYY-MM-DD (NOT UTC, uses the runtime's local day). */
 export function localDateKey(d: Date = new Date()): string {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");

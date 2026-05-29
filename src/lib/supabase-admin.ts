@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 
 /**
  * Server-only Supabase client that uses the SERVICE_ROLE key.
- * BYPASSES RLS — never expose this client to the browser.
+ * BYPASSES RLS, never expose this client to the browser.
  *
  * Required env vars on Vercel:
  *   NEXT_PUBLIC_SUPABASE_URL

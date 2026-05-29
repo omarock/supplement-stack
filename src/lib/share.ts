@@ -3,7 +3,7 @@
  *
  * A share token packs: a list of supplement IDs + an optional stack name.
  * Encoded as URL-safe base64 of "name|id1,id2,id3..."
- * No PII, no secrets — just a compact way to make the URL pretty.
+ * No PII, no secrets, just a compact way to make the URL pretty.
  */
 
 import { SUPPLEMENT_DB } from "./supplements";

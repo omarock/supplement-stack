@@ -241,7 +241,7 @@ function Step3({ data, update }: { data: QuizData; update: (u: Partial<QuizData>
 function Step4({ data, update }: { data: QuizData; update: (u: Partial<QuizData>) => void }) {
   return (
     <div>
-      <StepHeader tag="Step 4 of 6" title="Energy & stress" sub="Two quick scales — same as your sleep one." />
+      <StepHeader tag="Step 4 of 6" title="Energy & stress" sub="Two quick scales, same as your sleep one." />
       <div style={{ marginBottom: 22 }}>
         <div style={{ fontSize: 14, fontWeight: 500, color: TH.ink, marginBottom: 10 }}>Daytime energy</div>
         <ScaleField value={data.energy} onChange={v => update({ energy: v })}
@@ -278,7 +278,7 @@ function StepEmail({ data, update }: { data: QuizData; update: (u: Partial<QuizD
   // Email is optional in Express. Pressing "Generate" without one still works.
   return (
     <div>
-      <StepHeader tag="Step 6 of 6 · Optional" title="Where should we send your stack?" sub="Your stack appears on the next screen either way — but if you give us an email, we'll send a copy you can revisit. No spam. Unsubscribe anytime." />
+      <StepHeader tag="Step 6 of 6 · Optional" title="Where should we send your stack?" sub="Your stack appears on the next screen either way, but if you give us an email, we'll send a copy you can revisit. No spam. Unsubscribe anytime." />
       <Field label="Email (optional)">
         <input
           type="email"
@@ -301,7 +301,7 @@ function StepEmail({ data, update }: { data: QuizData; update: (u: Partial<QuizD
         borderRadius: 12, fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.6,
       }}>
         <strong style={{ color: TH.sageDeep }}>Heads up:</strong>{" "}
-        Express uses thoughtful defaults for sleep duration, allergies, medications, and bodywide concerns. For maximum accuracy — or if you have health conditions or take prescription medications — <Link href="/quiz/complete" style={{ color: TH.sageDeep, fontWeight: 600 }}>take the Complete quiz</Link>.
+        Express uses thoughtful defaults for sleep duration, allergies, medications, and bodywide concerns. For maximum accuracy, or if you have health conditions or take prescription medications, <Link href="/quiz/complete" style={{ color: TH.sageDeep, fontWeight: 600 }}>take the Complete quiz</Link>.
       </div>
     </div>
   );

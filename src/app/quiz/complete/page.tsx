@@ -232,7 +232,7 @@ function Step2({ d, u }: { d: QuizData; u: Updater }) {
     u({ goals: d.goals.includes(g) ? d.goals.filter(x => x !== g) : [...d.goals, g] });
   return (
     <>
-      <Heading step={2} title="What you want." subtitle="Pick all that apply — we'll prioritise accordingly." />
+      <Heading step={2} title="What you want." subtitle="Pick all that apply, we'll prioritise accordingly." />
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
         {goals.map(([label, glyph]) => (
           <GoalCard key={label} label={label} glyph={glyph}
@@ -316,7 +316,7 @@ function Step4({ d, u }: { d: QuizData; u: Updater }) {
 function Step5({ d, u }: { d: QuizData; u: Updater }) {
   return (
     <>
-      <Heading step={5} title="Energy & vitality." subtitle="When you're awake — how alive do you feel?" />
+      <Heading step={5} title="Energy & vitality." subtitle="When you're awake, how alive do you feel?" />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         <ScaleRow title="Daytime energy level?" value={d.energy} onChange={v => u({ energy: v })}
           labels={["Exhausted", "Low", "Moderate", "Good", "Vibrant"]} />
@@ -336,7 +336,7 @@ function Step5({ d, u }: { d: QuizData; u: Updater }) {
 function Step6({ d, u }: { d: QuizData; u: Updater }) {
   return (
     <>
-      <Heading step={6} title="Movement." subtitle="Any movement counts — gym, yoga, walks, sports, all of it." />
+      <Heading step={6} title="Movement." subtitle="Any movement counts, gym, yoga, walks, sports, all of it." />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         <div>
           <QLabel text="How often do you train?" />
@@ -374,7 +374,7 @@ function Step7({ d, u }: { d: QuizData; u: Updater }) {
           <QLabel text="How do you eat?" />
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {[
-              ["Omnivore", "Meat, fish, dairy, eggs — the full range"],
+              ["Omnivore", "Meat, fish, dairy, eggs, the full range"],
               ["Vegetarian", "No meat or fish; dairy and eggs are fine"],
               ["Vegan", "Fully plant-based"],
               ["Pescatarian", "Fish and seafood, no other meat"],
@@ -485,7 +485,7 @@ function Step9({ d, u }: { d: QuizData; u: Updater }) {
 function Step10({ d, u }: { d: QuizData; u: Updater }) {
   return (
     <>
-      <Heading step={10} title="Budget & preferences." subtitle="Last step — let's right-size the stack for your wallet and values." />
+      <Heading step={10} title="Budget & preferences." subtitle="Last step, let's right-size the stack for your wallet and values." />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         <div>
           <QLabel text="Monthly supplement budget" />
@@ -494,7 +494,7 @@ function Step10({ d, u }: { d: QuizData; u: Updater }) {
               ["Under $20 / month", "2-3 highest-impact essentials"],
               ["$20 – $50 / month", "A solid foundational stack"],
               ["$50 – $100 / month", "Comprehensive and targeted"],
-              ["$100+ / month", "Full optimisation — no compromises"],
+              ["$100+ / month", "Full optimisation, no compromises"],
             ].map(([label, sub]) => (
               <Card key={label} label={label} sub={sub}
                 selected={d.budget === label} onClick={() => u({ budget: label })} compact />
@@ -574,7 +574,7 @@ function StepGenerating({ data }: { data: QuizData }) {
           Want a copy in your inbox?
         </h1>
         <p style={{ color: th.inkSoft, fontSize: 15, lineHeight: 1.5, maxWidth: 420, margin: "0 auto 28px" }}>
-          We&apos;ll email your stack so you can revisit it anytime. Optional — your results are about to load either way.
+          We&apos;ll email your stack so you can revisit it anytime. Optional, your results are about to load either way.
         </p>
 
         <form onSubmit={submitEmail} style={{ maxWidth: 420, margin: "0 auto", display: "flex", flexDirection: "column", gap: 12 }}>
@@ -605,7 +605,7 @@ function StepGenerating({ data }: { data: QuizData }) {
             fontFamily: '"Inter", system-ui, sans-serif', textDecoration: "underline",
             textUnderlineOffset: 3,
           }}>
-            Skip — just show me my results
+            Skip, just show me my results
           </button>
         </form>
 

@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const comp = getCompetitor(slug);
   if (!comp) return { title: "Comparison not found" };
   return {
-    title: `suppdoc.io vs ${comp.name} — Honest Comparison | suppdoc.io`,
+    title: `suppdoc.io vs ${comp.name}, Honest Comparison | suppdoc.io`,
     description: comp.metaDescription,
     keywords: comp.keywords,
     openGraph: {
@@ -148,7 +148,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
         {/* Pros / Cons for the competitor */}
         <section style={{ padding: "0 var(--section-pad-x) 36px", maxWidth: 1100, margin: "0 auto" }}>
           <h2 style={{ ...D, fontSize: 24, color: TH.ink, letterSpacing: "-0.02em", margin: "0 0 16px" }}>
-            Where {comp.name} shines — and where it falls short
+            Where {comp.name} shines, and where it falls short
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "var(--proscons-cols)", gap: 14 }}>
             <div style={{

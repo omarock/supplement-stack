@@ -15,7 +15,7 @@ export async function getSessionUser(): Promise<{ id: string; email: string } | 
   const supa = createServerClient(url, key, {
     cookies: {
       getAll() { return cookieStore.getAll(); },
-      setAll() { /* noop — route handlers don't refresh the session here */ },
+      setAll() { /* noop, route handlers don't refresh the session here */ },
     },
   });
 

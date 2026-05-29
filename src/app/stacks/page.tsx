@@ -22,7 +22,7 @@ const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } 
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
-  title: "Pre-made Stacks — suppdoc.io",
+  title: "Pre-made Stacks, suppdoc.io",
   description: "15 ready-to-adopt supplement stacks composed by suppdoc.io. Sleep, energy, focus, stress, recovery, immunity, vegan, longevity, hormonal balance, beauty, menopause support, gut reset, athletic performance, and a foundational starter.",
   keywords: "supplement stacks, best supplements for sleep, best supplements for energy, vegan supplements, supplement routines",
 };
@@ -38,7 +38,7 @@ export default function StacksPage() {
         {/* Hero */}
         <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 32px", textAlign: "center" }}>
           <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>
-            — READY-MADE STACKS —
+          READY-MADE STACKS
           </div>
           <h1 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.025em", lineHeight: 1.05 }}>
             Skip the quiz. <em style={{ color: th.burgundy }}>Pick a stack</em>.
@@ -105,7 +105,7 @@ export default function StacksPage() {
                       </div>
                     </div>
 
-                    {/* Product preview mosaic — shows the actual bottles in the stack */}
+                    {/* Product preview mosaic, shows the actual bottles in the stack */}
                     {previewImages.length > 0 && (
                       <div style={{
                         display: "grid",

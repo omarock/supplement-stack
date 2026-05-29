@@ -111,7 +111,7 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
             const next = [...without, c].sort((a, b) => a.date.localeCompare(b.date));
             setCheckins(next);
             if (!enrollment) setEnrollment({ stack_name: null, stack_ids: null, reminder_opt_in: true, weekly_digest_opt_in: true, started_at: new Date().toISOString() });
-            // Celebrate the streak — only on a brand-new check-in for today, at a milestone.
+            // Celebrate the streak, only on a brand-new check-in for today, at a milestone.
             if (!wasLoggedToday) {
               const { current } = computeStreak(next, today);
               track("checkin_save", { streak: current, took: c.took_stack });
@@ -130,7 +130,7 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
           <SummaryCard checkinCount={checkins.length} />
         )}
 
-        {/* Premium nudge — full history + trend analytics */}
+        {/* Premium nudge, full history + trend analytics */}
         {!isPremium && checkins.length >= 5 && (
           <Link href="/pricing" style={{
             display: "flex", alignItems: "center", gap: 14, textDecoration: "none", color: "inherit",
@@ -142,7 +142,7 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
             </span>
             <span style={{ flex: 1 }}>
               <span style={{ display: "block", ...D, fontSize: 15, color: TH.ink }}>See your full history & trends</span>
-              <span style={{ display: "block", fontSize: 12.5, color: TH.muted, marginTop: 1 }}>Premium unlocks long-term analytics, AI memory & reminders — $9/mo.</span>
+              <span style={{ display: "block", fontSize: 12.5, color: TH.muted, marginTop: 1 }}>Premium unlocks long-term analytics, AI memory & reminders, $9/mo.</span>
             </span>
             <span style={{ color: TH.sageDeep, fontWeight: 600, fontSize: 13, whiteSpace: "nowrap" }}>Upgrade →</span>
           </Link>
@@ -152,7 +152,7 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
         <DigestSettings enrollment={enrollment} email={email} onChange={setEnrollment} />
 
         <p style={{ fontSize: 12, color: TH.muted, lineHeight: 1.6, marginTop: 26, textAlign: "center" }}>
-          Educational use only — not medical advice. Wellness check-ins are subjective and reflect how you feel, not a diagnosis.
+          Educational use only, not medical advice. Wellness check-ins are subjective and reflect how you feel, not a diagnosis.
         </p>
       </div>
 
@@ -169,7 +169,7 @@ function Celebration({ streak, onClose }: { streak: number; onClose: () => void 
   }, [onClose]);
 
   const msg = streak === 1
-    ? "Streak started — see you tomorrow."
+    ? "Streak started, see you tomorrow."
     : streak >= 30 ? "Incredible consistency."
     : streak >= 7 ? "A full week. This is how change sticks."
     : "Keep it going.";
@@ -269,7 +269,7 @@ function EnrollIntro({ onEnrolled }: { onEnrolled: (e: TrackerEnrollment) => voi
     }}>
       <h2 style={{ ...D, fontSize: 22, margin: "0 0 8px", letterSpacing: "-0.02em" }}>Start your streak today.</h2>
       <p style={{ fontSize: 15, color: TH.inkSoft, margin: "0 0 18px", lineHeight: 1.55, maxWidth: 560 }}>
-        Each day, log whether you took your stack and rate how you feel. In a week you&apos;ll see clear trends — and a streak worth protecting.
+        Each day, log whether you took your stack and rate how you feel. In a week you&apos;ll see clear trends, and a streak worth protecting.
       </p>
       <div style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
         {[

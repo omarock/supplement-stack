@@ -2,7 +2,7 @@
  * Compact internal-content index for the chat assistant.
  *
  * Built lazily at first call, then cached for the lifetime of the server
- * process. The full index serializes to ~22KB — fits comfortably in a single
+ * process. The full index serializes to ~22KB, fits comfortably in a single
  * system prompt and lets Claude ground every recommendation in a real
  * internal URL.
  */

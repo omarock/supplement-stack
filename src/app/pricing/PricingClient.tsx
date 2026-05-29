@@ -32,7 +32,7 @@ export default function PricingClient({ signedIn, isPremium, billingEnabled }: {
   const upgrade = useCallback(async () => {
     track("checkout_click", { plan, signedIn });
     if (!signedIn) { router.push("/signin?redirect=/pricing"); return; }
-    if (!billingEnabled) { setError("Checkout isn't switched on yet — check back shortly."); return; }
+    if (!billingEnabled) { setError("Checkout isn't switched on yet, check back shortly."); return; }
     setBusy(true); setError(null);
     try {
       const res = await fetch("/api/stripe/checkout", {
@@ -58,7 +58,7 @@ export default function PricingClient({ signedIn, isPremium, billingEnabled }: {
             Free to start. <span style={{ fontFamily: FONTS.serifItalic, fontStyle: "italic", fontWeight: 400, color: TH.sageDeep }}>Premium when it matters.</span>
           </h1>
           <p style={{ fontSize: 17, color: TH.inkSoft, maxWidth: 540, margin: "0 auto", lineHeight: 1.5 }}>
-            We don&apos;t sell supplements, so premium isn&apos;t a markup on pills — it&apos;s the tools that turn your stack into measurable progress.
+            We don&apos;t sell supplements, so premium isn&apos;t a markup on pills, it&apos;s the tools that turn your stack into measurable progress.
           </p>
         </header>
 
@@ -112,7 +112,7 @@ export default function PricingClient({ signedIn, isPremium, billingEnabled }: {
               cursor: isPremium ? "default" : busy ? "wait" : "pointer",
               boxShadow: isPremium ? "none" : `0 8px 20px -6px ${TH.sage}80`,
             }}>
-              {isPremium ? "✓ You're on Premium" : busy ? "Starting checkout…" : signedIn ? `Upgrade — ${price}${per}` : "Sign in to upgrade"}
+              {isPremium ? "✓ You're on Premium" : busy ? "Starting checkout…" : signedIn ? `Upgrade, ${price}${per}` : "Sign in to upgrade"}
             </button>
             {error && <div role="alert" style={{ marginTop: 10, fontSize: 12.5, color: "#b91c1c", textAlign: "center" }}>{error}</div>}
             <div style={{ marginTop: 10, ...MM, fontSize: 10, color: TH.mutedDim, textAlign: "center", letterSpacing: "0.03em" }}>
@@ -122,7 +122,7 @@ export default function PricingClient({ signedIn, isPremium, billingEnabled }: {
         </div>
 
         <p style={{ fontSize: 12.5, color: TH.muted, textAlign: "center", marginTop: 28, lineHeight: 1.6 }}>
-          Educational use only — not medical advice. Premium adds tools and history; it never changes the honesty of the recommendations.
+          Educational use only, not medical advice. Premium adds tools and history; it never changes the honesty of the recommendations.
         </p>
       </div>
 

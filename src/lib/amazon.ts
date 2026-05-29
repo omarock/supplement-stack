@@ -8,7 +8,7 @@
  *        NEXT_PUBLIC_AMAZON_AFFILIATE_TAG = suppdoc-20
  *   4. Redeploy. Amazon buy-buttons will appear automatically wherever amazonEnabled() is true.
  *
- * Until the env var is set, Amazon buttons stay hidden — keeping iHerb as the only visible affiliate.
+ * Until the env var is set, Amazon buttons stay hidden, keeping iHerb as the only visible affiliate.
  */
 
 export const AMAZON_AFFILIATE_TAG = process.env.NEXT_PUBLIC_AMAZON_AFFILIATE_TAG || "";

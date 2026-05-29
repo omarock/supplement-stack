@@ -68,7 +68,7 @@ function ProductImage({ option, height = 280, showBrandStrip = false }: {
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={imgSrc}
-          alt={`${option.brand} ${option.productName} — ${option.size}`}
+          alt={`${option.brand} ${option.productName}, ${option.size}`}
           loading="lazy"
           itemProp="image"
           style={{
@@ -84,7 +84,7 @@ function ProductImage({ option, height = 280, showBrandStrip = false }: {
         </div>
       )}
 
-      {/* Optional brand strip — off by default for cleaner Amazon-style cards */}
+      {/* Optional brand strip, off by default for cleaner Amazon-style cards */}
       {showBrandStrip && (
         <div style={{
           position: "absolute", bottom: 0, left: 0, right: 0,
@@ -246,7 +246,7 @@ function ProductModal({ supp, options, source, onClose }: {
           ))}
         </div>
         <p style={{ fontSize: 11, color: th.inkMute, textAlign: "center", marginTop: 24, lineHeight: 1.6 }}>
-          Prices are approximate and may vary by retailer. We may earn a commission on qualifying purchases — at no extra cost to you.
+          Prices are approximate and may vary by retailer. We may earn a commission on qualifying purchases, at no extra cost to you.
         </p>
       </div>
     </div>
@@ -342,7 +342,7 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                 </span>
               )}
 
-              {/* Image area — pure white, Amazon-style, clickable → /products/[id] */}
+              {/* Image area, pure white, Amazon-style, clickable → /products/[id] */}
               <Link
                 href={`/products/${s.id}`}
                 aria-label={`View ${bestseller.brand} ${bestseller.productName} details`}
@@ -381,7 +381,7 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                 overflow: "hidden",
                 minHeight: "calc(15px * 1.45 * 3)",
               }}>
-                {bestseller.productName} — {s.purpose}
+                {bestseller.productName}, {s.purpose}
               </h3>
 
               {/* Tag chips */}
@@ -423,7 +423,7 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                 </div>
               )}
 
-              {/* Price — big like Amazon */}
+              {/* Price, big like Amazon */}
               <div
                 itemProp="offers" itemScope itemType="https://schema.org/Offer"
                 style={{ display: "flex", alignItems: "baseline", gap: 4, marginTop: 4 }}
@@ -439,7 +439,7 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                 <span style={{ fontSize: 11, color: "#565959", marginLeft: 6 }}>~/month</span>
               </div>
 
-              {/* Buy buttons — bigger touch targets for mobile (min 44px height) */}
+              {/* Buy buttons, bigger touch targets for mobile (min 44px height) */}
               <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 8, paddingTop: 6 }}>
                 <a
                   href={iherbHref}

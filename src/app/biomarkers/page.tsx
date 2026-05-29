@@ -15,8 +15,8 @@ const CAT_LABEL: Record<string, string> = {
 };
 
 export const metadata: Metadata = {
-  title: "Biomarker Guide — what your blood test means | suppdoc.io",
-  description: "Plain-English guides to common blood biomarkers — vitamin D, ferritin, B12, HbA1c, cholesterol, TSH and more. See optimal ranges and the evidence-led supplements that help.",
+  title: "Biomarker Guide, what your blood test means | suppdoc.io",
+  description: "Plain-English guides to common blood biomarkers, vitamin D, ferritin, B12, HbA1c, cholesterol, TSH and more. See optimal ranges and the evidence-led supplements that help.",
   keywords: "blood test biomarkers, what does my blood test mean, biomarker optimal range, supplements for low ferritin, low vitamin d supplements, hba1c explained",
   alternates: { canonical: "https://www.suppdoc.io/biomarkers" },
 };
@@ -34,7 +34,7 @@ export default function BiomarkersIndex() {
               What your <span style={SI}>blood test</span> means.
             </h1>
             <p style={{ fontSize: 18, color: TH.inkSoft, maxWidth: 580, margin: "0 auto 22px", lineHeight: 1.55 }}>
-              Plain-English guides to common biomarkers — optimal ranges and the evidence-led supplements that help. Or upload your labs for a personalised read.
+              Plain-English guides to common biomarkers, optimal ranges and the evidence-led supplements that help. Or upload your labs for a personalised read.
             </p>
             <Link href="/bloodwork" style={{
               display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 26px", borderRadius: 999,

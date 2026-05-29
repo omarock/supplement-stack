@@ -7,12 +7,12 @@ import { validateInternalUrl, lookupSupplement } from "@/lib/knowledge-base";
 /**
  * Tiny safe Markdown renderer for chat responses.
  *
- * Supported syntax (deliberately narrow — XSS surface stays small):
+ * Supported syntax (deliberately narrow, XSS surface stays small):
  *  - Paragraphs (separated by blank lines)
  *  - **bold**
  *  - *italic* and _italic_
  *  - `inline code`
- *  - [text](url) — internal links render as citation chips
+ *  - [text](url), internal links render as citation chips
  *  - Bullet lists ("- " or "* ")
  *  - Numbered lists ("1. ")
  *
@@ -73,7 +73,7 @@ function parseBlocks(text: string): Block[] {
       continue;
     }
 
-    // Paragraph — accumulate until blank line or list start
+    // Paragraph, accumulate until blank line or list start
     const para: string[] = [];
     while (i < lines.length && lines[i].trim() !== "" && !/^[-*]\s+/.test(lines[i]) && !/^\d+\.\s+/.test(lines[i])) {
       para.push(lines[i]);
@@ -175,7 +175,7 @@ function renderInline(text: string, compact: boolean) {
     if (n.href) {
       const internal = validateInternalUrl(n.href);
       if (internal) return <CitationChip key={i} text={n.text} href={n.href} type={internal.type} slug={internal.slug} compact={compact} />;
-      // External or unrecognized internal — render as plain text (no link injection)
+      // External or unrecognized internal, render as plain text (no link injection)
       return <span key={i}>{n.text}</span>;
     }
     return <span key={i}>{n.text}</span>;
@@ -191,7 +191,7 @@ function CitationChip({ text, href, type, slug, compact }: {
 }) {
   // For ingredient chips, enrich the label with a tiny preview tooltip via title attr
   const supp = type === "ingredient" || type === "research" ? lookupSupplement(slug ?? "") : undefined;
-  const title = supp ? `${supp.name} — ${supp.purpose}` : text;
+  const title = supp ? `${supp.name}, ${supp.purpose}` : text;
 
   const accent = type === "ingredient" || type === "research" ? TH.sageDeep
     : type === "stack" ? TH.amberDeep

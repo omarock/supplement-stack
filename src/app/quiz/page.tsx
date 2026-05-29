@@ -9,7 +9,7 @@ const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWe
 const MM = { fontFamily: FONTS.mono } as const;
 
 export const metadata: Metadata = {
-  title: "Take the Quiz — Express or Complete | suppdoc.io",
+  title: "Take the Quiz, Express or Complete | suppdoc.io",
   description: "Get a personalised supplement stack. Choose the 2-minute Express quiz for fast goal-matched recommendations, or the 5-minute Complete quiz for deep personalization including bloodwork analysis.",
   keywords: "supplement quiz, personalised supplements, AI supplement quiz, express supplement quiz",
 };
@@ -36,7 +36,7 @@ export default function QuizChooser() {
               fontSize: 18, color: TH.inkSoft, maxWidth: 580, margin: "0 auto",
               lineHeight: 1.55,
             }}>
-              Two ways in. Most people want Express — quick and accurate. Complete is for when you want every nuance considered.
+              Two ways in. Most people want Express, quick and accurate. Complete is for when you want every nuance considered.
             </p>
           </header>
 

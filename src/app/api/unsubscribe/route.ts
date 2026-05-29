@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
         { onConflict: "email" },
       );
     } catch {
-      // soft-fail — still show success to the user; we'll catch it in logs
+      // soft-fail, still show success to the user; we'll catch it in logs
     }
   }
 
@@ -47,7 +47,7 @@ function renderPage(title: string, body: string): string {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>${escapeHtml(title)} — suppdoc.io</title>
+  <title>${escapeHtml(title)}, suppdoc.io</title>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body { margin:0; background:#f6f5f1; font-family:"Inter",-apple-system,sans-serif; color:#0a2540; }

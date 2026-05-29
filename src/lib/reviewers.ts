@@ -8,7 +8,7 @@
  * HOW TO ACTIVATE: once you've recruited a real reviewer, add them here. The
  * byline and schema upgrade automatically across every content page. Until
  * then, the byline shows an honest "reviewed against the research" statement
- * and pages are authored by the organisation — no fabricated names.
+ * and pages are authored by the organisation, no fabricated names.
  */
 
 export interface Reviewer {
@@ -29,7 +29,7 @@ export function authorSchema() {
   return { "@type": "Organization", name: "suppdoc", url: "https://www.suppdoc.io" };
 }
 
-/** Schema.org `reviewedBy` — Person(s) if we have real reviewers, else omit. */
+/** Schema.org `reviewedBy`, Person(s) if we have real reviewers, else omit. */
 export function reviewedBySchema() {
   if (!hasReviewers) return undefined;
   return REVIEWERS.map(r => ({

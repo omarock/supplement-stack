@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const research = getResearch(slug);
   const studyCount = research?.studies.length ?? 0;
   return {
-    title: `${supp.name} Research — Clinical Studies & Evidence | suppdoc.io`,
+    title: `${supp.name} Research, Clinical Studies & Evidence | suppdoc.io`,
     description: studyCount > 0
       ? `${studyCount} clinical studies on ${supp.name}. Real published research, plain-English summaries, PubMed links. Evidence level: ${research?.evidenceLevel ?? supp.evidence}.`
       : `Search the published research on ${supp.name}. Direct PubMed access, curated by suppdoc.io.`,
@@ -121,7 +121,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ slug:
                 How we read the research
               </div>
               <p style={{ fontSize: 14, color: TH.inkSoft, lineHeight: 1.6, margin: 0 }}>
-                We prioritize randomised controlled trials and meta-analyses over single observational studies. Animal and in-vitro data are listed as &quot;mechanistic&quot; — they suggest direction, not human effect size.
+                We prioritize randomised controlled trials and meta-analyses over single observational studies. Animal and in-vitro data are listed as &quot;mechanistic&quot;, they suggest direction, not human effect size.
               </p>
             </div>
             <div>
@@ -151,7 +151,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ slug:
                 See {supp.name.split(" (")[0]} in a personalised stack
               </h3>
               <p style={{ fontSize: 14, opacity: 0.85, margin: 0, lineHeight: 1.5 }}>
-                The research is one thing — what to take, at what dose, paired with what, is another. We compose stacks that turn the evidence into a daily routine.
+                The research is one thing, what to take, at what dose, paired with what, is another. We compose stacks that turn the evidence into a daily routine.
               </p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -169,7 +169,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ slug:
           padding: "0 var(--section-pad-x) 60px",
           fontSize: 12, color: TH.muted, lineHeight: 1.6, textAlign: "center",
         }}>
-          Studies referenced are real published research. Summaries are paraphrased for accessibility — for exact methods and full text, click through to PubMed. Educational use only — not medical advice. Consult a qualified clinician before starting any new supplement.
+          Studies referenced are real published research. Summaries are paraphrased for accessibility, for exact methods and full text, click through to PubMed. Educational use only, not medical advice. Consult a qualified clinician before starting any new supplement.
         </p>
       </main>
       <SiteFooter />

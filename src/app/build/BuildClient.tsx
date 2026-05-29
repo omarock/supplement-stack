@@ -72,7 +72,7 @@ function decodeStack(s: string | null): string[] {
   return s.split(",").map(x => x.trim()).filter(Boolean);
 }
 
-// Wellness impact estimator — sums tag contributions per supplement
+// Wellness impact estimator, sums tag contributions per supplement
 function wellnessImpact(supps: Supplement[]) {
   const scores = { energy: 0, sleep: 0, recovery: 0, focus: 0, stress: 0, mood: 0 };
   const tagMap: Record<keyof typeof scores, string[]> = {
@@ -102,29 +102,29 @@ function detectIssues(supps: Supplement[]) {
   const ids = new Set(supps.map(s => s.id));
 
   if (ids.has("omega3") && ids.has("omega3-algae")) {
-    issues.push({ kind: "info", text: "You have both fish-oil and algae omega-3 — these overlap. Keep one." });
+    issues.push({ kind: "info", text: "You have both fish-oil and algae omega-3, these overlap. Keep one." });
   }
   const magCount = supps.filter(s => s.id.startsWith("mag-")).length;
   if (magCount > 2) {
-    issues.push({ kind: "info", text: `You have ${magCount} magnesium forms — most people only need one (glycinate for sleep, threonate for brain).` });
+    issues.push({ kind: "info", text: `You have ${magCount} magnesium forms, most people only need one (glycinate for sleep, threonate for brain).` });
   }
   if (ids.has("5-htp") && ids.has("tryptophan")) {
-    issues.push({ kind: "warn", text: "5-HTP and L-Tryptophan both raise serotonin — combining is rarely needed and can be excessive." });
+    issues.push({ kind: "warn", text: "5-HTP and L-Tryptophan both raise serotonin, combining is rarely needed and can be excessive." });
   }
   if (ids.has("iron") && ids.has("calcium")) {
-    issues.push({ kind: "info", text: "Take iron and calcium at least 2 hours apart — calcium blocks iron absorption." });
+    issues.push({ kind: "info", text: "Take iron and calcium at least 2 hours apart, calcium blocks iron absorption." });
   }
   if (ids.has("coq10") && ids.has("ubiquinol")) {
-    issues.push({ kind: "info", text: "CoQ10 and Ubiquinol are the same nutrient (oxidized vs reduced) — pick one." });
+    issues.push({ kind: "info", text: "CoQ10 and Ubiquinol are the same nutrient (oxidized vs reduced), pick one." });
   }
   if (ids.has("ashwagandha") && ids.has("rhodiola") && ids.has("eleuthero") && ids.has("ginseng")) {
-    issues.push({ kind: "info", text: "You're stacking 4+ adaptogens — usually 2 is enough. Consider trimming." });
+    issues.push({ kind: "info", text: "You're stacking 4+ adaptogens, usually 2 is enough. Consider trimming." });
   }
   if (ids.has("nmn") && !ids.has("tmg") && !ids.has("b-complex") && !ids.has("methylfolate")) {
-    issues.push({ kind: "info", text: "NAD+ precursors (NMN/NR) consume methyl groups — consider adding TMG or B-complex." });
+    issues.push({ kind: "info", text: "NAD+ precursors (NMN/NR) consume methyl groups, consider adding TMG or B-complex." });
   }
   if (supps.length >= SOFT_CAP) {
-    issues.push({ kind: "info", text: `Your stack has ${supps.length} supplements — most well-designed routines stay under 10. Consider focusing.` });
+    issues.push({ kind: "info", text: `Your stack has ${supps.length} supplements, most well-designed routines stay under 10. Consider focusing.` });
   }
   return issues;
 }
@@ -256,10 +256,10 @@ export default function BuildClient() {
   const loadTemplate = useCallback((ids: string[]) => {
     const valid = ids.filter(id => SUPPLEMENT_DB.some(s => s.id === id));
     setSelectedIds(valid);
-    toast("Template loaded — tweak from here.");
+    toast("Template loaded, tweak from here.");
   }, [toast]);
 
-  // Share / copy URL — uses /share/[token] for a clean URL with a custom OG preview
+  // Share / copy URL, uses /share/[token] for a clean URL with a custom OG preview
   const shareUrl = useCallback(async () => {
     if (typeof window === "undefined") return;
     if (selectedIds.length === 0) {
@@ -270,13 +270,13 @@ export default function BuildClient() {
     const link = `${window.location.origin}/share/${token}`;
     try {
       await navigator.clipboard.writeText(link);
-      toast("Share link copied — paste anywhere to preview.");
+      toast("Share link copied, paste anywhere to preview.");
     } catch {
       toast(`Copy this: ${link}`);
     }
   }, [selectedIds, stackName, toast]);
 
-  // Buy all — open each iHerb link in a new tab (with affiliate code)
+  // Buy all, open each iHerb link in a new tab (with affiliate code)
   const buyAll = useCallback(() => {
     for (const s of selected) {
       const p = PRODUCTS[s.id]?.[0];
@@ -308,7 +308,7 @@ export default function BuildClient() {
         </p>
       </header>
 
-      {/* AI mode — describe in plain English */}
+      {/* AI mode, describe in plain English */}
       {selected.length === 0 && (
         <AIDescribeMode
           onApply={ids => {
@@ -372,7 +372,7 @@ export default function BuildClient() {
               <input
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                placeholder={`Search ${SUPPLEMENT_DB.length} ingredients — "magnesium", "sleep", "ashwagandha"…`}
+                placeholder={`Search ${SUPPLEMENT_DB.length} ingredients, "magnesium", "sleep", "ashwagandha"…`}
                 style={{
                   width: "100%", padding: "16px 18px 16px 48px",
                   fontSize: 15, fontFamily: FONTS.body, color: TH.ink,
@@ -860,7 +860,7 @@ function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
     "I want more energy, better focus, and improved sleep.",
     "I'm vegan and want a foundational stack for longevity.",
     "Help me recover faster from training and reduce joint stiffness.",
-    "I'm 45 and starting to feel burnt out — calmer baseline, deeper sleep.",
+    "I'm 45 and starting to feel burnt out, calmer baseline, deeper sleep.",
   ];
 
   const runWith = useCallback(async (raw: string) => {
@@ -917,7 +917,7 @@ function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
           color: TH.surface, fontWeight: 600, letterSpacing: "0.06em",
         }}>AI</span>
         <h2 style={{ ...D, fontSize: 18, color: TH.ink, margin: 0, letterSpacing: "-0.015em" }}>
-          Describe your goals — we&apos;ll compose the stack
+          Describe your goals, we&apos;ll compose the stack
         </h2>
       </div>
 

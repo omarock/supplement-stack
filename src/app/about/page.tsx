@@ -11,8 +11,8 @@ const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } 
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
-  title: "About — suppdoc.io",
-  description: "suppdoc.io composes personalised supplement rituals from clean, evidence-led ingredients. Built to help you understand your stack — not just sell it.",
+  title: "About, suppdoc.io",
+  description: "suppdoc.io composes personalised supplement rituals from clean, evidence-led ingredients. Built to help you understand your stack, not just sell it.",
 };
 
 export default function AboutPage() {
@@ -26,7 +26,7 @@ export default function AboutPage() {
           A quieter way to <em style={{ color: th.burgundy }}>supplement</em>.
         </h1>
         <p style={{ color: th.inkSoft, fontSize: 18, lineHeight: 1.6, maxWidth: 640, margin: "24px auto 0" }}>
-          suppdoc.io composes personalised supplement rituals from clean, evidence-led ingredients. We exist because most supplement advice is either too generic or too aggressive — and the average person deserves better.
+          suppdoc.io composes personalised supplement rituals from clean, evidence-led ingredients. We exist because most supplement advice is either too generic or too aggressive, and the average person deserves better.
         </p>
       </section>
 
@@ -38,7 +38,7 @@ export default function AboutPage() {
               Our philosophy
             </h2>
             <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.7 }}>
-              Most supplement brands push a generic stack at everyone. We do the opposite: we ask you 25 thoughtful questions about your body, lifestyle, and goals — then build a small, specific stack from clean ingredients that fits your budget. Less marketing, more matching.
+              Most supplement brands push a generic stack at everyone. We do the opposite: we ask you 25 thoughtful questions about your body, lifestyle, and goals, then build a small, specific stack from clean ingredients that fits your budget. Less marketing, more matching.
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export default function AboutPage() {
               Why we don&apos;t sell supplements directly
             </h2>
             <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.7 }}>
-              We&apos;d rather you buy proven, third-party-tested brands from trusted global retailers than from us. So instead of launching our own private label, we curate top-rated products for each recommendation — established brands like NOW Foods, Doctor&apos;s Best, Thorne, Sports Research, and Garden of Life — and link you out to retailers like iHerb and Amazon. You buy direct. We earn a small affiliate commission. Your stack stays honest.
+              We&apos;d rather you buy proven, third-party-tested brands from trusted global retailers than from us. So instead of launching our own private label, we curate top-rated products for each recommendation, established brands like NOW Foods, Doctor&apos;s Best, Thorne, Sports Research, and Garden of Life, and link you out to retailers like iHerb and Amazon. You buy direct. We earn a small affiliate commission. Your stack stays honest.
             </p>
           </div>
 
@@ -65,7 +65,7 @@ export default function AboutPage() {
               <li>· Available in clean forms from multiple trusted brands</li>
             </ul>
             <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.7, marginTop: 16 }}>
-              If a supplement doesn&apos;t pass all four — even if it&apos;s trendy — we don&apos;t recommend it.
+              If a supplement doesn&apos;t pass all four, even if it&apos;s trendy, we don&apos;t recommend it.
             </p>
           </div>
 
@@ -74,7 +74,7 @@ export default function AboutPage() {
               What suppdoc.io is not
             </h2>
             <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.7 }}>
-              We&apos;re not medical professionals. We don&apos;t diagnose, treat, or cure conditions. We don&apos;t replace your doctor, dietitian, or pharmacist. For any health concerns — and especially before starting supplements — talk to a qualified clinician. Our recommendations are educational.
+              We&apos;re not medical professionals. We don&apos;t diagnose, treat, or cure conditions. We don&apos;t replace your doctor, dietitian, or pharmacist. For any health concerns, and especially before starting supplements, talk to a qualified clinician. Our recommendations are educational.
             </p>
           </div>
 

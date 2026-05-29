@@ -75,7 +75,7 @@ export default function AuditClient() {
             fontSize: 18, color: TH.inkSoft, maxWidth: 620, margin: "0 auto",
             lineHeight: 1.55,
           }}>
-            Paste what you take today. We&apos;ll find what&apos;s redundant, missing, risky, or mistimed — then suggest a cleaner version. Free, instant, no signup.
+            Paste what you take today. We&apos;ll find what&apos;s redundant, missing, risky, or mistimed, then suggest a cleaner version. Free, instant, no signup.
           </p>
         </header>
 
@@ -126,7 +126,7 @@ export default function AuditClient() {
             marginTop: 14, flexWrap: "wrap", gap: 10,
           }}>
             <div style={{ fontSize: 12, color: TH.muted, lineHeight: 1.5 }}>
-              <strong style={{ color: TH.inkSoft }}>Privacy:</strong> What you paste isn&apos;t stored. Educational use only — not medical advice.
+              <strong style={{ color: TH.inkSoft }}>Privacy:</strong> What you paste isn&apos;t stored. Educational use only, not medical advice.
             </div>
             <button
               type="button"
@@ -166,7 +166,7 @@ export default function AuditClient() {
           )}
         </section>
 
-        {/* What we check — only show before result */}
+        {/* What we check, only show before result */}
         {!result && !loading && (
           <section style={{ marginTop: 40 }}>
             <div style={{
@@ -183,7 +183,7 @@ export default function AuditClient() {
                 { ic: "↻", t: "Redundancies", d: "Two omega-3s, CoQ10 + ubiquinol, three magnesiums." },
                 { ic: "✚", t: "Missing nutrients", d: "Foundational gaps you might want to fix." },
                 { ic: "◐", t: "Timing", d: "What to take morning vs evening, on empty stomach, etc." },
-                { ic: "$", t: "Cost analysis", d: "Spot waste — same effect for less." },
+                { ic: "$", t: "Cost analysis", d: "Spot waste, same effect for less." },
                 { ic: "★", t: "Evidence quality", d: "Each pick scored by published research." },
               ].map(item => (
                 <div key={item.t} style={{
@@ -236,7 +236,7 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
               Stack score
             </div>
             <div style={{ ...D, fontSize: 30, color: TH.ink, letterSpacing: "-0.02em", lineHeight: 1 }}>
-              {data.score >= 85 ? "Strong stack." : data.score >= 65 ? "Decent — with room." : data.score >= 50 ? "Needs cleanup." : "Significant issues."}
+              {data.score >= 85 ? "Strong stack." : data.score >= 65 ? "Decent, with room." : data.score >= 50 ? "Needs cleanup." : "Significant issues."}
             </div>
             <div style={{ fontSize: 13.5, color: TH.muted, marginTop: 6 }}>
               {matchedCount} ingredient{matchedCount === 1 ? "" : "s"} recognized
@@ -344,7 +344,7 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
           borderRadius: 14, padding: "16px 18px",
         }}>
           <div style={{ fontSize: 13, color: TH.muted, marginBottom: 6 }}>
-            We couldn&apos;t recognize these — likely brand-specific or outside our 151-ingredient library:
+            We couldn&apos;t recognize these, likely brand-specific or outside our 151-ingredient library:
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {unmatched.map((u, i) => (
@@ -373,7 +373,7 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
           Want a fresh stack instead?
         </h3>
         <p style={{ fontSize: 14, opacity: 0.85, margin: "0 0 18px" }}>
-          Take the quiz or describe your goals in plain English — we&apos;ll compose one from scratch.
+          Take the quiz or describe your goals in plain English, we&apos;ll compose one from scratch.
         </p>
         <div style={{ display: "flex", justifyContent: "center", gap: 10, flexWrap: "wrap" }}>
           <Link href="/quiz" style={ctaBtn(TH.surface, TH.ink)}>Take the quiz →</Link>
@@ -383,7 +383,7 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
 
       {/* Disclaimer */}
       <p style={{ fontSize: 12, color: TH.muted, lineHeight: 1.6, marginTop: 12, textAlign: "center" }}>
-        Educational use only — not medical advice. Always consult a qualified clinician before changing your supplements, especially if you have medical conditions, take prescription medications, or are pregnant or nursing.
+        Educational use only, not medical advice. Always consult a qualified clinician before changing your supplements, especially if you have medical conditions, take prescription medications, or are pregnant or nursing.
       </p>
 
       <style>{`

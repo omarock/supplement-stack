@@ -7,7 +7,7 @@ import { getAdminSupabase, isAdminEmail } from "@/lib/supabase-admin";
 import SuppdocLogo from "@/components/SuppdocLogo";
 
 export const metadata: Metadata = {
-  title: "Admin — suppdoc.io",
+  title: "Admin, suppdoc.io",
   robots: "noindex,nofollow",
 };
 
@@ -16,7 +16,7 @@ const th = {
   sage: "#5ba373", sageGlow: "rgba(91,163,115,0.10)",
   burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
 };
-// `S` retained as a name for backward compat — now points to Bricolage display (admin has no decorative serif glyphs)
+// `S` retained as a name for backward compat, now points to Bricolage display (admin has no decorative serif glyphs)
 const S = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
@@ -74,7 +74,7 @@ export default async function AdminDashboard() {
   const user = await checkAdmin();
   const admin = getAdminSupabase();
 
-  // No service role configured — show setup banner
+  // No service role configured, show setup banner
   if (!admin) {
     return (
       <NoServiceRoleNotice email={user.email ?? ""} />
@@ -162,7 +162,7 @@ export default async function AdminDashboard() {
         {/* Title */}
         <div style={{ marginBottom: 32 }}>
           <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 10 }}>
-            — DASHBOARD —
+          DASHBOARD
           </div>
           <h1 style={{ ...S, fontSize: 52, color: th.ink, margin: 0, letterSpacing: "-0.025em", lineHeight: 1 }}>
             Pilot your site.
@@ -371,7 +371,7 @@ function NoServiceRoleNotice({ email }: { email: string }) {
         <ol style={{ color: th.inkSoft, fontSize: 14, lineHeight: 1.8, marginTop: 18 }}>
           <li>Open <a href="https://supabase.com/dashboard/project/ihbourjkfjufdenzrypm/settings/api-keys" style={{ color: th.sage }}>your Supabase API keys page</a></li>
           <li>Switch to the <strong>Legacy anon, service_role API keys</strong> tab</li>
-          <li>Copy the <strong>service_role</strong> key (DO NOT share this — server-only)</li>
+          <li>Copy the <strong>service_role</strong> key (DO NOT share this, server-only)</li>
           <li>In Vercel: Settings → Environment Variables → Add <code style={{ background: "rgba(0,0,0,0.05)", padding: "1px 5px", borderRadius: 4 }}>SUPABASE_SERVICE_ROLE_KEY</code> with that value</li>
           <li>Also add <code style={{ background: "rgba(0,0,0,0.05)", padding: "1px 5px", borderRadius: 4 }}>ADMIN_EMAILS</code> with your email: <strong>{email}</strong></li>
           <li>Redeploy</li>

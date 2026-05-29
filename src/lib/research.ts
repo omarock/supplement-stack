@@ -42,7 +42,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   d3k2: {
     ingredient: "d3k2",
     evidenceLevel: "very strong",
-    summary: "Vitamin D3 is one of the most-studied supplements in human history — over 90,000 published papers. The combination with K2 directs supplemental calcium into bones and away from arteries.",
+    summary: "Vitamin D3 is one of the most-studied supplements in human history, over 90,000 published papers. The combination with K2 directs supplemental calcium into bones and away from arteries.",
     bestUseCases: ["Correct low serum 25(OH)D", "Bone density support", "Immune resilience (especially in winter)", "Mood support in low-sun seasons", "Cardiovascular calcium routing (with K2)"],
     studies: [
       {
@@ -270,7 +270,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   "l-theanine": {
     ingredient: "l-theanine",
     evidenceLevel: "strong",
-    summary: "L-theanine is the unique amino acid in tea that promotes alpha brain waves — the 'calm focus' state. It works fast (30–60 minutes) and pairs particularly well with caffeine.",
+    summary: "L-theanine is the unique amino acid in tea that promotes alpha brain waves, the 'calm focus' state. It works fast (30–60 minutes) and pairs particularly well with caffeine.",
     bestUseCases: ["Reducing caffeine jitters and anxiety", "Sustained focus during cognitive work", "Pre-stress events (presentations, exams)", "Mild evening relaxation without sedation", "Acute anxiety management"],
     studies: [
       {
@@ -282,7 +282,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "27 healthy adults",
         dose: "97 mg theanine + 40 mg caffeine",
         duration: "Single dose",
-        finding: "The combination improved accuracy on attention-switching tasks and reduced susceptibility to distractor stimuli vs caffeine alone — the canonical 'calm focus' finding.",
+        finding: "The combination improved accuracy on attention-switching tasks and reduced susceptibility to distractor stimuli vs caffeine alone, the canonical 'calm focus' finding.",
         pubmedQuery: pm("L-theanine caffeine cognitive performance Owen"),
       },
       {
@@ -327,7 +327,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   creatine: {
     ingredient: "creatine",
     evidenceLevel: "very strong",
-    summary: "Creatine monohydrate is the most-studied supplement in sports nutrition (500+ trials). Growing evidence shows benefits beyond muscle — cognition, mood, and aging.",
+    summary: "Creatine monohydrate is the most-studied supplement in sports nutrition (500+ trials). Growing evidence shows benefits beyond muscle, cognition, mood, and aging.",
     bestUseCases: ["Strength training performance", "Muscle mass and recovery", "Cognitive performance under sleep deprivation", "Age-related sarcopenia prevention", "Vegan/vegetarian creatine repletion"],
     studies: [
       {
@@ -375,7 +375,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "52 women with SSRI-resistant depression",
         dose: "5 g/day creatine + SSRI",
         duration: "8 weeks",
-        finding: "Adjunctive creatine produced significantly greater improvement in depression scores vs SSRI alone — onset of antidepressant response was also faster.",
+        finding: "Adjunctive creatine produced significantly greater improvement in depression scores vs SSRI alone, onset of antidepressant response was also faster.",
         pubmedQuery: pm("creatine depression SSRI Lyoo"),
       },
     ],
@@ -441,7 +441,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   curcumin: {
     ingredient: "curcumin",
     evidenceLevel: "strong",
-    summary: "Curcumin is the active polyphenol in turmeric. Raw curcumin has poor bioavailability — the studied effects rely on enhanced forms (BioPerine, Meriva phytosome, Theracurmin).",
+    summary: "Curcumin is the active polyphenol in turmeric. Raw curcumin has poor bioavailability, the studied effects rely on enhanced forms (BioPerine, Meriva phytosome, Theracurmin).",
     bestUseCases: ["Knee osteoarthritis pain", "Systemic inflammation reduction", "Mild-to-moderate depression (adjunct)", "Post-exercise muscle soreness", "Metabolic syndrome markers"],
     studies: [
       {
@@ -477,7 +477,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "9 RCTs",
         dose: "Variable",
         duration: "Variable",
-        finding: "Curcumin significantly reduced circulating IL-6, hs-CRP, and TNF-α — major inflammatory markers — across multiple conditions.",
+        finding: "Curcumin significantly reduced circulating IL-6, hs-CRP, and TNF-α, major inflammatory markers, across multiple conditions.",
         pubmedQuery: pm("curcumin inflammation IL-6 CRP Sahebkar"),
       },
     ],
@@ -555,7 +555,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "Multiple RCTs reviewed",
         dose: "200–1,000 mg/day",
         duration: "Variable",
-        finding: "Moderate vitamin C (200–500 mg) supports recovery in athletes. Mega-doses (>1 g) may blunt training adaptations — moderation matters.",
+        finding: "Moderate vitamin C (200–500 mg) supports recovery in athletes. Mega-doses (>1 g) may blunt training adaptations, moderation matters.",
         pubmedQuery: pm("vitamin C exercise oxidative Braakhuis"),
       },
       {
@@ -567,7 +567,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "Crossover study, healthy adults",
         dose: "100 mg vitamin C with iron",
         duration: "Per meal",
-        finding: "Vitamin C taken with iron-rich meals dramatically enhances non-heme iron absorption — clinically meaningful for vegetarians and women with low ferritin.",
+        finding: "Vitamin C taken with iron-rich meals dramatically enhances non-heme iron absorption, clinically meaningful for vegetarians and women with low ferritin.",
         pubmedQuery: pm("vitamin C iron absorption Cook Reddy"),
       },
     ],
@@ -576,7 +576,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   probiotic: {
     ingredient: "probiotic",
     evidenceLevel: "strong",
-    summary: "Probiotic effects are strain-specific. Generic 'probiotic' doesn't mean much — the evidence accumulates around specific strains tested for specific conditions.",
+    summary: "Probiotic effects are strain-specific. Generic 'probiotic' doesn't mean much, the evidence accumulates around specific strains tested for specific conditions.",
     bestUseCases: ["Antibiotic-associated diarrhea prevention (S. boulardii, LGG)", "IBS symptoms (B. infantis 35624)", "Acute infectious diarrhea (LGG)", "Mood and anxiety (Lactobacillus helveticus + B. longum)", "Vaginal microbiome (L. crispatus)"],
     studies: [
       {
@@ -666,7 +666,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   "lions-mane": {
     ingredient: "lions-mane",
     evidenceLevel: "moderate",
-    summary: "Lion's mane (Hericium erinaceus) contains hericenones and erinacines — compounds that stimulate nerve growth factor (NGF). Human evidence is most established for mild cognitive decline.",
+    summary: "Lion's mane (Hericium erinaceus) contains hericenones and erinacines, compounds that stimulate nerve growth factor (NGF). Human evidence is most established for mild cognitive decline.",
     bestUseCases: ["Mild cognitive decline / early memory issues", "Mood support (early evidence)", "Nerve regeneration (mechanistic)", "Stress-related cognitive performance"],
     studies: [
       {
@@ -858,7 +858,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "144 women with unexplained fatigue + low ferritin",
         dose: "80 mg/day ferrous sulfate",
         duration: "4 weeks",
-        finding: "Iron significantly reduced fatigue scores in non-anaemic women with low ferritin (≤50 ng/mL) — the first trial supporting low-ferritin treatment without anaemia.",
+        finding: "Iron significantly reduced fatigue scores in non-anaemic women with low ferritin (≤50 ng/mL), the first trial supporting low-ferritin treatment without anaemia.",
         pubmedQuery: pm("iron fatigue non-anaemic women Verdon BMJ"),
       },
       {
@@ -903,7 +903,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "10 RCTs",
         dose: "0.5–5 mg at destination bedtime",
         duration: "—",
-        finding: "Melatonin was highly effective for jet lag from eastward travel across 5+ time zones. Doses 0.5–5 mg performed similarly — lower doses sufficient.",
+        finding: "Melatonin was highly effective for jet lag from eastward travel across 5+ time zones. Doses 0.5–5 mg performed similarly, lower doses sufficient.",
         pubmedQuery: pm("melatonin jet lag Herxheimer Cochrane"),
       },
       {
@@ -969,7 +969,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   nmn: {
     ingredient: "nmn",
     evidenceLevel: "emerging",
-    summary: "NMN is one of the most active research areas in longevity science. Multiple recent human trials confirm safe NAD+ elevation. Functional outcomes are still being characterised — promising but not yet definitive.",
+    summary: "NMN is one of the most active research areas in longevity science. Multiple recent human trials confirm safe NAD+ elevation. Functional outcomes are still being characterised, promising but not yet definitive.",
     bestUseCases: ["Restoring age-related NAD+ decline", "Energy and endurance in adults 40+", "Insulin sensitivity (early evidence)", "Longevity protocols (Sinclair group)"],
     studies: [
       {
@@ -993,7 +993,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "48 amateur runners",
         dose: "300–1,200 mg/day NMN",
         duration: "6 weeks",
-        finding: "NMN dose-dependently improved aerobic capacity (VO2 max) and ventilatory threshold in runners — first evidence of performance benefit in healthy adults.",
+        finding: "NMN dose-dependently improved aerobic capacity (VO2 max) and ventilatory threshold in runners, first evidence of performance benefit in healthy adults.",
         pubmedQuery: pm("NMN aerobic capacity runners Liao"),
       },
       {
@@ -1026,7 +1026,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "12 healthy adults",
         dose: "Single doses up to 1,000 mg NR",
         duration: "Acute and chronic",
-        finding: "NR safely and dose-dependently increased blood NAD+ levels in humans — first definitive proof of human bioavailability of an NAD+ precursor.",
+        finding: "NR safely and dose-dependently increased blood NAD+ levels in humans, first definitive proof of human bioavailability of an NAD+ precursor.",
         pubmedQuery: pm("NR nicotinamide riboside NAD Trammell Nature"),
       },
       {
@@ -1071,7 +1071,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "60 sedentary older adults",
         dose: "250–1,000 mg/day",
         duration: "4 weeks",
-        finding: "Urolithin A dose-dependently improved mitochondrial gene expression and muscle function biomarkers — first human evidence of mitophagy induction by an oral supplement.",
+        finding: "Urolithin A dose-dependently improved mitochondrial gene expression and muscle function biomarkers, first human evidence of mitophagy induction by an oral supplement.",
         pubmedQuery: pm("urolithin A Mitopure mitochondrial Andreux Nature"),
       },
       {
@@ -1104,7 +1104,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   fisetin: {
     ingredient: "fisetin",
     evidenceLevel: "emerging",
-    summary: "Fisetin is one of the leading senolytic candidates — compounds that selectively clear senescent ('zombie') cells that accumulate with age. Mayo Clinic has multiple ongoing trials.",
+    summary: "Fisetin is one of the leading senolytic candidates, compounds that selectively clear senescent ('zombie') cells that accumulate with age. Mayo Clinic has multiple ongoing trials.",
     bestUseCases: ["Senolytic protocols (intermittent 2-day pulses)", "Anti-inflammatory support", "Longevity stacks", "Age-related cellular health"],
     studies: [
       {
@@ -1173,7 +1173,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "12 healthy adults",
         dose: "30 ml concentrate",
         duration: "Acute response",
-        finding: "Tart cherry consumption significantly reduced serum uric acid and increased urinary uric acid excretion within hours — relevant for gout management.",
+        finding: "Tart cherry consumption significantly reduced serum uric acid and increased urinary uric acid excretion within hours, relevant for gout management.",
         pubmedQuery: pm("tart cherry uric acid gout Bell"),
       },
     ],
@@ -1182,7 +1182,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   hmb: {
     ingredient: "hmb",
     evidenceLevel: "strong",
-    summary: "β-hydroxy β-methylbutyrate is the leucine metabolite that signals muscle preservation. Most effective in catabolic states — older adults, illness, bed rest, calorie deficit.",
+    summary: "β-hydroxy β-methylbutyrate is the leucine metabolite that signals muscle preservation. Most effective in catabolic states, older adults, illness, bed rest, calorie deficit.",
     bestUseCases: ["Older adults preventing sarcopenia", "Calorie deficit / cutting phases", "Recovery from immobilization or illness", "Beginner trainees", "Reducing exercise-induced muscle damage"],
     studies: [
       {
@@ -1263,7 +1263,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "11 RCTs · 874 patients",
         dose: "0.5–1.5 g/day",
         duration: "2+ months",
-        finding: "Berberine significantly reduced total cholesterol (–24 mg/dL), LDL (–25 mg/dL), and triglycerides (–44 mg/dL) vs placebo — effects comparable to mild statin doses.",
+        finding: "Berberine significantly reduced total cholesterol (–24 mg/dL), LDL (–25 mg/dL), and triglycerides (–44 mg/dL) vs placebo, effects comparable to mild statin doses.",
         pubmedQuery: pm("berberine lipids cholesterol Dong meta-analysis"),
       },
     ],
@@ -1272,7 +1272,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   saffron: {
     ingredient: "saffron",
     evidenceLevel: "strong",
-    summary: "Saffron extract — particularly the standardized Affron form — has emerged as one of the better-evidenced botanical antidepressants. Effects are comparable to SSRIs in mild-to-moderate depression.",
+    summary: "Saffron extract, particularly the standardized Affron form, has emerged as one of the better-evidenced botanical antidepressants. Effects are comparable to SSRIs in mild-to-moderate depression.",
     bestUseCases: ["Mild-to-moderate depression", "Premenstrual dysphoric disorder (PMDD)", "Mild anxiety with low mood", "Sexual side effects from SSRIs (adjunct)"],
     studies: [
       {
@@ -1409,7 +1409,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         sample: "Animal and small human studies",
         dose: "3 g",
         duration: "Acute",
-        finding: "Glycine increases blood flow to extremities, lowering core body temperature — the mechanism behind its sleep-onset effect.",
+        finding: "Glycine increases blood flow to extremities, lowering core body temperature, the mechanism behind its sleep-onset effect.",
         pubmedQuery: pm("glycine body temperature sleep Bannai"),
       },
     ],
@@ -1517,7 +1517,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
   citicoline: {
     ingredient: "citicoline",
     evidenceLevel: "strong",
-    summary: "Citicoline (CDP-Choline) — Cognizin is the patented form — supports both choline-based acetylcholine synthesis and phosphatidylcholine membrane integrity. Evidence-leading for attention.",
+    summary: "Citicoline (CDP-Choline), Cognizin is the patented form, supports both choline-based acetylcholine synthesis and phosphatidylcholine membrane integrity. Evidence-leading for attention.",
     bestUseCases: ["Adolescent attention and processing speed", "Adult attention performance", "Stroke recovery (clinical)", "Age-related memory complaints"],
     studies: [
       {
@@ -1568,7 +1568,7 @@ export function buildStudyLink(study: Study): string {
 }
 
 /**
- * Fallback for ingredients without a curated entry — points to a useful
+ * Fallback for ingredients without a curated entry, points to a useful
  * PubMed search built from the supplement's name and key tags.
  */
 export function fallbackResearchUrl(supplementName: string, tags: string[] = []): string {

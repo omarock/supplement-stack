@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = getPost(slug);
   if (!post) return { title: "Not found" };
   return {
-    title: `${post.title} — suppdoc.io Journal`,
+    title: `${post.title}, suppdoc.io Journal`,
     description: post.description,
     keywords: post.keywords,
     openGraph: {

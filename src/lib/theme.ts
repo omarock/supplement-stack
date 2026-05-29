@@ -1,5 +1,5 @@
 /**
- * suppdoc.io — design system tokens v2
+ * suppdoc.io, design system tokens v2
  * Inspired by Stripe: light primary, navy ink, sage/amber/coral accents
  */
 
@@ -9,7 +9,7 @@ export const TH = {
   elevated: "#ffffff",
   edge: "rgba(10, 37, 64, 0.08)",
   edgeStrong: "rgba(10, 37, 64, 0.14)",
-  ink: "#0a2540",                        // deep navy — premium, trustworthy
+  ink: "#0a2540",                        // deep navy, premium, trustworthy
   inkSoft: "#3c4858",
   muted: "#6b7280",
   mutedDim: "#a0a8b3",
@@ -40,5 +40,5 @@ export const BRAND = {
   nameShort: "suppdoc",
   domain: "io",
   tagline: "The supplement stack made for just you.",
-  description: "Tell us how you sleep, train, and feel. We build your daily stack from clean, evidence-led ingredients — in minutes.",
+  description: "Tell us how you sleep, train, and feel. We build your daily stack from clean, evidence-led ingredients, in minutes.",
 } as const;

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import AuthForm from "@/components/AuthForm";
 
 export const metadata: Metadata = {
-  title: "Sign in — suppdoc.io",
+  title: "Sign in, suppdoc.io",
   description: "Sign in to your suppdoc.io account to revisit your supplement stack and quiz history.",
 };
 

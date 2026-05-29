@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Medical Disclaimer — suppdoc.io",
+  title: "Medical Disclaimer, suppdoc.io",
   description: "suppdoc.io provides educational guidance only. This is not medical advice. Always consult a qualified healthcare professional before starting supplements.",
 };
 
@@ -15,7 +15,7 @@ export default function Page() {
 
       <h2>Educational Only</h2>
       <p>
-        All content on suppdoc.io — including the quiz, recommendations, daily routines, articles, and product information — is provided for educational and informational purposes only. It is <strong>not intended as medical advice, diagnosis, or treatment</strong>.
+        All content on suppdoc.io, including the quiz, recommendations, daily routines, articles, and product information, is provided for educational and informational purposes only. It is <strong>not intended as medical advice, diagnosis, or treatment</strong>.
       </p>
 
       <h2>Consult a Qualified Professional</h2>
@@ -70,7 +70,7 @@ export default function Page() {
 
       <h2>No Cure or Treatment Claims</h2>
       <p>
-        No supplement on this site is intended to diagnose, treat, cure, or prevent any disease. Phrases like &quot;may support&quot;, &quot;can help&quot;, and &quot;commonly used for&quot; describe research-backed potential effects — not guaranteed outcomes.
+        No supplement on this site is intended to diagnose, treat, cure, or prevent any disease. Phrases like &quot;may support&quot;, &quot;can help&quot;, and &quot;commonly used for&quot; describe research-backed potential effects, not guaranteed outcomes.
       </p>
 
       <h2>Limitation of Liability</h2>

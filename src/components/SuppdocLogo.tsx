@@ -5,7 +5,7 @@ import { useId } from "react";
 import { TH, FONTS } from "@/lib/theme";
 
 /**
- * The sprout mark — stem reaching up with two leaves and a glowing amber bud.
+ * The sprout mark, stem reaching up with two leaves and a glowing amber bud.
  */
 export function SDMark({ size = 28, monoColor }: { size?: number; monoColor?: string }) {
   const id = useId().replace(/:/g, "");

@@ -5,7 +5,7 @@ const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
 const MM = { fontFamily: FONTS.mono } as const;
 
 /**
- * Lock card shown in place of a premium-only feature. Calm and honest —
+ * Lock card shown in place of a premium-only feature. Calm and honest
  * states the value, not a hard sell. Routes to /pricing.
  */
 export default function Paywall({
@@ -52,7 +52,7 @@ export default function Paywall({
           background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none",
           ...D, fontWeight: 600, fontSize: 14.5, boxShadow: `0 8px 20px -6px ${TH.sage}80`,
         }}>
-          Upgrade — $9/mo
+          Upgrade, $9/mo
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
         </Link>
       </div>

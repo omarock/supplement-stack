@@ -10,7 +10,7 @@ import { getSubscription, isPremium } from "@/lib/premium";
 import type { Checkin, TrackerEnrollment } from "@/lib/tracker";
 
 export const metadata: Metadata = {
-  title: "Your daily tracker — suppdoc.io",
+  title: "Your daily tracker, suppdoc.io",
   description: "Track your stack, your wellness, and your streak. A 60-second daily check-in that turns your supplements into measurable progress.",
   robots: "noindex,nofollow",
 };

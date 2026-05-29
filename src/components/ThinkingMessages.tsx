@@ -14,13 +14,13 @@ interface Props {
   className?: string;
   /** Size variant. */
   size?: "sm" | "md";
-  /** Hide the spinner dot — text-only. */
+  /** Hide the spinner dot, text-only. */
   noDot?: boolean;
 }
 
 /**
  * Premium loading-state component that cycles through status phrases
- * during async operations. Better than "Loading…" — gives the user a sense
+ * during async operations. Better than "Loading…", gives the user a sense
  * that real work is happening.
  */
 export default function ThinkingMessages({ phrases, interval = 800, size = "md", noDot = false }: Props) {

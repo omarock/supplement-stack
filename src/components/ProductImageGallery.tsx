@@ -40,7 +40,7 @@ export default function ProductImageGallery({ images, alt }: Props) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      {/* Main image with hover-zoom — slightly smaller than full square */}
+      {/* Main image with hover-zoom, slightly smaller than full square */}
       <div
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
@@ -88,7 +88,7 @@ export default function ProductImageGallery({ images, alt }: Props) {
         )}
       </div>
 
-      {/* Thumbnail strip — only shown if 2+ images */}
+      {/* Thumbnail strip, only shown if 2+ images */}
       {gallery.length > 1 && (
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", maxWidth: 520, margin: "0 auto" }}>
           {gallery.map((url, i) => (
@@ -111,7 +111,7 @@ export default function ProductImageGallery({ images, alt }: Props) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={cleanIherbImageUrl(url)}
-                alt={`${alt} — view ${i + 1}`}
+                alt={`${alt}, view ${i + 1}`}
                 loading="lazy"
                 style={{
                   width: "100%", height: "100%",

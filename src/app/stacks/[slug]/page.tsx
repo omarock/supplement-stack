@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const stack = getStack(slug);
   if (!stack) return { title: "Not found" };
   return {
-    title: `${stack.name} — suppdoc.io`,
+    title: `${stack.name}, suppdoc.io`,
     description: stack.description,
     keywords: `${stack.name}, ${stack.bestFor.join(", ")}, supplement stack`,
     openGraph: {
@@ -136,8 +136,8 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                 </h2>
                 <p style={{ fontSize: 14, color: th.inkSoft, lineHeight: 1.5, margin: "6px 0 0" }}>
                   {optionalSupplements.length === 1
-                    ? "One additional supplement that pairs well with this stack — for users wanting to extend the protocol."
-                    : `${optionalSupplements.length} additional supplements that pair well with this stack — for users wanting to extend the protocol.`}
+                    ? "One additional supplement that pairs well with this stack, for users wanting to extend the protocol."
+                    : `${optionalSupplements.length} additional supplements that pair well with this stack, for users wanting to extend the protocol.`}
                 </p>
               </div>
               <SupplementGrid
@@ -224,13 +224,13 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
             <DailyRoutine supplements={supplements} />
           </section>
 
-          {/* Product alternatives — 3 brand options per supplement */}
+          {/* Product alternatives, 3 brand options per supplement */}
           <section style={{ marginBottom: 56 }}>
             <h2 style={{ ...S, fontSize: 32, margin: "0 0 8px", letterSpacing: "-0.02em", color: th.ink }}>
               All product options
             </h2>
             <p style={{ color: th.inkSoft, fontSize: 15, lineHeight: 1.6, margin: "0 0 24px", maxWidth: 640 }}>
-              Each supplement has multiple trusted brands. Compare quickly and pick what fits your budget — all available from trusted retailers like iHerb and Amazon.
+              Each supplement has multiple trusted brands. Compare quickly and pick what fits your budget, all available from trusted retailers like iHerb and Amazon.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
               {supplements.map(s => {
@@ -407,7 +407,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
             <strong>For informational purposes only. Not medical advice.</strong>{" "}
             Always consult a qualified healthcare professional before starting any supplement regimen.
             <br /><br />
-            <em>suppdoc.io is an affiliate of iHerb, Amazon and other trusted retailers. We may earn a commission on qualifying purchases through our links — at no extra cost to you.</em>
+            <em>suppdoc.io is an affiliate of iHerb, Amazon and other trusted retailers. We may earn a commission on qualifying purchases through our links, at no extra cost to you.</em>
           </p>
 
         </div>

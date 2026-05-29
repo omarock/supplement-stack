@@ -14,7 +14,7 @@ const D = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
-  title: "Journal — suppdoc.io",
+  title: "Journal, suppdoc.io",
   description: "Evidence-led articles on supplements, sleep, stress, and personalised wellness. Curated from peer-reviewed research, written in plain language.",
   keywords: "supplement journal, evidence-based supplements, wellness articles, supplement guide",
 };
@@ -30,7 +30,7 @@ export default function JournalPage() {
         {/* Hero */}
         <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 48px", textAlign: "center" }}>
           <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>
-            — THE JOURNAL —
+          THE JOURNAL
           </div>
           <h1 style={{ ...D, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.025em", lineHeight: 1.02, color: th.ink }}>
             Read before you <em style={{ ...S, fontStyle: "italic", color: th.burgundy }}>supplement</em>.

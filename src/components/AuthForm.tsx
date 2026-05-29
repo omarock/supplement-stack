@@ -58,9 +58,9 @@ export default function AuthForm({ mode }: { mode: Mode }) {
         },
       });
       if (error) setError(error.message);
-      else setSuccess(`Check your inbox — we sent a sign-in link to ${email}.`);
+      else setSuccess(`Check your inbox, we sent a sign-in link to ${email}.`);
     } else {
-      // Demo mode — just store email locally
+      // Demo mode, just store email locally
       localStorage.setItem("phylaUserEmail", email);
       setSuccess(`Saved! Once Supabase is configured, real email links will send. For now, you're "signed in" locally.`);
     }

@@ -1,6 +1,6 @@
 # suppdoc.io
 
-> suppdoc.io is an evidence-graded AI supplement platform. It helps people decide what to take and why — personalised recommendations, an interaction checker, bloodwork analysis, and daily tracking — grounded in published research. We do not sell our own supplements, so recommendations are not biased toward a house brand. Every claim links to the evidence and is being moved under named clinician review.
+> suppdoc.io is an evidence-graded AI supplement platform. It helps people decide what to take and why, personalised recommendations, an interaction checker, bloodwork analysis, and daily tracking, grounded in published research. We do not sell our own supplements, so recommendations are not biased toward a house brand. Every claim links to the evidence and is being moved under named clinician review.
 
 ## What suppdoc does
 - Builds a personalised supplement stack from a quiz, plain-English goals, or your labs.

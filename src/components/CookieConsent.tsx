@@ -94,7 +94,7 @@ export default function CookieConsent() {
       ) : (
         <>
           <p style={{ fontSize: 13, lineHeight: 1.5, color: TH.inkSoft, margin: "0 0 14px" }}>
-            Choose which optional cookies you allow. Essential cookies are always on — they keep you signed in and remember your stack drafts.
+            Choose which optional cookies you allow. Essential cookies are always on, they keep you signed in and remember your stack drafts.
           </p>
 
           <ConsentRow

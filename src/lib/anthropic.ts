@@ -2,13 +2,13 @@
  * Minimal Anthropic Messages API client.
  *
  * Why no SDK: avoids a new dep, the Messages API is HTTP-stable, and we don't
- * need streaming yet — we get back a single JSON object and parse it.
+ * need streaming yet, we get back a single JSON object and parse it.
  *
  * If ANTHROPIC_API_KEY is not set, callers should gracefully fall back to a
  * deterministic rules-based response (see /api/audit-stack and /api/generate-stack).
  */
 
-// Content blocks — used for multimodal input (bloodwork PDFs + lab photos).
+// Content blocks, used for multimodal input (bloodwork PDFs + lab photos).
 // The Messages API accepts either a plain string or an array of these blocks.
 export type ContentBlock =
   | { type: "text"; text: string }
@@ -75,7 +75,7 @@ export async function callClaude(opts: ClaudeOptions): Promise<ClaudeResult> {
       });
 
       if (res.status === 404 || res.status === 400) {
-        // Likely model not found — let caller try a fallback
+        // Likely model not found, let caller try a fallback
         const detail = await res.text();
         if (/model/i.test(detail)) return null;
         return { ok: false, text: "", error: `${res.status}: ${detail.slice(0, 200)}` };

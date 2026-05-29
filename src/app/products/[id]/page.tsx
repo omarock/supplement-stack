@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const productLabel = bestseller ? `${bestseller.brand} ${bestseller.productName}` : `${supp.brand} ${supp.name}`;
   const desc = (bestseller?.fullDescription ?? supp.description ?? supp.why).slice(0, 155);
   return {
-    title: `${productLabel} — Review, Price, Where to Buy | suppdoc.io`,
+    title: `${productLabel}, Review, Price, Where to Buy | suppdoc.io`,
     description: desc,
     keywords: [supp.name, bestseller?.brand ?? supp.brand, "review", "iHerb", "supplements"].join(", "),
     openGraph: {
@@ -87,7 +87,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <span style={{ color: th.ink }}>{bestseller.brand}</span>
       </div>
 
-      {/* Product hero — iHerb-style: image gallery (left) + info cards (right) */}
+      {/* Product hero, iHerb-style: image gallery (left) + info cards (right) */}
       <section style={{ padding: "24px var(--section-pad-x) 48px" }}>
         <div style={{
           maxWidth: 1200, margin: "0 auto",
@@ -100,7 +100,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               ...(bestseller.imageUrl ? [bestseller.imageUrl] : []),
               ...(bestseller.imageUrls ?? []),
             ]}
-            alt={`${bestseller.brand} ${bestseller.productName} — ${bestseller.size}`}
+            alt={`${bestseller.brand} ${bestseller.productName}, ${bestseller.size}`}
           />
 
           {/* RIGHT: Stacked info cards */}
@@ -341,7 +341,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             Not sure where to start?
           </h2>
           <p style={{ fontSize: 17, opacity: 0.95, margin: "12px auto 24px", maxWidth: 520, lineHeight: 1.5 }}>
-            Take our quiz. We&apos;ll compose a complete stack that fits your goals, body, and budget — in minutes.
+            Take our quiz. We&apos;ll compose a complete stack that fits your goals, body, and budget, in minutes.
           </p>
           <Link href="/quiz" style={{
             display: "inline-flex", padding: "16px 36px", borderRadius: 999, fontSize: 15, fontWeight: 600,

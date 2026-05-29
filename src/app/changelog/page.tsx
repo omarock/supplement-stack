@@ -9,7 +9,7 @@ const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWe
 const MM = { fontFamily: FONTS.mono } as const;
 
 export const metadata: Metadata = {
-  title: "Changelog — What's New on suppdoc.io",
+  title: "Changelog, What's New on suppdoc.io",
   description: "What's new on suppdoc.io: features shipped, ingredients added, content published, and improvements made. Reverse-chronological.",
   keywords: "suppdoc changelog, supplement platform updates, new features",
 };
@@ -24,7 +24,7 @@ interface Entry {
   link?: { label: string; href: string };
 }
 
-// Reverse-chronological — latest entries at the top of the array
+// Reverse-chronological, latest entries at the top of the array
 const ENTRIES: Entry[] = [
   {
     date: "2026-05-29",
@@ -36,7 +36,7 @@ const ENTRIES: Entry[] = [
     date: "2026-05-29",
     kind: "Feature",
     title: "AI chat assistant",
-    body: "Added a floating AI coach (bottom-right corner) powered by Claude Sonnet 4.6. Context-aware — it knows which page you're on, what's in your saved stack, and your quiz results. Cites real internal pages.",
+    body: "Added a floating AI coach (bottom-right corner) powered by Claude Sonnet 4.6. Context-aware, it knows which page you're on, what's in your saved stack, and your quiz results. Cites real internal pages.",
     link: { label: "Try it", href: "/" },
   },
   {
@@ -63,7 +63,7 @@ const ENTRIES: Entry[] = [
     date: "2026-05-27",
     kind: "Feature",
     title: "Audit my stack",
-    body: "Paste your current supplements — we score the stack 0-100 and flag interactions, redundancies, missing nutrients, timing issues, and cost waste. Free, instant, no signup.",
+    body: "Paste your current supplements, we score the stack 0-100 and flag interactions, redundancies, missing nutrients, timing issues, and cost waste. Free, instant, no signup.",
     link: { label: "Try it", href: "/audit" },
   },
   {
@@ -110,7 +110,7 @@ const ENTRIES: Entry[] = [
     date: "2026-05-25",
     kind: "Feature",
     title: "Email drip sequence",
-    body: "After taking the quiz, users receive a 4-email sequence at day 0 (welcome), 3, 7, and 14 — short, practical, with unsubscribe in every email.",
+    body: "After taking the quiz, users receive a 4-email sequence at day 0 (welcome), 3, 7, and 14, short, practical, with unsubscribe in every email.",
   },
   {
     date: "2026-05-24",
@@ -158,7 +158,7 @@ export default function ChangelogPage() {
             fontSize: 17, color: TH.inkSoft, lineHeight: 1.6, margin: 0,
             maxWidth: 580, marginLeft: "auto", marginRight: "auto",
           }}>
-            Every meaningful update we&apos;ve shipped — features, content, improvements, fixes. Newest at the top.
+            Every meaningful update we&apos;ve shipped, features, content, improvements, fixes. Newest at the top.
           </p>
         </section>
 
@@ -195,7 +195,7 @@ export default function ChangelogPage() {
             borderRadius: 18, padding: "20px 24px", textAlign: "center",
           }}>
             <p style={{ fontSize: 14, color: TH.inkSoft, margin: "0 0 12px", lineHeight: 1.55 }}>
-              Want to know when we ship something? Take the <Link href="/quiz" style={{ color: TH.sageDeep, fontWeight: 600, textDecoration: "underline" }}>quiz</Link> — we&apos;ll only email if it&apos;s worth your attention.
+              Want to know when we ship something? Take the <Link href="/quiz" style={{ color: TH.sageDeep, fontWeight: 600, textDecoration: "underline" }}>quiz</Link>, we&apos;ll only email if it&apos;s worth your attention.
             </p>
           </div>
         </section>

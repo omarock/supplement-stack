@@ -16,7 +16,7 @@ const MM = { fontFamily: FONTS.mono } as const;
 export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
   const { token } = await params;
   const payload = decodeShareToken(token);
-  if (!payload) return { title: "Stack not found — suppdoc.io" };
+  if (!payload) return { title: "Stack not found, suppdoc.io" };
 
   const supps = payload.ids
     .map(id => SUPPLEMENT_DB.find(s => s.id === id))
@@ -26,10 +26,10 @@ export async function generateMetadata({ params }: { params: Promise<{ token: st
   const name = payload.name?.trim() || "Custom Stack";
 
   return {
-    title: `${name} — ${count} supplement${count === 1 ? "" : "s"} on suppdoc.io`,
+    title: `${name}, ${count} supplement${count === 1 ? "" : "s"} on suppdoc.io`,
     description: `${name}: ${supps.slice(0, 5).map(s => s.name.split(" (")[0]).join(", ")}${count > 5 ? "…" : ""}. ~$${cost}/month. View, adopt, or remix on suppdoc.io.`,
     openGraph: {
-      title: `${name} — suppdoc.io`,
+      title: `${name}, suppdoc.io`,
       description: `${count} supplement${count === 1 ? "" : "s"} · ~$${cost}/month · personalised on suppdoc.io.`,
     },
   };
@@ -162,7 +162,7 @@ export default async function SharePage({ params }: { params: Promise<{ token: s
               Make it yours
             </div>
             <h2 style={{ ...D, fontSize: 26, letterSpacing: "-0.02em", margin: "0 0 8px", lineHeight: 1.15 }}>
-              Adopt this stack — or remix it
+              Adopt this stack, or remix it
             </h2>
             <p style={{ fontSize: 14.5, opacity: 0.85, margin: "0 0 22px", maxWidth: 480, marginLeft: "auto", marginRight: "auto", lineHeight: 1.5 }}>
               Open it in the custom builder where you can swap supplements, change brands, or audit it against your goals.

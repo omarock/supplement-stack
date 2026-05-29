@@ -7,7 +7,7 @@ import { getSubscription, isPremium } from "@/lib/premium";
 import { stripeEnabled } from "@/lib/stripe";
 
 export const metadata: Metadata = {
-  title: "Pricing — suppdoc.io",
+  title: "Pricing, suppdoc.io",
   description: "Free to start. Premium ($9/mo or $79/yr) unlocks bloodwork history, re-test comparison, full tracking trends, and an AI coach that remembers your data.",
 };
 

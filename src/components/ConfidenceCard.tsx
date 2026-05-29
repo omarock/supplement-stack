@@ -9,9 +9,9 @@ export interface ConfidenceCardProps {
   name: string;
   supplementId?: string;          // links to /ingredients/[id]
   evidence?: EvidenceTier;        // honest tier from the catalog
-  reason: string;                 // the "why" — plain English
+  reason: string;                 // the "why", plain English
   basis?: string[];               // what it's matched to (your goal, a biomarker, a symptom)
-  /** Discrete, honest interaction signal — never a fabricated number. */
+  /** Discrete, honest interaction signal, never a fabricated number. */
   interaction?: { level: "low" | "caution"; note?: string };
   tag?: string;                   // e.g. the biomarker that triggered it
 }
@@ -19,7 +19,7 @@ export interface ConfidenceCardProps {
 /**
  * A trust-forward recommendation card: evidence grade + why-it-matches-you +
  * interaction signal, all from real inputs. The visual embodiment of the
- * Confidence Layer. No fake match/confidence percentages — discrete labels only.
+ * Confidence Layer. No fake match/confidence percentages, discrete labels only.
  */
 export default function ConfidenceCard({
   name, supplementId, evidence, reason, basis, interaction, tag,
@@ -35,7 +35,7 @@ export default function ConfidenceCard({
       {/* Reason */}
       <p style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.5, margin: "8px 0 0" }}>{reason}</p>
 
-      {/* Basis chips — what this matches in YOUR data */}
+      {/* Basis chips, what this matches in YOUR data */}
       {basis && basis.length > 0 && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 10 }}>
           <span style={{ ...MM, fontSize: 9.5, color: TH.mutedDim, letterSpacing: "0.06em", textTransform: "uppercase", alignSelf: "center" }}>

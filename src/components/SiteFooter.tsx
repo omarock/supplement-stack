@@ -48,7 +48,7 @@ export default function SiteFooter() {
               Personalised supplement stacks, made for just you. Grounded in the published evidence, sourced from trusted retailers.
             </p>
             <p style={{ fontSize: 11, color: TH.mutedDim, marginTop: 18, lineHeight: 1.5 }}>
-              © {new Date().getFullYear()} suppdoc.io. For informational use only — not medical advice.
+              © {new Date().getFullYear()} suppdoc.io. For informational use only, not medical advice.
               <br />
               suppdoc.io is an affiliate of iHerb, Amazon and other trusted retailers.
             </p>

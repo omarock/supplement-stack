@@ -81,13 +81,13 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
-// Realistic demo analysis shown by "See an example" — uses real biomarker keys
+// Realistic demo analysis shown by "See an example", uses real biomarker keys
 // (so range bars render) and real catalog supplement ids.
 const SAMPLE_ANALYSIS: BloodworkAnalysis = {
   ok: true,
   poweredBy: "claude",
   confidence: "high",
-  summary: "Most markers look healthy. Two are worth attention — your ferritin (iron stores) is low and your vitamin D is on the low side — and a few metabolic markers are drifting up. None are alarming, but a few targeted changes could help your energy and long-term health.",
+  summary: "Most markers look healthy. Two are worth attention, your ferritin (iron stores) is low and your vitamin D is on the low side, and a few metabolic markers are drifting up. None are alarming, but a few targeted changes could help your energy and long-term health.",
   biomarkers: [
     { key: "ferritin", name: "Ferritin", value: 28, unit: "ng/mL", refRange: "30–400", status: "low", category: "blood", note: "Iron storage. Low ferritin is a leading cause of fatigue, especially in menstruating women." },
     { key: "vitamin_d", name: "Vitamin D (25-OH)", value: 24, unit: "ng/mL", refRange: "30–100", status: "borderline-low", category: "vitamins", note: "Drives immune function, mood, bone health, and calcium handling." },
@@ -97,7 +97,7 @@ const SAMPLE_ANALYSIS: BloodworkAnalysis = {
     { key: "magnesium", name: "Magnesium (serum)", value: 2.1, unit: "mg/dL", refRange: "1.8–2.4", status: "optimal", category: "minerals", note: "Cofactor in 300+ reactions." },
   ],
   findings: [
-    { title: "Low iron stores", detail: "Ferritin of 28 is below range. Combined with fatigue, this is worth discussing with your doctor — and a simple recheck in 8–12 weeks.", severity: "flag", biomarkers: ["Ferritin"] },
+    { title: "Low iron stores", detail: "Ferritin of 28 is below range. Combined with fatigue, this is worth discussing with your doctor, and a simple recheck in 8–12 weeks.", severity: "flag", biomarkers: ["Ferritin"] },
     { title: "Metabolic markers drifting up", detail: "HbA1c (5.8%) and LDL (142) are both just over the ideal line. Diet, movement, and a couple of supplements can often nudge these back.", severity: "watch", biomarkers: ["HbA1c", "LDL Cholesterol"] },
     { title: "This is not a diagnosis", detail: "This analysis is educational and based only on the values shown. Lab ranges vary by lab, age, sex, and medications. Review results with a qualified clinician.", severity: "info" },
   ],
@@ -114,8 +114,8 @@ const SAMPLE_ANALYSIS: BloodworkAnalysis = {
     "Swap refined carbs and sugary drinks for whole grains and water to bring HbA1c down.",
   ],
   seeClinicianFor: [
-    "A ferritin of 28 ng/mL with fatigue — ask whether an iron panel and a cause check are warranted.",
-    "HbA1c of 5.8% (prediabetic range) — worth a conversation about prevention.",
+    "A ferritin of 28 ng/mL with fatigue, ask whether an iron panel and a cause check are warranted.",
+    "HbA1c of 5.8% (prediabetic range), worth a conversation about prevention.",
   ],
 };
 
@@ -184,7 +184,7 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
             Turn your labs into a <span style={SI}>plan</span>.
           </h1>
           <p style={{ fontSize: 18, color: TH.inkSoft, maxWidth: 600, margin: "0 auto", lineHeight: 1.55 }}>
-            Upload a blood test — PDF or photo. Our AI reads your biomarkers, flags what&apos;s low or high, and suggests evidence-led, targeted supplements. Private and educational — never a diagnosis.
+            Upload a blood test, PDF or photo. Our AI reads your biomarkers, flags what&apos;s low or high, and suggests evidence-led, targeted supplements. Private and educational, never a diagnosis.
           </p>
         </header>
 
@@ -237,7 +237,7 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
 
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 16, flexWrap: "wrap", gap: 10 }}>
                   <div style={{ fontSize: 12.5, color: TH.muted, lineHeight: 1.5, maxWidth: 360 }}>
-                    <strong style={{ color: TH.inkSoft }}>Private:</strong> we don&apos;t store your file — it&apos;s read once and discarded.
+                    <strong style={{ color: TH.inkSoft }}>Private:</strong> we don&apos;t store your file, it&apos;s read once and discarded.
                   </div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     <button onClick={showSample} style={{
@@ -265,7 +265,7 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
           </section>
         )}
 
-        {/* How it works — only before result */}
+        {/* How it works, only before result */}
         {stage === "idle" && !pasteMode && <HowItWorks />}
 
         {/* Result */}
@@ -522,7 +522,7 @@ function AnalysisReport({ data, sourceKind, signedIn, onReset, isSample = false 
       </div>
 
       <p style={{ fontSize: 12, color: TH.muted, lineHeight: 1.6, textAlign: "center", marginTop: 4 }}>
-        This analysis is for education only and is not medical advice, diagnosis, or treatment. Reference ranges differ by laboratory, age, sex, and medication. Always consult a qualified clinician before acting on these results or changing your supplements — especially if you are pregnant, nursing, have a medical condition, or take prescription medication.
+        This analysis is for education only and is not medical advice, diagnosis, or treatment. Reference ranges differ by laboratory, age, sex, and medication. Always consult a qualified clinician before acting on these results or changing your supplements, especially if you are pregnant, nursing, have a medical condition, or take prescription medication.
       </p>
     </div>
   );
@@ -552,7 +552,7 @@ function BiomarkerCard({ b }: { b: ExtractedBiomarker }) {
       </div>
       {b.refRange && <div style={{ ...MM, fontSize: 10.5, color: TH.mutedDim, marginTop: 2 }}>ref: {b.refRange}</div>}
 
-      {/* Healthy-range bar — Function/Levels style */}
+      {/* Healthy-range bar, Function/Levels style */}
       {bar && (
         <div style={{ marginTop: 12 }}>
           <div style={{ position: "relative", height: 7, borderRadius: 999, overflow: "hidden", background: TH.edge }}>

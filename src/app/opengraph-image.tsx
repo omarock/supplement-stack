@@ -1,12 +1,12 @@
 import { ImageResponse } from "next/og";
 
 // Site-wide default Open Graph image (for / and any page that doesn't override).
-// Renders as a 1200x630 image — Twitter/LinkedIn/Facebook standard.
+// Renders as a 1200x630 image, Twitter/LinkedIn/Facebook standard.
 
 export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "suppdoc.io — Personalised, Evidence-Based Supplement Stacks";
+export const alt = "suppdoc.io, Personalised, Evidence-Based Supplement Stacks";
 
 export default async function Image() {
   return new ImageResponse(
@@ -60,7 +60,7 @@ export default async function Image() {
           tailored to your goals, body, and budget. From top-rated, third-party-tested brands.
         </div>
 
-        {/* Bottom strip — stats + CTA */}
+        {/* Bottom strip, stats + CTA */}
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           marginTop: "auto", paddingTop: 30,

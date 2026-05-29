@@ -6,7 +6,7 @@ import { track as vercelTrack } from "@vercel/analytics";
  * Central funnel-event tracker (thin wrapper over Vercel Analytics custom events).
  * Safe to call anywhere client-side; no-ops if analytics isn't available.
  *
- * Keep event names stable — they're the funnel we optimize against:
+ * Keep event names stable, they're the funnel we optimize against:
  *   home_goal_build · quiz_complete · stack_generate · audit_run ·
  *   bloodwork_analyze · bloodwork_save · track_cta_click · track_enroll ·
  *   checkin_save · checkout_click · interaction_to_audit

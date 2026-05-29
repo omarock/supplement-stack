@@ -52,7 +52,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: false,
     iherbSearch: "Sports Research Vitamin D3 K2",
     category: "vitamins",
-    description: "Vitamin D3 (cholecalciferol) is the form your skin produces from sunlight and the form your body uses for hundreds of processes — from immune function and mood regulation to bone density and calcium absorption. Modern life keeps most adults indoors, and roughly 40% of the global population is now estimated to have insufficient D3 levels. Pairing D3 with vitamin K2 (MK-7) is essential: K2 directs calcium into bones and away from arteries, mitigating the cardiovascular risk that high-dose D3 alone can carry. The combined daily dose of 5,000 IU D3 with 90 mcg K2 is well-evidenced for adults at all latitudes.",
+    description: "Vitamin D3 (cholecalciferol) is the form your skin produces from sunlight and the form your body uses for hundreds of processes, from immune function and mood regulation to bone density and calcium absorption. Modern life keeps most adults indoors, and roughly 40% of the global population is now estimated to have insufficient D3 levels. Pairing D3 with vitamin K2 (MK-7) is essential: K2 directs calcium into bones and away from arteries, mitigating the cardiovascular risk that high-dose D3 alone can carry. The combined daily dose of 5,000 IU D3 with 90 mcg K2 is well-evidenced for adults at all latitudes.",
   },
   {
     id: "omega3", name: "Omega-3 Fish Oil (Triglyceride)", brand: "Sports Research",
@@ -66,21 +66,21 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Sports Research Omega-3 Fish Oil Triple Strength",
     warnings: ["blood-thinners"],
     category: "omega-fats",
-    description: "Omega-3 fish oil delivers EPA and DHA — the two long-chain omega-3 fatty acids your brain, heart, joints, and inflammation pathways depend on. The triglyceride form used by premium brands like Sports Research is more bioavailable and stable than the ethyl ester form found in cheap supplements. Decades of research support omega-3s for cardiovascular function, mood, joint comfort, and recovery from physical stress. The American Heart Association recommends 1–2 g of combined EPA+DHA daily for general health and 2–4 g for cardiovascular support. Always store fish oil refrigerated and check the lot's third-party purity testing before buying.",
+    description: "Omega-3 fish oil delivers EPA and DHA, the two long-chain omega-3 fatty acids your brain, heart, joints, and inflammation pathways depend on. The triglyceride form used by premium brands like Sports Research is more bioavailable and stable than the ethyl ester form found in cheap supplements. Decades of research support omega-3s for cardiovascular function, mood, joint comfort, and recovery from physical stress. The American Heart Association recommends 1–2 g of combined EPA+DHA daily for general health and 2–4 g for cardiovascular support. Always store fish oil refrigerated and check the lot's third-party purity testing before buying.",
   },
   {
     id: "omega3-algae", name: "Algae Omega-3 EPA/DHA", brand: "Ovega-3",
     dose: "500 mg EPA+DHA", timing: "morning",
     purpose: "Heart · brain · inflammation (vegan)",
     evidence: "strong", monthlyCost: 28, priority: 8,
-    why: "Plant-based EPA/DHA from algae — the same omega-3s as fish oil, since fish get them from algae in the first place.",
+    why: "Plant-based EPA/DHA from algae, the same omega-3s as fish oil, since fish get them from algae in the first place.",
     hue: "#688a6b",
     tags: ["focus", "recovery", "general", "stress", "brain-fog", "vegan-only", "joint", "longevity", "heart"],
     vegan: true,
     iherbSearch: "Ovega-3 Algae Omega-3",
     warnings: ["fish-allergy", "blood-thinners"],
     category: "omega-fats",
-    description: "Algae oil is the original source of EPA and DHA — fish only contain these long-chain omega-3s because they eat algae or other fish that ate algae. Direct algae supplements provide the same omega-3s without involving fish, making them the cleanest option for vegans, vegetarians, and people with fish or shellfish allergies. They are also typically free of the heavy-metal and PCB contamination concerns associated with ocean-sourced products. Ovega-3 and Nordic Naturals' algae line each provide 500–700 mg of combined EPA+DHA per serving. Daily intake of at least 500 mg of EPA+DHA is associated with cardiovascular and cognitive benefits.",
+    description: "Algae oil is the original source of EPA and DHA, fish only contain these long-chain omega-3s because they eat algae or other fish that ate algae. Direct algae supplements provide the same omega-3s without involving fish, making them the cleanest option for vegans, vegetarians, and people with fish or shellfish allergies. They are also typically free of the heavy-metal and PCB contamination concerns associated with ocean-sourced products. Ovega-3 and Nordic Naturals' algae line each provide 500–700 mg of combined EPA+DHA per serving. Daily intake of at least 500 mg of EPA+DHA is associated with cardiovascular and cognitive benefits.",
   },
   {
     id: "multivit", name: "Whole-food Multivitamin", brand: "Garden of Life",
@@ -93,7 +93,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Garden of Life Vitamin Code mykind Organics Multivitamin",
     category: "vitamins",
-    description: "A high-quality multivitamin provides insurance against gaps in dietary micronutrient intake — vitamins and minerals the body needs in small amounts but that even careful eaters can miss. Whole-food multivitamins like Garden of Life Vitamin Code use vitamins cultured on whole-food substrates, providing them alongside the natural cofactors that enhance absorption. While a multivitamin is no substitute for a varied diet, daily use ensures consistent coverage of foundational nutrients — particularly B vitamins, magnesium, zinc, and vitamin D — which support energy, mood, immune function, and long-term cellular health. Look for forms standardized to active vitamins (methylfolate, methylcobalamin, P-5-P).",
+    description: "A high-quality multivitamin provides insurance against gaps in dietary micronutrient intake, vitamins and minerals the body needs in small amounts but that even careful eaters can miss. Whole-food multivitamins like Garden of Life Vitamin Code use vitamins cultured on whole-food substrates, providing them alongside the natural cofactors that enhance absorption. While a multivitamin is no substitute for a varied diet, daily use ensures consistent coverage of foundational nutrients, particularly B vitamins, magnesium, zinc, and vitamin D, which support energy, mood, immune function, and long-term cellular health. Look for forms standardized to active vitamins (methylfolate, methylcobalamin, P-5-P).",
   },
 
   // ── Sleep & nervous system ───────────────────────────────────────────────
@@ -108,7 +108,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Doctor's Best High Absorption Magnesium Glycinate",
     category: "minerals",
-    description: "Magnesium glycinate combines the essential mineral magnesium with the amino acid glycine, creating one of the most bioavailable and gentle forms of magnesium available. Glycine itself has calming properties, which makes this form especially well-suited for evening use to support deep sleep and nervous system relaxation. An estimated 50% of adults in industrialized countries fall short of daily magnesium needs — a deficit linked to poor sleep quality, muscle tension, anxiety, and elevated blood pressure. Unlike magnesium citrate, glycinate does not cause laxative effects, making it appropriate for higher daily doses. Standard intake is 200–400 mg of elemental magnesium per evening, with food.",
+    description: "Magnesium glycinate combines the essential mineral magnesium with the amino acid glycine, creating one of the most bioavailable and gentle forms of magnesium available. Glycine itself has calming properties, which makes this form especially well-suited for evening use to support deep sleep and nervous system relaxation. An estimated 50% of adults in industrialized countries fall short of daily magnesium needs, a deficit linked to poor sleep quality, muscle tension, anxiety, and elevated blood pressure. Unlike magnesium citrate, glycinate does not cause laxative effects, making it appropriate for higher daily doses. Standard intake is 200–400 mg of elemental magnesium per evening, with food.",
   },
   {
     id: "ashwagandha", name: "Ashwagandha KSM-66", brand: "Jarrow Formulas",
@@ -122,20 +122,20 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Jarrow Formulas Ashwagandha KSM-66",
     warnings: ["pregnant", "thyroid", "autoimmune"],
     category: "adaptogens",
-    description: "Ashwagandha (Withania somnifera) is the most-studied adaptogenic herb in Ayurvedic medicine, used for over 3,000 years to support resilience to physical and mental stress. The KSM-66 extract — standardized to 5% withanolides and made from the root only — is the gold-standard clinical form, with over 20 published placebo-controlled trials. Research consistently shows reductions in perceived stress, lower cortisol levels in chronically stressed adults, improved sleep onset, and modest improvements in strength and recovery in active populations. The standard dose is 600 mg of KSM-66 per day. Avoid during pregnancy, with autoimmune conditions, or alongside thyroid medication without clinician supervision.",
+    description: "Ashwagandha (Withania somnifera) is the most-studied adaptogenic herb in Ayurvedic medicine, used for over 3,000 years to support resilience to physical and mental stress. The KSM-66 extract, standardized to 5% withanolides and made from the root only, is the gold-standard clinical form, with over 20 published placebo-controlled trials. Research consistently shows reductions in perceived stress, lower cortisol levels in chronically stressed adults, improved sleep onset, and modest improvements in strength and recovery in active populations. The standard dose is 600 mg of KSM-66 per day. Avoid during pregnancy, with autoimmune conditions, or alongside thyroid medication without clinician supervision.",
   },
   {
     id: "l-theanine", name: "L-Theanine (Suntheanine)", brand: "Now Foods",
     dose: "200 mg", timing: "midday",
     purpose: "Calm focus · stress",
     evidence: "strong", monthlyCost: 12, priority: 7,
-    why: "Promotes alpha brain waves — calm, focused energy without sedation. Pairs beautifully with coffee.",
+    why: "Promotes alpha brain waves, calm, focused energy without sedation. Pairs beautifully with coffee.",
     hue: "#688a6b",
     tags: ["focus", "stress", "high-stress", "anxiety", "brain-fog", "poor-focus"],
     vegan: true,
     iherbSearch: "Now Foods L-Theanine Suntheanine 200mg",
     category: "amino-acids",
-    description: "L-Theanine is a unique amino acid found almost exclusively in tea leaves, particularly green tea. It crosses the blood-brain barrier and promotes the production of alpha brain waves — the electrical pattern associated with calm, focused alertness without sedation. This is why a cup of green tea feels different from coffee even when both contain caffeine. Clinical research supports L-theanine for anxiety reduction, focus enhancement, and as a companion to caffeine to smooth the stimulant edge while extending its benefits. The Suntheanine branded form is pure L-isomer (not the racemic DL mix) and is the form used in most published studies. Standard dose is 100–400 mg.",
+    description: "L-Theanine is a unique amino acid found almost exclusively in tea leaves, particularly green tea. It crosses the blood-brain barrier and promotes the production of alpha brain waves, the electrical pattern associated with calm, focused alertness without sedation. This is why a cup of green tea feels different from coffee even when both contain caffeine. Clinical research supports L-theanine for anxiety reduction, focus enhancement, and as a companion to caffeine to smooth the stimulant edge while extending its benefits. The Suntheanine branded form is pure L-isomer (not the racemic DL mix) and is the form used in most published studies. Standard dose is 100–400 mg.",
   },
   {
     id: "glycine", name: "Glycine", brand: "Now Foods",
@@ -148,7 +148,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Now Foods Glycine Powder",
     category: "amino-acids",
-    description: "Glycine is the smallest of the 20 amino acids — and one of the most underappreciated. It is the primary inhibitory neurotransmitter in the spinal cord and brainstem, helps regulate core body temperature (which must drop slightly to initiate deep sleep), and is a building block of glutathione, collagen, and creatine. Supplementing 3 g of glycine 30–60 minutes before bed has been shown in clinical trials to improve subjective sleep quality and reduce next-day fatigue, particularly in people who report poor sleep. Glycine has a faintly sweet taste and dissolves easily in water or tea. It is also relevant for those eating diets low in connective-tissue cuts of meat.",
+    description: "Glycine is the smallest of the 20 amino acids, and one of the most underappreciated. It is the primary inhibitory neurotransmitter in the spinal cord and brainstem, helps regulate core body temperature (which must drop slightly to initiate deep sleep), and is a building block of glutathione, collagen, and creatine. Supplementing 3 g of glycine 30–60 minutes before bed has been shown in clinical trials to improve subjective sleep quality and reduce next-day fatigue, particularly in people who report poor sleep. Glycine has a faintly sweet taste and dissolves easily in water or tea. It is also relevant for those eating diets low in connective-tissue cuts of meat.",
   },
 
   // ── Energy, focus, cognition ─────────────────────────────────────────────
@@ -157,13 +157,13 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "1000 mcg", timing: "morning",
     purpose: "Energy · nerves · cognition",
     evidence: "very strong", monthlyCost: 10, priority: 9,
-    why: "Essential for energy production and red blood cell formation. Plant-based diets need it — period.",
+    why: "Essential for energy production and red blood cell formation. Plant-based diets need it, period.",
     hue: "#c4944a",
     tags: ["energy", "vegan", "vegetarian", "low-energy", "brain-fog", "longevity"],
     vegan: true,
     iherbSearch: "Jarrow Formulas Methyl B-12 Methylcobalamin",
     category: "vitamins",
-    description: "Vitamin B12 (methylcobalamin) is essential for red blood cell formation, DNA synthesis, and the protective myelin sheath around nerves. Unlike most vitamins, B12 is produced exclusively by microorganisms and accumulates in animal foods — making vegans and vegetarians universally at risk of deficiency. Older adults are also at risk because stomach acid declines with age, impairing B12 absorption from food. Symptoms of deficiency include fatigue, brain fog, tingling in the hands and feet, and mood changes. Methylcobalamin is the active form the body uses directly, bypassing the conversion step required of cheaper cyanocobalamin. Standard daily doses are 500–1,000 mcg sublingually or oral.",
+    description: "Vitamin B12 (methylcobalamin) is essential for red blood cell formation, DNA synthesis, and the protective myelin sheath around nerves. Unlike most vitamins, B12 is produced exclusively by microorganisms and accumulates in animal foods, making vegans and vegetarians universally at risk of deficiency. Older adults are also at risk because stomach acid declines with age, impairing B12 absorption from food. Symptoms of deficiency include fatigue, brain fog, tingling in the hands and feet, and mood changes. Methylcobalamin is the active form the body uses directly, bypassing the conversion step required of cheaper cyanocobalamin. Standard daily doses are 500–1,000 mcg sublingually or oral.",
   },
   {
     id: "b-complex", name: "B-Complex", brand: "Thorne",
@@ -176,7 +176,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Thorne Basic B Complex",
     category: "vitamins",
-    description: "A B-complex provides all eight B vitamins in their bioactive forms — methylfolate, methylcobalamin, P-5-P, and so on — rather than the cheaper synthetic forms that require enzymatic activation in the liver. The B vitamins work synergistically: B6, B12, and folate together regulate homocysteine (a cardiovascular risk marker); B1, B2, B3, and B5 drive cellular energy metabolism; biotin and B12 support nervous system function. Adequate B intake supports mood, mental clarity, energy production, and the methylation reactions that regulate gene expression. Standard doses provide 5–25 mg of each B vitamin, with active forms ensuring usability even for people with common MTHFR variants.",
+    description: "A B-complex provides all eight B vitamins in their bioactive forms, methylfolate, methylcobalamin, P-5-P, and so on, rather than the cheaper synthetic forms that require enzymatic activation in the liver. The B vitamins work synergistically: B6, B12, and folate together regulate homocysteine (a cardiovascular risk marker); B1, B2, B3, and B5 drive cellular energy metabolism; biotin and B12 support nervous system function. Adequate B intake supports mood, mental clarity, energy production, and the methylation reactions that regulate gene expression. Standard doses provide 5–25 mg of each B vitamin, with active forms ensuring usability even for people with common MTHFR variants.",
   },
   {
     id: "rhodiola", name: "Rhodiola Rosea", brand: "Now Foods",
@@ -203,7 +203,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Host Defense Lion's Mane",
     category: "nootropics",
-    description: "Lion's mane (Hericium erinaceus) is a functional mushroom whose cascading white spines resemble its namesake. It is one of the few natural compounds shown in published research to support nerve growth factor (NGF) and brain-derived neurotrophic factor (BDNF) — proteins essential for neuron health and the brain's capacity for plasticity. Clinical studies have explored lion's mane for cognitive support in mild memory complaints, mood, and peripheral nerve health. Effects typically build over 8–12 weeks of consistent use, paralleling neuroplastic timescales. Dual-extracted forms (water and alcohol) deliver both the polysaccharides and the terpene compounds. Standard dose is 500–1,500 mg of fruiting body extract daily.",
+    description: "Lion's mane (Hericium erinaceus) is a functional mushroom whose cascading white spines resemble its namesake. It is one of the few natural compounds shown in published research to support nerve growth factor (NGF) and brain-derived neurotrophic factor (BDNF), proteins essential for neuron health and the brain's capacity for plasticity. Clinical studies have explored lion's mane for cognitive support in mild memory complaints, mood, and peripheral nerve health. Effects typically build over 8–12 weeks of consistent use, paralleling neuroplastic timescales. Dual-extracted forms (water and alcohol) deliver both the polysaccharides and the terpene compounds. Standard dose is 500–1,500 mg of fruiting body extract daily.",
   },
 
   // ── Recovery & performance ───────────────────────────────────────────────
@@ -212,13 +212,13 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "5 g micronised", timing: "morning",
     purpose: "Strength · cognition · recovery",
     evidence: "very strong", monthlyCost: 10, priority: 9,
-    why: "The most-studied supplement on earth. Improves strength output, recovery, and short-term cognition. Yes — even for women.",
+    why: "The most-studied supplement on earth. Improves strength output, recovery, and short-term cognition. Yes, even for women.",
     hue: "#688a6b",
     tags: ["recovery", "focus", "active", "very-active", "memory", "strength", "general", "longevity"],
     vegan: true,
     iherbSearch: "Optimum Nutrition Creatine Monohydrate Micronized",
     category: "performance",
-    description: "Creatine monohydrate is the most-studied performance supplement in the world, with over 500 published studies establishing its safety and efficacy. It works by saturating muscle phosphocreatine stores, enabling faster ATP regeneration during high-intensity efforts. Benefits include modest strength and power gains, improved high-intensity training capacity, faster recovery between sets, and emerging evidence for cognitive support — particularly under sleep deprivation and in vegetarians. The 'monohydrate' form is the gold standard; fancier creatine salts cost more without measurable advantage. The standard daily dose is 5 g, taken at any time of day with water. A loading phase is optional. Effects build over 2–4 weeks of consistent use.",
+    description: "Creatine monohydrate is the most-studied performance supplement in the world, with over 500 published studies establishing its safety and efficacy. It works by saturating muscle phosphocreatine stores, enabling faster ATP regeneration during high-intensity efforts. Benefits include modest strength and power gains, improved high-intensity training capacity, faster recovery between sets, and emerging evidence for cognitive support, particularly under sleep deprivation and in vegetarians. The 'monohydrate' form is the gold standard; fancier creatine salts cost more without measurable advantage. The standard daily dose is 5 g, taken at any time of day with water. A loading phase is optional. Effects build over 2–4 weeks of consistent use.",
   },
   {
     id: "collagen", name: "Collagen Peptides", brand: "Sports Research",
@@ -231,7 +231,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: false,
     iherbSearch: "Sports Research Collagen Peptides",
     category: "joint",
-    description: "Collagen is the most abundant protein in the human body — the structural scaffolding of skin, joints, bones, tendons, and connective tissue. After age 25, the body's own collagen production declines about 1–2% per year, contributing to skin thinning, joint stiffness, and tissue fragility. Hydrolyzed collagen peptides (type I and III from grass-fed bovine, or type II from chicken) are broken into bioactive di- and tripeptides the body can use as both raw material and as signaling molecules to stimulate its own collagen production. Multiple randomized trials show benefits for skin elasticity and hydration, joint comfort, and nail strength. Standard dose is 10–20 g daily, mixed in coffee or smoothies.",
+    description: "Collagen is the most abundant protein in the human body, the structural scaffolding of skin, joints, bones, tendons, and connective tissue. After age 25, the body's own collagen production declines about 1–2% per year, contributing to skin thinning, joint stiffness, and tissue fragility. Hydrolyzed collagen peptides (type I and III from grass-fed bovine, or type II from chicken) are broken into bioactive di- and tripeptides the body can use as both raw material and as signaling molecules to stimulate its own collagen production. Multiple randomized trials show benefits for skin elasticity and hydration, joint comfort, and nail strength. Standard dose is 10–20 g daily, mixed in coffee or smoothies.",
   },
   {
     id: "curcumin", name: "Curcumin (with BioPerine)", brand: "Doctor's Best",
@@ -274,7 +274,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Nature's Way Vitamin C Buffered",
     category: "vitamins",
-    description: "Vitamin C is a water-soluble vitamin that the human body — unlike most mammals — cannot synthesize. It functions as a powerful antioxidant, a cofactor for collagen synthesis (essential for skin, blood vessels, and connective tissue), and a key player in immune defense. Buffered vitamin C is paired with minerals like calcium, magnesium, or potassium, raising the pH and making it gentler on the stomach than ascorbic acid alone — particularly important at higher doses. While the 90 mg daily reference intake prevents scurvy, optimal intake for general health is debated but often cited as 500–1,000 mg per day. Doses above 2 g can cause loose stools.",
+    description: "Vitamin C is a water-soluble vitamin that the human body, unlike most mammals, cannot synthesize. It functions as a powerful antioxidant, a cofactor for collagen synthesis (essential for skin, blood vessels, and connective tissue), and a key player in immune defense. Buffered vitamin C is paired with minerals like calcium, magnesium, or potassium, raising the pH and making it gentler on the stomach than ascorbic acid alone, particularly important at higher doses. While the 90 mg daily reference intake prevents scurvy, optimal intake for general health is debated but often cited as 500–1,000 mg per day. Doses above 2 g can cause loose stools.",
   },
   {
     id: "zinc", name: "Zinc Picolinate", brand: "Thorne",
@@ -287,7 +287,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Thorne Zinc Picolinate 15mg",
     category: "minerals",
-    description: "Zinc is an essential trace mineral involved in over 300 enzymatic reactions, immune function, taste, smell, wound healing, and testosterone synthesis. Its bioavailability varies dramatically by form: picolinate, citrate, and bisglycinate are well-absorbed; oxide is poorly absorbed and best avoided. Modern diets — especially those heavy in refined grains and low in oysters, red meat, and pumpkin seeds — often fall short of the 11 mg (men) or 8 mg (women) daily reference intake. Athletes, vegetarians, and people with frequent illness benefit most from supplementation. Standard daily doses are 10–25 mg with food. Doses above 40 mg long-term can interfere with copper absorption.",
+    description: "Zinc is an essential trace mineral involved in over 300 enzymatic reactions, immune function, taste, smell, wound healing, and testosterone synthesis. Its bioavailability varies dramatically by form: picolinate, citrate, and bisglycinate are well-absorbed; oxide is poorly absorbed and best avoided. Modern diets, especially those heavy in refined grains and low in oysters, red meat, and pumpkin seeds, often fall short of the 11 mg (men) or 8 mg (women) daily reference intake. Athletes, vegetarians, and people with frequent illness benefit most from supplementation. Standard daily doses are 10–25 mg with food. Doses above 40 mg long-term can interfere with copper absorption.",
   },
   {
     id: "elderberry", name: "Elderberry Extract", brand: "Sambucol",
@@ -314,20 +314,20 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Garden of Life Dr Formulated Probiotics Mood",
     category: "gut",
-    description: "A diverse, multi-strain probiotic supplements the trillions of beneficial bacteria that line your digestive tract — collectively known as the gut microbiome. The microbiome influences immune function (70% of immune cells live in or around the gut), neurotransmitter production (90% of serotonin is made in the gut), and digestion itself. The best probiotic supplements contain 10 or more clinically-studied strains, deliver at least 25 billion CFU per dose, and use delayed-release capsules to protect bacteria from stomach acid. Garden of Life's Mood-specific formula includes strains studied for the gut-brain axis. Standard dose is one capsule daily; benefits typically emerge within 2–4 weeks.",
+    description: "A diverse, multi-strain probiotic supplements the trillions of beneficial bacteria that line your digestive tract, collectively known as the gut microbiome. The microbiome influences immune function (70% of immune cells live in or around the gut), neurotransmitter production (90% of serotonin is made in the gut), and digestion itself. The best probiotic supplements contain 10 or more clinically-studied strains, deliver at least 25 billion CFU per dose, and use delayed-release capsules to protect bacteria from stomach acid. Garden of Life's Mood-specific formula includes strains studied for the gut-brain axis. Standard dose is one capsule daily; benefits typically emerge within 2–4 weeks.",
   },
   {
     id: "digestive-enzymes", name: "Digestive Enzymes (Broad-Spectrum)", brand: "Enzymedica",
     dose: "1 capsule with meals", timing: "midday",
     purpose: "Digestion · bloating · nutrient uptake",
     evidence: "moderate", monthlyCost: 24, priority: 5,
-    why: "Broad-spectrum plant enzymes that help break down proteins, fats, and carbs — useful for bloating or low stomach acid.",
+    why: "Broad-spectrum plant enzymes that help break down proteins, fats, and carbs, useful for bloating or low stomach acid.",
     hue: "#d4a96a",
     tags: ["digestive-issues", "bloating"],
     vegan: true,
     iherbSearch: "Enzymedica Digest Gold",
     category: "gut",
-    description: "Digestive enzymes break down the macronutrients in food — proteins (protease), carbohydrates (amylase), fats (lipase), and fiber (cellulase) — into the smaller molecules your intestines can absorb. The pancreas produces these enzymes naturally, but production declines with age, stress, and certain conditions. A broad-spectrum plant-based enzyme blend, taken with meals, can support digestion in people experiencing bloating, gas, or a feeling of incomplete digestion. They are particularly useful for those with low stomach acid, eating large meals, or following a high-fiber plant-based diet. Standard dose is one capsule with each main meal, taken at the start of the meal.",
+    description: "Digestive enzymes break down the macronutrients in food, proteins (protease), carbohydrates (amylase), fats (lipase), and fiber (cellulase), into the smaller molecules your intestines can absorb. The pancreas produces these enzymes naturally, but production declines with age, stress, and certain conditions. A broad-spectrum plant-based enzyme blend, taken with meals, can support digestion in people experiencing bloating, gas, or a feeling of incomplete digestion. They are particularly useful for those with low stomach acid, eating large meals, or following a high-fiber plant-based diet. Standard dose is one capsule with each main meal, taken at the start of the meal.",
   },
 
   // ── Iron, heart, beauty, specialty ───────────────────────────────────────
@@ -342,20 +342,20 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Solgar Gentle Iron Bisglycinate",
     category: "minerals",
-    description: "Iron is essential for hemoglobin — the protein in red blood cells that transports oxygen from your lungs to every tissue. Iron deficiency is the most common nutrient deficiency worldwide, particularly affecting menstruating women, pregnant women, endurance athletes, and people on plant-based diets. Symptoms include unusual fatigue, paleness, shortness of breath, cold extremities, and impaired exercise capacity. Iron bisglycinate (Ferrochel) is far gentler on the stomach and better absorbed than the harsh ferrous sulfate found in cheap supplements. Standard supplemental dose is 15–25 mg of elemental iron, taken with vitamin C and away from coffee, tea, calcium, or dairy for optimal absorption.",
+    description: "Iron is essential for hemoglobin, the protein in red blood cells that transports oxygen from your lungs to every tissue. Iron deficiency is the most common nutrient deficiency worldwide, particularly affecting menstruating women, pregnant women, endurance athletes, and people on plant-based diets. Symptoms include unusual fatigue, paleness, shortness of breath, cold extremities, and impaired exercise capacity. Iron bisglycinate (Ferrochel) is far gentler on the stomach and better absorbed than the harsh ferrous sulfate found in cheap supplements. Standard supplemental dose is 15–25 mg of elemental iron, taken with vitamin C and away from coffee, tea, calcium, or dairy for optimal absorption.",
   },
   {
     id: "coq10", name: "CoQ10 (Ubiquinol)", brand: "Doctor's Best",
     dose: "100 mg ubiquinol", timing: "morning",
     purpose: "Cellular energy · heart",
     evidence: "strong", monthlyCost: 26, priority: 5,
-    why: "The active form of CoQ10 — fuels cellular energy production and supports cardiovascular function. More relevant after 40.",
+    why: "The active form of CoQ10, fuels cellular energy production and supports cardiovascular function. More relevant after 40.",
     hue: "#d4a96a",
     tags: ["energy", "longevity", "heart", "low-energy", "afternoon-crash"],
     vegan: true,
     iherbSearch: "Doctor's Best Ubiquinol CoQ10",
     category: "antioxidants",
-    description: "Coenzyme Q10 (CoQ10) is a vitamin-like substance found in every cell of the body, where it powers the production of ATP — the molecular currency of cellular energy — and protects mitochondria from oxidative damage. The heart, kidneys, and liver contain the highest concentrations because of their continuous energy demands. CoQ10 production declines with age (starting in the late 30s) and is significantly depleted by statin medications, which inhibit the same enzyme responsible for both cholesterol and CoQ10 synthesis. Standard ubiquinone CoQ10 is suitable for adults under 40; ubiquinol (the reduced form) is preferred after age 40 or alongside statins. Standard dose is 100–200 mg with a fat-containing meal.",
+    description: "Coenzyme Q10 (CoQ10) is a vitamin-like substance found in every cell of the body, where it powers the production of ATP, the molecular currency of cellular energy, and protects mitochondria from oxidative damage. The heart, kidneys, and liver contain the highest concentrations because of their continuous energy demands. CoQ10 production declines with age (starting in the late 30s) and is significantly depleted by statin medications, which inhibit the same enzyme responsible for both cholesterol and CoQ10 synthesis. Standard ubiquinone CoQ10 is suitable for adults under 40; ubiquinol (the reduced form) is preferred after age 40 or alongside statins. Standard dose is 100–200 mg with a fat-containing meal.",
   },
   {
     id: "biotin", name: "Biotin", brand: "Sports Research",
@@ -368,7 +368,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Sports Research Biotin 5000mcg",
     category: "vitamins",
-    description: "Biotin (vitamin B7) is a water-soluble B vitamin essential for the metabolism of fats, carbohydrates, and amino acids, as well as for the production of keratin — the structural protein in hair, skin, and nails. Frank biotin deficiency is rare but can manifest as hair thinning, brittle nails, and skin issues. High-dose biotin (5,000 mcg) is widely used as a beauty supplement, with subjective improvements in hair shaft thickness and nail growth often reported within 2–3 months of consistent use. Note that high-dose biotin can interfere with certain blood tests (especially thyroid panels) — discontinue 48 hours before lab work. Standard supplemental dose is 2,500–10,000 mcg daily.",
+    description: "Biotin (vitamin B7) is a water-soluble B vitamin essential for the metabolism of fats, carbohydrates, and amino acids, as well as for the production of keratin, the structural protein in hair, skin, and nails. Frank biotin deficiency is rare but can manifest as hair thinning, brittle nails, and skin issues. High-dose biotin (5,000 mcg) is widely used as a beauty supplement, with subjective improvements in hair shaft thickness and nail growth often reported within 2–3 months of consistent use. Note that high-dose biotin can interfere with certain blood tests (especially thyroid panels), discontinue 48 hours before lab work. Standard supplemental dose is 2,500–10,000 mcg daily.",
   },
 
   // ─── EXTENDED LIBRARY (added 2026-05) ──────────────────────────────────────
@@ -378,7 +378,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "600 mg", timing: "morning",
     purpose: "Liver · antioxidant · respiratory",
     evidence: "strong", monthlyCost: 14, priority: 6,
-    why: "Precursor to glutathione — the body's master antioxidant. Supports liver detox, lung function, and recovery from oxidative stress.",
+    why: "Precursor to glutathione, the body's master antioxidant. Supports liver detox, lung function, and recovery from oxidative stress.",
     hue: "#688a6b",
     tags: ["liver", "immune", "longevity", "general", "recovery", "brain-fog", "frequent-illness"],
     vegan: true,
@@ -411,7 +411,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: false,
     iherbSearch: "Jarrow Formulas Acetyl L-Carnitine 500mg",
     category: "amino-acids",
-    description: "Acetyl-L-Carnitine, often called ALCAR, is an acetylated form of L-carnitine that crosses the blood-brain barrier far more efficiently than its parent compound. Inside cells, carnitine shuttles long-chain fatty acids into mitochondria for energy production, supporting cellular ATP output in tissues with the highest energy demand — the brain, heart, and skeletal muscle. Clinical studies have explored ALCAR for mental energy, mild age-related cognitive decline, neuropathic discomfort, and mood support. Typical doses are 500–1,500 mg per day on an empty stomach. Benefits often build progressively over 4–8 weeks of consistent use.",
+    description: "Acetyl-L-Carnitine, often called ALCAR, is an acetylated form of L-carnitine that crosses the blood-brain barrier far more efficiently than its parent compound. Inside cells, carnitine shuttles long-chain fatty acids into mitochondria for energy production, supporting cellular ATP output in tissues with the highest energy demand, the brain, heart, and skeletal muscle. Clinical studies have explored ALCAR for mental energy, mild age-related cognitive decline, neuropathic discomfort, and mood support. Typical doses are 500–1,500 mg per day on an empty stomach. Benefits often build progressively over 4–8 weeks of consistent use.",
   },
   {
     id: "l-carnitine", name: "L-Carnitine Tartrate", brand: "NOW Foods",
@@ -437,14 +437,14 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Doctor's Best Alpha Lipoic Acid 300mg",
     category: "antioxidants",
-    description: "Alpha-Lipoic Acid (ALA) is a sulfur-containing fatty acid synthesized in the mitochondria, where it functions as a critical cofactor for energy-producing enzymes. Uniquely, ALA is soluble in both water and fat, allowing it to neutralize free radicals throughout the entire cell — earning it the title 'universal antioxidant.' It also regenerates other antioxidants including vitamins C and E, glutathione, and CoQ10. Clinical research has focused on ALA's role in supporting healthy blood sugar regulation, insulin sensitivity, and peripheral nerve health. Most studies use 300–600 mg per day, taken on an empty stomach for optimal absorption.",
+    description: "Alpha-Lipoic Acid (ALA) is a sulfur-containing fatty acid synthesized in the mitochondria, where it functions as a critical cofactor for energy-producing enzymes. Uniquely, ALA is soluble in both water and fat, allowing it to neutralize free radicals throughout the entire cell, earning it the title 'universal antioxidant.' It also regenerates other antioxidants including vitamins C and E, glutathione, and CoQ10. Clinical research has focused on ALA's role in supporting healthy blood sugar regulation, insulin sensitivity, and peripheral nerve health. Most studies use 300–600 mg per day, taken on an empty stomach for optimal absorption.",
   },
   {
     id: "berberine", name: "Berberine HCl", brand: "Thorne",
     dose: "500 mg", timing: "midday",
     purpose: "Blood sugar · metabolic health · gut",
     evidence: "strong", monthlyCost: 22, priority: 6,
-    why: "Botanical compound that activates AMPK — supports healthy blood glucose, lipid profile, and metabolic flexibility.",
+    why: "Botanical compound that activates AMPK, supports healthy blood glucose, lipid profile, and metabolic flexibility.",
     hue: "#c4944a",
     tags: ["weight", "longevity", "general", "heart", "digestive-issues"],
     vegan: true,
@@ -464,7 +464,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Solgar Quercetin Complex with Bromelain",
     category: "antioxidants",
-    description: "Quercetin is a flavonoid pigment abundant in onions, apples, capers, and red wine. As one of the most-studied plant polyphenols, it has been investigated for its antioxidant, anti-inflammatory, and immune-modulating effects. Quercetin stabilizes mast cells — the immune cells that release histamine — which is why many practitioners use it to support a balanced response during allergy season. It has also gained attention for its zinc-ionophore activity, helping zinc enter cells where it supports antiviral defenses. Bromelain (an enzyme from pineapple) is often paired with quercetin to enhance absorption. Typical doses are 500–1,000 mg daily.",
+    description: "Quercetin is a flavonoid pigment abundant in onions, apples, capers, and red wine. As one of the most-studied plant polyphenols, it has been investigated for its antioxidant, anti-inflammatory, and immune-modulating effects. Quercetin stabilizes mast cells, the immune cells that release histamine, which is why many practitioners use it to support a balanced response during allergy season. It has also gained attention for its zinc-ionophore activity, helping zinc enter cells where it supports antiviral defenses. Bromelain (an enzyme from pineapple) is often paired with quercetin to enhance absorption. Typical doses are 500–1,000 mg daily.",
   },
   {
     id: "resveratrol", name: "Resveratrol (Trans)", brand: "Doctor's Best",
@@ -477,33 +477,33 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Doctor's Best Trans-Resveratrol 500mg",
     category: "antioxidants",
-    description: "Resveratrol is a polyphenol concentrated in the skins of red grapes, Japanese knotweed, and a handful of berries. Made famous by the 'French paradox' — the observation that red-wine drinkers had unexpectedly low rates of heart disease — it has since become one of the most-studied longevity compounds. Resveratrol activates sirtuins (SIRT1 in particular), a family of enzymes that regulate metabolism and cellular repair. Research suggests benefits for endothelial function, blood pressure, and oxidative stress markers. Most supplements provide 250–500 mg of trans-resveratrol (the bioactive isomer) per day, often paired with a fat-containing meal for absorption.",
+    description: "Resveratrol is a polyphenol concentrated in the skins of red grapes, Japanese knotweed, and a handful of berries. Made famous by the 'French paradox', the observation that red-wine drinkers had unexpectedly low rates of heart disease, it has since become one of the most-studied longevity compounds. Resveratrol activates sirtuins (SIRT1 in particular), a family of enzymes that regulate metabolism and cellular repair. Research suggests benefits for endothelial function, blood pressure, and oxidative stress markers. Most supplements provide 250–500 mg of trans-resveratrol (the bioactive isomer) per day, often paired with a fat-containing meal for absorption.",
   },
   {
     id: "pqq", name: "PQQ (Pyrroloquinoline Quinone)", brand: "Life Extension",
     dose: "20 mg", timing: "morning",
     purpose: "Mitochondrial biogenesis · cellular energy",
     evidence: "moderate", monthlyCost: 32, priority: 4,
-    why: "One of the few compounds shown to support the creation of new mitochondria — the energy factories of every cell.",
+    why: "One of the few compounds shown to support the creation of new mitochondria, the energy factories of every cell.",
     hue: "#a3604a",
     tags: ["energy", "longevity", "low-energy", "afternoon-crash", "memory"],
     vegan: true,
     iherbSearch: "Life Extension PQQ Caps 20mg",
     category: "antioxidants",
-    description: "Pyrroloquinoline Quinone (PQQ) is a small redox cofactor found in trace amounts in fermented foods, kiwi, parsley, and green tea. What makes PQQ unique among supplements is its documented ability to stimulate mitochondrial biogenesis — the creation of brand-new mitochondria within cells. Because mitochondrial density drives cellular energy output, PQQ has gained attention for supporting daytime energy, exercise capacity, and cognitive function with aging. It also functions as a potent antioxidant. Clinical studies typically use 10–20 mg per day. PQQ pairs well with CoQ10 or ubiquinol for full mitochondrial support.",
+    description: "Pyrroloquinoline Quinone (PQQ) is a small redox cofactor found in trace amounts in fermented foods, kiwi, parsley, and green tea. What makes PQQ unique among supplements is its documented ability to stimulate mitochondrial biogenesis, the creation of brand-new mitochondria within cells. Because mitochondrial density drives cellular energy output, PQQ has gained attention for supporting daytime energy, exercise capacity, and cognitive function with aging. It also functions as a potent antioxidant. Clinical studies typically use 10–20 mg per day. PQQ pairs well with CoQ10 or ubiquinol for full mitochondrial support.",
   },
   {
     id: "ubiquinol", name: "Ubiquinol (Active CoQ10)", brand: "Kaneka",
     dose: "100 mg", timing: "morning",
     purpose: "Heart · cellular energy · statin support",
     evidence: "strong", monthlyCost: 36, priority: 5,
-    why: "The reduced, ready-to-use form of CoQ10. Better absorbed than ubiquinone — especially valuable after 40 or on statins.",
+    why: "The reduced, ready-to-use form of CoQ10. Better absorbed than ubiquinone, especially valuable after 40 or on statins.",
     hue: "#d4a96a",
     tags: ["energy", "heart", "longevity", "low-energy", "afternoon-crash"],
     vegan: true,
     iherbSearch: "Kaneka Ubiquinol 100mg",
     category: "antioxidants",
-    description: "Ubiquinol is the reduced, active form of Coenzyme Q10 — the form your body actually uses to generate ATP in mitochondria and to protect cellular membranes from oxidation. While conventional CoQ10 (ubiquinone) must first be converted to ubiquinol before it works, this conversion becomes progressively less efficient with age and is impaired by statin medications. Direct ubiquinol supplementation bypasses this bottleneck. Clinical research supports its use for cardiovascular health, blood-pressure regulation, and energy in adults over 40. The Japan-developed Kaneka form is the standard used in most published studies. Typical doses are 50–200 mg daily with a fatty meal.",
+    description: "Ubiquinol is the reduced, active form of Coenzyme Q10, the form your body actually uses to generate ATP in mitochondria and to protect cellular membranes from oxidation. While conventional CoQ10 (ubiquinone) must first be converted to ubiquinol before it works, this conversion becomes progressively less efficient with age and is impaired by statin medications. Direct ubiquinol supplementation bypasses this bottleneck. Clinical research supports its use for cardiovascular health, blood-pressure regulation, and energy in adults over 40. The Japan-developed Kaneka form is the standard used in most published studies. Typical doses are 50–200 mg daily with a fatty meal.",
   },
 
   // Magnesium variants & extra minerals
@@ -518,14 +518,14 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods Magnesium Citrate 400mg",
     category: "minerals",
-    description: "Magnesium Citrate combines magnesium with citric acid, creating one of the most cost-effective and well-absorbed forms of this essential mineral. Magnesium itself is involved in more than 300 enzymatic reactions in the body — including muscle relaxation, nervous system regulation, blood sugar control, and energy production. The citrate form has a mild osmotic effect in the gut, making it especially useful for people who experience occasional constipation alongside general magnesium needs. Standard daily doses range from 200–400 mg of elemental magnesium, typically taken in the evening to support sleep and muscle recovery.",
+    description: "Magnesium Citrate combines magnesium with citric acid, creating one of the most cost-effective and well-absorbed forms of this essential mineral. Magnesium itself is involved in more than 300 enzymatic reactions in the body, including muscle relaxation, nervous system regulation, blood sugar control, and energy production. The citrate form has a mild osmotic effect in the gut, making it especially useful for people who experience occasional constipation alongside general magnesium needs. Standard daily doses range from 200–400 mg of elemental magnesium, typically taken in the evening to support sleep and muscle recovery.",
   },
   {
     id: "mag-threonate", name: "Magnesium L-Threonate", brand: "Magtein",
     dose: "2000 mg (144 mg elemental)", timing: "evening",
     purpose: "Cognition · sleep depth · brain magnesium",
     evidence: "moderate", monthlyCost: 38, priority: 5,
-    why: "The only magnesium form clinically shown to raise brain magnesium levels — supports memory, learning, and deep sleep.",
+    why: "The only magnesium form clinically shown to raise brain magnesium levels, supports memory, learning, and deep sleep.",
     hue: "#a78bfa",
     tags: ["sleep", "focus", "memory", "low-sleep", "brain-fog", "longevity", "poor-focus"],
     vegan: true,
@@ -545,20 +545,20 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Doctor's Best Vitamin K2 MK-7 100mcg",
     warnings: ["blood-thinners"],
     category: "vitamins",
-    description: "Vitamin K2 (menaquinone-7, or MK-7) is the long-acting, animal-derived form of vitamin K that activates two proteins central to calcium routing in the body: osteocalcin, which directs calcium into bone, and matrix Gla protein, which keeps calcium out of arteries. While vitamin K1 (from leafy greens) primarily supports blood clotting, K2 is increasingly recognized as essential for bone density and cardiovascular health. The MK-7 form has a half-life of 72 hours — far longer than MK-4 — making once-daily dosing effective. It is especially important to pair with vitamin D3 supplementation. Typical doses are 90–200 mcg per day.",
+    description: "Vitamin K2 (menaquinone-7, or MK-7) is the long-acting, animal-derived form of vitamin K that activates two proteins central to calcium routing in the body: osteocalcin, which directs calcium into bone, and matrix Gla protein, which keeps calcium out of arteries. While vitamin K1 (from leafy greens) primarily supports blood clotting, K2 is increasingly recognized as essential for bone density and cardiovascular health. The MK-7 form has a half-life of 72 hours, far longer than MK-4, making once-daily dosing effective. It is especially important to pair with vitamin D3 supplementation. Typical doses are 90–200 mcg per day.",
   },
   {
     id: "selenium", name: "Selenium (Selenomethionine)", brand: "NOW Foods",
     dose: "200 mcg", timing: "morning",
     purpose: "Thyroid · antioxidant · immune",
     evidence: "strong", monthlyCost: 10, priority: 5,
-    why: "Critical for thyroid hormone conversion and glutathione peroxidase — one of the body's main antioxidant enzymes.",
+    why: "Critical for thyroid hormone conversion and glutathione peroxidase, one of the body's main antioxidant enzymes.",
     hue: "#d4a96a",
     tags: ["immune", "general", "longevity", "thyroid"],
     vegan: true,
     iherbSearch: "NOW Foods Selenium 200mcg",
     category: "minerals",
-    description: "Selenium is a trace mineral essential for the activity of selenoproteins — including glutathione peroxidase, one of the body's primary antioxidant enzymes, and the deiodinase enzymes that convert thyroid hormone T4 into its active form T3. Brazil nuts are the richest food source, but soil depletion makes consistent intake variable. Adequate selenium supports thyroid function, immune resilience, and protection against oxidative stress. The selenomethionine form has the highest bioavailability. Daily intake of 100–200 mcg covers most adults; the upper limit is 400 mcg/day. Excessive intake from high-dose supplements should be avoided.",
+    description: "Selenium is a trace mineral essential for the activity of selenoproteins, including glutathione peroxidase, one of the body's primary antioxidant enzymes, and the deiodinase enzymes that convert thyroid hormone T4 into its active form T3. Brazil nuts are the richest food source, but soil depletion makes consistent intake variable. Adequate selenium supports thyroid function, immune resilience, and protection against oxidative stress. The selenomethionine form has the highest bioavailability. Daily intake of 100–200 mcg covers most adults; the upper limit is 400 mcg/day. Excessive intake from high-dose supplements should be avoided.",
   },
   {
     id: "iodine", name: "Iodine (Kelp)", brand: "Nature's Way",
@@ -572,7 +572,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Nature's Way Kelp Iodine",
     warnings: ["thyroid", "autoimmune"],
     category: "minerals",
-    description: "Iodine is a trace mineral that the body cannot produce on its own. It is the essential building block of thyroid hormones T3 and T4, which regulate metabolism, body temperature, energy production, and brain development. Modern Western diets — particularly those low in iodized salt, seafood, and dairy — can fall short of the 150 mcg daily recommendation. Mild deficiency may contribute to low energy, sluggish metabolism, and cognitive fog. Kelp-derived iodine is the most common natural form. People with thyroid conditions or on thyroid medication should consult a clinician before supplementing, as both deficiency and excess can disrupt thyroid function.",
+    description: "Iodine is a trace mineral that the body cannot produce on its own. It is the essential building block of thyroid hormones T3 and T4, which regulate metabolism, body temperature, energy production, and brain development. Modern Western diets, particularly those low in iodized salt, seafood, and dairy, can fall short of the 150 mcg daily recommendation. Mild deficiency may contribute to low energy, sluggish metabolism, and cognitive fog. Kelp-derived iodine is the most common natural form. People with thyroid conditions or on thyroid medication should consult a clinician before supplementing, as both deficiency and excess can disrupt thyroid function.",
   },
   {
     id: "chromium", name: "Chromium Picolinate", brand: "NOW Foods",
@@ -598,7 +598,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods Boron 3mg",
     category: "minerals",
-    description: "Boron is an ultra-trace mineral with surprisingly broad effects on hormonal and skeletal health. Modest daily supplementation has been shown to support bone density by improving calcium and magnesium retention, to activate vitamin D, and — in small but consistent studies — to raise free testosterone and DHT while modestly lowering inflammatory markers and SHBG in men. It may also support joint comfort by reducing inflammation in connective tissue. Standard doses range from 3–10 mg daily, well below the 20 mg upper limit. Boron is found in raisins, almonds, avocado, and prunes.",
+    description: "Boron is an ultra-trace mineral with surprisingly broad effects on hormonal and skeletal health. Modest daily supplementation has been shown to support bone density by improving calcium and magnesium retention, to activate vitamin D, and, in small but consistent studies, to raise free testosterone and DHT while modestly lowering inflammatory markers and SHBG in men. It may also support joint comfort by reducing inflammation in connective tissue. Standard doses range from 3–10 mg daily, well below the 20 mg upper limit. Boron is found in raisins, almonds, avocado, and prunes.",
   },
   {
     id: "inositol", name: "Inositol (Myo + D-Chiro 40:1)", brand: "Wholesome Story",
@@ -634,7 +634,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "100 mg", timing: "evening",
     purpose: "Mood · sleep · serotonin precursor",
     evidence: "moderate", monthlyCost: 14, priority: 5,
-    why: "Direct precursor to serotonin and melatonin. May support mood and sleep onset — use cautiously, not with SSRIs.",
+    why: "Direct precursor to serotonin and melatonin. May support mood and sleep onset, use cautiously, not with SSRIs.",
     hue: "#a3604a",
     tags: ["sleep", "low-mood", "sleep-onset"],
     vegan: true,
@@ -655,21 +655,21 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Nature's Way Valerian Root 500mg",
     warnings: ["pregnant"],
     category: "sleep",
-    description: "Valerian root has been used as a sleep and calming herb since at least ancient Greece. Its active compounds — valerenic acid and valepotriates — appear to modulate GABA receptors in a manner similar to mild sedatives, though without the dependence risk. Unlike fast-acting sleep aids, valerian's benefits typically emerge gradually over 2–4 weeks of consistent nightly use. Clinical reviews suggest improvements in sleep onset latency and subjective sleep quality, particularly in adults with mild insomnia. Standard doses range from 300–600 mg of standardized extract taken 30–60 minutes before bed. The earthy smell is famously strong — capsules are the preferred format.",
+    description: "Valerian root has been used as a sleep and calming herb since at least ancient Greece. Its active compounds, valerenic acid and valepotriates, appear to modulate GABA receptors in a manner similar to mild sedatives, though without the dependence risk. Unlike fast-acting sleep aids, valerian's benefits typically emerge gradually over 2–4 weeks of consistent nightly use. Clinical reviews suggest improvements in sleep onset latency and subjective sleep quality, particularly in adults with mild insomnia. Standard doses range from 300–600 mg of standardized extract taken 30–60 minutes before bed. The earthy smell is famously strong, capsules are the preferred format.",
   },
   {
     id: "saffron", name: "Saffron Extract (Affron)", brand: "Sports Research",
     dose: "28 mg", timing: "morning",
     purpose: "Mood · mild low mood · PMS",
     evidence: "strong", monthlyCost: 24, priority: 6,
-    why: "Clinically-studied spice extract that supports mood in mild-to-moderate low mood — comparable to first-line interventions in head-to-head trials.",
+    why: "Clinically-studied spice extract that supports mood in mild-to-moderate low mood, comparable to first-line interventions in head-to-head trials.",
     hue: "#c4944a",
     tags: ["low-mood", "stress", "female", "anxiety"],
     vegan: true,
     iherbSearch: "Sports Research Saffron Affron",
     warnings: ["pregnant"],
     category: "adaptogens",
-    description: "Saffron — the dried stigma of Crocus sativus — is the world's most expensive spice by weight, with a strikingly robust evidence base for emotional well-being. Multiple randomized controlled trials of standardized extracts (Affron and Satiereal are the most-studied) show meaningful improvements in mood, irritability, and PMS symptoms. Head-to-head studies have compared saffron favorably to common first-line mood treatments at clinical doses. Mechanistically, saffron's bioactive compounds (crocin, safranal, picrocrocin) appear to modulate serotonin, dopamine, and norepinephrine pathways. The clinical dose is 28–30 mg of standardized extract daily, with effects typically emerging within 4–6 weeks.",
+    description: "Saffron, the dried stigma of Crocus sativus, is the world's most expensive spice by weight, with a strikingly robust evidence base for emotional well-being. Multiple randomized controlled trials of standardized extracts (Affron and Satiereal are the most-studied) show meaningful improvements in mood, irritability, and PMS symptoms. Head-to-head studies have compared saffron favorably to common first-line mood treatments at clinical doses. Mechanistically, saffron's bioactive compounds (crocin, safranal, picrocrocin) appear to modulate serotonin, dopamine, and norepinephrine pathways. The clinical dose is 28–30 mg of standardized extract daily, with effects typically emerging within 4–6 weeks.",
   },
   {
     id: "holy-basil", name: "Holy Basil (Tulsi)", brand: "Organic India",
@@ -683,21 +683,21 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Organic India Tulsi Holy Basil",
     warnings: ["pregnant"],
     category: "adaptogens",
-    description: "Holy Basil, known as Tulsi in Sanskrit, has been revered in Ayurvedic medicine for over 3,000 years as the 'queen of herbs.' Unlike its culinary cousin sweet basil, holy basil is classified as an adaptogen — supporting the body's response to physical, chemical, and emotional stressors. Clinical research suggests benefits for cortisol regulation, blood sugar balance, immune resilience, and overall sense of well-being. Its active phytochemicals include eugenol, ursolic acid, and rosmarinic acid. Typical doses are 300–600 mg of leaf extract twice daily. It can also be enjoyed as a fragrant tea — an alternative for those preferring food-based supplementation.",
+    description: "Holy Basil, known as Tulsi in Sanskrit, has been revered in Ayurvedic medicine for over 3,000 years as the 'queen of herbs.' Unlike its culinary cousin sweet basil, holy basil is classified as an adaptogen, supporting the body's response to physical, chemical, and emotional stressors. Clinical research suggests benefits for cortisol regulation, blood sugar balance, immune resilience, and overall sense of well-being. Its active phytochemicals include eugenol, ursolic acid, and rosmarinic acid. Typical doses are 300–600 mg of leaf extract twice daily. It can also be enjoyed as a fragrant tea, an alternative for those preferring food-based supplementation.",
   },
   {
     id: "panax-ginseng", name: "Korean Red Ginseng (Panax)", brand: "Korean Ginseng Corp",
     dose: "500 mg standardised", timing: "morning",
     purpose: "Energy · cognitive performance · libido",
     evidence: "strong", monthlyCost: 28, priority: 6,
-    why: "The classic 'true' ginseng. Supports physical endurance, mental performance, and circulation. Avoid in evening — stimulating.",
+    why: "The classic 'true' ginseng. Supports physical endurance, mental performance, and circulation. Avoid in evening, stimulating.",
     hue: "#a3604a",
     tags: ["energy", "focus", "low-energy", "male", "low-motivation", "afternoon-crash"],
     vegan: true,
     iherbSearch: "Korea Ginseng Corp Korean Red Ginseng",
     warnings: ["pregnant", "blood-thinners"],
     category: "adaptogens",
-    description: "Panax ginseng — the 'true' ginseng of Traditional Chinese Medicine — has been used for over 2,000 years to restore vital energy. Modern clinical research has investigated its standardized extracts (Ginsana, KRG, others) for mental performance, physical endurance, immune support, and male sexual function. The active ginsenosides modulate the HPA axis and support nitric oxide signaling. Korean red ginseng, which is steamed before drying, contains a higher proportion of the most bioactive ginsenosides. Typical doses are 200–600 mg daily of a standardized extract. Because it is gently stimulating, ginseng is best taken in the morning or early afternoon, not at night.",
+    description: "Panax ginseng, the 'true' ginseng of Traditional Chinese Medicine, has been used for over 2,000 years to restore vital energy. Modern clinical research has investigated its standardized extracts (Ginsana, KRG, others) for mental performance, physical endurance, immune support, and male sexual function. The active ginsenosides modulate the HPA axis and support nitric oxide signaling. Korean red ginseng, which is steamed before drying, contains a higher proportion of the most bioactive ginsenosides. Typical doses are 200–600 mg daily of a standardized extract. Because it is gently stimulating, ginseng is best taken in the morning or early afternoon, not at night.",
   },
 
   // Nootropics
@@ -706,13 +706,13 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "750 mg standardised", timing: "morning",
     purpose: "Memory · learning · stress modulation",
     evidence: "strong", monthlyCost: 13, priority: 6,
-    why: "Ayurvedic herb with consistent evidence for memory consolidation and learning — but effects build slowly (8–12 weeks).",
+    why: "Ayurvedic herb with consistent evidence for memory consolidation and learning, but effects build slowly (8–12 weeks).",
     hue: "#688a6b",
     tags: ["focus", "memory", "stress", "brain-fog", "poor-focus", "longevity"],
     vegan: true,
     iherbSearch: "Himalaya Bacopa Monnieri",
     category: "nootropics",
-    description: "Bacopa monnieri is a wetland herb central to Ayurvedic medicine, where it has been used for centuries as a brain tonic and longevity herb. Its active compounds — bacosides A and B — appear to enhance synaptic communication, support dendrite growth, and protect neurons from oxidative stress. Multiple randomized controlled trials have demonstrated improvements in memory consolidation, learning speed, and information retention, particularly with consistent use over 8–12 weeks. Unlike fast-acting nootropics, bacopa works gradually. Standard doses are 300 mg of extract (standardized to 45–50% bacosides) one to two times daily, ideally with a fat-containing meal.",
+    description: "Bacopa monnieri is a wetland herb central to Ayurvedic medicine, where it has been used for centuries as a brain tonic and longevity herb. Its active compounds, bacosides A and B, appear to enhance synaptic communication, support dendrite growth, and protect neurons from oxidative stress. Multiple randomized controlled trials have demonstrated improvements in memory consolidation, learning speed, and information retention, particularly with consistent use over 8–12 weeks. Unlike fast-acting nootropics, bacopa works gradually. Standard doses are 300 mg of extract (standardized to 45–50% bacosides) one to two times daily, ideally with a fat-containing meal.",
   },
   {
     id: "ginkgo", name: "Ginkgo Biloba", brand: "Nature's Way",
@@ -726,7 +726,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Nature's Way Ginkgo Biloba 120mg",
     warnings: ["blood-thinners"],
     category: "nootropics",
-    description: "Ginkgo biloba is one of the oldest tree species on earth, with leaves that have been used in Traditional Chinese Medicine for thousands of years. Standardized extracts — typically EGb 761 with 24% flavonoid glycosides and 6% terpene lactones — are among the most-studied botanical interventions for cerebral circulation and age-related cognitive support. Ginkgo improves microcirculation and platelet function, which underlies its use for memory, concentration, tinnitus, and cold extremities. Clinical doses are 120–240 mg per day in divided doses. Because it has mild blood-thinning effects, it should not be combined with anticoagulant medications without medical supervision.",
+    description: "Ginkgo biloba is one of the oldest tree species on earth, with leaves that have been used in Traditional Chinese Medicine for thousands of years. Standardized extracts, typically EGb 761 with 24% flavonoid glycosides and 6% terpene lactones, are among the most-studied botanical interventions for cerebral circulation and age-related cognitive support. Ginkgo improves microcirculation and platelet function, which underlies its use for memory, concentration, tinnitus, and cold extremities. Clinical doses are 120–240 mg per day in divided doses. Because it has mild blood-thinning effects, it should not be combined with anticoagulant medications without medical supervision.",
   },
   {
     id: "citicoline", name: "Citicoline (CDP-Choline)", brand: "Cognizin",
@@ -765,7 +765,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: false,
     iherbSearch: "Doctor's Best Phosphatidylserine 100mg",
     category: "nootropics",
-    description: "Phosphatidylserine (PS) is a phospholipid concentrated in cell membranes, particularly within neurons. Its supplementation has two distinct evidence-based applications. First, in adults with age-related memory complaints, PS has been shown to support memory recall, recognition, and processing speed. Second, in stressed populations, PS appears to blunt the cortisol response to physical and mental stressors — a finding particularly relevant for athletes managing overtraining and for high-stress professionals. Most studies use 100 mg three times daily, though 100–300 mg once daily is also effective. PS is typically derived from soy lecithin or sunflower lecithin.",
+    description: "Phosphatidylserine (PS) is a phospholipid concentrated in cell membranes, particularly within neurons. Its supplementation has two distinct evidence-based applications. First, in adults with age-related memory complaints, PS has been shown to support memory recall, recognition, and processing speed. Second, in stressed populations, PS appears to blunt the cortisol response to physical and mental stressors, a finding particularly relevant for athletes managing overtraining and for high-stress professionals. Most studies use 100 mg three times daily, though 100–300 mg once daily is also effective. PS is typically derived from soy lecithin or sunflower lecithin.",
   },
 
   // Joints & antioxidants
@@ -780,7 +780,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Sports Research Astaxanthin 12mg",
     category: "antioxidants",
-    description: "Astaxanthin is a deep-red carotenoid produced by the microalga Haematococcus pluvialis and concentrated in salmon, krill, and flamingos. It has the highest antioxidant capacity of any naturally occurring carotenoid — many times more potent than vitamin C or beta-carotene against certain types of oxidative stress. Unlike most antioxidants, astaxanthin crosses both the blood-brain barrier and the blood-retinal barrier, contributing to brain and eye health. Clinical studies support its use for skin elasticity, moisture, and protection against UV damage from within. Typical doses are 4–12 mg per day with a fat-containing meal for absorption.",
+    description: "Astaxanthin is a deep-red carotenoid produced by the microalga Haematococcus pluvialis and concentrated in salmon, krill, and flamingos. It has the highest antioxidant capacity of any naturally occurring carotenoid, many times more potent than vitamin C or beta-carotene against certain types of oxidative stress. Unlike most antioxidants, astaxanthin crosses both the blood-brain barrier and the blood-retinal barrier, contributing to brain and eye health. Clinical studies support its use for skin elasticity, moisture, and protection against UV damage from within. Typical doses are 4–12 mg per day with a fat-containing meal for absorption.",
   },
   {
     id: "lutein", name: "Lutein + Zeaxanthin", brand: "Doctor's Best",
@@ -793,7 +793,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Doctor's Best Lutein Zeaxanthin",
     category: "antioxidants",
-    description: "Lutein and zeaxanthin are the two carotenoids that selectively accumulate in the macula — the central, high-resolution part of the retina. They function as a built-in 'eye sunscreen,' absorbing high-energy blue light from the sun, screens, and indoor lighting that would otherwise damage delicate photoreceptors. Higher macular pigment density is associated with sharper contrast sensitivity, reduced glare, and a lower long-term risk of age-related macular degeneration. The AREDS2 study established 10 mg lutein and 2 mg zeaxanthin as the clinical reference dose. Many modern supplements provide 20 mg lutein and 4 mg zeaxanthin for screen-heavy lifestyles.",
+    description: "Lutein and zeaxanthin are the two carotenoids that selectively accumulate in the macula, the central, high-resolution part of the retina. They function as a built-in 'eye sunscreen,' absorbing high-energy blue light from the sun, screens, and indoor lighting that would otherwise damage delicate photoreceptors. Higher macular pigment density is associated with sharper contrast sensitivity, reduced glare, and a lower long-term risk of age-related macular degeneration. The AREDS2 study established 10 mg lutein and 2 mg zeaxanthin as the clinical reference dose. Many modern supplements provide 20 mg lutein and 4 mg zeaxanthin for screen-heavy lifestyles.",
   },
   {
     id: "msm", name: "MSM (Methylsulfonylmethane)", brand: "Doctor's Best",
@@ -806,20 +806,20 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Doctor's Best MSM 1500mg",
     category: "joint",
-    description: "Methylsulfonylmethane (MSM) is an organic sulfur compound that provides bioavailable sulfur — an essential building block of joint cartilage, collagen, keratin, and the body's own antioxidant glutathione. Clinical research supports MSM for joint comfort and stiffness in mild osteoarthritis, with effects often appearing within 4–6 weeks. Athletes also use it for post-workout muscle soreness and recovery. The OptiMSM brand is the most-studied purified form. Typical doses range from 1,500–3,000 mg per day, in divided doses with meals. Higher doses (up to 6 g) have been studied safely over months in clinical trials.",
+    description: "Methylsulfonylmethane (MSM) is an organic sulfur compound that provides bioavailable sulfur, an essential building block of joint cartilage, collagen, keratin, and the body's own antioxidant glutathione. Clinical research supports MSM for joint comfort and stiffness in mild osteoarthritis, with effects often appearing within 4–6 weeks. Athletes also use it for post-workout muscle soreness and recovery. The OptiMSM brand is the most-studied purified form. Typical doses range from 1,500–3,000 mg per day, in divided doses with meals. Higher doses (up to 6 g) have been studied safely over months in clinical trials.",
   },
   {
     id: "boswellia", name: "Boswellia (AKBA-Enhanced)", brand: "Life Extension",
     dose: "100 mg AprèsFlex", timing: "morning",
     purpose: "Joint comfort · inflammation modulation",
     evidence: "strong", monthlyCost: 19, priority: 6,
-    why: "Frankincense extract standardized to AKBA — directly inhibits the 5-LOX inflammation pathway. Comparable to first-line joint interventions in trials.",
+    why: "Frankincense extract standardized to AKBA, directly inhibits the 5-LOX inflammation pathway. Comparable to first-line joint interventions in trials.",
     hue: "#a3604a",
     tags: ["joint", "joint-pain", "inflammation", "longevity"],
     vegan: true,
     iherbSearch: "Life Extension Boswellia AprèsFlex",
     category: "joint",
-    description: "Boswellia serrata, also known as Indian frankincense, has been used in Ayurvedic medicine for centuries to support joint comfort and inflammation. Its primary bioactive compound, acetyl-11-keto-beta-boswellic acid (AKBA), is one of the few naturally occurring substances shown to inhibit the 5-LOX enzyme — a key pathway in inflammatory leukotriene production that is not affected by typical NSAIDs. The enhanced-AKBA form known as AprèsFlex (or 5-Loxin) is the most clinically studied. Trials in osteoarthritis have shown meaningful improvements in pain, stiffness, and joint function within 5–7 days, with continued progress over 90 days at 100 mg daily.",
+    description: "Boswellia serrata, also known as Indian frankincense, has been used in Ayurvedic medicine for centuries to support joint comfort and inflammation. Its primary bioactive compound, acetyl-11-keto-beta-boswellic acid (AKBA), is one of the few naturally occurring substances shown to inhibit the 5-LOX enzyme, a key pathway in inflammatory leukotriene production that is not affected by typical NSAIDs. The enhanced-AKBA form known as AprèsFlex (or 5-Loxin) is the most clinically studied. Trials in osteoarthritis have shown meaningful improvements in pain, stiffness, and joint function within 5–7 days, with continued progress over 90 days at 100 mg daily.",
   },
 
   // Gut, liver, greens
@@ -847,7 +847,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Jarrow Formulas Milk Thistle Silymarin",
     category: "specialty",
-    description: "Milk thistle (Silybum marianum) has been used as a liver-supportive herb for over 2,000 years. Its active complex, silymarin — a group of flavonolignans including silybin, silydianin, and silychristin — works through multiple mechanisms: stabilizing hepatocyte cell membranes against toxin damage, supporting glutathione synthesis and recycling, and acting as a direct antioxidant within liver tissue. Clinical research has explored its use for general liver wellness, recovery from environmental and dietary stressors, and as adjunctive support alongside certain medications. Standard doses are 200–600 mg of extract standardized to 80% silymarin per day, taken in divided doses with meals.",
+    description: "Milk thistle (Silybum marianum) has been used as a liver-supportive herb for over 2,000 years. Its active complex, silymarin, a group of flavonolignans including silybin, silydianin, and silychristin, works through multiple mechanisms: stabilizing hepatocyte cell membranes against toxin damage, supporting glutathione synthesis and recycling, and acting as a direct antioxidant within liver tissue. Clinical research has explored its use for general liver wellness, recovery from environmental and dietary stressors, and as adjunctive support alongside certain medications. Standard doses are 200–600 mg of extract standardized to 80% silymarin per day, taken in divided doses with meals.",
   },
   {
     id: "spirulina", name: "Spirulina (Hawaiian)", brand: "Nutrex",
@@ -860,7 +860,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Nutrex Hawaii Spirulina Pacifica",
     category: "greens",
-    description: "Spirulina is a blue-green microalga (Arthrospira platensis) that has been consumed as a food since the Aztec civilization. It is one of the most nutrient-dense whole foods known: gram for gram, it provides exceptional levels of plant protein, B vitamins, bioavailable iron, gamma-linolenic acid, and the unique pigment phycocyanin — a potent antioxidant and anti-inflammatory compound. Hawaiian-grown spirulina (Nutrex's Spirulina Pacifica) is widely considered the cleanest source. Clinical studies suggest benefits for blood lipid profiles, iron status in deficient populations, and exercise endurance. Standard doses are 3–10 g daily, taken in tablet form to avoid the strong taste.",
+    description: "Spirulina is a blue-green microalga (Arthrospira platensis) that has been consumed as a food since the Aztec civilization. It is one of the most nutrient-dense whole foods known: gram for gram, it provides exceptional levels of plant protein, B vitamins, bioavailable iron, gamma-linolenic acid, and the unique pigment phycocyanin, a potent antioxidant and anti-inflammatory compound. Hawaiian-grown spirulina (Nutrex's Spirulina Pacifica) is widely considered the cleanest source. Clinical studies suggest benefits for blood lipid profiles, iron status in deficient populations, and exercise endurance. Standard doses are 3–10 g daily, taken in tablet form to avoid the strong taste.",
   },
   {
     id: "chlorella", name: "Chlorella (Broken Cell Wall)", brand: "Sun Chlorella",
@@ -873,20 +873,20 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Sun Chlorella Broken Cell Wall",
     category: "greens",
-    description: "Chlorella is a single-celled green freshwater alga renowned for its concentrated chlorophyll content and unique fibrous cell wall, which has been shown in animal and human studies to bind certain heavy metals and persistent organic pollutants in the digestive tract, gently supporting elimination. Because the intact cell wall is indigestible, only 'broken cell wall' or 'cracked cell wall' chlorella delivers usable nutrition. It is a notable plant source of vitamin B12 analogs, iron, and protein. Standard doses are 2–5 g per day, taken with meals. Look for purity testing — algae products can concentrate environmental contaminants if poorly sourced.",
+    description: "Chlorella is a single-celled green freshwater alga renowned for its concentrated chlorophyll content and unique fibrous cell wall, which has been shown in animal and human studies to bind certain heavy metals and persistent organic pollutants in the digestive tract, gently supporting elimination. Because the intact cell wall is indigestible, only 'broken cell wall' or 'cracked cell wall' chlorella delivers usable nutrition. It is a notable plant source of vitamin B12 analogs, iron, and protein. Standard doses are 2–5 g per day, taken with meals. Look for purity testing, algae products can concentrate environmental contaminants if poorly sourced.",
   },
   {
     id: "beetroot", name: "Beetroot Powder", brand: "BeetElite",
     dose: "10 g (1 scoop)", timing: "pre-train",
     purpose: "Nitric oxide · circulation · endurance",
     evidence: "strong", monthlyCost: 30, priority: 5,
-    why: "Dietary nitrates from beetroot convert to nitric oxide — improving blood flow, exercise efficiency, and blood pressure.",
+    why: "Dietary nitrates from beetroot convert to nitric oxide, improving blood flow, exercise efficiency, and blood pressure.",
     hue: "#a3604a",
     tags: ["active", "very-active", "heart", "energy", "strength"],
     vegan: true,
     iherbSearch: "BeetElite Beetroot Powder",
     category: "performance",
-    description: "Beetroot is one of the highest dietary sources of inorganic nitrate. Once consumed, nitrate is converted by oral and gut bacteria into nitrite and ultimately nitric oxide — the signaling molecule that dilates blood vessels and improves blood flow. Clinical studies have shown that beetroot supplementation can lower resting blood pressure, improve exercise tolerance, and reduce the oxygen cost of activity at submaximal intensities. Standardized powders (such as BeetElite) provide consistent nitrate dosing — typically 400–600 mg of nitrate per serving — that whole beets do not. Best taken 60–90 minutes before exercise.",
+    description: "Beetroot is one of the highest dietary sources of inorganic nitrate. Once consumed, nitrate is converted by oral and gut bacteria into nitrite and ultimately nitric oxide, the signaling molecule that dilates blood vessels and improves blood flow. Clinical studies have shown that beetroot supplementation can lower resting blood pressure, improve exercise tolerance, and reduce the oxygen cost of activity at submaximal intensities. Standardized powders (such as BeetElite) provide consistent nitrate dosing, typically 400–600 mg of nitrate per serving, that whole beets do not. Best taken 60–90 minutes before exercise.",
   },
   {
     id: "l-citrulline", name: "L-Citrulline Malate", brand: "NOW Foods",
@@ -912,20 +912,20 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods Beta Alanine Powder",
     category: "performance",
-    description: "Beta-alanine is a non-essential amino acid that, once consumed, combines with histidine to form carnosine — a dipeptide stored in skeletal muscle. Carnosine buffers hydrogen ion accumulation during high-intensity exercise, delaying the muscular acidity that limits anaerobic performance. Meta-analyses consistently show meaningful improvements in exercise capacity during efforts lasting 60 seconds to 4 minutes — sprints, CrossFit-style workouts, HIIT, and many team sports. Loading takes 2–4 weeks of consistent supplementation at 3.2–6.4 g per day, ideally split into smaller doses to minimize the characteristic harmless tingling sensation (paresthesia). CarnoSyn is the patented, research-grade form.",
+    description: "Beta-alanine is a non-essential amino acid that, once consumed, combines with histidine to form carnosine, a dipeptide stored in skeletal muscle. Carnosine buffers hydrogen ion accumulation during high-intensity exercise, delaying the muscular acidity that limits anaerobic performance. Meta-analyses consistently show meaningful improvements in exercise capacity during efforts lasting 60 seconds to 4 minutes, sprints, CrossFit-style workouts, HIIT, and many team sports. Loading takes 2–4 weeks of consistent supplementation at 3.2–6.4 g per day, ideally split into smaller doses to minimize the characteristic harmless tingling sensation (paresthesia). CarnoSyn is the patented, research-grade form.",
   },
   {
     id: "mct-oil", name: "MCT Oil (C8 + C10)", brand: "Sports Research",
     dose: "1 tbsp (15 mL)", timing: "morning",
     purpose: "Ketones · sustained energy · brain fuel",
     evidence: "moderate", monthlyCost: 22, priority: 4,
-    why: "Medium-chain triglycerides bypass normal fat digestion and convert rapidly to ketones — clean, sustained brain and muscle fuel.",
+    why: "Medium-chain triglycerides bypass normal fat digestion and convert rapidly to ketones, clean, sustained brain and muscle fuel.",
     hue: "#d4a96a",
     tags: ["energy", "low-energy", "focus", "weight", "afternoon-crash", "brain-fog"],
     vegan: true,
     iherbSearch: "Sports Research MCT Oil C8 C10",
     category: "performance",
-    description: "Medium-chain triglycerides (MCTs) are saturated fatty acids of 6–12 carbons in length, derived primarily from coconut and palm kernel oils. Unlike long-chain fats, MCTs are absorbed directly into the portal circulation and metabolized rapidly in the liver, where they are partially converted to ketone bodies — an alternative fuel source for the brain and skeletal muscle. The C8 (caprylic acid) and C10 (capric acid) chains are the most ketogenic; pure C8 oils produce the steepest ketone rise. MCT oil is popular among low-carb practitioners, athletes seeking clean fuel, and adults pursuing sharper cognitive states. Start with 1 teaspoon to assess GI tolerance.",
+    description: "Medium-chain triglycerides (MCTs) are saturated fatty acids of 6–12 carbons in length, derived primarily from coconut and palm kernel oils. Unlike long-chain fats, MCTs are absorbed directly into the portal circulation and metabolized rapidly in the liver, where they are partially converted to ketone bodies, an alternative fuel source for the brain and skeletal muscle. The C8 (caprylic acid) and C10 (capric acid) chains are the most ketogenic; pure C8 oils produce the steepest ketone rise. MCT oil is popular among low-carb practitioners, athletes seeking clean fuel, and adults pursuing sharper cognitive states. Start with 1 teaspoon to assess GI tolerance.",
   },
 
   // Hormonal & libido
@@ -941,20 +941,20 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Double Wood Tongkat Ali",
     warnings: ["pregnant"],
     category: "hormonal",
-    description: "Tongkat Ali (Eurycoma longifolia, also called Longjack) is a Southeast Asian flowering plant with a long history of use in Malaysian traditional medicine. Standardized extracts — particularly the patented Physta and LJ100 forms — have been studied for their effects on free testosterone, libido, sexual function, body composition, and stress resilience. Tongkat Ali appears to work by lowering sex hormone binding globulin (SHBG), thereby increasing the proportion of bioavailable testosterone, and by gently down-regulating cortisol under chronic stress. Most studies use 200–400 mg per day of a standardized extract over 8–12 weeks. Cycling on and off is commonly recommended.",
+    description: "Tongkat Ali (Eurycoma longifolia, also called Longjack) is a Southeast Asian flowering plant with a long history of use in Malaysian traditional medicine. Standardized extracts, particularly the patented Physta and LJ100 forms, have been studied for their effects on free testosterone, libido, sexual function, body composition, and stress resilience. Tongkat Ali appears to work by lowering sex hormone binding globulin (SHBG), thereby increasing the proportion of bioavailable testosterone, and by gently down-regulating cortisol under chronic stress. Most studies use 200–400 mg per day of a standardized extract over 8–12 weeks. Cycling on and off is commonly recommended.",
   },
   {
     id: "maca", name: "Maca Root (Black + Red + Yellow)", brand: "Navitas Organics",
     dose: "3 g powder", timing: "morning",
     purpose: "Libido · energy · hormonal balance",
     evidence: "moderate", monthlyCost: 18, priority: 5,
-    why: "Peruvian root vegetable studied for libido and energy in both men and women — without affecting hormones directly.",
+    why: "Peruvian root vegetable studied for libido and energy in both men and women, without affecting hormones directly.",
     hue: "#d4a96a",
     tags: ["male", "female", "energy", "low-energy", "low-motivation"],
     vegan: true,
     iherbSearch: "Navitas Organics Maca Powder",
     category: "hormonal",
-    description: "Maca is a cruciferous root vegetable native to the high Andes of Peru, where it has been cultivated as both food and medicine for over 2,000 years. Modern clinical research has explored maca's effects on libido, sexual function, mood, and physical energy in adults of all genders. Notably, these effects appear to occur without directly altering hormone levels — making maca an interesting option for people seeking libido and vitality support without hormonal interference. Black maca is most studied for energy and male fertility; red maca for prostate and hormonal balance in women. Standard doses are 1.5–5 g of dried powder daily, easily added to smoothies or oatmeal.",
+    description: "Maca is a cruciferous root vegetable native to the high Andes of Peru, where it has been cultivated as both food and medicine for over 2,000 years. Modern clinical research has explored maca's effects on libido, sexual function, mood, and physical energy in adults of all genders. Notably, these effects appear to occur without directly altering hormone levels, making maca an interesting option for people seeking libido and vitality support without hormonal interference. Black maca is most studied for energy and male fertility; red maca for prostate and hormonal balance in women. Standard doses are 1.5–5 g of dried powder daily, easily added to smoothies or oatmeal.",
   },
 
   // Functional mushrooms & extra adaptogens
@@ -969,7 +969,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Host Defense Cordyceps",
     category: "adaptogens",
-    description: "Cordyceps is a genus of parasitic fungi traditionally harvested from the Tibetan plateau, where it has been used for centuries to support stamina, sexual vitality, and respiratory function. Modern supplements use cultivated forms — primarily CS-4 (a Cordyceps sinensis strain) and Cordyceps militaris — which produce the same active compounds (cordycepin and adenosine derivatives) sustainably and at scale. Research suggests cordyceps may improve oxygen utilization (VO2 max), exercise tolerance, and energy production in skeletal muscle by enhancing ATP synthesis. Typical doses range from 1,000–3,000 mg per day. It pairs well with cordyceps-containing pre-workouts or coffee blends.",
+    description: "Cordyceps is a genus of parasitic fungi traditionally harvested from the Tibetan plateau, where it has been used for centuries to support stamina, sexual vitality, and respiratory function. Modern supplements use cultivated forms, primarily CS-4 (a Cordyceps sinensis strain) and Cordyceps militaris, which produce the same active compounds (cordycepin and adenosine derivatives) sustainably and at scale. Research suggests cordyceps may improve oxygen utilization (VO2 max), exercise tolerance, and energy production in skeletal muscle by enhancing ATP synthesis. Typical doses range from 1,000–3,000 mg per day. It pairs well with cordyceps-containing pre-workouts or coffee blends.",
   },
   {
     id: "reishi", name: "Reishi Mushroom", brand: "Host Defense",
@@ -992,41 +992,41 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "1 mg", timing: "morning",
     purpose: "Methylation · mood · MTHFR support",
     evidence: "strong", monthlyCost: 16, priority: 6,
-    why: "The bioactive form of folate — bypasses the MTHFR enzyme, supporting methylation, mood, and homocysteine balance.",
+    why: "The bioactive form of folate, bypasses the MTHFR enzyme, supporting methylation, mood, and homocysteine balance.",
     hue: "#688a6b",
     tags: ["low-mood", "stress", "longevity", "female", "general", "brain-fog"],
     vegan: true,
     iherbSearch: "Thorne 5-MTHF L-Methylfolate",
     category: "vitamins",
-    description: "L-5-MTHF (L-methylfolate) is the biologically active, ready-to-use form of folate (vitamin B9). Unlike synthetic folic acid, which requires conversion through the MTHFR enzyme, methylfolate is absorbed and used directly — making it the preferred form for people with common MTHFR gene variants (estimated to affect 30–50% of the population). Methylfolate is essential for methylation, the biochemical 'on/off' switch that regulates DNA expression, neurotransmitter synthesis, and homocysteine recycling. Adequate methylfolate supports mood, cognition, cardiovascular health, and is critical during pregnancy. Standard doses are 400 mcg–1 mg per day.",
+    description: "L-5-MTHF (L-methylfolate) is the biologically active, ready-to-use form of folate (vitamin B9). Unlike synthetic folic acid, which requires conversion through the MTHFR enzyme, methylfolate is absorbed and used directly, making it the preferred form for people with common MTHFR gene variants (estimated to affect 30–50% of the population). Methylfolate is essential for methylation, the biochemical 'on/off' switch that regulates DNA expression, neurotransmitter synthesis, and homocysteine recycling. Adequate methylfolate supports mood, cognition, cardiovascular health, and is critical during pregnancy. Standard doses are 400 mcg–1 mg per day.",
   },
   {
     id: "vit-a", name: "Vitamin A (Retinyl Palmitate)", brand: "NOW Foods",
     dose: "10,000 IU", timing: "morning",
     purpose: "Vision · skin · immune",
     evidence: "strong", monthlyCost: 9, priority: 4,
-    why: "True retinol vitamin A — critical for night vision, skin cell turnover, and mucosal immune barriers.",
+    why: "True retinol vitamin A, critical for night vision, skin cell turnover, and mucosal immune barriers.",
     hue: "#c4944a",
     tags: ["skin", "immune", "eye", "general"],
     vegan: false,
     iherbSearch: "NOW Foods Vitamin A 10000 IU",
     warnings: ["pregnant"],
     category: "vitamins",
-    description: "Vitamin A is a fat-soluble vitamin essential for vision, skin cell turnover, mucosal immune barriers, and reproductive health. It exists in two forms: preformed retinol (from animal sources like liver and egg yolk) and pro-vitamin A carotenoids (from plants), which the body converts at variable efficiency. People with certain genetic variants convert beta-carotene poorly, making true retinol supplementation valuable. Vitamin A supports a healthy skin barrier — which is why dermatologists use its derivatives (retinoids) for acne and aging — and is critical for low-light vision. Standard doses are 3,000–10,000 IU per day. Pregnant women should not exceed 10,000 IU due to teratogenic risk at higher doses.",
+    description: "Vitamin A is a fat-soluble vitamin essential for vision, skin cell turnover, mucosal immune barriers, and reproductive health. It exists in two forms: preformed retinol (from animal sources like liver and egg yolk) and pro-vitamin A carotenoids (from plants), which the body converts at variable efficiency. People with certain genetic variants convert beta-carotene poorly, making true retinol supplementation valuable. Vitamin A supports a healthy skin barrier, which is why dermatologists use its derivatives (retinoids) for acne and aging, and is critical for low-light vision. Standard doses are 3,000–10,000 IU per day. Pregnant women should not exceed 10,000 IU due to teratogenic risk at higher doses.",
   },
   {
     id: "vit-e", name: "Vitamin E (Mixed Tocopherols)", brand: "Now Foods",
     dose: "400 IU", timing: "morning",
     purpose: "Antioxidant · skin · cardiovascular",
     evidence: "moderate", monthlyCost: 12, priority: 4,
-    why: "Mixed tocopherols protect cell membranes from lipid peroxidation. Skip synthetic dl-alpha — always choose mixed natural forms.",
+    why: "Mixed tocopherols protect cell membranes from lipid peroxidation. Skip synthetic dl-alpha, always choose mixed natural forms.",
     hue: "#d4a96a",
     tags: ["skin", "longevity", "heart", "general"],
     vegan: true,
     iherbSearch: "NOW Foods Vitamin E Mixed Tocopherols 400IU",
     warnings: ["blood-thinners"],
     category: "vitamins",
-    description: "Vitamin E refers to a family of eight fat-soluble compounds — four tocopherols and four tocotrienols. Of these, alpha-tocopherol is the form most actively retained by the body, but research increasingly suggests that the full spectrum of mixed tocopherols provides superior protection against lipid peroxidation in cell membranes. Synthetic dl-alpha-tocopherol (common in cheap supplements) is biologically inferior to the natural d-alpha and mixed forms. Vitamin E supports skin integrity, cardiovascular health, and immune function. Standard doses are 100–400 IU per day with a fat-containing meal. Higher doses may interfere with vitamin K and blood clotting.",
+    description: "Vitamin E refers to a family of eight fat-soluble compounds, four tocopherols and four tocotrienols. Of these, alpha-tocopherol is the form most actively retained by the body, but research increasingly suggests that the full spectrum of mixed tocopherols provides superior protection against lipid peroxidation in cell membranes. Synthetic dl-alpha-tocopherol (common in cheap supplements) is biologically inferior to the natural d-alpha and mixed forms. Vitamin E supports skin integrity, cardiovascular health, and immune function. Standard doses are 100–400 IU per day with a fat-containing meal. Higher doses may interfere with vitamin K and blood clotting.",
   },
   {
     id: "phosphatidylcholine", name: "Phosphatidylcholine (PC)", brand: "Bodybio",
@@ -1055,33 +1055,33 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods Choline Bitartrate 500mg",
     category: "vitamins",
-    description: "Choline is an essential nutrient that the body cannot produce in adequate amounts. Despite its critical roles in liver fat metabolism, neurotransmitter synthesis, and cell membrane structure, an estimated 90% of adults fall short of the recommended daily intake. Choline is the precursor to acetylcholine — the neurotransmitter that governs memory, focus, and the brain-muscle connection — and to phosphatidylcholine, a structural backbone of every cell membrane. Adequate choline supports liver health (preventing fat accumulation), cognitive function, and is especially important during pregnancy for fetal brain development. Standard doses are 250–1,000 mg per day with food.",
+    description: "Choline is an essential nutrient that the body cannot produce in adequate amounts. Despite its critical roles in liver fat metabolism, neurotransmitter synthesis, and cell membrane structure, an estimated 90% of adults fall short of the recommended daily intake. Choline is the precursor to acetylcholine, the neurotransmitter that governs memory, focus, and the brain-muscle connection, and to phosphatidylcholine, a structural backbone of every cell membrane. Adequate choline supports liver health (preventing fat accumulation), cognitive function, and is especially important during pregnancy for fetal brain development. Standard doses are 250–1,000 mg per day with food.",
   },
   {
     id: "vit-b6", name: "Vitamin B6 (P-5-P)", brand: "Pure Encapsulations",
     dose: "50 mg active P-5-P", timing: "morning",
     purpose: "Mood · PMS · neurotransmitter synthesis",
     evidence: "strong", monthlyCost: 13, priority: 5,
-    why: "The active P-5-P form bypasses conversion bottlenecks. Cofactor for serotonin, dopamine, and GABA — directly supports mood and PMS.",
+    why: "The active P-5-P form bypasses conversion bottlenecks. Cofactor for serotonin, dopamine, and GABA, directly supports mood and PMS.",
     hue: "#a78bfa",
     tags: ["female", "stress", "low-mood", "anxiety", "longevity"],
     vegan: true,
     iherbSearch: "Pure Encapsulations P5P 50 Pyridoxal 5 Phosphate",
     category: "vitamins",
-    description: "Vitamin B6 in its active pyridoxal-5-phosphate (P-5-P) form is a critical cofactor for over 140 enzymatic reactions in the body, including the synthesis of every major neurotransmitter — serotonin, dopamine, norepinephrine, GABA, and melatonin. Standard B6 (pyridoxine HCl) requires liver activation to become P-5-P, a process that can be impaired by certain medications, age, or genetic variations. Direct P-5-P supplementation bypasses this bottleneck. Clinical research supports B6 for PMS symptoms, premenstrual mood changes, morning sickness, and homocysteine reduction. Standard doses range from 10–100 mg of P-5-P per day. Long-term high-dose use (above 200 mg) should be avoided due to neuropathy risk.",
+    description: "Vitamin B6 in its active pyridoxal-5-phosphate (P-5-P) form is a critical cofactor for over 140 enzymatic reactions in the body, including the synthesis of every major neurotransmitter, serotonin, dopamine, norepinephrine, GABA, and melatonin. Standard B6 (pyridoxine HCl) requires liver activation to become P-5-P, a process that can be impaired by certain medications, age, or genetic variations. Direct P-5-P supplementation bypasses this bottleneck. Clinical research supports B6 for PMS symptoms, premenstrual mood changes, morning sickness, and homocysteine reduction. Standard doses range from 10–100 mg of P-5-P per day. Long-term high-dose use (above 200 mg) should be avoided due to neuropathy risk.",
   },
   {
-    id: "vit-b1", name: "Thiamine (B1) — Benfotiamine", brand: "Doctor's Best",
+    id: "vit-b1", name: "Thiamine (B1), Benfotiamine", brand: "Doctor's Best",
     dose: "300 mg benfotiamine", timing: "morning",
     purpose: "Nervous system · blood sugar · energy",
     evidence: "moderate", monthlyCost: 14, priority: 4,
-    why: "Fat-soluble form of B1 — 100x more bioavailable than thiamine HCl. Supports nerve health and AGE protection in metabolic stress.",
+    why: "Fat-soluble form of B1, 100x more bioavailable than thiamine HCl. Supports nerve health and AGE protection in metabolic stress.",
     hue: "#c4944a",
     tags: ["energy", "longevity", "general", "weight"],
     vegan: true,
     iherbSearch: "Doctor's Best Benfotiamine 300mg",
     category: "vitamins",
-    description: "Thiamine (vitamin B1) is essential for converting carbohydrates into usable energy via the Krebs cycle and for nerve signal transmission. Benfotiamine is a fat-soluble derivative of thiamine that achieves significantly higher plasma and tissue concentrations than the water-soluble form, allowing it to cross cell membranes and reach nerve tissue more effectively. Clinical research on benfotiamine has focused on its role in protecting against the formation of advanced glycation end-products (AGEs) — damaging compounds elevated in poorly-controlled blood sugar — and supporting peripheral nerve function. Standard doses are 150–600 mg per day, taken in divided doses with food.",
+    description: "Thiamine (vitamin B1) is essential for converting carbohydrates into usable energy via the Krebs cycle and for nerve signal transmission. Benfotiamine is a fat-soluble derivative of thiamine that achieves significantly higher plasma and tissue concentrations than the water-soluble form, allowing it to cross cell membranes and reach nerve tissue more effectively. Clinical research on benfotiamine has focused on its role in protecting against the formation of advanced glycation end-products (AGEs), damaging compounds elevated in poorly-controlled blood sugar, and supporting peripheral nerve function. Standard doses are 150–600 mg per day, taken in divided doses with food.",
   },
   {
     id: "vit-b3", name: "Niacinamide (B3, Non-Flush)", brand: "Thorne",
@@ -1094,10 +1094,10 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Thorne Niacinamide 500mg",
     category: "vitamins",
-    description: "Niacinamide (also called nicotinamide) is the non-flushing form of vitamin B3 and a direct precursor to NAD+ — the central coenzyme of cellular energy production and DNA repair. Unlike its cousin niacin, niacinamide does not cause the characteristic skin flush. Clinical research supports niacinamide for skin barrier function, reducing fine lines, supporting joint comfort in mild osteoarthritis, and as adjunctive support during dermatologic treatments. As a NAD+ precursor, it is also studied in the context of cellular aging and longevity research. Standard doses range from 500–1,500 mg per day, typically in divided doses with food.",
+    description: "Niacinamide (also called nicotinamide) is the non-flushing form of vitamin B3 and a direct precursor to NAD+, the central coenzyme of cellular energy production and DNA repair. Unlike its cousin niacin, niacinamide does not cause the characteristic skin flush. Clinical research supports niacinamide for skin barrier function, reducing fine lines, supporting joint comfort in mild osteoarthritis, and as adjunctive support during dermatologic treatments. As a NAD+ precursor, it is also studied in the context of cellular aging and longevity research. Standard doses range from 500–1,500 mg per day, typically in divided doses with food.",
   },
   {
-    id: "vit-b2", name: "Riboflavin (B2) — Activated", brand: "NOW Foods",
+    id: "vit-b2", name: "Riboflavin (B2), Activated", brand: "NOW Foods",
     dose: "100 mg", timing: "morning",
     purpose: "Energy · migraine · mitochondrial",
     evidence: "strong", monthlyCost: 10, priority: 4,
@@ -1107,7 +1107,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods Riboflavin 100mg",
     category: "vitamins",
-    description: "Riboflavin (vitamin B2) is essential for converting food into cellular energy. Inside cells, it is incorporated into the cofactors FAD and FMN, which power the electron transport chain in mitochondria — the site of ATP production. Beyond foundational energy metabolism, high-dose riboflavin (400 mg/day) has unusually strong clinical evidence for the prevention of migraine headaches, with effects building over 8–12 weeks. It is also necessary for the recycling of glutathione, the body's master antioxidant, and for activating other B vitamins. Standard supplemental doses are 25–100 mg daily for general support, or 400 mg for migraine prevention. A harmless bright yellow urine is normal.",
+    description: "Riboflavin (vitamin B2) is essential for converting food into cellular energy. Inside cells, it is incorporated into the cofactors FAD and FMN, which power the electron transport chain in mitochondria, the site of ATP production. Beyond foundational energy metabolism, high-dose riboflavin (400 mg/day) has unusually strong clinical evidence for the prevention of migraine headaches, with effects building over 8–12 weeks. It is also necessary for the recycling of glutathione, the body's master antioxidant, and for activating other B vitamins. Standard supplemental doses are 25–100 mg daily for general support, or 400 mg for migraine prevention. A harmless bright yellow urine is normal.",
   },
 
   // ZMA & specialty stacks
@@ -1116,7 +1116,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "30 mg Zn / 450 mg Mg / 11 mg B6", timing: "evening",
     purpose: "Sleep · recovery · testosterone (male)",
     evidence: "moderate", monthlyCost: 14, priority: 5,
-    why: "Classic recovery stack for active individuals. Zinc and magnesium often run low in heavy trainers — replenishing supports sleep and hormone production.",
+    why: "Classic recovery stack for active individuals. Zinc and magnesium often run low in heavy trainers, replenishing supports sleep and hormone production.",
     hue: "#7a6d92",
     tags: ["sleep", "recovery", "male", "active", "very-active", "low-sleep"],
     vegan: true,
@@ -1129,14 +1129,14 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "5 mg elemental lithium", timing: "morning",
     purpose: "Mood stability · neuroprotection",
     evidence: "moderate", monthlyCost: 16, priority: 4,
-    why: "Microdose lithium — far below pharmaceutical levels. May support stable mood and neurological resilience. Not for treating diagnosed mood disorders.",
+    why: "Microdose lithium, far below pharmaceutical levels. May support stable mood and neurological resilience. Not for treating diagnosed mood disorders.",
     hue: "#a78bfa",
     tags: ["low-mood", "stress", "longevity", "anxiety"],
     vegan: true,
     iherbSearch: "Pure Encapsulations Lithium Orotate 5mg",
     warnings: ["pregnant", "bipolar"],
     category: "specialty",
-    description: "Lithium is a naturally occurring trace mineral found in drinking water, vegetables, and grains. While high-dose lithium carbonate (600–1,800 mg) is a prescription medication for bipolar disorder, micro-dose lithium orotate (typically 5–20 mg of elemental lithium) supplies just a fraction of that amount — closer to the range found in mineral-rich drinking water. Epidemiological studies have observed that populations with higher lithium content in their water supply show lower rates of mood disorders, suicide, and dementia. Research suggests microdose lithium may support neuroprotection, mood stability, and cellular repair pathways. People with diagnosed mood disorders or on lithium medication should not use this without clinician supervision.",
+    description: "Lithium is a naturally occurring trace mineral found in drinking water, vegetables, and grains. While high-dose lithium carbonate (600–1,800 mg) is a prescription medication for bipolar disorder, micro-dose lithium orotate (typically 5–20 mg of elemental lithium) supplies just a fraction of that amount, closer to the range found in mineral-rich drinking water. Epidemiological studies have observed that populations with higher lithium content in their water supply show lower rates of mood disorders, suicide, and dementia. Research suggests microdose lithium may support neuroprotection, mood stability, and cellular repair pathways. People with diagnosed mood disorders or on lithium medication should not use this without clinician supervision.",
   },
 
   // Hormonal & women's health
@@ -1151,21 +1151,21 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Life Extension Fenugreek Testofen",
     category: "hormonal",
-    description: "Fenugreek (Trigonella foenum-graecum) is a culinary and medicinal herb native to the Mediterranean and Western Asia. The patented Testofen extract — standardized to 50% fenuside glycosides — has been studied in placebo-controlled trials for its effects on free testosterone, libido, sexual function, and body composition in active adult men. The proposed mechanism is inhibition of the enzymes that convert testosterone to estrogen (aromatase) and DHT (5-alpha-reductase), preserving more testosterone in its free, bioavailable form. Standard dose is 600 mg of Testofen per day for 8–12 weeks. Whole-food fenugreek seeds also have a strong evidence base for blood sugar support.",
+    description: "Fenugreek (Trigonella foenum-graecum) is a culinary and medicinal herb native to the Mediterranean and Western Asia. The patented Testofen extract, standardized to 50% fenuside glycosides, has been studied in placebo-controlled trials for its effects on free testosterone, libido, sexual function, and body composition in active adult men. The proposed mechanism is inhibition of the enzymes that convert testosterone to estrogen (aromatase) and DHT (5-alpha-reductase), preserving more testosterone in its free, bioavailable form. Standard dose is 600 mg of Testofen per day for 8–12 weeks. Whole-food fenugreek seeds also have a strong evidence base for blood sugar support.",
   },
   {
     id: "dim", name: "DIM (Diindolylmethane)", brand: "Pure Encapsulations",
     dose: "100 mg", timing: "morning",
     purpose: "Estrogen metabolism · hormonal balance",
     evidence: "moderate", monthlyCost: 26, priority: 5,
-    why: "Active compound concentrated from cruciferous vegetables. Supports favorable 2:16 ratio of estrogen metabolites — relevant for both women and men.",
+    why: "Active compound concentrated from cruciferous vegetables. Supports favorable 2:16 ratio of estrogen metabolites, relevant for both women and men.",
     hue: "#688a6b",
     tags: ["female", "male", "hormonal", "beauty"],
     vegan: true,
     iherbSearch: "Pure Encapsulations DIM Detox 100mg",
     warnings: ["pregnant"],
     category: "hormonal",
-    description: "Diindolylmethane (DIM) is a bioactive compound formed in the stomach when indole-3-carbinol from cruciferous vegetables — broccoli, kale, cauliflower, cabbage — is exposed to gastric acid. You would need to eat about 2 pounds of broccoli to get the equivalent of a typical DIM supplement. DIM modulates estrogen metabolism by shifting the balance toward the favorable 2-hydroxyestrone pathway and away from the less-desirable 16-hydroxyestrone pathway. This affects both women (PMS, cyclical breast tenderness, estrogen dominance) and men (where excess estrogen can disrupt the testosterone-to-estrogen ratio). Standard dose is 100–200 mg per day with food.",
+    description: "Diindolylmethane (DIM) is a bioactive compound formed in the stomach when indole-3-carbinol from cruciferous vegetables, broccoli, kale, cauliflower, cabbage, is exposed to gastric acid. You would need to eat about 2 pounds of broccoli to get the equivalent of a typical DIM supplement. DIM modulates estrogen metabolism by shifting the balance toward the favorable 2-hydroxyestrone pathway and away from the less-desirable 16-hydroxyestrone pathway. This affects both women (PMS, cyclical breast tenderness, estrogen dominance) and men (where excess estrogen can disrupt the testosterone-to-estrogen ratio). Standard dose is 100–200 mg per day with food.",
   },
   {
     id: "saw-palmetto", name: "Saw Palmetto Extract", brand: "NOW Foods",
@@ -1178,21 +1178,21 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods Saw Palmetto 320mg Standardized",
     category: "hormonal",
-    description: "Saw palmetto (Serenoa repens) is a small palm native to the southeastern United States, whose berries have been used in traditional medicine for over a century to support prostate and urinary health in men. The standardized extract (containing 85–95% free fatty acids and sterols) mildly inhibits 5-alpha-reductase — the enzyme that converts testosterone into dihydrotestosterone (DHT). DHT drives both benign prostatic enlargement and the androgen-mediated hair loss pattern in genetically susceptible men. Clinical research supports its use for urinary symptoms and is investigated for its mild adjunctive role in male pattern hair loss. Standard dose is 320 mg of standardized extract daily.",
+    description: "Saw palmetto (Serenoa repens) is a small palm native to the southeastern United States, whose berries have been used in traditional medicine for over a century to support prostate and urinary health in men. The standardized extract (containing 85–95% free fatty acids and sterols) mildly inhibits 5-alpha-reductase, the enzyme that converts testosterone into dihydrotestosterone (DHT). DHT drives both benign prostatic enlargement and the androgen-mediated hair loss pattern in genetically susceptible men. Clinical research supports its use for urinary symptoms and is investigated for its mild adjunctive role in male pattern hair loss. Standard dose is 320 mg of standardized extract daily.",
   },
   {
     id: "evening-primrose", name: "Evening Primrose Oil", brand: "Nature's Way",
     dose: "1300 mg (130 mg GLA)", timing: "morning",
     purpose: "Skin · PMS · hormonal balance",
     evidence: "moderate", monthlyCost: 17, priority: 4,
-    why: "Rich source of gamma-linolenic acid (GLA) — an omega-6 the body uses to produce anti-inflammatory prostaglandins. Long used for PMS and skin support.",
+    why: "Rich source of gamma-linolenic acid (GLA), an omega-6 the body uses to produce anti-inflammatory prostaglandins. Long used for PMS and skin support.",
     hue: "#d4a96a",
     tags: ["female", "skin", "beauty", "joint"],
     vegan: true,
     iherbSearch: "Nature's Way Evening Primrose Oil 1300mg",
     warnings: ["blood-thinners"],
     category: "omega-fats",
-    description: "Evening primrose oil is extracted from the seeds of the wildflower Oenothera biennis. Its therapeutic value comes from its uniquely high content of gamma-linolenic acid (GLA), an omega-6 fatty acid that the body converts into prostaglandin E1 — a signaling molecule with anti-inflammatory and hormonal-balancing effects. Clinical research has explored EPO for cyclical breast discomfort, PMS-related symptoms, atopic skin conditions, and mild joint inflammation. Because most modern Western diets are rich in pro-inflammatory omega-6 forms, GLA supplementation can shift the balance toward the more beneficial prostaglandins. Standard doses range from 1,300–3,000 mg per day (delivering 130–300 mg of GLA).",
+    description: "Evening primrose oil is extracted from the seeds of the wildflower Oenothera biennis. Its therapeutic value comes from its uniquely high content of gamma-linolenic acid (GLA), an omega-6 fatty acid that the body converts into prostaglandin E1, a signaling molecule with anti-inflammatory and hormonal-balancing effects. Clinical research has explored EPO for cyclical breast discomfort, PMS-related symptoms, atopic skin conditions, and mild joint inflammation. Because most modern Western diets are rich in pro-inflammatory omega-6 forms, GLA supplementation can shift the balance toward the more beneficial prostaglandins. Standard doses range from 1,300–3,000 mg per day (delivering 130–300 mg of GLA).",
   },
 
   // Heart & circulation
@@ -1201,13 +1201,13 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "500 mg standardised", timing: "morning",
     purpose: "Urinary tract · UTI prevention",
     evidence: "strong", monthlyCost: 18, priority: 5,
-    why: "Concentrated extract delivering 36 mg PACs daily — the dose shown to reduce recurrent UTI risk. Replaces drinking gallons of juice.",
+    why: "Concentrated extract delivering 36 mg PACs daily, the dose shown to reduce recurrent UTI risk. Replaces drinking gallons of juice.",
     hue: "#a3604a",
     tags: ["female", "general", "frequent-illness"],
     vegan: true,
     iherbSearch: "Solgar Cranberry Extract PACran",
     category: "specialty",
-    description: "Cranberries contain a unique class of polyphenols called proanthocyanidins (PACs) — particularly A-type PACs — that prevent E. coli bacteria from adhering to the bladder wall, where they would otherwise multiply and cause urinary tract infections. Clinical research suggests that a daily dose of 36 mg of A-type PACs (the amount in concentrated extracts like PACran) meaningfully reduces the risk of recurrent UTIs, particularly in women prone to them. Capsule extracts deliver this dose without the added sugar of juice. Standard dose is 500 mg of standardized extract daily. Cranberry is preventive — it does not treat an active infection, which requires antibiotics.",
+    description: "Cranberries contain a unique class of polyphenols called proanthocyanidins (PACs), particularly A-type PACs, that prevent E. coli bacteria from adhering to the bladder wall, where they would otherwise multiply and cause urinary tract infections. Clinical research suggests that a daily dose of 36 mg of A-type PACs (the amount in concentrated extracts like PACran) meaningfully reduces the risk of recurrent UTIs, particularly in women prone to them. Capsule extracts deliver this dose without the added sugar of juice. Standard dose is 500 mg of standardized extract daily. Cranberry is preventive, it does not treat an active infection, which requires antibiotics.",
   },
   {
     id: "hawthorn", name: "Hawthorn Berry Extract", brand: "Nature's Way",
@@ -1221,21 +1221,21 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Nature's Way Hawthorn Berries 565mg",
     warnings: ["blood-thinners"],
     category: "heart",
-    description: "Hawthorn (Crataegus species) has been used as a heart-supportive botanical in European herbal medicine for over a thousand years. Its bioactive flavonoids — vitexin, hyperoside, and oligomeric proanthocyanidins — appear to support coronary blood flow, mildly dilate blood vessels, and gently improve the heart's pumping efficiency. Clinical studies of standardized extracts have shown benefits in mild functional cardiac complaints and the early stages of heart-related fatigue. Hawthorn is considered one of the safest and gentlest cardiotonic herbs, with cumulative benefits emerging over 4–8 weeks. Standard doses are 160–900 mg of standardized extract per day.",
+    description: "Hawthorn (Crataegus species) has been used as a heart-supportive botanical in European herbal medicine for over a thousand years. Its bioactive flavonoids, vitexin, hyperoside, and oligomeric proanthocyanidins, appear to support coronary blood flow, mildly dilate blood vessels, and gently improve the heart's pumping efficiency. Clinical studies of standardized extracts have shown benefits in mild functional cardiac complaints and the early stages of heart-related fatigue. Hawthorn is considered one of the safest and gentlest cardiotonic herbs, with cumulative benefits emerging over 4–8 weeks. Standard doses are 160–900 mg of standardized extract per day.",
   },
   {
     id: "aged-garlic", name: "Aged Garlic Extract (Kyolic)", brand: "Kyolic",
     dose: "1200 mg", timing: "morning",
     purpose: "Cardiovascular · cholesterol · blood pressure",
     evidence: "strong", monthlyCost: 22, priority: 5,
-    why: "Aged at low heat for 20+ months — odorless, with concentrated, stable bioactives clinically shown to support healthy cholesterol and BP.",
+    why: "Aged at low heat for 20+ months, odorless, with concentrated, stable bioactives clinically shown to support healthy cholesterol and BP.",
     hue: "#688a6b",
     tags: ["heart", "longevity", "general", "immune"],
     vegan: true,
     iherbSearch: "Kyolic Aged Garlic Extract Cardiovascular",
     warnings: ["blood-thinners"],
     category: "heart",
-    description: "Aged Garlic Extract (AGE) is produced by aging organically grown garlic in stainless steel tanks for up to 20 months without heat. This process converts the harsh, unstable sulfur compounds in fresh garlic into milder, more bioavailable forms — particularly S-allyl-cysteine — while eliminating odor. Kyolic AGE has over 800 published studies, more than any other garlic preparation, supporting its use for cardiovascular health, cholesterol balance, blood pressure regulation, and immune function. Standard doses are 600–1,200 mg per day, taken with meals. Because of mild blood-thinning properties, garlic supplements should be discontinued 1–2 weeks before scheduled surgery.",
+    description: "Aged Garlic Extract (AGE) is produced by aging organically grown garlic in stainless steel tanks for up to 20 months without heat. This process converts the harsh, unstable sulfur compounds in fresh garlic into milder, more bioavailable forms, particularly S-allyl-cysteine, while eliminating odor. Kyolic AGE has over 800 published studies, more than any other garlic preparation, supporting its use for cardiovascular health, cholesterol balance, blood pressure regulation, and immune function. Standard doses are 600–1,200 mg per day, taken with meals. Because of mild blood-thinning properties, garlic supplements should be discontinued 1–2 weeks before scheduled surgery.",
   },
   {
     id: "nattokinase", name: "Nattokinase (NSK-SD)", brand: "Doctor's Best",
@@ -1249,7 +1249,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Doctor's Best Nattokinase 2000 FU",
     warnings: ["blood-thinners", "pregnant"],
     category: "heart",
-    description: "Nattokinase is a proteolytic enzyme produced when soybeans are fermented with Bacillus subtilis natto, creating the traditional Japanese food natto. The enzyme has documented fibrinolytic activity, meaning it helps the body break down fibrin — the protein meshwork involved in blood clot formation. Clinical research suggests benefits for circulatory health, healthy blood viscosity, and post-flight leg circulation. Because of these effects on the clotting system, nattokinase should be discontinued at least two weeks before any scheduled surgery and is not appropriate for people on blood-thinning medications without clinician oversight. Standard dose is 100 mg (2,000 Fibrinolytic Units) per day on an empty stomach.",
+    description: "Nattokinase is a proteolytic enzyme produced when soybeans are fermented with Bacillus subtilis natto, creating the traditional Japanese food natto. The enzyme has documented fibrinolytic activity, meaning it helps the body break down fibrin, the protein meshwork involved in blood clot formation. Clinical research suggests benefits for circulatory health, healthy blood viscosity, and post-flight leg circulation. Because of these effects on the clotting system, nattokinase should be discontinued at least two weeks before any scheduled surgery and is not appropriate for people on blood-thinning medications without clinician oversight. Standard dose is 100 mg (2,000 Fibrinolytic Units) per day on an empty stomach.",
   },
 
   // Gut & digestion
@@ -1277,7 +1277,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods Inulin Powder Prebiotic",
     category: "gut",
-    description: "Inulin is a soluble fiber naturally found in chicory root, Jerusalem artichokes, garlic, onions, and asparagus. Because human enzymes cannot break it down, it passes intact to the large intestine where it is selectively fermented by beneficial bacteria — particularly Bifidobacterium and Lactobacillus species. This fermentation produces short-chain fatty acids like butyrate, which nourish colon cells and modulate immune function. Research supports inulin for microbiome diversity, regularity, calcium absorption, and metabolic markers. Start with 2–5 g per day to allow gut adaptation; some people experience initial gas or bloating that resolves within 1–2 weeks. Can be added to smoothies or coffee.",
+    description: "Inulin is a soluble fiber naturally found in chicory root, Jerusalem artichokes, garlic, onions, and asparagus. Because human enzymes cannot break it down, it passes intact to the large intestine where it is selectively fermented by beneficial bacteria, particularly Bifidobacterium and Lactobacillus species. This fermentation produces short-chain fatty acids like butyrate, which nourish colon cells and modulate immune function. Research supports inulin for microbiome diversity, regularity, calcium absorption, and metabolic markers. Start with 2–5 g per day to allow gut adaptation; some people experience initial gas or bloating that resolves within 1–2 weeks. Can be added to smoothies or coffee.",
   },
   {
     id: "ginger", name: "Ginger Root Extract", brand: "NOW Foods",
@@ -1291,7 +1291,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "NOW Foods Ginger Root Extract",
     warnings: ["blood-thinners"],
     category: "gut",
-    description: "Ginger (Zingiber officinale) is one of the most-studied culinary herbs for its medicinal properties. Its active compounds — gingerols and shogaols — have been shown in randomized trials to relieve nausea (motion, pregnancy, post-operative, and chemotherapy-induced), reduce digestive bloating, support gastric emptying, and modulate inflammatory pathways relevant to joint comfort and exercise recovery. Standardized extracts deliver consistent gingerol content that fresh ginger does not. Standard doses range from 250–1,500 mg per day depending on the indication. Higher doses (above 4 g) should be approached cautiously alongside blood-thinning medications due to mild antiplatelet effects.",
+    description: "Ginger (Zingiber officinale) is one of the most-studied culinary herbs for its medicinal properties. Its active compounds, gingerols and shogaols, have been shown in randomized trials to relieve nausea (motion, pregnancy, post-operative, and chemotherapy-induced), reduce digestive bloating, support gastric emptying, and modulate inflammatory pathways relevant to joint comfort and exercise recovery. Standardized extracts deliver consistent gingerol content that fresh ginger does not. Standard doses range from 250–1,500 mg per day depending on the indication. Higher doses (above 4 g) should be approached cautiously alongside blood-thinning medications due to mild antiplatelet effects.",
   },
 
   // Antioxidants & nootropics extension
@@ -1300,14 +1300,14 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "400 mg EGCG", timing: "morning",
     purpose: "Antioxidant · metabolism · longevity",
     evidence: "strong", monthlyCost: 18, priority: 5,
-    why: "Concentrated EGCG — the most-studied catechin. Supports thermogenesis, cardiovascular markers, and acts as a potent antioxidant.",
+    why: "Concentrated EGCG, the most-studied catechin. Supports thermogenesis, cardiovascular markers, and acts as a potent antioxidant.",
     hue: "#688a6b",
     tags: ["longevity", "weight", "heart", "general"],
     vegan: true,
     iherbSearch: "Life Extension Mega Green Tea Extract Decaffeinated",
     warnings: ["liver"],
     category: "antioxidants",
-    description: "Green tea is one of the most-researched plant beverages in human medicine. Its primary bioactive — epigallocatechin gallate (EGCG) — is a potent polyphenol with antioxidant, mild thermogenic, and metabolic effects. Concentrated extracts deliver in a single capsule what would require 4–8 cups of brewed tea. Clinical research supports green tea EGCG for healthy cholesterol levels, metabolic rate, post-meal glucose handling, and as part of comprehensive longevity protocols. Decaffeinated versions are preferred for evening use or sensitive individuals. Standard doses are 300–600 mg of EGCG per day, taken with food to optimize absorption and minimize the rare risk of liver irritation seen at very high doses.",
+    description: "Green tea is one of the most-researched plant beverages in human medicine. Its primary bioactive, epigallocatechin gallate (EGCG), is a potent polyphenol with antioxidant, mild thermogenic, and metabolic effects. Concentrated extracts deliver in a single capsule what would require 4–8 cups of brewed tea. Clinical research supports green tea EGCG for healthy cholesterol levels, metabolic rate, post-meal glucose handling, and as part of comprehensive longevity protocols. Decaffeinated versions are preferred for evening use or sensitive individuals. Standard doses are 300–600 mg of EGCG per day, taken with food to optimize absorption and minimize the rare risk of liver irritation seen at very high doses.",
   },
   {
     id: "l-tyrosine", name: "L-Tyrosine", brand: "NOW Foods",
@@ -1320,7 +1320,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods L-Tyrosine 500mg",
     category: "amino-acids",
-    description: "L-Tyrosine is an amino acid that serves as the direct precursor to the catecholamines — dopamine, norepinephrine, and epinephrine — and to thyroid hormones. Under normal conditions, the body synthesizes adequate tyrosine from phenylalanine. But under acute stress, sleep deprivation, cold exposure, or intense cognitive demand, catecholamine production can outpace tyrosine availability, leading to decrements in working memory, attention, and mood. Military and aviation research consistently shows that tyrosine supplementation (1–2 g) preserves cognitive performance under these challenging conditions. It is best taken on an empty stomach 30–60 minutes before a stressful event. Less useful during ordinary unstressed circumstances.",
+    description: "L-Tyrosine is an amino acid that serves as the direct precursor to the catecholamines, dopamine, norepinephrine, and epinephrine, and to thyroid hormones. Under normal conditions, the body synthesizes adequate tyrosine from phenylalanine. But under acute stress, sleep deprivation, cold exposure, or intense cognitive demand, catecholamine production can outpace tyrosine availability, leading to decrements in working memory, attention, and mood. Military and aviation research consistently shows that tyrosine supplementation (1–2 g) preserves cognitive performance under these challenging conditions. It is best taken on an empty stomach 30–60 minutes before a stressful event. Less useful during ordinary unstressed circumstances.",
   },
   {
     id: "tudca", name: "TUDCA (Tauroursodeoxycholic Acid)", brand: "Nutricost",
@@ -1334,7 +1334,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Nutricost TUDCA 500mg",
     warnings: ["pregnant"],
     category: "specialty",
-    description: "Tauroursodeoxycholic acid (TUDCA) is a bile acid naturally produced in trace amounts by gut bacteria from ursodeoxycholic acid (UDCA), a compound originally isolated from bear bile and used in human medicine for over a century to treat gallstones and certain liver conditions. TUDCA's standout property is its protective effect against endoplasmic reticulum (ER) stress — a state of cellular protein-folding overload implicated in liver disease, neurodegeneration, and diabetes. Supplementation supports liver function, healthy bile flow, eye health, and is often used as cycle support by athletes taking hepatotoxic compounds. Standard dose is 250–1,000 mg per day. Most TUDCA is bovine-derived; vegan synthetic options exist but are less common.",
+    description: "Tauroursodeoxycholic acid (TUDCA) is a bile acid naturally produced in trace amounts by gut bacteria from ursodeoxycholic acid (UDCA), a compound originally isolated from bear bile and used in human medicine for over a century to treat gallstones and certain liver conditions. TUDCA's standout property is its protective effect against endoplasmic reticulum (ER) stress, a state of cellular protein-folding overload implicated in liver disease, neurodegeneration, and diabetes. Supplementation supports liver function, healthy bile flow, eye health, and is often used as cycle support by athletes taking hepatotoxic compounds. Standard dose is 250–1,000 mg per day. Most TUDCA is bovine-derived; vegan synthetic options exist but are less common.",
   },
   {
     id: "whey-isolate", name: "Whey Protein Isolate", brand: "Naked Nutrition",
@@ -1348,7 +1348,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Naked Whey Protein Isolate Grass Fed",
     warnings: ["dairy-allergy"],
     category: "performance",
-    description: "Whey protein isolate is the most-studied protein supplement in sports nutrition. It contains all nine essential amino acids in a highly bioavailable form, with the highest leucine content per gram of any whole-food protein source — making it particularly effective at triggering muscle protein synthesis. Compared to whey concentrate, isolate is processed further to remove most fat and lactose (under 1%), making it suitable for many lactose-sensitive individuals. Grass-fed, undenatured sources retain the beneficial immunoglobulins and growth factors of fresh milk. Standard post-workout dose is 20–40 g within two hours of training. Whey isolate also supports satiety and lean mass preservation during fat loss.",
+    description: "Whey protein isolate is the most-studied protein supplement in sports nutrition. It contains all nine essential amino acids in a highly bioavailable form, with the highest leucine content per gram of any whole-food protein source, making it particularly effective at triggering muscle protein synthesis. Compared to whey concentrate, isolate is processed further to remove most fat and lactose (under 1%), making it suitable for many lactose-sensitive individuals. Grass-fed, undenatured sources retain the beneficial immunoglobulins and growth factors of fresh milk. Standard post-workout dose is 20–40 g within two hours of training. Whey isolate also supports satiety and lean mass preservation during fat loss.",
   },
   {
     id: "plant-protein", name: "Plant Protein Blend (Pea + Rice)", brand: "Naked Pea",
@@ -1361,7 +1361,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Naked Pea Plant Protein",
     category: "performance",
-    description: "Plant protein blends combining pea and brown rice protein create a complete amino acid profile that rivals whey protein for supporting muscle protein synthesis. Pea protein is naturally high in BCAAs and lysine but lower in methionine; brown rice protein is the inverse, making them perfect complementary sources. Single-source pea or rice proteins are not nutritionally inferior — but the blend simplifies things. Modern plant proteins have come a long way in texture and flavor. Choose minimally-processed brands with no added sugars or artificial sweeteners. Standard dose is 25–40 g post-workout. Sprouted varieties may improve digestibility and reduce phytate content.",
+    description: "Plant protein blends combining pea and brown rice protein create a complete amino acid profile that rivals whey protein for supporting muscle protein synthesis. Pea protein is naturally high in BCAAs and lysine but lower in methionine; brown rice protein is the inverse, making them perfect complementary sources. Single-source pea or rice proteins are not nutritionally inferior, but the blend simplifies things. Modern plant proteins have come a long way in texture and flavor. Choose minimally-processed brands with no added sugars or artificial sweeteners. Standard dose is 25–40 g post-workout. Sprouted varieties may improve digestibility and reduce phytate content.",
   },
   {
     id: "dha-prenatal", name: "DHA (Prenatal-Grade)", brand: "Nordic Naturals",
@@ -1381,13 +1381,13 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "7 g", timing: "pre-train",
     purpose: "Intra-workout · muscle preservation",
     evidence: "moderate", monthlyCost: 28, priority: 4,
-    why: "Branched-chain amino acids — leucine, isoleucine, valine — that preserve muscle during fasted or long training sessions.",
+    why: "Branched-chain amino acids, leucine, isoleucine, valine, that preserve muscle during fasted or long training sessions.",
     hue: "#688a6b",
     tags: ["recovery", "active", "very-active", "strength"],
     vegan: true,
     iherbSearch: "Scivation Xtend BCAA",
     category: "performance",
-    description: "Branched-chain amino acids (BCAAs) — leucine, isoleucine, and valine — are three of the nine essential amino acids and the only ones metabolized primarily in skeletal muscle rather than the liver. Leucine is the primary trigger of muscle protein synthesis via the mTOR pathway. BCAA supplementation is most valuable in specific contexts: during fasted training, long endurance sessions, or for individuals struggling to consume adequate total protein. For people already meeting protein targets (around 1.6 g/kg/day), adding whey or a complete protein source is generally more effective than isolated BCAAs. The standard 2:1:1 leucine ratio at 5–10 g per serving is the most-studied dose.",
+    description: "Branched-chain amino acids (BCAAs), leucine, isoleucine, and valine, are three of the nine essential amino acids and the only ones metabolized primarily in skeletal muscle rather than the liver. Leucine is the primary trigger of muscle protein synthesis via the mTOR pathway. BCAA supplementation is most valuable in specific contexts: during fasted training, long endurance sessions, or for individuals struggling to consume adequate total protein. For people already meeting protein targets (around 1.6 g/kg/day), adding whey or a complete protein source is generally more effective than isolated BCAAs. The standard 2:1:1 leucine ratio at 5–10 g per serving is the most-studied dose.",
   },
   {
     id: "eaa", name: "Essential Amino Acids (EAAs)", brand: "Kion",
@@ -1400,7 +1400,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Kion Aminos Essential Amino Acids",
     category: "performance",
-    description: "Essential amino acids (EAAs) are the nine amino acids the body cannot synthesize and must obtain from diet: leucine, isoleucine, valine, lysine, methionine, threonine, phenylalanine, tryptophan, and histidine. While BCAA supplementation focuses on just three of these, more recent research consistently shows that complete EAA blends produce a stronger and more sustained muscle protein synthesis response — because all nine amino acids are required to build new muscle tissue. EAAs are particularly useful for older adults (whose anabolic resistance demands a stronger leucine threshold), fasted training, and people pursuing recomposition. Standard dose is 5–15 g per serving, taken before or during training.",
+    description: "Essential amino acids (EAAs) are the nine amino acids the body cannot synthesize and must obtain from diet: leucine, isoleucine, valine, lysine, methionine, threonine, phenylalanine, tryptophan, and histidine. While BCAA supplementation focuses on just three of these, more recent research consistently shows that complete EAA blends produce a stronger and more sustained muscle protein synthesis response, because all nine amino acids are required to build new muscle tissue. EAAs are particularly useful for older adults (whose anabolic resistance demands a stronger leucine threshold), fasted training, and people pursuing recomposition. Standard dose is 5–15 g per serving, taken before or during training.",
   },
   {
     id: "moringa", name: "Moringa Leaf Powder", brand: "Kuli Kuli",
@@ -1413,7 +1413,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Kuli Kuli Moringa Powder Organic",
     category: "greens",
-    description: "Moringa oleifera is a small fast-growing tree native to northern India and used for centuries as a food and medicine across South Asia and East Africa. Often called the 'miracle tree,' its leaves are exceptionally nutrient-dense — gram for gram providing significant amounts of vitamin A, vitamin C, calcium, iron, and complete plant protein. Modern research has explored moringa's bioactive compounds (particularly the isothiocyanates and quercetin) for antioxidant effects, blood sugar support, and inflammation modulation. The leaf powder has a slightly earthy taste and can be added to smoothies, soups, or warm water. Standard doses are 2–8 g of powder per day.",
+    description: "Moringa oleifera is a small fast-growing tree native to northern India and used for centuries as a food and medicine across South Asia and East Africa. Often called the 'miracle tree,' its leaves are exceptionally nutrient-dense, gram for gram providing significant amounts of vitamin A, vitamin C, calcium, iron, and complete plant protein. Modern research has explored moringa's bioactive compounds (particularly the isothiocyanates and quercetin) for antioxidant effects, blood sugar support, and inflammation modulation. The leaf powder has a slightly earthy taste and can be added to smoothies, soups, or warm water. Standard doses are 2–8 g of powder per day.",
   },
 
   // ── Longevity / NAD+ / cellular aging ────────────────────────────────────
@@ -1454,33 +1454,33 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Double Wood Fisetin 500mg",
     category: "antioxidants",
-    description: "Fisetin is a polyphenol flavonoid found naturally in strawberries, apples, and onions, but in amounts far too small to deliver meaningful effects. At supplemental doses, fisetin has demonstrated senolytic activity in preclinical research — meaning it selectively triggers apoptosis in senescent ('zombie') cells that accumulate with aging and secrete inflammatory signals. Mayo Clinic researchers have launched human trials investigating fisetin for frailty, chronic kidney disease, and Alzheimer's prevention. Many longevity protocols use a 'hit-and-run' approach: 1,000 mg per day for 2 consecutive days monthly. Daily lower doses of 100–500 mg are also common.",
+    description: "Fisetin is a polyphenol flavonoid found naturally in strawberries, apples, and onions, but in amounts far too small to deliver meaningful effects. At supplemental doses, fisetin has demonstrated senolytic activity in preclinical research, meaning it selectively triggers apoptosis in senescent ('zombie') cells that accumulate with aging and secrete inflammatory signals. Mayo Clinic researchers have launched human trials investigating fisetin for frailty, chronic kidney disease, and Alzheimer's prevention. Many longevity protocols use a 'hit-and-run' approach: 1,000 mg per day for 2 consecutive days monthly. Daily lower doses of 100–500 mg are also common.",
   },
   {
     id: "urolithin-a", name: "Urolithin A (Mitopure)", brand: "Timeline",
     dose: "500 mg", timing: "morning",
     purpose: "Mitophagy · muscle function · cellular renewal",
     evidence: "strong", monthlyCost: 65, priority: 6,
-    why: "Triggers mitophagy — the cellular recycling of damaged mitochondria. Only ~40% of adults make enough naturally.",
+    why: "Triggers mitophagy, the cellular recycling of damaged mitochondria. Only ~40% of adults make enough naturally.",
     hue: "#a78bfa",
     tags: ["longevity", "energy", "anti-aging", "recovery", "active"],
     vegan: true,
     iherbSearch: "Timeline Mitopure Urolithin A",
     category: "specialty",
-    description: "Urolithin A is a postbiotic compound produced when gut bacteria metabolize ellagitannins from pomegranates and certain berries — but only about 40% of adults harbor the right microbiome to produce it in meaningful amounts. The patented Mitopure form, developed by Swiss biotech Amazentis and clinically validated in trials, delivers a standardized 500 mg dose. Human trials show urolithin A induces mitophagy (the body's quality-control process for damaged mitochondria), improves muscle endurance, and reduces inflammatory markers in adults 40+. It's considered one of the most promising longevity ingredients of the decade.",
+    description: "Urolithin A is a postbiotic compound produced when gut bacteria metabolize ellagitannins from pomegranates and certain berries, but only about 40% of adults harbor the right microbiome to produce it in meaningful amounts. The patented Mitopure form, developed by Swiss biotech Amazentis and clinically validated in trials, delivers a standardized 500 mg dose. Human trials show urolithin A induces mitophagy (the body's quality-control process for damaged mitochondria), improves muscle endurance, and reduces inflammatory markers in adults 40+. It's considered one of the most promising longevity ingredients of the decade.",
   },
   {
     id: "spermidine", name: "Spermidine (Wheat Germ Extract)", brand: "Double Wood",
     dose: "10 mg", timing: "morning",
     purpose: "Autophagy · cellular renewal · longevity",
     evidence: "moderate", monthlyCost: 28, priority: 4,
-    why: "Triggers autophagy — the cellular self-cleaning process. Higher dietary spermidine is linked to longer lifespan.",
+    why: "Triggers autophagy, the cellular self-cleaning process. Higher dietary spermidine is linked to longer lifespan.",
     hue: "#a78bfa",
     tags: ["longevity", "anti-aging", "general"],
     vegan: true,
     iherbSearch: "Double Wood Spermidine Wheat Germ",
     category: "specialty",
-    description: "Spermidine is a naturally occurring polyamine first discovered in semen (hence the name) but present in every living cell. It is a potent inducer of autophagy — the cellular process of breaking down and recycling damaged components. Large observational studies link higher dietary spermidine intake (from foods like aged cheese, wheat germ, mushrooms, and natto) to lower all-cause mortality and reduced cardiovascular risk. Preclinical research shows lifespan extension across yeast, flies, worms, and mice. Supplemental doses of 1–10 mg per day match the upper range of dietary intake in long-lived populations.",
+    description: "Spermidine is a naturally occurring polyamine first discovered in semen (hence the name) but present in every living cell. It is a potent inducer of autophagy, the cellular process of breaking down and recycling damaged components. Large observational studies link higher dietary spermidine intake (from foods like aged cheese, wheat germ, mushrooms, and natto) to lower all-cause mortality and reduced cardiovascular risk. Preclinical research shows lifespan extension across yeast, flies, worms, and mice. Supplemental doses of 1–10 mg per day match the upper range of dietary intake in long-lived populations.",
   },
   {
     id: "ca-akg", name: "Calcium AKG (Alpha-Ketoglutarate)", brand: "Life Extension",
@@ -1532,7 +1532,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods TMG Trimethylglycine",
     category: "amino-acids",
-    description: "Trimethylglycine (TMG), also known as betaine anhydrous, is a methyl donor that supports the conversion of homocysteine to methionine — an important pathway for cardiovascular health and DNA methylation. TMG is particularly relevant for anyone taking NAD+ precursors (NMN, NR), since methylating excess nicotinamide consumes methyl groups; TMG replaces them. Clinical trials at 1.5–4 g/day show meaningful reductions in elevated homocysteine. TMG is also studied for athletic performance, with research suggesting small improvements in power output and body composition. Standard dose is 500–2000 mg per day.",
+    description: "Trimethylglycine (TMG), also known as betaine anhydrous, is a methyl donor that supports the conversion of homocysteine to methionine, an important pathway for cardiovascular health and DNA methylation. TMG is particularly relevant for anyone taking NAD+ precursors (NMN, NR), since methylating excess nicotinamide consumes methyl groups; TMG replaces them. Clinical trials at 1.5–4 g/day show meaningful reductions in elevated homocysteine. TMG is also studied for athletic performance, with research suggesting small improvements in power output and body composition. Standard dose is 500–2000 mg per day.",
   },
 
   // ── Gut · advanced ────────────────────────────────────────────────────────
@@ -1547,7 +1547,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: false,
     iherbSearch: "BodyBio Butyrate Tributyrin",
     category: "gut",
-    description: "Butyrate is a short-chain fatty acid produced when gut bacteria ferment dietary fiber, and it is the preferred energy source for colon cells (colonocytes). Adequate butyrate supports the gut barrier, reduces low-grade inflammation, and is increasingly linked to immune and even cognitive function via the gut-brain axis. Many modern diets are too low in fermentable fiber to produce sufficient butyrate. Tributyrin is a triglyceride form of butyrate that survives stomach acid and releases butyrate directly in the colon — far more effective than sodium butyrate. Standard dose is 500–2000 mg per day with food.",
+    description: "Butyrate is a short-chain fatty acid produced when gut bacteria ferment dietary fiber, and it is the preferred energy source for colon cells (colonocytes). Adequate butyrate supports the gut barrier, reduces low-grade inflammation, and is increasingly linked to immune and even cognitive function via the gut-brain axis. Many modern diets are too low in fermentable fiber to produce sufficient butyrate. Tributyrin is a triglyceride form of butyrate that survives stomach acid and releases butyrate directly in the colon, far more effective than sodium butyrate. Standard dose is 500–2000 mg per day with food.",
   },
   {
     id: "lactoferrin", name: "Lactoferrin", brand: "Jarrow Formulas",
@@ -1581,13 +1581,13 @@ export const SUPPLEMENT_DB: Supplement[] = [
     dose: "400 mg", timing: "morning",
     purpose: "Stomach lining · heartburn · gut comfort",
     evidence: "moderate", monthlyCost: 14, priority: 4,
-    why: "Deglycyrrhizinated licorice — soothes the stomach lining without the blood-pressure effect of regular licorice.",
+    why: "Deglycyrrhizinated licorice, soothes the stomach lining without the blood-pressure effect of regular licorice.",
     hue: "#c4944a",
     tags: ["gut", "digestive-issues", "stress"],
     vegan: true,
     iherbSearch: "Now Foods DGL Licorice",
     category: "gut",
-    description: "Deglycyrrhizinated licorice (DGL) has the glycyrrhizin removed — the compound responsible for licorice's potential to raise blood pressure — while retaining the flavonoids that soothe and protect the gastric mucosa. DGL stimulates mucus secretion, supports the production of new stomach lining cells, and has been used clinically for heartburn, gastritis, and mild peptic ulcer for decades. It's commonly chewed before meals to coat the esophagus and stomach. Standard dose is 400–800 mg, 20 minutes before meals. Safer than regular licorice for long-term use, but pregnant women should still consult a clinician.",
+    description: "Deglycyrrhizinated licorice (DGL) has the glycyrrhizin removed, the compound responsible for licorice's potential to raise blood pressure, while retaining the flavonoids that soothe and protect the gastric mucosa. DGL stimulates mucus secretion, supports the production of new stomach lining cells, and has been used clinically for heartburn, gastritis, and mild peptic ulcer for decades. It's commonly chewed before meals to coat the esophagus and stomach. Standard dose is 400–800 mg, 20 minutes before meals. Safer than regular licorice for long-term use, but pregnant women should still consult a clinician.",
   },
   {
     id: "zinc-carnosine", name: "Zinc-Carnosine (PepZin GI)", brand: "Doctor's Best",
@@ -1641,7 +1641,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Healthy Origins Pycnogenol 100mg",
     category: "antioxidants",
-    description: "Pycnogenol is a patented extract from the bark of the French maritime pine (Pinus pinaster), standardized to 65–75% procyanidins. Over 450 published studies — including more than 160 clinical trials — have validated its use for venous insufficiency, mild-to-moderate hypertension, asthma, ADHD-related focus issues, skin elasticity, joint comfort in osteoarthritis, and erectile function. The combination of antioxidant capacity, anti-inflammatory action, and nitric oxide modulation explains its broad effects. Standard dose is 50–200 mg per day, typically split into two servings with food.",
+    description: "Pycnogenol is a patented extract from the bark of the French maritime pine (Pinus pinaster), standardized to 65–75% procyanidins. Over 450 published studies, including more than 160 clinical trials, have validated its use for venous insufficiency, mild-to-moderate hypertension, asthma, ADHD-related focus issues, skin elasticity, joint comfort in osteoarthritis, and erectile function. The combination of antioxidant capacity, anti-inflammatory action, and nitric oxide modulation explains its broad effects. Standard dose is 50–200 mg per day, typically split into two servings with food.",
   },
   {
     id: "huperzine", name: "Huperzine A", brand: "Double Wood",
@@ -1655,7 +1655,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Double Wood Huperzine A 200mcg",
     warnings: ["pregnant"],
     category: "nootropics",
-    description: "Huperzine A is an alkaloid isolated from the Chinese club moss Huperzia serrata. It is a reversible, selective inhibitor of acetylcholinesterase — the enzyme that breaks down acetylcholine, the brain's primary neurotransmitter for memory and learning. Multiple randomized trials in Alzheimer's, vascular dementia, and age-related cognitive decline show meaningful improvements in cognitive scores. For healthy users, it can support sharp focus and memory recall. Huperzine A has a long half-life and should be cycled (5 days on, 2 off) to avoid tolerance. Standard dose is 100–200 mcg per day.",
+    description: "Huperzine A is an alkaloid isolated from the Chinese club moss Huperzia serrata. It is a reversible, selective inhibitor of acetylcholinesterase, the enzyme that breaks down acetylcholine, the brain's primary neurotransmitter for memory and learning. Multiple randomized trials in Alzheimer's, vascular dementia, and age-related cognitive decline show meaningful improvements in cognitive scores. For healthy users, it can support sharp focus and memory recall. Huperzine A has a long half-life and should be cycled (5 days on, 2 off) to avoid tolerance. Standard dose is 100–200 mcg per day.",
   },
 
   // ── Beauty / skin ────────────────────────────────────────────────────────
@@ -1683,7 +1683,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Designs for Health Tocotrienols Annatto",
     category: "vitamins",
-    description: "Vitamin E exists in eight forms — four tocopherols and four tocotrienols. Most supplements provide only alpha-tocopherol, leaving out the tocotrienols, which have unique benefits not replicable by tocopherols. Annatto-sourced tocotrienols (delta and gamma forms, tocopherol-free) are the most clinically studied. Trials demonstrate benefits for liver enzymes in fatty liver disease, lipid profile, skin UV protection, and bone density. Tocotrienols are also being researched for cancer prevention. Standard dose is 75–300 mg of total tocotrienols per day, with a fat-containing meal.",
+    description: "Vitamin E exists in eight forms, four tocopherols and four tocotrienols. Most supplements provide only alpha-tocopherol, leaving out the tocotrienols, which have unique benefits not replicable by tocopherols. Annatto-sourced tocotrienols (delta and gamma forms, tocopherol-free) are the most clinically studied. Trials demonstrate benefits for liver enzymes in fatty liver disease, lipid profile, skin UV protection, and bone density. Tocotrienols are also being researched for cancer prevention. Standard dose is 75–300 mg of total tocotrienols per day, with a fat-containing meal.",
   },
   {
     id: "silica", name: "Silica (BioSil ch-OSA)", brand: "BioSil",
@@ -1696,7 +1696,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "BioSil Hair Skin Nails ch-OSA",
     category: "specialty",
-    description: "BioSil is a patented choline-stabilized orthosilicic acid (ch-OSA) form of bioavailable silicon — the trace mineral the body uses to activate its own collagen, elastin, and keratin synthesis. Unlike collagen peptides, which provide raw building blocks, BioSil triggers the enzymes that build endogenous structural proteins. Placebo-controlled trials demonstrate significant improvements in skin elasticity, hair tensile strength and thickness, and nail brittleness over 5–9 months. Standard dose is 5–10 mg of ch-OSA per day. Look for the BioSil brand or the ch-OSA name to ensure you're getting the studied form.",
+    description: "BioSil is a patented choline-stabilized orthosilicic acid (ch-OSA) form of bioavailable silicon, the trace mineral the body uses to activate its own collagen, elastin, and keratin synthesis. Unlike collagen peptides, which provide raw building blocks, BioSil triggers the enzymes that build endogenous structural proteins. Placebo-controlled trials demonstrate significant improvements in skin elasticity, hair tensile strength and thickness, and nail brittleness over 5–9 months. Standard dose is 5–10 mg of ch-OSA per day. Look for the BioSil brand or the ch-OSA name to ensure you're getting the studied form.",
   },
   {
     id: "ceramides", name: "Ceramides (Ceramosides)", brand: "Life Extension",
@@ -1710,7 +1710,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Life Extension Skin Restoring Ceramides",
     warnings: ["gluten-allergy"],
     category: "specialty",
-    description: "Ceramides are lipid molecules that form roughly 50% of the skin's outermost barrier (stratum corneum). Production declines with age and UV exposure, leading to dryness, wrinkles, and increased trans-epidermal water loss. Oral phytoceramides — typically derived from wheat (Ceramosides) or rice — have been shown in placebo-controlled trials to improve skin hydration, reduce visible wrinkles, and restore skin barrier function within 8–12 weeks. The Ceramosides form is the most-studied at 30 mg per day. Note: wheat-derived forms are not gluten-free.",
+    description: "Ceramides are lipid molecules that form roughly 50% of the skin's outermost barrier (stratum corneum). Production declines with age and UV exposure, leading to dryness, wrinkles, and increased trans-epidermal water loss. Oral phytoceramides, typically derived from wheat (Ceramosides) or rice, have been shown in placebo-controlled trials to improve skin hydration, reduce visible wrinkles, and restore skin barrier function within 8–12 weeks. The Ceramosides form is the most-studied at 30 mg per day. Note: wheat-derived forms are not gluten-free.",
   },
 
   // ── Performance ──────────────────────────────────────────────────────────
@@ -1777,7 +1777,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods Tribulus 1000mg",
     category: "hormonal",
-    description: "Tribulus terrestris is a small flowering plant used for centuries in Ayurvedic and traditional Chinese medicine. Its active compounds — steroidal saponins, particularly protodioscin — have been investigated for libido, erectile function, and athletic performance. While tribulus does not reliably raise testosterone in healthy men, multiple placebo-controlled trials do show meaningful improvements in self-reported libido and sexual satisfaction in both men and women. Standard dose is 250–1500 mg per day of extract standardized to ≥45% saponins (Bulgarian-sourced is traditionally preferred).",
+    description: "Tribulus terrestris is a small flowering plant used for centuries in Ayurvedic and traditional Chinese medicine. Its active compounds, steroidal saponins, particularly protodioscin, have been investigated for libido, erectile function, and athletic performance. While tribulus does not reliably raise testosterone in healthy men, multiple placebo-controlled trials do show meaningful improvements in self-reported libido and sexual satisfaction in both men and women. Standard dose is 250–1500 mg per day of extract standardized to ≥45% saponins (Bulgarian-sourced is traditionally preferred).",
   },
 
   // ── Sleep / mood ─────────────────────────────────────────────────────────
@@ -1806,7 +1806,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Life Extension Magnolia Bark Honokiol",
     category: "adaptogens",
-    description: "Magnolia bark has been used in traditional Chinese medicine for over 2,000 years to relieve stress and support sleep. Its two primary active compounds — honokiol and magnolol — modulate GABA-A receptors (the same target as benzodiazepines but with a much milder effect), suppress evening cortisol, and exert antioxidant action. Clinical trials show reductions in perceived stress, transient cortisol, and improvements in sleep quality in adults with mild anxiety. Standard dose is 200–400 mg of extract standardized to 1–2% honokiol per day, in the evening.",
+    description: "Magnolia bark has been used in traditional Chinese medicine for over 2,000 years to relieve stress and support sleep. Its two primary active compounds, honokiol and magnolol, modulate GABA-A receptors (the same target as benzodiazepines but with a much milder effect), suppress evening cortisol, and exert antioxidant action. Clinical trials show reductions in perceived stress, transient cortisol, and improvements in sleep quality in adults with mild anxiety. Standard dose is 200–400 mg of extract standardized to 1–2% honokiol per day, in the evening.",
   },
   {
     id: "passionflower", name: "Passionflower Extract", brand: "Gaia Herbs",
@@ -1820,7 +1820,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Gaia Herbs Passionflower",
     warnings: ["pregnant"],
     category: "adaptogens",
-    description: "Passionflower (Passiflora incarnata) is a climbing vine native to the Americas, used traditionally for anxiety and insomnia. Its mechanism involves modulating GABA activity in the brain. Several randomized trials — including pre-operative anxiety trials in which passionflower performed comparably to low-dose benzodiazepines — support its use for acute and generalized anxiety. It does not impair next-day function, unlike many sleep aids. Standard dose is 400–800 mg of extract, or 0.5–2 ml of liquid extract, taken in the evening.",
+    description: "Passionflower (Passiflora incarnata) is a climbing vine native to the Americas, used traditionally for anxiety and insomnia. Its mechanism involves modulating GABA activity in the brain. Several randomized trials, including pre-operative anxiety trials in which passionflower performed comparably to low-dose benzodiazepines, support its use for acute and generalized anxiety. It does not impair next-day function, unlike many sleep aids. Standard dose is 400–800 mg of extract, or 0.5–2 ml of liquid extract, taken in the evening.",
   },
   {
     id: "lemon-balm", name: "Lemon Balm (Melissa)", brand: "Gaia Herbs",
@@ -1833,7 +1833,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Gaia Herbs Lemon Balm",
     category: "adaptogens",
-    description: "Lemon balm (Melissa officinalis) is a citrus-scented herb in the mint family used since antiquity for stress, mild digestive complaints, and cognitive support. Its rosmarinic acid content inhibits GABA transaminase, raising GABA levels. Single-dose trials show measurable improvements in calmness, alertness, and accuracy on cognitive tasks within 60 minutes — without sedation. Lemon balm is also studied for menopausal symptoms, cold sore frequency (when applied topically), and mild dyspepsia. Standard dose is 300–600 mg of extract or 1–3 g of dried leaf, twice daily.",
+    description: "Lemon balm (Melissa officinalis) is a citrus-scented herb in the mint family used since antiquity for stress, mild digestive complaints, and cognitive support. Its rosmarinic acid content inhibits GABA transaminase, raising GABA levels. Single-dose trials show measurable improvements in calmness, alertness, and accuracy on cognitive tasks within 60 minutes, without sedation. Lemon balm is also studied for menopausal symptoms, cold sore frequency (when applied topically), and mild dyspepsia. Standard dose is 300–600 mg of extract or 1–3 g of dried leaf, twice daily.",
   },
   {
     id: "gaba", name: "GABA (PharmaGABA)", brand: "NOW Foods",
@@ -1846,7 +1846,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods GABA PharmaGABA",
     category: "amino-acids",
-    description: "GABA (gamma-aminobutyric acid) is the brain's primary inhibitory neurotransmitter — the molecular brake on overactive neurons. Whether oral GABA crosses the blood-brain barrier is debated, but trials with the patented PharmaGABA form (naturally fermented from Lactobacillus hilgardii) consistently demonstrate stress relief, faster sleep onset, and reduced subjective tension within 30–60 minutes. Some effects may be mediated via the enteric nervous system rather than direct CNS action. Standard dose is 100–500 mg before stressful events or 30 minutes before bed.",
+    description: "GABA (gamma-aminobutyric acid) is the brain's primary inhibitory neurotransmitter, the molecular brake on overactive neurons. Whether oral GABA crosses the blood-brain barrier is debated, but trials with the patented PharmaGABA form (naturally fermented from Lactobacillus hilgardii) consistently demonstrate stress relief, faster sleep onset, and reduced subjective tension within 30–60 minutes. Some effects may be mediated via the enteric nervous system rather than direct CNS action. Standard dose is 100–500 mg before stressful events or 30 minutes before bed.",
   },
 
   // ── Heart / cardiovascular ───────────────────────────────────────────────
@@ -1861,7 +1861,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Jarrow Formulas Citrus Bergamot",
     category: "heart",
-    description: "Citrus bergamot (Citrus bergamia) is a citrus fruit grown almost exclusively in the Calabria region of southern Italy. Its polyphenol fraction (Bergamot Polyphenolic Fraction, BPF) — standardized to brutieridin, melitidin, and other flavonoids — has demonstrated meaningful lipid-lowering effects in randomized trials: typical reductions of 24–36% in LDL-cholesterol and 30% in triglycerides over 6 months. Unlike statins, bergamot does not deplete CoQ10 and may improve insulin sensitivity. Standard dose is 500–1500 mg of standardized extract per day, with the evening meal.",
+    description: "Citrus bergamot (Citrus bergamia) is a citrus fruit grown almost exclusively in the Calabria region of southern Italy. Its polyphenol fraction (Bergamot Polyphenolic Fraction, BPF), standardized to brutieridin, melitidin, and other flavonoids, has demonstrated meaningful lipid-lowering effects in randomized trials: typical reductions of 24–36% in LDL-cholesterol and 30% in triglycerides over 6 months. Unlike statins, bergamot does not deplete CoQ10 and may improve insulin sensitivity. Standard dose is 500–1500 mg of standardized extract per day, with the evening meal.",
   },
   {
     id: "red-yeast-rice", name: "Red Yeast Rice", brand: "Nature's Plus",
@@ -1875,7 +1875,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Nature's Plus Red Yeast Rice",
     warnings: ["pregnant", "statin-use"],
     category: "heart",
-    description: "Red yeast rice (RYR) is rice fermented with the Monascus purpureus mold, traditionally used in Chinese cuisine and medicine. The fermentation produces monacolin K — chemically identical to the prescription statin lovastatin — at concentrations of roughly 5–10 mg per gram of extract. Clinical trials demonstrate significant LDL-cholesterol reductions of 15–25%. Because RYR is essentially a low-dose statin, it carries the same precautions: avoid in pregnancy, alongside prescription statins, or with grapefruit juice. Consider co-supplementing with CoQ10 for muscle support. Always pair with regular liver enzyme monitoring.",
+    description: "Red yeast rice (RYR) is rice fermented with the Monascus purpureus mold, traditionally used in Chinese cuisine and medicine. The fermentation produces monacolin K, chemically identical to the prescription statin lovastatin, at concentrations of roughly 5–10 mg per gram of extract. Clinical trials demonstrate significant LDL-cholesterol reductions of 15–25%. Because RYR is essentially a low-dose statin, it carries the same precautions: avoid in pregnancy, alongside prescription statins, or with grapefruit juice. Consider co-supplementing with CoQ10 for muscle support. Always pair with regular liver enzyme monitoring.",
   },
   {
     id: "garlic-aged-evening", name: "Olive Leaf Extract (Oleuropein)", brand: "Now Foods",
@@ -1888,7 +1888,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "NOW Foods Olive Leaf Extract Oleuropein",
     category: "heart",
-    description: "Olive leaf extract concentrates the cardioprotective polyphenols of the Mediterranean diet — particularly oleuropein and its breakdown product, hydroxytyrosol — into a single supplement. Clinical trials demonstrate modest but consistent reductions in systolic and diastolic blood pressure, improved LDL oxidation resistance, and supportive effects on immune function. The standardized extract is more potent than olive oil itself for these markers. Standard dose is 500–1000 mg of extract standardized to 15–20% oleuropein, taken with a meal.",
+    description: "Olive leaf extract concentrates the cardioprotective polyphenols of the Mediterranean diet, particularly oleuropein and its breakdown product, hydroxytyrosol, into a single supplement. Clinical trials demonstrate modest but consistent reductions in systolic and diastolic blood pressure, improved LDL oxidation resistance, and supportive effects on immune function. The standardized extract is more potent than olive oil itself for these markers. Standard dose is 500–1000 mg of extract standardized to 15–20% oleuropein, taken with a meal.",
   },
 
   // ── Vision ────────────────────────────────────────────────────────────────
@@ -1903,7 +1903,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Life Extension Bilberry Mirtoselect",
     category: "antioxidants",
-    description: "Bilberry (Vaccinium myrtillus) is a wild European cousin of the blueberry with 4–5× the anthocyanin content. The Mirtoselect form, standardized to 36% anthocyanosides, is the most-researched extract. Clinical trials support bilberry for digital eye fatigue, night vision under glare, dark adaptation, and capillary fragility (retinal hemorrhage, varicose veins). Effects extend beyond the eyes — bilberry also improves general microcirculation. Standard dose is 80–160 mg of standardized extract per day.",
+    description: "Bilberry (Vaccinium myrtillus) is a wild European cousin of the blueberry with 4–5× the anthocyanin content. The Mirtoselect form, standardized to 36% anthocyanosides, is the most-researched extract. Clinical trials support bilberry for digital eye fatigue, night vision under glare, dark adaptation, and capillary fragility (retinal hemorrhage, varicose veins). Effects extend beyond the eyes, bilberry also improves general microcirculation. Standard dose is 80–160 mg of standardized extract per day.",
   },
 
   // ── Detox / liver ─────────────────────────────────────────────────────────
@@ -1931,7 +1931,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Solgar Artichoke Leaf Extract",
     category: "specialty",
-    description: "Artichoke leaf extract concentrates the bitter compound cynarin, which strongly stimulates bile production and flow from the gallbladder. Bile is essential for fat digestion and for excreting cholesterol — so artichoke supports both digestion and modest cholesterol reduction. Meta-analyses confirm benefits for functional dyspepsia, IBS, and mild hypercholesterolemia. Artichoke leaf also has hepatoprotective effects against toxins. Standard dose is 300–600 mg of extract standardized to 2.5–5% cynarin, before meals.",
+    description: "Artichoke leaf extract concentrates the bitter compound cynarin, which strongly stimulates bile production and flow from the gallbladder. Bile is essential for fat digestion and for excreting cholesterol, so artichoke supports both digestion and modest cholesterol reduction. Meta-analyses confirm benefits for functional dyspepsia, IBS, and mild hypercholesterolemia. Artichoke leaf also has hepatoprotective effects against toxins. Standard dose is 300–600 mg of extract standardized to 2.5–5% cynarin, before meals.",
   },
 
   // ── Women's health ───────────────────────────────────────────────────────
@@ -1947,7 +1947,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Gaia Herbs Vitex Chasteberry",
     warnings: ["pregnant"],
     category: "hormonal",
-    description: "Chasteberry (Vitex agnus-castus), also called monk's pepper, is the most-studied herb for PMS and luteal phase symptoms. It works by binding dopamine D2 receptors in the pituitary, gently lowering prolactin and supporting progesterone in the second half of the menstrual cycle. Multiple randomized trials demonstrate significant reductions in breast tenderness, mood swings, irritability, and bloating across 3+ cycles of use. Effects build slowly — at least 8–12 weeks for full benefit. Standard dose is 20–40 mg of dried fruit equivalent or 200–500 mg of extract, taken in the morning. Avoid during pregnancy or while using hormonal contraceptives.",
+    description: "Chasteberry (Vitex agnus-castus), also called monk's pepper, is the most-studied herb for PMS and luteal phase symptoms. It works by binding dopamine D2 receptors in the pituitary, gently lowering prolactin and supporting progesterone in the second half of the menstrual cycle. Multiple randomized trials demonstrate significant reductions in breast tenderness, mood swings, irritability, and bloating across 3+ cycles of use. Effects build slowly, at least 8–12 weeks for full benefit. Standard dose is 20–40 mg of dried fruit equivalent or 200–500 mg of extract, taken in the morning. Avoid during pregnancy or while using hormonal contraceptives.",
   },
   {
     id: "black-cohosh", name: "Black Cohosh (Remifemin)", brand: "Enzymatic Therapy",
@@ -1961,7 +1961,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Enzymatic Therapy Remifemin Black Cohosh",
     warnings: ["pregnant"],
     category: "hormonal",
-    description: "Black cohosh (Actaea racemosa) is a North American plant traditionally used by Native Americans for women's health complaints. The standardized Remifemin extract (developed in Germany in 1956) is the form used in most clinical trials. Multiple meta-analyses confirm meaningful reductions in hot flashes, night sweats, mood disturbance, and sleep difficulty in perimenopausal and postmenopausal women. Unlike phytoestrogens, black cohosh does not bind estrogen receptors — its effects are mediated through serotonin and opioid pathways. Standard dose is 40 mg of standardized extract per day, on continuous use for at least 8 weeks.",
+    description: "Black cohosh (Actaea racemosa) is a North American plant traditionally used by Native Americans for women's health complaints. The standardized Remifemin extract (developed in Germany in 1956) is the form used in most clinical trials. Multiple meta-analyses confirm meaningful reductions in hot flashes, night sweats, mood disturbance, and sleep difficulty in perimenopausal and postmenopausal women. Unlike phytoestrogens, black cohosh does not bind estrogen receptors, its effects are mediated through serotonin and opioid pathways. Standard dose is 40 mg of standardized extract per day, on continuous use for at least 8 weeks.",
   },
 
   // ── Men's health ──────────────────────────────────────────────────────────
@@ -1976,7 +1976,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Solaray Nettle Root Extract",
     category: "hormonal",
-    description: "Nettle root (Urtica dioica) has been used traditionally for prostate complaints and urinary symptoms. Its bioactive lignans bind sex hormone binding globulin (SHBG), potentially increasing the bioavailable fraction of testosterone. Multiple trials — particularly in combination with saw palmetto — show meaningful improvements in benign prostatic hyperplasia symptoms: urinary frequency, urgency, and night-time waking to urinate. Standard dose is 300–600 mg of nettle root extract per day.",
+    description: "Nettle root (Urtica dioica) has been used traditionally for prostate complaints and urinary symptoms. Its bioactive lignans bind sex hormone binding globulin (SHBG), potentially increasing the bioavailable fraction of testosterone. Multiple trials, particularly in combination with saw palmetto, show meaningful improvements in benign prostatic hyperplasia symptoms: urinary frequency, urgency, and night-time waking to urinate. Standard dose is 300–600 mg of nettle root extract per day.",
   },
   {
     id: "pumpkin-seed-oil", name: "Pumpkin Seed Oil", brand: "Sports Research",
@@ -2020,7 +2020,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Jarrow Formulas Setria Glutathione",
     category: "antioxidants",
-    description: "Glutathione is the body's master antioxidant, present in every cell and central to detoxification, immune function, and antioxidant defense. Levels fall with age and oxidative stress. Most oral glutathione is destroyed in the gut, but the patented Setria form — produced via fermentation by Kyowa Hakko — has been shown in a placebo-controlled trial to raise blood, red blood cell, and lymphocyte glutathione levels after 6 months at 1000 mg/day. Standard dose is 250–1000 mg per day. NAC and glycine are precursors that more reliably raise endogenous glutathione synthesis.",
+    description: "Glutathione is the body's master antioxidant, present in every cell and central to detoxification, immune function, and antioxidant defense. Levels fall with age and oxidative stress. Most oral glutathione is destroyed in the gut, but the patented Setria form, produced via fermentation by Kyowa Hakko, has been shown in a placebo-controlled trial to raise blood, red blood cell, and lymphocyte glutathione levels after 6 months at 1000 mg/day. Standard dose is 250–1000 mg per day. NAC and glycine are precursors that more reliably raise endogenous glutathione synthesis.",
   },
   {
     id: "astragalus", name: "Astragalus Root", brand: "Nature's Way",
@@ -2034,7 +2034,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Nature's Way Astragalus Root",
     warnings: ["autoimmune"],
     category: "adaptogens",
-    description: "Astragalus (Astragalus membranaceus) is a foundational herb in traditional Chinese medicine, classified as a Qi tonic. Its primary actives — astragalosides and polysaccharides — support immune cell activity, reduce upper respiratory infection frequency, and have been investigated for cardiovascular and renal protective effects. Astragaloside IV in particular activates telomerase, a longevity-relevant mechanism. Standard dose is 500–1500 mg per day of root or 250–500 mg of standardized extract. Avoid in active autoimmune conditions where immune stimulation is undesirable.",
+    description: "Astragalus (Astragalus membranaceus) is a foundational herb in traditional Chinese medicine, classified as a Qi tonic. Its primary actives, astragalosides and polysaccharides, support immune cell activity, reduce upper respiratory infection frequency, and have been investigated for cardiovascular and renal protective effects. Astragaloside IV in particular activates telomerase, a longevity-relevant mechanism. Standard dose is 500–1500 mg per day of root or 250–500 mg of standardized extract. Avoid in active autoimmune conditions where immune stimulation is undesirable.",
   },
   {
     id: "mucuna", name: "Mucuna Pruriens (Velvet Bean)", brand: "Now Foods",
@@ -2061,7 +2061,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Nature's Way Eleuthero Siberian Ginseng",
     category: "adaptogens",
-    description: "Eleuthero (Eleutherococcus senticosus), formerly called Siberian ginseng, is a thorny Russian shrub used as an adaptogen since the 1960s. Unlike true Panax ginsengs, eleuthero is generally gentler and better tolerated for long-term daily use. Soviet-era research (and more recent Western trials) demonstrate improvements in physical endurance, mental performance under stress, and immune cell counts during illness. The primary actives — eleutherosides B and E — appear to modulate the HPA axis without stimulating it. Standard dose is 300–1200 mg of extract or 2–8 g of dried root per day.",
+    description: "Eleuthero (Eleutherococcus senticosus), formerly called Siberian ginseng, is a thorny Russian shrub used as an adaptogen since the 1960s. Unlike true Panax ginsengs, eleuthero is generally gentler and better tolerated for long-term daily use. Soviet-era research (and more recent Western trials) demonstrate improvements in physical endurance, mental performance under stress, and immune cell counts during illness. The primary actives, eleutherosides B and E, appear to modulate the HPA axis without stimulating it. Standard dose is 300–1200 mg of extract or 2–8 g of dried root per day.",
   },
   {
     id: "schisandra", name: "Schisandra Berry", brand: "Nature's Way",
@@ -2074,7 +2074,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Nature's Way Schisandra Berry",
     category: "adaptogens",
-    description: "Schisandra chinensis (wǔ wèi zǐ — 'five-flavor berry') is a foundational adaptogen in traditional Chinese medicine, prized for nourishing all five Yin organs simultaneously. Its lignans — schisandrin A, B, and C — have demonstrated hepatoprotective effects (raising glutathione, lowering liver enzymes), as well as benefits for endurance, mental performance, and stress resilience. Schisandra is unusual in being both calming and energizing, depending on context. Standard dose is 500–2000 mg of dried berry or 100–500 mg of standardized extract per day.",
+    description: "Schisandra chinensis (wǔ wèi zǐ, 'five-flavor berry') is a foundational adaptogen in traditional Chinese medicine, prized for nourishing all five Yin organs simultaneously. Its lignans, schisandrin A, B, and C, have demonstrated hepatoprotective effects (raising glutathione, lowering liver enzymes), as well as benefits for endurance, mental performance, and stress resilience. Schisandra is unusual in being both calming and energizing, depending on context. Standard dose is 500–2000 mg of dried berry or 100–500 mg of standardized extract per day.",
   },
   {
     id: "chaga", name: "Chaga Mushroom", brand: "Host Defense",
@@ -2087,7 +2087,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Host Defense Chaga",
     category: "adaptogens",
-    description: "Chaga (Inonotus obliquus) is a parasitic fungus that grows primarily on birch trees in cold northern climates. Used for centuries in Russian and Northern European folk medicine, chaga has one of the highest measured antioxidant capacities of any food. Its primary actives — betulinic acid, melanin, and beta-glucans — support immune balance and have been investigated for inflammation, gastric ulcer, and metabolic health. Look for dual-extracted forms (both water and alcohol extraction) to capture both water-soluble and fat-soluble compounds. Standard dose is 500–2000 mg of extract per day.",
+    description: "Chaga (Inonotus obliquus) is a parasitic fungus that grows primarily on birch trees in cold northern climates. Used for centuries in Russian and Northern European folk medicine, chaga has one of the highest measured antioxidant capacities of any food. Its primary actives, betulinic acid, melanin, and beta-glucans, support immune balance and have been investigated for inflammation, gastric ulcer, and metabolic health. Look for dual-extracted forms (both water and alcohol extraction) to capture both water-soluble and fat-soluble compounds. Standard dose is 500–2000 mg of extract per day.",
   },
 
   // ── Minerals ─────────────────────────────────────────────────────────────
@@ -2116,7 +2116,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     vegan: true,
     iherbSearch: "Solgar Calcium Citrate Malate",
     category: "minerals",
-    description: "Calcium is the most abundant mineral in the body and the building block of bone and tooth structure. Adequate calcium intake — combined with vitamin D, vitamin K2, and weight-bearing exercise — is essential for peak bone mass in young adulthood and for preventing osteoporosis later in life. The citrate-malate form is the most bioavailable and well-tolerated, suitable even on an empty stomach. Take separately from iron, zinc, and thyroid medication. Standard dose is 500–1000 mg of supplemental calcium per day, split into 500 mg servings.",
+    description: "Calcium is the most abundant mineral in the body and the building block of bone and tooth structure. Adequate calcium intake, combined with vitamin D, vitamin K2, and weight-bearing exercise, is essential for peak bone mass in young adulthood and for preventing osteoporosis later in life. The citrate-malate form is the most bioavailable and well-tolerated, suitable even on an empty stomach. Take separately from iron, zinc, and thyroid medication. Standard dose is 500–1000 mg of supplemental calcium per day, split into 500 mg servings.",
   },
 ];
 
@@ -2230,7 +2230,7 @@ function buildTags(d: QuizData): Set<string> {
   return t;
 }
 
-// ─── Safety filter — exclude unsafe supplements ──────────────────────────────
+// ─── Safety filter, exclude unsafe supplements ──────────────────────────────
 function isSafe(s: Supplement, d: QuizData): boolean {
   if (!s.warnings) return true;
   for (const warn of s.warnings) {
@@ -2309,27 +2309,27 @@ export function recommend(d: QuizData): Recommendation {
   // Build reasoning
   const reasoning: string[] = [];
   if (tags.has("low-sleep") || tags.has("wake-at-night") || tags.has("sleep-onset"))
-    reasoning.push("Your sleep profile signals room for improvement — we prioritised supplements that calm the nervous system and deepen sleep.");
+    reasoning.push("Your sleep profile signals room for improvement, we prioritised supplements that calm the nervous system and deepen sleep.");
   if (tags.has("high-stress") || tags.has("anxiety"))
-    reasoning.push("Stress is elevated — we added adaptogens and calming nutrients that support cortisol balance.");
+    reasoning.push("Stress is elevated, we added adaptogens and calming nutrients that support cortisol balance.");
   if (tags.has("low-energy") || tags.has("afternoon-crash"))
-    reasoning.push("Low daytime energy or afternoon crashes — we focused on nutrients that fuel cellular energy and steady output.");
+    reasoning.push("Low daytime energy or afternoon crashes, we focused on nutrients that fuel cellular energy and steady output.");
   if (tags.has("brain-fog") || tags.has("poor-focus"))
-    reasoning.push("Mental clarity issues — we included cognitive support that targets focus and neural function.");
+    reasoning.push("Mental clarity issues, we included cognitive support that targets focus and neural function.");
   if (tags.has("vegan"))
-    reasoning.push("Plant-based diet — we included B12, algae-based omega-3, and other nutrients that commonly run low without animal products.");
+    reasoning.push("Plant-based diet, we included B12, algae-based omega-3, and other nutrients that commonly run low without animal products.");
   if (tags.has("vegan-only") && !tags.has("vegan"))
     reasoning.push("Per your preference, we kept the entire stack 100% plant-based.");
   if (tags.has("very-active"))
-    reasoning.push("High training load — we emphasised recovery, anti-inflammatory support, and performance ingredients.");
+    reasoning.push("High training load, we emphasised recovery, anti-inflammatory support, and performance ingredients.");
   if (tags.has("joint-pain"))
-    reasoning.push("Joint discomfort flagged — we included evidence-led joint and inflammation support.");
+    reasoning.push("Joint discomfort flagged, we included evidence-led joint and inflammation support.");
   if (tags.has("digestive-issues") || tags.has("bloating"))
-    reasoning.push("Digestive concerns — we added gut-supportive ingredients to ease bloating and improve nutrient uptake.");
+    reasoning.push("Digestive concerns, we added gut-supportive ingredients to ease bloating and improve nutrient uptake.");
   if (tags.has("frequent-illness"))
-    reasoning.push("Frequent illness — we strengthened the immune pillar of your stack.");
+    reasoning.push("Frequent illness, we strengthened the immune pillar of your stack.");
   if (tags.has("female") && tags.has("low-energy"))
-    reasoning.push("As a woman with low energy, iron is a common culprit — we included a gentle, well-absorbed form.");
+    reasoning.push("As a woman with low energy, iron is a common culprit, we included a gentle, well-absorbed form.");
 
   // Safety notes
   const notes: string[] = [];

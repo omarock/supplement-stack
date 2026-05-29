@@ -21,7 +21,7 @@
   --c-lavender: #a78bfa;
   --c-edge:     rgba(10, 37, 64, 0.08);
 
-  /* Responsive sizing tokens — desktop defaults */
+  /* Responsive sizing tokens, desktop defaults */
   --hero-h1: 88px;
   --hero-h1-line: 0.96;
   --section-h2: 64px;

@@ -11,8 +11,8 @@ const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } 
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 export const metadata: Metadata = {
-  title: "Contact — suppdoc.io",
-  description: "Get in touch with the suppdoc team. Questions about your stack, partnerships, or press inquiries — we reply within one business day.",
+  title: "Contact, suppdoc.io",
+  description: "Get in touch with the suppdoc team. Questions about your stack, partnerships, or press inquiries, we reply within one business day.",
 };
 
 export default function ContactPage() {
@@ -26,7 +26,7 @@ export default function ContactPage() {
           We&apos;d love to <em style={{ color: th.burgundy }}>hear from you</em>.
         </h1>
         <p style={{ color: th.inkSoft, fontSize: 17, lineHeight: 1.6, maxWidth: 580, margin: "20px auto 0" }}>
-          Questions about your stack, feedback on the quiz, partnerships, or press inquiries — we reply within one business day.
+          Questions about your stack, feedback on the quiz, partnerships, or press inquiries, we reply within one business day.
         </p>
       </section>
 

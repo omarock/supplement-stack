@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 /**
  * GET /admin/export/{quizzes|clicks|signups}
- * Streams a CSV of the requested table — admin-only.
+ * Streams a CSV of the requested table, admin-only.
  */
 export async function GET(
   _request: Request,

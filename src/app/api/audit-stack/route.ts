@@ -52,7 +52,7 @@ function detect(text: string): { id?: string; name: string; matched?: boolean }[
     }
   }
 
-  // Capture unmatched mentions — words that look like supplement names but aren't in our DB
+  // Capture unmatched mentions, words that look like supplement names but aren't in our DB
   const tokens = text.split(/[,\n;]+/).map(t => t.trim()).filter(Boolean);
   for (const t of tokens) {
     const looksLikeSupplement = /\b(mg|mcg|iu|g)\b|\bvitamin|mineral|extract|oil|capsule|tablet/i.test(t);
@@ -81,12 +81,12 @@ function rulesBasedAudit(text: string): AuditResponse {
   const supps = matched.map(d => SUPPLEMENT_DB.find(s => s.id === d.id)!).filter(Boolean);
   const findings: AuditFinding[] = [];
 
-  // — Interactions / overlaps —
+  //, Interactions / overlaps
   if (ids.has("omega3") && ids.has("omega3-algae")) {
     findings.push({
       kind: "redundant",
       title: "Two omega-3 sources",
-      detail: "You're taking both fish-oil and algae omega-3 — they overlap. Pick one (fish for cost, algae if vegan/fish-allergic).",
+      detail: "You're taking both fish-oil and algae omega-3, they overlap. Pick one (fish for cost, algae if vegan/fish-allergic).",
       affects: ["omega3", "omega3-algae"],
     });
   }
@@ -94,7 +94,7 @@ function rulesBasedAudit(text: string): AuditResponse {
     findings.push({
       kind: "redundant",
       title: "CoQ10 + Ubiquinol",
-      detail: "CoQ10 and Ubiquinol are the same nutrient (oxidized vs reduced). Pick one — ubiquinol for adults 40+, regular CoQ10 if younger.",
+      detail: "CoQ10 and Ubiquinol are the same nutrient (oxidized vs reduced). Pick one, ubiquinol for adults 40+, regular CoQ10 if younger.",
       affects: ["coq10", "ubiquinol"],
     });
   }
@@ -110,7 +110,7 @@ function rulesBasedAudit(text: string): AuditResponse {
     findings.push({
       kind: "warning",
       title: "5-HTP + L-Tryptophan",
-      detail: "Both raise serotonin via different points in the pathway. Combining is rarely needed and can be excessive — drop one.",
+      detail: "Both raise serotonin via different points in the pathway. Combining is rarely needed and can be excessive, drop one.",
       affects: ["5-htp", "tryptophan"],
     });
   }
@@ -125,7 +125,7 @@ function rulesBasedAudit(text: string): AuditResponse {
     findings.push({
       kind: "timing",
       title: "Iron + calcium timing",
-      detail: "Calcium blocks iron absorption by ~50%. Take them at least 2 hours apart — iron on empty stomach (with vitamin C), calcium with dinner.",
+      detail: "Calcium blocks iron absorption by ~50%. Take them at least 2 hours apart, iron on empty stomach (with vitamin C), calcium with dinner.",
       affects: ["iron", "calcium"],
     });
   }
@@ -145,7 +145,7 @@ function rulesBasedAudit(text: string): AuditResponse {
       });
     }
   }
-  // — Missing foundational —
+  //, Missing foundational
   const hasOmega = ids.has("omega3") || ids.has("omega3-algae") || ids.has("dha-prenatal");
   const hasD3 = ids.has("d3k2") || /vitamin d/i.test(text);
   const hasMag = supps.some(s => s.id.startsWith("mag-"));
@@ -170,7 +170,7 @@ function rulesBasedAudit(text: string): AuditResponse {
       detail: "50%+ of adults don't meet the RDA. Glycinate (300 mg) at night is the gentlest, sleep-supporting option.",
     });
   }
-  // — Stack sprawl —
+  //, Stack sprawl
   if (supps.length > 10) {
     findings.push({
       kind: "info",
@@ -178,7 +178,7 @@ function rulesBasedAudit(text: string): AuditResponse {
       detail: "Well-designed stacks usually stay under 10. Each addition raises interaction risk and adherence cost. Consider trimming.",
     });
   }
-  // — Cost analysis —
+  //, Cost analysis
   const monthlyCost = supps.reduce((sum, s) => sum + s.monthlyCost, 0);
   if (monthlyCost > 200) {
     findings.push({
@@ -188,7 +188,7 @@ function rulesBasedAudit(text: string): AuditResponse {
     });
   }
 
-  // — Score —
+  //, Score
   let score = 100;
   for (const f of findings) {
     if (f.kind === "warning") score -= 15;
@@ -199,7 +199,7 @@ function rulesBasedAudit(text: string): AuditResponse {
   }
   score = Math.max(35, score);
 
-  // — Suggested foundational stack —
+  //, Suggested foundational stack
   const suggestedIds = ["d3k2", "omega3", "mag-glycinate", "creatine"].filter(id => !ids.has(id));
   const suggestedStack = suggestedIds
     .map(id => SUPPLEMENT_DB.find(s => s.id === id))
@@ -233,7 +233,7 @@ async function claudeAudit(text: string): Promise<AuditResponse> {
 
   const system = `You are an evidence-led supplement coach for suppdoc.io. You analyze a user's current supplement stack and return a structured JSON audit. You are educational, not medical. Always note when a clinician should be involved (pregnancy, blood thinners, autoimmune, thyroid meds).
 
-You MUST return valid JSON only — no preamble, no markdown fences. The JSON shape is:
+You MUST return valid JSON only, no preamble, no markdown fences. The JSON shape is:
 {
   "score": <number 0-100>,
   "findings": [

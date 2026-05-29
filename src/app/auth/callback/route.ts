@@ -10,7 +10,7 @@ import { NextResponse } from "next/server";
  *  - When they return from Google/email, Supabase sends us a `?code=...` parameter.
  *  - We need to read the verifier cookie + the code, and exchange them for a session.
  *  - This MUST happen server-side so the session cookies get set on the response.
- *  - A client component can't reliably do this — it gets the "PKCE code verifier not found" error.
+ *  - A client component can't reliably do this, it gets the "PKCE code verifier not found" error.
  */
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -40,7 +40,7 @@ export async function GET(request: Request) {
           );
         } catch {
           // setAll can be called in a Server Component context where cookies are read-only.
-          // We can ignore here — the redirect response below will carry the Set-Cookie headers.
+          // We can ignore here, the redirect response below will carry the Set-Cookie headers.
         }
       },
     },
