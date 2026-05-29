@@ -5,7 +5,7 @@ import { SUPPLEMENT_DB, Supplement } from "@/lib/supplements";
 import { STACKS } from "@/lib/stacks";
 import { iherbLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
-import { PRODUCTS } from "@/lib/products";
+import { PRODUCTS, cleanIherbImageUrl } from "@/lib/products";
 import { iherbProductLink } from "@/lib/iherb";
 import { GOALS } from "@/lib/goals";
 import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
@@ -293,15 +293,36 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             <div style={{
               display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20,
             }}>
-              {products.map((p, i) => (
+              {products.map((p, i) => {
+                const img = cleanIherbImageUrl(p.imageUrl);
+                return (
                 <div key={i} style={{
                   background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16, padding: 20,
                 }}>
+                  {/* Product image (clean white canvas) with a tidy fallback */}
                   <div style={{
-                    fontSize: 10, ...MM, color: p.brandInk, letterSpacing: "0.08em", marginBottom: 8,
-                    background: p.brandBg, padding: "4px 10px", borderRadius: 999, display: "inline-block",
+                    position: "relative", height: 150, borderRadius: 12, overflow: "hidden", marginBottom: 14,
+                    background: "#ffffff", border: `1px solid ${th.line}`,
+                    display: "flex", alignItems: "center", justifyContent: "center",
                   }}>
-                    {p.badge.toUpperCase()}
+                    {img ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={img} alt={`${p.brand} ${p.productName}`} loading="lazy"
+                        style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} />
+                    ) : (
+                      <div aria-hidden style={{
+                        width: 50, height: 78, borderRadius: 25,
+                        background: `linear-gradient(135deg, ${supp.hue}, ${supp.hue}cc)`,
+                        boxShadow: `0 10px 24px ${supp.hue}40`,
+                      }} />
+                    )}
+                    <span style={{
+                      position: "absolute", top: 10, left: 10,
+                      fontSize: 10, ...MM, color: p.brandInk, letterSpacing: "0.08em",
+                      background: p.brandBg, padding: "4px 10px", borderRadius: 999,
+                    }}>
+                      {p.badge.toUpperCase()}
+                    </span>
                   </div>
                   <div style={{ ...D, fontSize: 17, fontWeight: 600, margin: "6px 0 4px", lineHeight: 1.3 }}>
                     {p.productName}
@@ -322,7 +343,8 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                     View on iHerb →
                   </a>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
