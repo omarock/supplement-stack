@@ -7,6 +7,8 @@ import EvidenceBadge, { type EvidenceTier } from "@/components/EvidenceBadge";
 import { GOALS, goalBySlug, ingredientsForGoal } from "@/lib/goals";
 import { STACKS } from "@/lib/stacks";
 import ReviewedBy from "@/components/ReviewedBy";
+import RelatedContent from "@/components/RelatedContent";
+import { biomarkersForGoal, interactionsForGoal, relatedGoals } from "@/lib/related";
 import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import { TH, FONTS } from "@/lib/theme";
 
@@ -107,6 +109,12 @@ export default async function BestForGoalPage({ params }: { params: Promise<{ go
             <Link href="/quiz" style={ctaSecondary()}>Get a personalised stack →</Link>
             <Link href="/audit" style={ctaSecondary()}>Check your current stack →</Link>
           </div>
+
+          <RelatedContent groups={[
+            { title: "Related biomarkers", items: biomarkersForGoal(g) },
+            { title: "May interact", items: interactionsForGoal(g) },
+            { title: "People also explore", items: relatedGoals(g.slug) },
+          ]} />
 
           {/* FAQ */}
           <section style={{ marginTop: 36 }}>

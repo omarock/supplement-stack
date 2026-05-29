@@ -6,6 +6,8 @@ import SiteFooter from "@/components/SiteFooter";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { INTERACTIONS, interactionSlug, interactionBySlug, KIND_META } from "@/lib/interactions";
 import ReviewedBy from "@/components/ReviewedBy";
+import RelatedContent from "@/components/RelatedContent";
+import { goalsForIngredient, biomarkersForIngredient, otherInteractionsFor } from "@/lib/related";
 import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import { TH, FONTS } from "@/lib/theme";
 
@@ -143,6 +145,12 @@ export default async function InteractionPage({ params }: { params: Promise<{ pa
               ))}
             </div>
           </section>
+
+          <RelatedContent groups={[
+            { title: `Best supplements for…`, items: [...goalsForIngredient(it.a), ...goalsForIngredient(it.b)] },
+            { title: `More ${a} & ${b} interactions`, items: [...otherInteractionsFor(it.a, pair), ...otherInteractionsFor(it.b, pair)] },
+            { title: "Related biomarkers", items: [...biomarkersForIngredient(it.a), ...biomarkersForIngredient(it.b)] },
+          ]} />
 
           {/* CTA to the live checker */}
           <div style={{ background: TH.ink, color: "#fff", borderRadius: 18, padding: "24px 26px", textAlign: "center", marginBottom: 22 }}>

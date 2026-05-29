@@ -7,6 +7,8 @@ import EvidenceBadge, { type EvidenceTier } from "@/components/EvidenceBadge";
 import { BIOMARKERS, type BiomarkerDef } from "@/lib/biomarkers";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import ReviewedBy from "@/components/ReviewedBy";
+import RelatedContent from "@/components/RelatedContent";
+import { goalsForBiomarker, stacksForBiomarker, otherBiomarkers } from "@/lib/related";
 import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import { TH, FONTS } from "@/lib/theme";
 
@@ -159,6 +161,12 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
               background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14.5,
             }}>Analyze my bloodwork →</Link>
           </div>
+
+          <RelatedContent groups={[
+            { title: "Best for your goal", items: goalsForBiomarker(b) },
+            { title: "Research-backed stacks", items: stacksForBiomarker(b) },
+            { title: "Related biomarkers", items: otherBiomarkers(b) },
+          ]} />
 
           {/* FAQ */}
           <section style={{ marginBottom: 22 }}>

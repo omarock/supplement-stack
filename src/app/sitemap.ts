@@ -109,8 +109,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  // ─── Tier 6: supporting pages ──────────────────────────────────────────
-  for (const path of ["/about", "/methodology", "/changelog", "/help", "/contact"]) {
+  // ─── Tier 6: supporting + authority pages ─────────────────────────────
+  for (const path of ["/about", "/methodology", "/editorial", "/team", "/changelog", "/help", "/contact"]) {
     entries.push({
       url: `${BASE}${path}`,
       lastModified: now, changeFrequency: "monthly", priority: 0.6,
