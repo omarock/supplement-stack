@@ -6,6 +6,8 @@ import { SUPPLEMENT_DB, type Supplement } from "@/lib/supplements";
 import { PRODUCTS } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { TH, FONTS } from "@/lib/theme";
+import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
+import { encodeShareToken } from "@/lib/share";
 
 // ─── Constants ─────────────────────────────────────────────────────────────
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -255,19 +257,22 @@ export default function BuildClient() {
     toast("Template loaded — tweak from here.");
   }, [toast]);
 
-  // Share / copy URL
+  // Share / copy URL — uses /share/[token] for a clean URL with a custom OG preview
   const shareUrl = useCallback(async () => {
     if (typeof window === "undefined") return;
-    const url = new URL(window.location.href);
-    url.searchParams.set("s", encodeStack(selectedIds));
-    const link = url.toString();
+    if (selectedIds.length === 0) {
+      toast("Add some supplements before sharing.");
+      return;
+    }
+    const token = encodeShareToken({ ids: selectedIds, name: stackName });
+    const link = `${window.location.origin}/share/${token}`;
     try {
       await navigator.clipboard.writeText(link);
-      toast("Share link copied to clipboard.");
+      toast("Share link copied — paste anywhere to preview.");
     } catch {
       toast(`Copy this: ${link}`);
     }
-  }, [selectedIds, toast]);
+  }, [selectedIds, stackName, toast]);
 
   // Buy all — open each iHerb link in a new tab (with affiliate code)
   const buyAll = useCallback(() => {
@@ -957,14 +962,7 @@ function AIDescribeMode({ onApply }: { onApply: (ids: string[]) => void }) {
             display: "inline-flex", alignItems: "center", gap: 8,
           }}>
           {loading ? (
-            <>
-              <span style={{
-                width: 12, height: 12, border: `2px solid ${TH.surface}`,
-                borderTopColor: "transparent", borderRadius: 999,
-                animation: "sd-spin 0.7s linear infinite",
-              }} />
-              Composing…
-            </>
+            <ThinkingMessages phrases={PHRASES.generateStack} interval={750} size="sm" />
           ) : "Generate stack →"}
         </button>
       </div>

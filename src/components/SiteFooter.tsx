@@ -12,11 +12,14 @@ const COLS: [string, [string, string][]][] = [
   ]],
   ["Company", [
     ["About", "/about"],
+    ["Methodology", "/methodology"],
+    ["Changelog", "/changelog"],
     ["Journal", "/journal"],
     ["Contact", "/contact"],
     ["Your profile", "/me"],
   ]],
   ["Resources", [
+    ["Compare", "/compare"],
     ["Help & FAQ", "/help"],
     ["Medical disclaimer", "/disclaimer"],
   ]],

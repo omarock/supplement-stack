@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import Link from "next/link";
 import { TH, FONTS } from "@/lib/theme";
 import type { AuditResponse, AuditFinding } from "@/app/api/audit-stack/route";
+import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
 const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWeight: 400 };
@@ -140,14 +141,7 @@ export default function AuditClient() {
               }}
             >
               {loading ? (
-                <>
-                  <span style={{
-                    width: 14, height: 14, border: `2px solid ${TH.surface}`,
-                    borderTopColor: "transparent", borderRadius: 999,
-                    animation: "sd-spin 0.7s linear infinite",
-                  }} />
-                  Analyzing…
-                </>
+                <ThinkingMessages phrases={PHRASES.audit} interval={900} />
               ) : (
                 <>
                   Audit my stack

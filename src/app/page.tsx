@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, type CSSProperties } from "react";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import HeroSpotlight from "@/components/HeroSpotlight";
 import { TH, FONTS, D, SI, MM } from "@/lib/theme";
 import { STACKS } from "@/lib/stacks";
 
@@ -1235,6 +1236,7 @@ export default function HomePage() {
   return (
     <>
       <SiteHeader />
+      <HeroSpotlight />
       <main>
         <Hero />
         <Trust />
