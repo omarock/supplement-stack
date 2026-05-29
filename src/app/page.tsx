@@ -217,76 +217,72 @@ function Hero() {
   return (
     <section id="engine" style={{
       position: "relative",
-      padding: "var(--hero-pad-y) var(--hero-pad-x) 56px",
+      padding: "var(--hero-pad-y-new) var(--hero-pad-x) var(--hero-pad-bottom)",
       overflow: "hidden",
     }}>
       <GradientMesh />
 
-      {/* Centred intro */}
+      {/* Centred intro — tightened for mobile-first */}
       <div style={{ position: "relative", maxWidth: 1180, margin: "0 auto", textAlign: "center" }}>
         <Reveal>
           <div style={{
-            display: "inline-flex", alignItems: "center", gap: 10,
-            padding: "7px 14px 7px 8px", borderRadius: 999,
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "5px 12px 5px 5px", borderRadius: 999,
             background: TH.surface, border: `1px solid ${TH.edge}`,
-            color: TH.inkSoft, fontSize: 13, fontWeight: 500,
-            marginBottom: 28, boxShadow: `0 4px 12px ${TH.ink}0a`,
-            flexWrap: "wrap",
+            color: TH.inkSoft, fontSize: 12.5, fontWeight: 500,
+            marginBottom: "var(--hero-chip-mb)", boxShadow: `0 4px 12px ${TH.ink}0a`,
           }}>
             <span aria-hidden style={{
               background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
               color: "white", borderRadius: 999, padding: "2px 8px",
-              fontSize: 11, fontWeight: 600,
+              fontSize: 10.5, fontWeight: 700, letterSpacing: "0.04em",
             }}>AI</span>
-            <span>The AI clinic for your supplement stack</span>
-            <span style={{ color: TH.muted }}>·</span>
-            <Link href="/journal" style={{ color: TH.sage, fontWeight: 600, textDecoration: "none" }}>
-              How it works →
-            </Link>
+            <span style={{ whiteSpace: "nowrap" }}>Evidence-led · Free</span>
           </div>
         </Reveal>
 
         <h1 style={{
-          ...D, fontSize: "var(--hero-h1)", lineHeight: "var(--hero-h1-line)",
-          letterSpacing: "-0.04em", margin: "0 auto 22px", color: TH.ink,
-          maxWidth: 980,
+          ...D, fontSize: "var(--hero-h1-new)", lineHeight: "var(--hero-h1-line-new)",
+          letterSpacing: "-0.035em", margin: "0 auto var(--hero-h1-mb)", color: TH.ink,
+          maxWidth: 880,
         }}>
-          <WordReveal text="Your supplements," />{" "}
+          <WordReveal text="Your stack," />{" "}
           <span style={{ ...SI, color: TH.sageDeep }}>
-            <WordReveal text="reviewed by AI" delay={0.1} />
-          </span>{" "}
-          <WordReveal text="and matched to the science." delay={0.2} />
+            <WordReveal text="reviewed by AI." delay={0.1} />
+          </span>
         </h1>
 
-        <Reveal delay={0.4}>
+        <Reveal delay={0.3}>
           <p style={{
-            fontSize: 19, lineHeight: 1.55, color: TH.inkSoft,
-            maxWidth: 640, margin: "0 auto 36px",
+            fontSize: "var(--hero-sub-size)", lineHeight: 1.5, color: TH.inkSoft,
+            maxWidth: 520, margin: "0 auto var(--hero-cards-gap)",
+            fontWeight: 400,
           }}>
-            Get a personalised stack, build your own, or audit what you&apos;re already taking — all powered by AI and grounded in the published research.
+            Personalised in 2 minutes — pick your path.
           </p>
         </Reveal>
       </div>
 
-      {/* 3-service entry grid */}
+      {/* 3-service entry grid — Quiz is featured */}
       <div style={{
         position: "relative", maxWidth: 1180, margin: "0 auto",
       }}>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
-          gap: 18,
+          gridTemplateColumns: "var(--service-grid-cols)",
+          gap: "var(--service-grid-gap)",
         }}>
           <Reveal delay={0.15}>
             <ServiceCard
+              featured
               kind="quiz"
-              tag="Service 01"
+              tag="01 · Recommended"
               title="Take the AI quiz"
               tagline="The fastest way in."
-              body="Answer a few questions about how you sleep, eat, and feel. Our engine matches you to evidence-backed ingredients."
+              body="Answer a few questions about how you sleep, eat, and feel. We match you to evidence-backed ingredients."
               cta="Start the quiz"
               href="/quiz"
-              meta="Express: 2 min · Complete: 5 min"
+              meta="2 min · personalised"
               accent={TH.sage}
               accentDeep={TH.sageDeep}
             />
@@ -294,13 +290,13 @@ function Hero() {
           <Reveal delay={0.25}>
             <ServiceCard
               kind="build"
-              tag="Service 02"
+              tag="02"
               title="Build your stack"
-              tagline="Describe it in plain English."
-              body={'"I want better sleep, more energy, and less stress." — we compose the stack instantly. Or pick from 15 ready-made stacks.'}
+              tagline="Describe goals in plain English."
+              body="Or pick from 15 ready-made stacks across 151 ingredients."
               cta="Start building"
               href="/build"
-              meta="151 ingredients · 15 ready-made"
+              meta="151 ingredients"
               accent={TH.amber}
               accentDeep={TH.amberDeep}
             />
@@ -308,13 +304,13 @@ function Hero() {
           <Reveal delay={0.35}>
             <ServiceCard
               kind="audit"
-              tag="Service 03"
-              title="Audit my current stack"
+              tag="03"
+              title="Audit my stack"
               tagline="Already taking supplements?"
-              body="Paste what you take. AI finds interactions, redundancies, missing nutrients, and timing issues — then suggests a cleaner version."
+              body="Paste yours. We flag interactions, redundancies, gaps, and timing."
               cta="Audit my stack"
               href="/audit"
-              meta="Free · instant report"
+              meta="Free · instant"
               accent={TH.coral}
               accentDeep="#c9543a"
               badge="NEW"
@@ -322,19 +318,20 @@ function Hero() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.5}>
+        {/* Compact trust strip — sits inside hero on mobile so it's still above the fold */}
+        <Reveal delay={0.45}>
           <div style={{
-            display: "flex", justifyContent: "center", gap: 22,
-            marginTop: 28, fontSize: 13, color: TH.muted,
+            display: "flex", justifyContent: "center", gap: "var(--trust-strip-gap)",
+            marginTop: "var(--trust-strip-mt)", fontSize: 12.5, color: TH.muted,
             alignItems: "center", flexWrap: "wrap",
           }}>
             {[
-              "Free, no signup required",
-              "151 evidence-led ingredients",
-              "Honest — we don't sell our own pills",
+              "Free · no signup",
+              "151 researched ingredients",
+              "We don't sell our own pills",
             ].map(item => (
-              <div key={item} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.5">
+              <div key={item} style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.8">
                   <path d="M5 12l5 5 9-11" />
                 </svg>
                 {item}
@@ -343,14 +340,70 @@ function Hero() {
           </div>
         </Reveal>
       </div>
+
+      {/* Mobile-first hero sizing tokens — override the global ones for this section only */}
+      <style>{`
+        :root {
+          --hero-pad-y-new: 72px;
+          --hero-pad-bottom: 64px;
+          --hero-h1-new: 64px;
+          --hero-h1-line-new: 1.04;
+          --hero-h1-mb: 18px;
+          --hero-sub-size: 18px;
+          --hero-chip-mb: 22px;
+          --hero-cards-gap: 30px;
+          --service-grid-cols: 1.45fr 1fr 1fr;
+          --service-grid-gap: 14px;
+          --trust-strip-gap: 22px;
+          --trust-strip-mt: 24px;
+        }
+        @media (max-width: 1024px) {
+          :root {
+            --hero-pad-y-new: 48px;
+            --hero-pad-bottom: 48px;
+            --hero-h1-new: 48px;
+            --hero-h1-mb: 14px;
+            --hero-sub-size: 16px;
+            --hero-chip-mb: 18px;
+            --hero-cards-gap: 22px;
+            --service-grid-cols: 1fr;
+            --service-grid-gap: 11px;
+            --trust-strip-gap: 14px;
+            --trust-strip-mt: 18px;
+          }
+        }
+        @media (max-width: 640px) {
+          :root {
+            --hero-pad-y-new: 28px;
+            --hero-pad-bottom: 36px;
+            --hero-h1-new: 38px;
+            --hero-h1-line-new: 1.06;
+            --hero-h1-mb: 10px;
+            --hero-sub-size: 15px;
+            --hero-chip-mb: 14px;
+            --hero-cards-gap: 18px;
+            --service-grid-gap: 10px;
+            --trust-strip-gap: 12px;
+            --trust-strip-mt: 14px;
+          }
+        }
+      `}</style>
     </section>
   );
 }
 
 // ─── Service card ─────────────────────────────────────────────────────────
+// Two variants:
+//   featured = tall, recommended-look card with glyph + body + meta (used for Quiz)
+//   compact  = single-row horizontal card with just title + tagline + arrow (Build/Audit)
+//
+// On desktop the grid is 1.45fr / 1fr / 1fr so featured commands more space.
+// On mobile both render with mobile-optimised compact heights (~140px each) so all 3 fit above the fold.
 function ServiceCard({
+  featured = false,
   kind, tag, title, tagline, body, cta, href, meta, accent, accentDeep, badge,
 }: {
+  featured?: boolean;
   kind: "quiz" | "build" | "audit";
   tag: string;
   title: string;
@@ -363,81 +416,170 @@ function ServiceCard({
   accentDeep: string;
   badge?: string;
 }) {
+  // The compact card and the featured card share the same Link wrapper + accent
+  // but the inner layout differs. We branch on `featured` for the article body.
+  const cardClass = featured ? "sd-service-card sd-service-featured" : "sd-service-card sd-service-compact";
+
   return (
     <Link href={href} style={{ textDecoration: "none", color: "inherit", display: "block", height: "100%" }}>
       <article
-        className="sd-service-card"
+        className={cardClass}
         style={{
           position: "relative", height: "100%",
-          padding: "28px 26px 22px",
           background: TH.surface,
-          border: `1px solid ${TH.edge}`,
-          borderRadius: 22,
-          boxShadow: "0 1px 3px rgba(10,37,64,0.04), 0 10px 28px rgba(10,37,64,0.06)",
-          display: "flex", flexDirection: "column",
+          border: featured ? `2px solid ${accent}` : `1px solid ${TH.edge}`,
+          borderRadius: 18,
+          boxShadow: featured
+            ? `0 1px 3px rgba(10,37,64,0.05), 0 14px 38px ${accent}26`
+            : "0 1px 3px rgba(10,37,64,0.04), 0 6px 18px rgba(10,37,64,0.05)",
+          display: "flex",
           transition: "transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, border-color .25s",
           overflow: "hidden",
+          padding: featured ? "var(--card-pad-featured)" : "var(--card-pad-compact)",
+          flexDirection: featured ? "column" : "row",
+          alignItems: featured ? "stretch" : "center",
+          gap: featured ? 0 : 14,
+          minHeight: featured ? "var(--card-h-featured)" : "var(--card-h-compact)",
         }}
       >
         {/* Subtle gradient corner */}
         <div aria-hidden style={{
           position: "absolute", top: -60, right: -60, width: 180, height: 180,
-          background: `radial-gradient(circle at 30% 30%, ${accent}1f, transparent 70%)`,
+          background: `radial-gradient(circle at 30% 30%, ${accent}24, transparent 70%)`,
           pointerEvents: "none",
         }} />
 
         {badge && (
           <span style={{
-            position: "absolute", top: 16, right: 16,
-            fontSize: 10, ...MM, letterSpacing: "0.08em",
+            position: "absolute", top: 12, right: 12,
+            fontSize: 9.5, ...MM, letterSpacing: "0.1em",
             background: `${accent}22`, color: accentDeep,
-            padding: "3px 8px", borderRadius: 999, fontWeight: 600,
+            padding: "2px 7px", borderRadius: 999, fontWeight: 700,
           }}>{badge}</span>
         )}
 
-        <ServiceGlyph kind={kind} accent={accent} accentDeep={accentDeep} />
+        {featured ? (
+          /* FEATURED LAYOUT — Quiz card */
+          <>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+              <ServiceGlyph kind={kind} accent={accent} accentDeep={accentDeep} size={42} />
+              <span style={{
+                fontSize: 10.5, ...MM, letterSpacing: "0.12em",
+                background: accent, color: TH.surface,
+                padding: "4px 10px", borderRadius: 999, fontWeight: 700,
+                textTransform: "uppercase",
+              }}>
+                ★ {tag}
+              </span>
+            </div>
 
-        <div style={{
-          ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.12em",
-          marginTop: 18, textTransform: "uppercase",
-        }}>{tag}</div>
+            <h3 style={{
+              ...D, fontSize: "var(--card-title-featured)", color: TH.ink, lineHeight: 1.1,
+              letterSpacing: "-0.025em", margin: "0 0 4px",
+            }}>{title}</h3>
 
-        <h3 style={{
-          ...D, fontSize: 26, color: TH.ink, lineHeight: 1.15,
-          letterSpacing: "-0.025em", margin: "6px 0 4px",
-        }}>{title}</h3>
+            <div style={{ ...SI, fontStyle: "italic", fontSize: 17, color: accentDeep, marginBottom: 10 }}>
+              {tagline}
+            </div>
 
-        <div style={{ ...SI, fontStyle: "italic", fontSize: 17, color: accentDeep, marginBottom: 12 }}>
-          {tagline}
-        </div>
+            <p style={{
+              fontSize: 14.5, lineHeight: 1.5, color: TH.inkSoft,
+              margin: "0 0 16px", flex: 1,
+            }}>{body}</p>
 
-        <p style={{
-          fontSize: 14.5, lineHeight: 1.55, color: TH.inkSoft,
-          margin: "0 0 18px", flex: 1,
-        }}>{body}</p>
+            <div style={{
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              paddingTop: 12, borderTop: `1px solid ${TH.edge}`,
+            }}>
+              <span style={{ ...MM, fontSize: 11, color: TH.muted }}>{meta}</span>
+              <span style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                color: TH.surface, background: accentDeep,
+                padding: "8px 14px", borderRadius: 999,
+                fontWeight: 600, fontSize: 13.5,
+              }}>
+                {cta}
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6">
+                  <path d="M5 12h14M13 5l7 7-7 7" />
+                </svg>
+              </span>
+            </div>
+          </>
+        ) : (
+          /* COMPACT LAYOUT — Build, Audit cards */
+          <>
+            <div style={{
+              flexShrink: 0,
+              width: 46, height: 46, borderRadius: 12,
+              background: `${accent}14`,
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <ServiceGlyph kind={kind} accent={accent} accentDeep={accentDeep} size={28} />
+            </div>
 
-        <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          paddingTop: 14, borderTop: `1px solid ${TH.edge}`,
-        }}>
-          <span style={{ ...MM, fontSize: 11, color: TH.muted }}>{meta}</span>
-          <span style={{
-            display: "inline-flex", alignItems: "center", gap: 6,
-            color: accentDeep, fontWeight: 600, fontSize: 14,
-          }}>
-            {cta}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-              <path d="M5 12h14M13 5l7 7-7 7" />
-            </svg>
-          </span>
-        </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
+                <span style={{
+                  ...MM, fontSize: 10, color: TH.muted, letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                }}>{tag}</span>
+              </div>
+              <h3 style={{
+                ...D, fontSize: "var(--card-title-compact)", color: TH.ink, lineHeight: 1.18,
+                letterSpacing: "-0.02em", margin: "0 0 3px",
+              }}>{title}</h3>
+              <p style={{
+                fontSize: 13, lineHeight: 1.4, color: TH.muted,
+                margin: 0,
+              }}>{tagline}</p>
+            </div>
+
+            <span aria-hidden style={{
+              flexShrink: 0,
+              width: 32, height: 32, borderRadius: 999,
+              background: TH.bg,
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+              color: accentDeep,
+              transition: "transform .2s, background .2s",
+            }} className="sd-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+            </span>
+          </>
+        )}
       </article>
 
       <style>{`
+        :root {
+          --card-pad-featured: 22px 22px 18px;
+          --card-pad-compact: 14px 16px;
+          --card-h-featured: 220px;
+          --card-h-compact: 84px;
+          --card-title-featured: 26px;
+          --card-title-compact: 17px;
+        }
+        @media (max-width: 640px) {
+          :root {
+            --card-pad-featured: 18px 18px 16px;
+            --card-pad-compact: 14px 16px;
+            --card-h-featured: auto;
+            --card-h-compact: 78px;
+            --card-title-featured: 23px;
+            --card-title-compact: 16.5px;
+          }
+        }
         .sd-service-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-3px);
           box-shadow: 0 4px 12px rgba(10,37,64,0.08), 0 24px 50px rgba(10,37,64,0.12);
           border-color: ${TH.edgeStrong};
+        }
+        .sd-service-featured:hover {
+          box-shadow: 0 4px 12px rgba(10,37,64,0.08), 0 24px 50px ${accent}3a;
+        }
+        .sd-service-compact:hover .sd-arrow {
+          transform: translateX(3px);
+          background: ${accent}1f;
         }
       `}</style>
     </Link>
@@ -445,10 +587,10 @@ function ServiceCard({
 }
 
 // ─── Service-specific glyph ───────────────────────────────────────────────
-function ServiceGlyph({ kind, accent, accentDeep }: { kind: "quiz" | "build" | "audit"; accent: string; accentDeep: string }) {
+function ServiceGlyph({ kind, accent, accentDeep, size = 46 }: { kind: "quiz" | "build" | "audit"; accent: string; accentDeep: string; size?: number }) {
   if (kind === "quiz") {
     return (
-      <svg width="46" height="46" viewBox="0 0 48 48" fill="none" aria-hidden>
+      <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
         <rect x="6" y="10" width="36" height="28" rx="6" fill={accent} fillOpacity="0.12" stroke={accent} strokeWidth="1.5" />
         <circle cx="14" cy="20" r="2.2" fill={accentDeep} />
         <rect x="20" y="18.5" width="18" height="3" rx="1.5" fill={accentDeep} fillOpacity="0.7" />
@@ -459,7 +601,7 @@ function ServiceGlyph({ kind, accent, accentDeep }: { kind: "quiz" | "build" | "
   }
   if (kind === "build") {
     return (
-      <svg width="46" height="46" viewBox="0 0 48 48" fill="none" aria-hidden>
+      <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
         <circle cx="14" cy="24" r="6" fill={accent} fillOpacity="0.25" />
         <circle cx="14" cy="24" r="6" stroke={accentDeep} strokeWidth="1.5" />
         <circle cx="34" cy="14" r="5" fill={accentDeep} fillOpacity="0.18" />
@@ -472,7 +614,7 @@ function ServiceGlyph({ kind, accent, accentDeep }: { kind: "quiz" | "build" | "
   }
   // audit
   return (
-    <svg width="46" height="46" viewBox="0 0 48 48" fill="none" aria-hidden>
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden>
       <circle cx="22" cy="22" r="13" stroke={accentDeep} strokeWidth="1.5" fill={accent} fillOpacity="0.12" />
       <path d="M16 22 L20 26 L29 17" stroke={accentDeep} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M32 32 L40 40" stroke={accentDeep} strokeWidth="2.2" strokeLinecap="round" />
