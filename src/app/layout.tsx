@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import CookieConsent from "@/components/CookieConsent";
-import ChatAssistant from "@/components/ChatAssistant";
+import DeferredWidgets from "@/components/DeferredWidgets";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -58,8 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BRAND_JSONLD) }} />
         {children}
-        <ChatAssistant />
-        <CookieConsent />
+        <DeferredWidgets />
         <Analytics />
       </body>
     </html>

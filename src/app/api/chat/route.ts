@@ -9,6 +9,8 @@ import {
   type IncomingMessage,
 } from "@/lib/chat-context";
 import { detectSupplementsInText, lookupSupplement } from "@/lib/knowledge-base";
+import { getSessionUser } from "@/lib/auth-server";
+import { buildMemoryBlock } from "@/lib/chat-memory";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -125,9 +127,27 @@ export async function POST(req: NextRequest) {
   const v = validateBody(body);
   if (!v.ok) return new Response(JSON.stringify({ ok: false, error: v.error }), { status: 400 });
 
-  const prepared = prepareMessages(v.messages, v.context, MAX_HISTORY);
+  let prepared = prepareMessages(v.messages, v.context, MAX_HISTORY);
   if (prepared.length === 0) return new Response(JSON.stringify({ ok: false, error: "no user message" }), { status: 400 });
   const greeting = isGreetingTurn(v.messages);
+
+  // H6 — persistent health memory: for signed-in users, inject a server-sourced
+  // snapshot of their tracked stack, check-in trends, recent bloodwork, and goals
+  // so the coach reasons longitudinally. Best-effort; never blocks the reply.
+  if (anthropicEnabled()) {
+    try {
+      const user = await getSessionUser();
+      if (user) {
+        const memory = await buildMemoryBlock(user.email);
+        if (memory) {
+          const last = prepared[prepared.length - 1];
+          if (last.role === "user") {
+            prepared = [...prepared.slice(0, -1), { role: "user", content: last.content + memory }];
+          }
+        }
+      }
+    } catch { /* memory is best-effort; degrade to stateless chat */ }
+  }
 
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
