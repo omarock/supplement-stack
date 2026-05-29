@@ -5,6 +5,8 @@ import { POSTS } from "@/lib/blog";
 import { COMPETITORS } from "@/lib/competitors";
 import { RESEARCH } from "@/lib/research";
 import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
+import { GOALS } from "@/lib/goals";
+import { BIOMARKERS } from "@/lib/biomarkers";
 
 const BASE = "https://www.suppdoc.io";
 
@@ -81,6 +83,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE}/interactions/${interactionSlug(it.a, it.b)}`,
       lastModified: now, changeFrequency: "monthly", priority: 0.7,
     });
+  }
+
+  // ─── Tier 4c: best-for-goal guides ─────────────────────────────────────
+  entries.push({ url: `${BASE}/best`, lastModified: now, changeFrequency: "monthly", priority: 0.85 });
+  for (const g of GOALS) {
+    entries.push({ url: `${BASE}/best/${g.slug}`, lastModified: now, changeFrequency: "monthly", priority: 0.8 });
+  }
+
+  // ─── Tier 4d: biomarker guides ─────────────────────────────────────────
+  entries.push({ url: `${BASE}/biomarkers`, lastModified: now, changeFrequency: "monthly", priority: 0.85 });
+  for (const b of BIOMARKERS) {
+    entries.push({ url: `${BASE}/biomarkers/${b.key.replace(/_/g, "-")}`, lastModified: now, changeFrequency: "monthly", priority: 0.75 });
   }
 
   // ─── Tier 5: compare pages ─────────────────────────────────────────────

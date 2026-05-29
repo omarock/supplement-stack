@@ -21,8 +21,10 @@ const NAV: NavGroup[] = [
   {
     label: "Learn",
     items: [
+      { label: "Best for your goal", href: "/best", desc: "Best supplements for sleep, energy…" },
       { label: "Ingredients", href: "/ingredients", desc: "151 evidence-graded guides" },
       { label: "Interactions", href: "/interactions", desc: "What works together & what to separate" },
+      { label: "Biomarkers", href: "/biomarkers", desc: "What your blood test means" },
       { label: "Stacks", href: "/stacks", desc: "15 ready-made protocols" },
       { label: "Journal", href: "/journal", desc: "Evidence-led articles" },
     ],
