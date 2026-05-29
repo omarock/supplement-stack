@@ -30,7 +30,9 @@ const NAV: NavGroup[] = [
     label: "My plan",
     items: [
       { label: "Daily tracker", href: "/track", desc: "Check in & see your trends" },
+      { label: "Bloodwork history", href: "/bloodwork/history", desc: "Saved labs & re-test comparison" },
       { label: "My profile", href: "/me", desc: "Your stacks & history" },
+      { label: "Pricing", href: "/pricing", desc: "Free vs Premium" },
     ],
   },
 ];

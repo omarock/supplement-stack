@@ -30,6 +30,7 @@ interface Props {
   initialCheckins: Checkin[];
   initialEnrollment: TrackerEnrollment | null;
   email: string;
+  isPremium?: boolean;
 }
 
 const SLIDER_HINT: Record<WellnessMetric, [string, string]> = {
@@ -40,7 +41,7 @@ const SLIDER_HINT: Record<WellnessMetric, [string, string]> = {
   stress: ["Calm", "Stressed"],
 };
 
-export default function TrackerClient({ initialCheckins, initialEnrollment, email }: Props) {
+export default function TrackerClient({ initialCheckins, initialEnrollment, email, isPremium = false }: Props) {
   const [checkins, setCheckins] = useState<Checkin[]>(initialCheckins);
   const [enrollment, setEnrollment] = useState<TrackerEnrollment | null>(initialEnrollment);
   const [celebrate, setCelebrate] = useState<number | null>(null);
@@ -125,6 +126,24 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
         {/* AI weekly summary */}
         {checkins.length >= 2 && (
           <SummaryCard checkinCount={checkins.length} />
+        )}
+
+        {/* Premium nudge — full history + trend analytics */}
+        {!isPremium && checkins.length >= 5 && (
+          <Link href="/pricing" style={{
+            display: "flex", alignItems: "center", gap: 14, textDecoration: "none", color: "inherit",
+            background: `linear-gradient(135deg, ${TH.surface} 0%, ${TH.bg} 100%)`,
+            border: `1px solid ${TH.sage}33`, borderRadius: 16, padding: "16px 20px", marginBottom: 22,
+          }}>
+            <span style={{ width: 38, height: 38, borderRadius: 11, background: TH.accentGlow, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }} aria-hidden>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={TH.sageDeep} strokeWidth="2"><path d="M3 17l6-6 4 4 8-8" /><path d="M17 7h4v4" /></svg>
+            </span>
+            <span style={{ flex: 1 }}>
+              <span style={{ display: "block", ...D, fontSize: 15, color: TH.ink }}>See your full history & trends</span>
+              <span style={{ display: "block", fontSize: 12.5, color: TH.muted, marginTop: 1 }}>Premium unlocks long-term analytics, AI memory & reminders — $9/mo.</span>
+            </span>
+            <span style={{ color: TH.sageDeep, fontWeight: 600, fontSize: 13, whiteSpace: "nowrap" }}>Upgrade →</span>
+          </Link>
         )}
 
         {/* Settings / footnote */}

@@ -6,6 +6,7 @@ import { getAdminSupabase } from "@/lib/supabase-admin";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import TrackerClient from "./TrackerClient";
+import { getSubscription, isPremium } from "@/lib/premium";
 import type { Checkin, TrackerEnrollment } from "@/lib/tracker";
 
 export const metadata: Metadata = {
@@ -55,6 +56,8 @@ export default async function TrackPage() {
     enrollment = (enr ?? null) as TrackerEnrollment | null;
   }
 
+  const premium = isPremium(await getSubscription(user.email));
+
   return (
     <div style={{ minHeight: "100vh", background: "#f6f5f1", color: "#0a2540", fontFamily: '"Inter", system-ui, sans-serif' }}>
       <SiteHeader />
@@ -62,6 +65,7 @@ export default async function TrackPage() {
         initialCheckins={checkins}
         initialEnrollment={enrollment}
         email={user.email}
+        isPremium={premium}
       />
       <SiteFooter />
     </div>
