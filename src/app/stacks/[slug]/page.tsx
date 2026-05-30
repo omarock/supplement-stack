@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { STACKS, getStack, getStackSupplements, getStackOptionalSupplements, stackMonthlyCost } from "@/lib/stacks";
 import { GOALS } from "@/lib/goals";
-import { PRODUCTS, cleanIherbImageUrl } from "@/lib/products";
+import { PRODUCTS, productImage } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import SiteHeader from "@/components/SiteHeader";
@@ -284,7 +284,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                         const amazonHref = p.amazonAsin
                           ? amazonProductLink(p.amazonAsin)
                           : amazonLink(`${p.brand} ${p.productName}`);
-                        const img = cleanIherbImageUrl(p.imageUrl);
+                        const img = productImage(p);
                         return (
                           <div key={i} style={{
                             background: th.paper, border: `1px solid ${th.line}`, borderRadius: 12,

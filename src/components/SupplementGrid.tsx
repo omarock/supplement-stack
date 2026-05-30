@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Supplement } from "@/lib/supplements";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
-import { getProducts, getPrimaryProduct, cleanIherbImageUrl, type ProductOption } from "@/lib/products";
+import { getProducts, getPrimaryProduct, productImage, type ProductOption } from "@/lib/products";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import { trackClick } from "@/lib/track";
 import BottleMockup from "@/components/BottleMockup";
@@ -41,8 +41,8 @@ function ProductImage({ option, height = 280, showBrandStrip = false }: {
   option: ProductOption; supplementId?: string; brandIndex?: number;
   height?: number; showBrandStrip?: boolean;
 }) {
-  const useImage = !!option.imageUrl;
-  const imgSrc = cleanIherbImageUrl(option.imageUrl);
+  const imgSrc = productImage(option);
+  const useImage = !!imgSrc;
 
   return (
     <div style={{

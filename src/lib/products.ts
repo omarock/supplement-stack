@@ -2591,6 +2591,27 @@ export function cleanIherbImageUrl(url: string | undefined): string | undefined 
 }
 
 /**
+ * Amazon serves a product's primary image directly from its ASIN, on a pure
+ * white background (an Amazon listing requirement), which is exactly what our
+ * white-canvas cards want. This lets every product with an ASIN show a real
+ * photo without hand-collecting image URLs.
+ */
+export function amazonImageFromAsin(asin: string): string {
+  return `https://m.media-amazon.com/images/P/${asin}.01._SCLZZZZZZZ_.jpg`;
+}
+
+/**
+ * Resolve the best real product photo for an option: a curated iHerb image if we
+ * have one, otherwise the Amazon ASIN image, otherwise undefined (callers then
+ * fall back to the branded BottleMockup, which never 404s).
+ */
+export function productImage(option: ProductOption): string | undefined {
+  if (option.imageUrl) return cleanIherbImageUrl(option.imageUrl);
+  if (option.amazonAsin) return amazonImageFromAsin(option.amazonAsin);
+  return undefined;
+}
+
+/**
  * Get the primary (top recommended) product for a supplement.
  */
 export function getPrimaryProduct(supplementId: string): ProductOption | null {

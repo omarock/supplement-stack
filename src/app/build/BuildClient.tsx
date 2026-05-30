@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Link from "next/link";
 import { SUPPLEMENT_DB, type Supplement } from "@/lib/supplements";
-import { getPrimaryProduct, cleanIherbImageUrl, type ProductOption } from "@/lib/products";
+import { getPrimaryProduct, productImage, type ProductOption } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import { TH, FONTS } from "@/lib/theme";
@@ -33,7 +33,7 @@ function buyLinks(supp: Supplement): { product: ProductOption | null; iherb: str
   const amazon = p?.amazonAsin
     ? amazonProductLink(p.amazonAsin)
     : amazonLink(p ? `${p.brand} ${p.productName}` : supp.name);
-  return { product: p, iherb, amazon, image: cleanIherbImageUrl(p?.imageUrl) };
+  return { product: p, iherb, amazon, image: p ? productImage(p) : undefined };
 }
 
 // ─── Constants ─────────────────────────────────────────────────────────────

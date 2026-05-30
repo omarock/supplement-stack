@@ -5,7 +5,7 @@ import { SUPPLEMENT_DB, Supplement } from "@/lib/supplements";
 import { STACKS } from "@/lib/stacks";
 import { iherbLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
-import { PRODUCTS, cleanIherbImageUrl } from "@/lib/products";
+import { PRODUCTS, productImage } from "@/lib/products";
 import { iherbProductLink } from "@/lib/iherb";
 import { GOALS } from "@/lib/goals";
 import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
@@ -295,7 +295,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
               display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20,
             }}>
               {products.map((p, i) => {
-                const img = cleanIherbImageUrl(p.imageUrl);
+                const img = productImage(p);
                 return (
                 <div key={i} style={{
                   background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16, padding: 20,
