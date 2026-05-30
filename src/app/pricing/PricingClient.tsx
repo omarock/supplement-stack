@@ -4,9 +4,40 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics";
 import { TH, FONTS } from "@/lib/theme";
+import type { PaddleClientConfig } from "@/lib/paddle";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
 const MM = { fontFamily: FONTS.mono } as const;
+
+// ─── Paddle.js loader (loaded once, on demand) ──────────────────────────────
+type PaddleGlobal = {
+  Environment: { set: (env: "sandbox" | "production") => void };
+  Initialize: (opts: { token: string }) => void;
+  Checkout: { open: (opts: Record<string, unknown>) => void };
+};
+declare global { interface Window { Paddle?: PaddleGlobal } }
+
+let paddlePromise: Promise<PaddleGlobal> | null = null;
+function loadPaddle(cfg: PaddleClientConfig): Promise<PaddleGlobal> {
+  if (typeof window === "undefined") return Promise.reject(new Error("no window"));
+  if (window.Paddle) return Promise.resolve(window.Paddle);
+  if (paddlePromise) return paddlePromise;
+  paddlePromise = new Promise<PaddleGlobal>((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
+    s.async = true;
+    s.onload = () => {
+      const P = window.Paddle;
+      if (!P) { reject(new Error("Paddle failed to load")); return; }
+      P.Environment.set(cfg.environment);
+      P.Initialize({ token: cfg.token });
+      resolve(P);
+    };
+    s.onerror = () => reject(new Error("Paddle script error"));
+    document.body.appendChild(s);
+  });
+  return paddlePromise;
+}
 
 const FREE = [
   "All guides, studies, stacks & journal",
@@ -23,17 +54,44 @@ const PREMIUM = [
   "Daily reminders + weekly reports",
 ];
 
-export default function PricingClient({ signedIn, isPremium, billingEnabled }: { signedIn: boolean; isPremium: boolean; billingEnabled: boolean }) {
+export default function PricingClient({ signedIn, email, isPremium, billingEnabled, paddle }: {
+  signedIn: boolean; email: string | null; isPremium: boolean; billingEnabled: boolean; paddle: PaddleClientConfig | null;
+}) {
   const router = useRouter();
   const [plan, setPlan] = useState<"monthly" | "annual">("monthly");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const upgrade = useCallback(async () => {
-    track("checkout_click", { plan, signedIn });
+    track("checkout_click", { plan, signedIn, provider: paddle ? "paddle" : "stripe" });
     if (!signedIn) { router.push("/signin?redirect=/pricing"); return; }
     if (!billingEnabled) { setError("Checkout isn't switched on yet, check back shortly."); return; }
     setBusy(true); setError(null);
+
+    // ── Paddle overlay checkout (preferred when configured) ──
+    if (paddle) {
+      try {
+        const P = await loadPaddle(paddle);
+        const priceId = plan === "annual" ? paddle.priceAnnual : paddle.priceMonthly;
+        P.Checkout.open({
+          items: [{ priceId, quantity: 1 }],
+          ...(email ? { customer: { email } } : {}),
+          customData: { user_email: email ?? "" },
+          settings: {
+            displayMode: "overlay",
+            theme: "light",
+            successUrl: `${window.location.origin}/me?upgraded=1`,
+          },
+        });
+      } catch {
+        setError("Couldn't open checkout. Please try again.");
+      } finally {
+        setBusy(false);
+      }
+      return;
+    }
+
+    // ── Stripe redirect checkout (fallback) ──
     try {
       const res = await fetch("/api/stripe/checkout", {
         method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ plan }),
@@ -43,7 +101,7 @@ export default function PricingClient({ signedIn, isPremium, billingEnabled }: {
       else setError("Couldn't start checkout. Please try again.");
     } catch { setError("Network error."); }
     finally { setBusy(false); }
-  }, [signedIn, billingEnabled, plan, router]);
+  }, [signedIn, email, billingEnabled, plan, paddle, router]);
 
   const price = plan === "annual" ? "$79" : "$9";
   const per = plan === "annual" ? "/year" : "/month";
@@ -116,7 +174,7 @@ export default function PricingClient({ signedIn, isPremium, billingEnabled }: {
             </button>
             {error && <div role="alert" style={{ marginTop: 10, fontSize: 12.5, color: "#b91c1c", textAlign: "center" }}>{error}</div>}
             <div style={{ marginTop: 10, ...MM, fontSize: 10, color: TH.mutedDim, textAlign: "center", letterSpacing: "0.03em" }}>
-              Cancel anytime · secure checkout by Stripe
+              Cancel anytime · secure checkout by {paddle ? "Paddle" : "Stripe"}
             </div>
           </div>
         </div>

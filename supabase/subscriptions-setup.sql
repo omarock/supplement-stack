@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS public.subscriptions (
   user_id                UUID REFERENCES auth.users(id) ON DELETE SET NULL,
   stripe_customer_id     TEXT,
   stripe_subscription_id TEXT,
+  paddle_customer_id     TEXT,
+  paddle_subscription_id TEXT,
   status                 TEXT,            -- active | trialing | past_due | canceled | incomplete
   plan                   TEXT,            -- monthly | annual
   current_period_end     TIMESTAMPTZ,
@@ -20,6 +22,10 @@ CREATE TABLE IF NOT EXISTS public.subscriptions (
   created_at             TIMESTAMPTZ DEFAULT NOW(),
   updated_at             TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Idempotent, in case the table already exists from an earlier setup.
+ALTER TABLE public.subscriptions ADD COLUMN IF NOT EXISTS paddle_customer_id     TEXT;
+ALTER TABLE public.subscriptions ADD COLUMN IF NOT EXISTS paddle_subscription_id TEXT;
 
 CREATE INDEX IF NOT EXISTS subscriptions_customer_idx ON public.subscriptions (stripe_customer_id);
 CREATE INDEX IF NOT EXISTS subscriptions_user_id_idx  ON public.subscriptions (user_id);

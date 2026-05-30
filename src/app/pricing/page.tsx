@@ -5,6 +5,7 @@ import PricingClient from "./PricingClient";
 import { getSessionUser } from "@/lib/auth-server";
 import { getSubscription, isPremium } from "@/lib/premium";
 import { stripeEnabled } from "@/lib/stripe";
+import { paddleConfigured, paddleClientConfig } from "@/lib/paddle";
 
 export const metadata: Metadata = {
   title: "Pricing, suppdoc.io",
@@ -16,11 +17,18 @@ export const dynamic = "force-dynamic";
 export default async function PricingPage() {
   const user = await getSessionUser();
   const sub = user ? await getSubscription(user.email) : null;
+  const paddleOn = paddleConfigured();
 
   return (
     <div style={{ minHeight: "100vh", background: "#f6f5f1", color: "#0a2540", fontFamily: '"Inter", system-ui, sans-serif' }}>
       <SiteHeader />
-      <PricingClient signedIn={Boolean(user)} isPremium={isPremium(sub)} billingEnabled={stripeEnabled()} />
+      <PricingClient
+        signedIn={Boolean(user)}
+        email={user?.email ?? null}
+        isPremium={isPremium(sub)}
+        billingEnabled={paddleOn || stripeEnabled()}
+        paddle={paddleOn ? paddleClientConfig() : null}
+      />
       <SiteFooter />
     </div>
   );
