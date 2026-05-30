@@ -5,7 +5,7 @@ import { SUPPLEMENT_DB, Supplement } from "@/lib/supplements";
 import { STACKS } from "@/lib/stacks";
 import { iherbLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
-import { PRODUCTS, productImage } from "@/lib/products";
+import { PRODUCTS, productImage, type ProductOption } from "@/lib/products";
 import { iherbProductLink } from "@/lib/iherb";
 import { GOALS } from "@/lib/goals";
 import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
@@ -235,7 +235,34 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
           </h2>
           <div style={{
             background: th.paper, border: `1px solid ${th.line}`, borderRadius: 20, padding: 28,
+            display: "flex", gap: 28, flexWrap: "wrap", alignItems: "flex-start",
           }}>
+            {/* Recommended product image */}
+            {(() => {
+              const heroOpt: ProductOption = products[0] ?? {
+                brand: supp.brand, productName: supp.name.split(" (")[0], size: supp.dose,
+                approxPrice: supp.monthlyCost, rating: 4.7, reviewCount: 0, badge: "Bestseller",
+                searchQuery: supp.iherbSearch, brandBg: "#fef3c7", brandInk: "#92400e",
+              };
+              const heroImg = productImage(heroOpt);
+              return (
+                <div style={{
+                  width: 150, height: 150, flexShrink: 0, borderRadius: 16, overflow: "hidden",
+                  background: "#fff", border: `1px solid ${th.line}`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  {heroImg ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={heroImg} alt={`${heroOpt.brand} ${heroOpt.productName}`} loading="lazy"
+                      style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} />
+                  ) : (
+                    <BottleMockup option={heroOpt} height={150} showBackgroundScene={false} />
+                  )}
+                </div>
+              );
+            })()}
+
+            <div style={{ flex: 1, minWidth: 240 }}>
             <div style={{ marginBottom: 18 }}>
               <div style={{ fontSize: 13, color: th.inkMute, ...MM, letterSpacing: "0.05em", marginBottom: 6 }}>
                 RECOMMENDED
@@ -280,6 +307,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             <p style={{ marginTop: 18, fontSize: 12, color: th.inkMute, lineHeight: 1.5 }}>
               suppdoc.io is an affiliate. Links may earn us a commission at no extra cost to you.
             </p>
+            </div>
           </div>
         </div>
       </section>
