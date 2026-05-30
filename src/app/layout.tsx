@@ -16,6 +16,9 @@ export const metadata: Metadata = {
       { url: "/favicon.svg", type: "image/svg+xml" },
     ],
   },
+  verification: {
+    google: "g3pNVxrU5kcIHyzAwSKhh3JlUlomQ9c4WpiyBFniDFI",
+  },
 };
 
 // Brand entity for Google + AI search ("suppdoc" knowledge). Add real social
