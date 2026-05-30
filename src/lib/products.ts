@@ -58,6 +58,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 15, rating: 4.8, reviewCount: 6800, badge: "Editor's Pick",
       searchQuery: "Sports Research Vitamin D3 K2",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sre/sre01134/l/86.jpg",
     },
     {
       brand: "Doctor's Best", productName: "Vitamin D3 5000 IU + K2", size: "60 softgels",
@@ -122,12 +123,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 31, rating: 4.8, reviewCount: 1900, badge: "Premium",
       searchQuery: "Nordic Naturals Algae Omega",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor01606/l/58.jpg",
     },
     {
       brand: "Sports Research", productName: "Vegan Omega 3 from Algae", size: "60 softgels",
       approxPrice: 26, rating: 4.7, reviewCount: 1500, badge: "Vegan",
       searchQuery: "Sports Research Vegan Omega from Algae",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sre/sre01115/l/77.jpg",
     },
   ],
 
@@ -152,6 +155,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 38, rating: 4.8, reviewCount: 1800, badge: "Premium",
       searchQuery: "Thorne Basic Nutrients 2 Day",
       brandBg: "#f3f4f6", brandInk: "#1f2937",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/thr/thr00684/l/63.jpg",
     },
     {
       brand: "Pure Encapsulations", productName: "O.N.E. Multivitamin", size: "60 capsules",
@@ -289,8 +293,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       brand: "BulkSupplements", productName: "Glycine Powder", size: "500 g",
       approxPrice: 16, rating: 4.7, reviewCount: 5200, badge: "Editor's Pick",
       searchQuery: "BulkSupplements Glycine Powder",
-      brandBg: "#f3f4f6", brandInk: "#1f2937",
-    },
+      brandBg: "#f3f4f6", brandInk: "#1f2937",    },
   ],
 
   b12: [
@@ -321,6 +324,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 22, rating: 4.8, reviewCount: 1600, badge: "Premium",
       searchQuery: "Thorne Methylcobalamin",
       brandBg: "#f3f4f6", brandInk: "#1f2937",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/thr/thr12502/l/53.jpg",
     },
   ],
 
@@ -353,6 +357,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 34, rating: 4.8, reviewCount: 1900, badge: "Premium",
       searchQuery: "Pure Encapsulations B-Complex Plus",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/pes/pes00024/l/11.jpg",
     },
   ],
 
@@ -448,8 +453,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       brand: "BulkSupplements", productName: "Creatine Monohydrate", size: "500 g",
       approxPrice: 16, rating: 4.8, reviewCount: 9100, badge: "Editor's Pick",
       searchQuery: "BulkSupplements Creatine Monohydrate",
-      brandBg: "#f3f4f6", brandInk: "#1f2937",
-    },
+      brandBg: "#f3f4f6", brandInk: "#1f2937",    },
   ],
 
   collagen: [
@@ -507,6 +511,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 56, rating: 4.8, reviewCount: 1900, badge: "Premium",
       searchQuery: "Thorne Meriva-SF Curcumin",
       brandBg: "#f3f4f6", brandInk: "#1f2937",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/thr/thr00484/l/45.jpg",
     },
     {
       brand: "NOW Foods", productName: "Curcumin", size: "120 veg capsules",
@@ -571,12 +576,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 11, rating: 4.7, reviewCount: 2900, badge: "Best Value",
       searchQuery: "Nature's Way Vitamin C Buffered",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nwy/nwy40320/l/38.jpg",
     },
     {
       brand: "Thorne", productName: "Vitamin C with Flavonoids", size: "90 capsules",
       approxPrice: 23, rating: 4.8, reviewCount: 1400, badge: "Premium",
       searchQuery: "Thorne Vitamin C Flavonoids",
       brandBg: "#f3f4f6", brandInk: "#1f2937",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/thr/thr01248/l/40.jpg",
     },
   ],
 
@@ -732,12 +739,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 14, rating: 4.8, reviewCount: 2800, badge: "Premium",
       searchQuery: "Thorne Iron Bisglycinate",
       brandBg: "#f3f4f6", brandInk: "#1f2937",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/thr/thr00345/l/38.jpg",
     },
     {
       brand: "MegaFood", productName: "Blood Builder", size: "60 tablets",
       approxPrice: 22, rating: 4.7, reviewCount: 7400, badge: "Editor's Pick",
       searchQuery: "MegaFood Blood Builder",
       brandBg: "#fee2e2", brandInk: "#991b1b",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/mgf/mgf10171/l/89.jpg",
     },
   ],
 
@@ -2060,6 +2069,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     form: "Softgels", ingredientForm: "Mitopure Urolithin A (patented)",
     servingSize: "2 softgels", servingsPerContainer: 30, mgPerServing: "500 mg",
     certifications: ["Patented", "Clinically Studied", "Vegan", "Non-GMO"],
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/tmm/tmm04540/l/2.jpg",
   }],
   spermidine: [{
     brand: "Double Wood", productName: "Spermidine 10mg", size: "60 capsules",
@@ -2186,8 +2196,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     brandBg: "#ede9fe", brandInk: "#5b21b6",
     form: "Capsules", ingredientForm: "TeaCrine Theacrine",
     servingSize: "1-2 capsules", servingsPerContainer: 60, mgPerServing: "100-200 mg",
-    certifications: ["3rd Party Tested", "Non-GMO", "Vegan", "Gluten Free"],
-  }],
+    certifications: ["3rd Party Tested", "Non-GMO", "Vegan", "Gluten Free"],  }],
   uridine: [{
     brand: "Double Wood", productName: "Uridine Monophosphate", size: "60 capsules",
     approxPrice: 24, rating: 4.5, reviewCount: 1400, badge: "Bestseller",
@@ -2195,8 +2204,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     brandBg: "#ede9fe", brandInk: "#5b21b6",
     form: "Capsules", ingredientForm: "Uridine 5'-Monophosphate Disodium",
     servingSize: "1 capsule", servingsPerContainer: 60, mgPerServing: "300 mg",
-    certifications: ["3rd Party Tested", "Non-GMO", "Vegan"],
-  }],
+    certifications: ["3rd Party Tested", "Non-GMO", "Vegan"],  }],
   pycnogenol: [{
     brand: "Healthy Origins", productName: "Pycnogenol 100mg", size: "60 veg caps",
     approxPrice: 35, rating: 4.7, reviewCount: 2300, badge: "Editor's Pick",
@@ -2291,6 +2299,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     form: "Softgels", ingredientForm: "Montmorency Tart Cherry (CherryPURE)",
     servingSize: "1 softgel", servingsPerContainer: 60, mgPerServing: "480 mg",
     certifications: ["Non-GMO", "Gluten Free"],
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sre/sre01011/l/48.jpg",
   }],
   "l-arginine": [{
     brand: "NOW Foods", productName: "L-Arginine 1000mg", size: "120 tablets",
@@ -2401,6 +2410,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     form: "Tablets", ingredientForm: "Red Yeast Rice (Monascus purpureus)",
     servingSize: "2 tablets", servingsPerContainer: 30, mgPerServing: "1200 mg",
     certifications: ["Non-GMO", "Gluten Free", "Vegan"],
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nap/nap07361/l/42.jpg",
   }],
   "garlic-aged-evening": [{
     brand: "NOW Foods", productName: "Olive Leaf Extract 500mg", size: "120 veg caps",
@@ -2486,6 +2496,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     form: "Veg Capsules", ingredientForm: "Urtica dioica root extract",
     servingSize: "1 capsule", servingsPerContainer: 60, mgPerServing: "500 mg",
     certifications: ["Non-GMO", "Vegan", "Lab Verified"],
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sor/sor03752/l/72.jpg",
   }],
   "pumpkin-seed-oil": [{
     brand: "Sports Research", productName: "Pumpkin Seed Oil 1000mg", size: "120 softgels",
@@ -2633,23 +2644,17 @@ export function cleanIherbImageUrl(url: string | undefined): string | undefined 
 }
 
 /**
- * Amazon serves a product's primary image directly from its ASIN, on a pure
- * white background (an Amazon listing requirement), which is exactly what our
- * white-canvas cards want. This lets every product with an ASIN show a real
- * photo without hand-collecting image URLs.
- */
-export function amazonImageFromAsin(asin: string): string {
-  return `https://m.media-amazon.com/images/P/${asin}.01._SCLZZZZZZZ_.jpg`;
-}
-
-/**
- * Resolve the best real product photo for an option: a curated iHerb image if we
- * have one, otherwise the Amazon ASIN image, otherwise undefined (callers then
- * fall back to the branded BottleMockup, which never 404s).
+ * Resolve the best real product photo for an option: the curated `imageUrl`
+ * (iHerb CDN, brand Shopify CDN, etc.) if we have one, otherwise undefined so
+ * callers fall back to the branded BottleMockup, which never 404s.
+ *
+ * Note: we intentionally do NOT derive images from `amazonAsin`. Amazon's
+ * /images/P/<ASIN> endpoint serves to curl but refuses cross-origin <img>
+ * hotlinks in a browser, so those render broken. `amazonAsin` is used only to
+ * build exact "Buy on Amazon" links, never for images.
  */
 export function productImage(option: ProductOption): string | undefined {
   if (option.imageUrl) return cleanIherbImageUrl(option.imageUrl);
-  if (option.amazonAsin) return amazonImageFromAsin(option.amazonAsin);
   return undefined;
 }
 
