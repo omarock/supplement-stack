@@ -74,6 +74,19 @@ page. Until then, pages are honestly authored by the organisation (no fabricated
 Ingredient pages show a pinned `Last reviewed` date — bump the `LAST_REVIEWED` constant
 in `src/app/ingredients/[slug]/page.tsx` when the catalog is re-reviewed.
 
+### Instant indexing (IndexNow → Bing, Yandex, …)
+
+The site is verified for [IndexNow](https://www.indexnow.org) via the key file in
+`public/2e769915a3c251da0ac80c05987a39b3.txt`. To notify search engines the moment
+you publish or update pages, ping them:
+
+```bash
+node scripts/indexnow.cjs https://www.suppdoc.io/ingredients/<new-ingredient>
+```
+
+Use it for new/updated URLs only — the sitemap handles full discovery. Helper:
+`submitToIndexNow(urls)` in `src/lib/indexnow.ts` for programmatic use.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
