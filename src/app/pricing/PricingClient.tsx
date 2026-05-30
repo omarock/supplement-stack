@@ -83,7 +83,8 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
             successUrl: `${window.location.origin}/me?upgraded=1`,
           },
         });
-      } catch {
+      } catch (e) {
+        console.error("Paddle checkout failed to open:", e);
         setError("Couldn't open checkout. Please try again.");
       } finally {
         setBusy(false);
