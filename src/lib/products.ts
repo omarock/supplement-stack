@@ -62,6 +62,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Doctor's Best", productName: "Vitamin D3 5000 IU + K2", size: "60 softgels",
       approxPrice: 11, rating: 4.7, reviewCount: 4100, badge: "Best Value",
+      amazonAsin: "B0DJN4373S",
       searchQuery: "Doctor's Best Vitamin D3 5000 K2",
       brandBg: "#dbeafe", brandInk: "#1e40af",
     },
@@ -87,12 +88,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Nordic Naturals", productName: "Ultimate Omega", size: "60 softgels",
       approxPrice: 27, rating: 4.9, reviewCount: 8400, badge: "Premium",
+      amazonAsin: "B000HDV7YS",
       searchQuery: "Nordic Naturals Ultimate Omega",
       brandBg: "#dbeafe", brandInk: "#1e40af",
     },
     {
       brand: "NOW Foods", productName: "Ultra Omega-3", size: "180 softgels",
       approxPrice: 20, rating: 4.7, reviewCount: 7200, badge: "Best Value",
+      amazonAsin: "B000SE5SY6",
       searchQuery: "NOW Foods Ultra Omega-3",
       brandBg: "#fdebe1", brandInk: "#c2410c",
     },
@@ -153,6 +156,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Pure Encapsulations", productName: "O.N.E. Multivitamin", size: "60 capsules",
       approxPrice: 42, rating: 4.8, reviewCount: 2900, badge: "Editor's Pick",
+      amazonAsin: "B00CBYG1L0",
       searchQuery: "Pure Encapsulations O.N.E. Multivitamin",
       brandBg: "#dbeafe", brandInk: "#1e40af",
     },
@@ -178,12 +182,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "NOW Foods", productName: "Magnesium Glycinate", size: "180 tablets",
       approxPrice: 15, rating: 4.7, reviewCount: 9800, badge: "Best Value",
+      amazonAsin: "B07NWMVMT1",
       searchQuery: "NOW Foods Magnesium Glycinate Tablets",
       brandBg: "#fdebe1", brandInk: "#c2410c",
     },
     {
       brand: "KAL", productName: "Magnesium Glycinate 400", size: "180 tablets",
       approxPrice: 22, rating: 4.7, reviewCount: 6200, badge: "Premium",
+      amazonAsin: "B00013YZ1Q",
       searchQuery: "KAL Magnesium Glycinate 400",
       brandBg: "#fef3c7", brandInk: "#92400e",
     },
@@ -209,12 +215,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "NOW Foods", productName: "Ashwagandha", size: "180 veg capsules",
       approxPrice: 17, rating: 4.6, reviewCount: 7100, badge: "Best Value",
+      amazonAsin: "B0768GW2R8",
       searchQuery: "NOW Foods Ashwagandha 450",
       brandBg: "#fdebe1", brandInk: "#c2410c",
     },
     {
       brand: "Solgar", productName: "Ashwagandha Root Extract", size: "60 veg capsules",
       approxPrice: 24, rating: 4.7, reviewCount: 2800, badge: "Premium",
+      amazonAsin: "B00014FNBQ",
       searchQuery: "Solgar Ashwagandha Root Extract",
       brandBg: "#dbeafe", brandInk: "#1e40af",
     },
@@ -240,12 +248,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Doctor's Best", productName: "Suntheanine L-Theanine", size: "90 veg capsules",
       approxPrice: 16, rating: 4.7, reviewCount: 3200, badge: "Editor's Pick",
+      amazonAsin: "B001OXTGVG",
       searchQuery: "Doctor's Best Suntheanine L-Theanine",
       brandBg: "#dbeafe", brandInk: "#1e40af",
     },
     {
       brand: "Jarrow Formulas", productName: "Theanine 200", size: "60 veg capsules",
       approxPrice: 19, rating: 4.7, reviewCount: 1800, badge: "Premium",
+      amazonAsin: "B001EHBF5W",
       searchQuery: "Jarrow Formulas Theanine 200",
       brandBg: "#fef3c7", brandInk: "#92400e",
     },
@@ -271,6 +281,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Source Naturals", productName: "Glycine 500mg", size: "200 capsules",
       approxPrice: 12, rating: 4.6, reviewCount: 1100, badge: "Best Value",
+      amazonAsin: "B000F4VA00",
       searchQuery: "Source Naturals Glycine 500",
       brandBg: "#d1fae5", brandInk: "#065f46",
     },
@@ -301,6 +312,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Garden of Life", productName: "mykind Organics B-12 Spray", size: "58 ml",
       approxPrice: 16, rating: 4.7, reviewCount: 3400, badge: "Editor's Pick",
+      amazonAsin: "B00K5NEPJY",
       searchQuery: "Garden of Life mykind Organics B-12 Spray",
       brandBg: "#d1fae5", brandInk: "#065f46",
     },
@@ -332,6 +344,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Jarrow Formulas", productName: "B-Right Complex", size: "100 capsules",
       approxPrice: 16, rating: 4.8, reviewCount: 8100, badge: "Best Value",
+      amazonAsin: "B0016003Z0",
       searchQuery: "Jarrow B-Right",
       brandBg: "#fef3c7", brandInk: "#92400e",
     },
@@ -363,6 +376,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Gaia Herbs", productName: "Rhodiola Rosea", size: "60 veg capsules",
       approxPrice: 21, rating: 4.7, reviewCount: 2100, badge: "Editor's Pick",
+      amazonAsin: "B0036THNA2",
       searchQuery: "Gaia Herbs Rhodiola Rosea",
       brandBg: "#d1fae5", brandInk: "#065f46",
     },
@@ -393,12 +407,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Real Mushrooms", productName: "Organic Lions Mane Extract", size: "120 capsules",
       approxPrice: 30, rating: 4.8, reviewCount: 4900, badge: "Editor's Pick",
+      amazonAsin: "B078SZX3ML",
       searchQuery: "Real Mushrooms Lions Mane Extract",
       brandBg: "#fef3c7", brandInk: "#92400e",
     },
     {
       brand: "NOW Foods", productName: "Lion's Mane 500mg", size: "60 veg capsules",
       approxPrice: 18, rating: 4.6, reviewCount: 2400, badge: "Best Value",
+      amazonAsin: "B09V3BS25N",
       searchQuery: "NOW Foods Lion's Mane 500",
       brandBg: "#fdebe1", brandInk: "#c2410c",
     },
@@ -424,6 +440,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "NOW Foods", productName: "Creatine Monohydrate Pure Powder", size: "1 kg",
       approxPrice: 26, rating: 4.8, reviewCount: 5400, badge: "Best Value",
+      amazonAsin: "B0013OXD38",
       searchQuery: "NOW Foods Creatine Monohydrate Pure Powder",
       brandBg: "#fdebe1", brandInk: "#c2410c",
     },
@@ -455,12 +472,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Vital Proteins", productName: "Collagen Peptides", size: "284 g",
       approxPrice: 27, rating: 4.7, reviewCount: 12400, badge: "Premium",
+      amazonAsin: "B07DC748VW",
       searchQuery: "Vital Proteins Collagen Peptides",
       brandBg: "#e0e7ff", brandInk: "#3730a3",
     },
     {
       brand: "Garden of Life", productName: "Grass Fed Collagen Peptides", size: "560 g",
       approxPrice: 35, rating: 4.7, reviewCount: 4800, badge: "Editor's Pick",
+      amazonAsin: "B07K4SK9SY",
       searchQuery: "Garden of Life Grass Fed Collagen Peptides",
       brandBg: "#d1fae5", brandInk: "#065f46",
     },
@@ -492,6 +511,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "NOW Foods", productName: "Curcumin", size: "120 veg capsules",
       approxPrice: 20, rating: 4.7, reviewCount: 3200, badge: "Best Value",
+      amazonAsin: "B000QSLHIU",
       searchQuery: "NOW Foods Curcumin",
       brandBg: "#fdebe1", brandInk: "#c2410c",
     },
@@ -516,12 +536,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Doctor's Best", productName: "Glucosamine Chondroitin MSM", size: "240 capsules",
       approxPrice: 28, rating: 4.7, reviewCount: 3400, badge: "Best Value",
+      amazonAsin: "B000I4DFAK",
       searchQuery: "Doctor's Best Glucosamine Chondroitin MSM",
       brandBg: "#dbeafe", brandInk: "#1e40af",
     },
     {
       brand: "Solgar", productName: "Glucosamine Chondroitin MSM", size: "120 tablets",
       approxPrice: 36, rating: 4.7, reviewCount: 1800, badge: "Premium",
+      amazonAsin: "B0028H5XBO",
       searchQuery: "Solgar Glucosamine Chondroitin MSM",
       brandBg: "#fef3c7", brandInk: "#92400e",
     },
@@ -578,12 +600,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "NOW Foods", productName: "Zinc Picolinate 50mg", size: "120 veg capsules",
       approxPrice: 9, rating: 4.7, reviewCount: 4100, badge: "Best Value",
+      amazonAsin: "B000TMJZ4G",
       searchQuery: "NOW Foods Zinc Picolinate",
       brandBg: "#fdebe1", brandInk: "#c2410c",
     },
     {
       brand: "Solgar", productName: "Zinc Picolinate 22mg", size: "100 tablets",
       approxPrice: 13, rating: 4.7, reviewCount: 1200, badge: "Editor's Pick",
+      amazonAsin: "B00020ICLC",
       searchQuery: "Solgar Zinc Picolinate",
       brandBg: "#fef3c7", brandInk: "#92400e",
     },
@@ -609,12 +633,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Gaia Herbs", productName: "Black Elderberry Syrup", size: "89 ml",
       approxPrice: 22, rating: 4.7, reviewCount: 1900, badge: "Premium",
+      amazonAsin: "B0036THLOA",
       searchQuery: "Gaia Herbs Black Elderberry Syrup",
       brandBg: "#d1fae5", brandInk: "#065f46",
     },
     {
       brand: "Nature's Way", productName: "Sambucus Elderberry Gummies", size: "60 gummies",
       approxPrice: 14, rating: 4.7, reviewCount: 5800, badge: "Best Value",
+      amazonAsin: "B00MJ7VL1O",
       searchQuery: "Nature's Way Sambucus Elderberry Gummies",
       brandBg: "#d1fae5", brandInk: "#065f46",
     },
@@ -640,12 +666,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Renew Life", productName: "Ultimate Flora Extra Care", size: "60 capsules",
       approxPrice: 38, rating: 4.7, reviewCount: 4300, badge: "Editor's Pick",
+      amazonAsin: "B07B11HQF8",
       searchQuery: "Renew Life Ultimate Flora Extra Care 30 Billion",
       brandBg: "#dbeafe", brandInk: "#1e40af",
     },
     {
       brand: "Now Foods", productName: "Probiotic-10 50 Billion", size: "100 veg capsules",
       approxPrice: 36, rating: 4.7, reviewCount: 7900, badge: "Best Value",
+      amazonAsin: "B0031RJXCK",
       searchQuery: "NOW Foods Probiotic-10 50 Billion",
       brandBg: "#fdebe1", brandInk: "#c2410c",
     },
@@ -670,12 +698,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "NOW Foods", productName: "Super Enzymes", size: "180 tablets",
       approxPrice: 22, rating: 4.7, reviewCount: 6200, badge: "Best Value",
+      amazonAsin: "B0013OXKJA",
       searchQuery: "NOW Foods Super Enzymes",
       brandBg: "#fdebe1", brandInk: "#c2410c",
     },
     {
       brand: "Garden of Life", productName: "Dr. Formulated Enzymes Organic Digest+", size: "90 chewables",
       approxPrice: 18, rating: 4.6, reviewCount: 1900, badge: "Editor's Pick",
+      amazonAsin: "B00Y8MPKVU",
       searchQuery: "Garden of Life Dr Formulated Enzymes Digest+",
       brandBg: "#d1fae5", brandInk: "#065f46",
     },
@@ -729,12 +759,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "NOW Foods", productName: "CoQ10 100mg", size: "150 veg capsules",
       approxPrice: 28, rating: 4.8, reviewCount: 4100, badge: "Best Value",
+      amazonAsin: "B0013OSM0M",
       searchQuery: "NOW Foods CoQ10 100",
       brandBg: "#fdebe1", brandInk: "#c2410c",
     },
     {
       brand: "Qunol", productName: "Mega CoQ10 Ubiquinol 100mg", size: "60 softgels",
       approxPrice: 36, rating: 4.7, reviewCount: 3200, badge: "Premium",
+      amazonAsin: "B00ZQULF1C",
       searchQuery: "Qunol Mega CoQ10 Ubiquinol",
       brandBg: "#e0e7ff", brandInk: "#3730a3",
     },
@@ -760,12 +792,14 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     {
       brand: "Doctor's Best", productName: "Best Biotin 5000 mcg", size: "60 veg capsules",
       approxPrice: 10, rating: 4.7, reviewCount: 2400, badge: "Best Value",
+      amazonAsin: "B00EODALHQ",
       searchQuery: "Doctor's Best Biotin 5000mcg",
       brandBg: "#dbeafe", brandInk: "#1e40af",
     },
     {
       brand: "Solgar", productName: "Biotin 10,000 mcg", size: "60 veg capsules",
       approxPrice: 16, rating: 4.7, reviewCount: 1800, badge: "Premium",
+      amazonAsin: "B009P6BHKC",
       searchQuery: "Solgar Biotin 10000mcg",
       brandBg: "#fef3c7", brandInk: "#92400e",
     },
@@ -2042,6 +2076,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
   "ca-akg": [{
     brand: "Life Extension", productName: "GEROPROTECT Ageless Cell", size: "60 tablets",
     approxPrice: 35, rating: 4.6, reviewCount: 720, badge: "Editor's Pick",
+    amazonAsin: "B06XCRLNFP",
     searchQuery: "Life Extension Calcium AKG",
     brandBg: "#dbeafe", brandInk: "#1e40af",
     form: "Tablets", ingredientForm: "Calcium Alpha-Ketoglutarate",
@@ -2113,6 +2148,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
   "s-boulardii": [{
     brand: "Jarrow Formulas", productName: "Saccharomyces Boulardii + MOS", size: "90 capsules",
     approxPrice: 22, rating: 4.7, reviewCount: 5400, badge: "Bestseller",
+    amazonAsin: "B0013OVW0E",
     searchQuery: "Jarrow Formulas Saccharomyces Boulardii",
     brandBg: "#fef3c7", brandInk: "#a16207",
     form: "Capsules", ingredientForm: "S. boulardii + Mannan-Oligosaccharides",
@@ -2134,6 +2170,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
   "zinc-carnosine": [{
     brand: "Doctor's Best", productName: "PepZin GI Zinc-L-Carnosine", size: "120 veg caps",
     approxPrice: 26, rating: 4.6, reviewCount: 2100, badge: "Editor's Pick",
+    amazonAsin: "B0035BYOSA",
     searchQuery: "Doctor's Best PepZin GI Zinc Carnosine",
     brandBg: "#dbeafe", brandInk: "#1e40af",
     form: "Veg Capsules", ingredientForm: "Zinc-L-Carnosine (PepZin GI)",
@@ -2189,6 +2226,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
   "hyaluronic-acid": [{
     brand: "Doctor's Best", productName: "Hyaluronic Acid with BioCell Collagen", size: "180 veg caps",
     approxPrice: 22, rating: 4.6, reviewCount: 4200, badge: "Bestseller",
+    amazonAsin: "B003C5F8FW",
     searchQuery: "Doctor's Best Hyaluronic Acid",
     brandBg: "#dbeafe", brandInk: "#1e40af",
     form: "Veg Capsules", ingredientForm: "Low-MW Hyaluronic Acid",
@@ -2257,6 +2295,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
   "l-arginine": [{
     brand: "NOW Foods", productName: "L-Arginine 1000mg", size: "120 tablets",
     approxPrice: 18, rating: 4.6, reviewCount: 4400, badge: "Best Value",
+    amazonAsin: "B0013OVX3U",
     searchQuery: "NOW Foods L-Arginine 1000mg",
     brandBg: "#fdebe1", brandInk: "#c2410c",
     form: "Tablets", ingredientForm: "Free-form L-Arginine HCl",
@@ -2366,6 +2405,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
   "garlic-aged-evening": [{
     brand: "NOW Foods", productName: "Olive Leaf Extract 500mg", size: "120 veg caps",
     approxPrice: 18, rating: 4.7, reviewCount: 2700, badge: "Bestseller",
+    amazonAsin: "B0019LPMDY",
     searchQuery: "NOW Foods Olive Leaf Extract 500mg",
     brandBg: "#fdebe1", brandInk: "#c2410c",
     form: "Veg Capsules", ingredientForm: "Olive Leaf Extract (18% Oleuropein)",
@@ -2429,6 +2469,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
   "black-cohosh": [{
     brand: "Enzymatic Therapy", productName: "Remifemin Black Cohosh", size: "120 tablets",
     approxPrice: 28, rating: 4.6, reviewCount: 2400, badge: "Editor's Pick",
+    amazonAsin: "B00NMPMAQW",
     searchQuery: "Enzymatic Therapy Remifemin",
     brandBg: "#fef3c7", brandInk: "#a16207",
     form: "Tablets", ingredientForm: "Black Cohosh Standardized Extract (Remifemin)",
@@ -2460,6 +2501,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
   "white-willow": [{
     brand: "Nature's Way", productName: "White Willow Bark 400mg", size: "100 veg caps",
     approxPrice: 14, rating: 4.6, reviewCount: 1500, badge: "Best Value",
+    amazonAsin: "B000PG5I4W",
     searchQuery: "Nature's Way White Willow Bark",
     brandBg: "#fef3c7", brandInk: "#a16207",
     form: "Veg Capsules", ingredientForm: "Salix alba bark (standardized salicin)",
