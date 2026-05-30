@@ -66,6 +66,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B0DJN4373S",
       searchQuery: "Doctor's Best Vitamin D3 5000 K2",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/drb/drb00626/l/8.jpg",
     },
   ],
 
@@ -92,6 +93,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B000HDV7YS",
       searchQuery: "Nordic Naturals Ultimate Omega",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor01790/l/122.jpg",
     },
     {
       brand: "NOW Foods", productName: "Ultra Omega-3", size: "180 softgels",
@@ -99,6 +101,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B000SE5SY6",
       searchQuery: "NOW Foods Ultra Omega-3",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01662/l/76.jpg",
     },
   ],
 
@@ -163,6 +166,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B00CBYG1L0",
       searchQuery: "Pure Encapsulations O.N.E. Multivitamin",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/pes/pes11499/l/11.jpg",
     },
   ],
 
@@ -189,6 +193,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B07NWMVMT1",
       searchQuery: "NOW Foods Magnesium Glycinate Tablets",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01289/l/62.jpg",
     },
     {
       brand: "KAL", productName: "Magnesium Glycinate 400", size: "180 tablets",
@@ -196,6 +201,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B00013YZ1Q",
       searchQuery: "KAL Magnesium Glycinate 400",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/cal/cal81209/l/100.jpg",
     },
   ],
 
@@ -222,6 +228,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B0768GW2R8",
       searchQuery: "NOW Foods Ashwagandha 450",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04593/l/27.jpg",
     },
     {
       brand: "Solgar", productName: "Ashwagandha Root Extract", size: "60 veg capsules",
@@ -229,6 +236,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B00014FNBQ",
       searchQuery: "Solgar Ashwagandha Root Extract",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sol/sol04104/l/31.jpg",
     },
   ],
 
@@ -255,6 +263,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B001OXTGVG",
       searchQuery: "Doctor's Best Suntheanine L-Theanine",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/drb/drb00197/l/77.jpg",
     },
     {
       brand: "Jarrow Formulas", productName: "Theanine 200", size: "60 veg capsules",
@@ -262,6 +271,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B001EHBF5W",
       searchQuery: "Jarrow Formulas Theanine 200",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/jrw/jrw15057/l/57.jpg",
     },
   ],
 
@@ -288,6 +298,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B000F4VA00",
       searchQuery: "Source Naturals Glycine 500",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sns/sns01605/l/36.jpg",
     },
     {
       brand: "BulkSupplements", productName: "Glycine Powder", size: "500 g",
@@ -318,6 +329,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B00K5NEPJY",
       searchQuery: "Garden of Life mykind Organics B-12 Spray",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/gol/gol11779/l/108.jpg",
     },
     {
       brand: "Thorne", productName: "Methylcobalamin B12", size: "60 capsules",
@@ -351,6 +363,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B0016003Z0",
       searchQuery: "Jarrow B-Right",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/jrw/jrw01006/l/114.jpg",
     },
     {
       brand: "Pure Encapsulations", productName: "B-Complex Plus", size: "60 capsules",
@@ -384,6 +397,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B0036THNA2",
       searchQuery: "Gaia Herbs Rhodiola Rosea",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/gai/gai40170/l/114.jpg",
     },
     {
       brand: "Doctor's Best", productName: "Rhodiola", size: "60 veg capsules",
@@ -415,6 +429,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B078SZX3ML",
       searchQuery: "Real Mushrooms Lions Mane Extract",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/rms/rms06804/l/24.jpg",
     },
     {
       brand: "NOW Foods", productName: "Lion's Mane 500mg", size: "60 veg capsules",
@@ -422,6 +437,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B09V3BS25N",
       searchQuery: "NOW Foods Lion's Mane 500",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04789/l/39.jpg",
     },
   ],
 
@@ -448,6 +464,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B0013OXD38",
       searchQuery: "NOW Foods Creatine Monohydrate Pure Powder",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now02032/l/55.jpg",
     },
     {
       brand: "BulkSupplements", productName: "Creatine Monohydrate", size: "500 g",
@@ -479,6 +496,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B07DC748VW",
       searchQuery: "Vital Proteins Collagen Peptides",
       brandBg: "#e0e7ff", brandInk: "#3730a3",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/vtp/vtp00509/l/69.jpg",
     },
     {
       brand: "Garden of Life", productName: "Grass Fed Collagen Peptides", size: "560 g",
@@ -486,6 +504,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B07K4SK9SY",
       searchQuery: "Garden of Life Grass Fed Collagen Peptides",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/gol/gol12459/l/66.jpg",
     },
   ],
 
@@ -519,6 +538,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B000QSLHIU",
       searchQuery: "NOW Foods Curcumin",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04639/l/69.jpg",
     },
   ],
 
@@ -544,6 +564,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B000I4DFAK",
       searchQuery: "Doctor's Best Glucosamine Chondroitin MSM",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/drb/drb00081/l/121.jpg",
     },
     {
       brand: "Solgar", productName: "Glucosamine Chondroitin MSM", size: "120 tablets",
@@ -551,6 +572,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B0028H5XBO",
       searchQuery: "Solgar Glucosamine Chondroitin MSM",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sol/sol01319/l/46.jpg",
     },
   ],
 
@@ -610,6 +632,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B000TMJZ4G",
       searchQuery: "NOW Foods Zinc Picolinate",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01552/l/57.jpg",
     },
     {
       brand: "Solgar", productName: "Zinc Picolinate 22mg", size: "100 tablets",
@@ -617,6 +640,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B00020ICLC",
       searchQuery: "Solgar Zinc Picolinate",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sol/sol03725/l/91.jpg",
     },
   ],
 
@@ -643,6 +667,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B0036THLOA",
       searchQuery: "Gaia Herbs Black Elderberry Syrup",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/gai/gai99626/l/94.jpg",
     },
     {
       brand: "Nature's Way", productName: "Sambucus Elderberry Gummies", size: "60 gummies",
@@ -650,6 +675,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B00MJ7VL1O",
       searchQuery: "Nature's Way Sambucus Elderberry Gummies",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nwy/nwy10486/l/140.jpg",
     },
   ],
 
@@ -676,6 +702,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B07B11HQF8",
       searchQuery: "Renew Life Ultimate Flora Extra Care 30 Billion",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/ren/ren12108/l/103.jpg",
     },
     {
       brand: "Now Foods", productName: "Probiotic-10 50 Billion", size: "100 veg capsules",
@@ -683,6 +710,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B0031RJXCK",
       searchQuery: "NOW Foods Probiotic-10 50 Billion",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now02933/l/69.jpg",
     },
   ],
 
@@ -708,6 +736,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B0013OXKJA",
       searchQuery: "NOW Foods Super Enzymes",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now02962/l/64.jpg",
     },
     {
       brand: "Garden of Life", productName: "Dr. Formulated Enzymes Organic Digest+", size: "90 chewables",
@@ -715,6 +744,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B00Y8MPKVU",
       searchQuery: "Garden of Life Dr Formulated Enzymes Digest+",
       brandBg: "#d1fae5", brandInk: "#065f46",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/gol/gol11843/l/81.jpg",
     },
   ],
 
@@ -757,6 +787,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     amazonAsin: "B00KHQJDWS",
       productPath: "/pr/doctor-s-best-high-absorption-coq10-100-mg-60-veggie-caps/20",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/drb/drb00069/l/98.jpg",
       form: "Veg Capsules",
       ingredientForm: "CoQ10 (Ubiquinone) with BioPerine for enhanced absorption",
       servingSize: "1 veg capsule",
@@ -771,6 +802,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B0013OSM0M",
       searchQuery: "NOW Foods CoQ10 100",
       brandBg: "#fdebe1", brandInk: "#c2410c",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now03209/l/67.jpg",
     },
     {
       brand: "Qunol", productName: "Mega CoQ10 Ubiquinol 100mg", size: "60 softgels",
@@ -778,6 +810,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B00ZQULF1C",
       searchQuery: "Qunol Mega CoQ10 Ubiquinol",
       brandBg: "#e0e7ff", brandInk: "#3730a3",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/qnl/qnl00128/l/91.jpg",
     },
   ],
 
@@ -804,6 +837,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B00EODALHQ",
       searchQuery: "Doctor's Best Biotin 5000mcg",
       brandBg: "#dbeafe", brandInk: "#1e40af",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/drb/drb00301/l/61.jpg",
     },
     {
       brand: "Solgar", productName: "Biotin 10,000 mcg", size: "60 veg capsules",
@@ -811,6 +845,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       amazonAsin: "B009P6BHKC",
       searchQuery: "Solgar Biotin 10000mcg",
       brandBg: "#fef3c7", brandInk: "#92400e",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sol/sol52387/l/24.jpg",
     },
   ],
 
@@ -2089,6 +2124,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     amazonAsin: "B06XCRLNFP",
     searchQuery: "Life Extension Calcium AKG",
     brandBg: "#dbeafe", brandInk: "#1e40af",
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/lex/lex21193/l/90.jpg",
     form: "Tablets", ingredientForm: "Calcium Alpha-Ketoglutarate",
     servingSize: "2 tablets", servingsPerContainer: 30, mgPerServing: "1000 mg Ca-AKG",
     certifications: ["Non-GMO", "Gluten Free"],
@@ -2161,6 +2197,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     amazonAsin: "B0013OVW0E",
     searchQuery: "Jarrow Formulas Saccharomyces Boulardii",
     brandBg: "#fef3c7", brandInk: "#a16207",
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/jrw/jrw03004/l/112.jpg",
     form: "Capsules", ingredientForm: "S. boulardii + Mannan-Oligosaccharides",
     servingSize: "1 capsule", servingsPerContainer: 90, mgPerServing: "5 billion CFU",
     certifications: ["Non-GMO", "Vegetarian", "Gluten Free"],
@@ -2183,6 +2220,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     amazonAsin: "B0035BYOSA",
     searchQuery: "Doctor's Best PepZin GI Zinc Carnosine",
     brandBg: "#dbeafe", brandInk: "#1e40af",
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/drb/drb00136/l/106.jpg",
     form: "Veg Capsules", ingredientForm: "Zinc-L-Carnosine (PepZin GI)",
     servingSize: "1 capsule", servingsPerContainer: 120, mgPerServing: "75 mg ZnC (16 mg zinc)",
     certifications: ["Non-GMO", "Vegan", "Gluten Free"],
@@ -2237,6 +2275,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     amazonAsin: "B003C5F8FW",
     searchQuery: "Doctor's Best Hyaluronic Acid",
     brandBg: "#dbeafe", brandInk: "#1e40af",
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/drb/drb00228/l/168.jpg",
     form: "Veg Capsules", ingredientForm: "Low-MW Hyaluronic Acid",
     servingSize: "2 capsules", servingsPerContainer: 90, mgPerServing: "120 mg",
     certifications: ["Non-GMO", "Vegetarian", "Gluten Free"],
@@ -2307,6 +2346,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     amazonAsin: "B0013OVX3U",
     searchQuery: "NOW Foods L-Arginine 1000mg",
     brandBg: "#fdebe1", brandInk: "#c2410c",
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now00035/l/32.jpg",
     form: "Tablets", ingredientForm: "Free-form L-Arginine HCl",
     servingSize: "1-3 tablets", servingsPerContainer: 60, mgPerServing: "1000-3000 mg",
     certifications: ["Non-GMO", "Vegan", "Kosher"],
@@ -2418,6 +2458,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     amazonAsin: "B0019LPMDY",
     searchQuery: "NOW Foods Olive Leaf Extract 500mg",
     brandBg: "#fdebe1", brandInk: "#c2410c",
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04722/l/63.jpg",
     form: "Veg Capsules", ingredientForm: "Olive Leaf Extract (18% Oleuropein)",
     servingSize: "1 capsule", servingsPerContainer: 120, mgPerServing: "500 mg",
     certifications: ["Non-GMO", "Vegan", "Kosher"],
@@ -2482,6 +2523,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     amazonAsin: "B00NMPMAQW",
     searchQuery: "Enzymatic Therapy Remifemin",
     brandBg: "#fef3c7", brandInk: "#a16207",
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/emt/emt07520/l/27.jpg",
     form: "Tablets", ingredientForm: "Black Cohosh Standardized Extract (Remifemin)",
     servingSize: "1 tablet", servingsPerContainer: 120, mgPerServing: "20 mg (= 40 mg twice daily)",
     certifications: ["Clinically Studied", "Non-GMO"],
@@ -2515,6 +2557,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     amazonAsin: "B000PG5I4W",
     searchQuery: "Nature's Way White Willow Bark",
     brandBg: "#fef3c7", brandInk: "#a16207",
+    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nwy/nwy17850/l/76.jpg",
     form: "Veg Capsules", ingredientForm: "Salix alba bark (standardized salicin)",
     servingSize: "1 capsule", servingsPerContainer: 100, mgPerServing: "400 mg",
     certifications: ["Non-GMO Project Verified", "Vegetarian", "Gluten Free"],
