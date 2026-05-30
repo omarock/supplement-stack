@@ -23,6 +23,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/quiz/complete`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/build`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/audit`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/bloodwork`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/bloodwork/history`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE}/pricing`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
   );
 
   // ─── Tier 2: stacks index + individual stacks ──────────────────────────
@@ -125,5 +128,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  return entries;
+  // Dedupe by URL (guards against any duplicate slug in the source data leaking
+  // two identical <url> entries into the sitemap, which weakens crawl trust).
+  const seen = new Set<string>();
+  return entries.filter(e => {
+    const u = String(e.url);
+    if (seen.has(u)) return false;
+    seen.add(u);
+    return true;
+  });
 }

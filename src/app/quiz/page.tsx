@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Take the Quiz, Express or Complete | suppdoc.io",
   description: "Get a personalised supplement stack. Choose the 2-minute Express quiz for fast goal-matched recommendations, or the 5-minute Complete quiz for deep personalization including bloodwork analysis.",
   keywords: "supplement quiz, personalised supplements, AI supplement quiz, express supplement quiz",
+  alternates: { canonical: "/quiz" },
 };
 
 export default function QuizChooser() {

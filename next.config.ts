@@ -53,6 +53,20 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // Canonical host: 301 the bare apex (suppdoc.io) to www so search engines
+  // only ever index one host. Prevents the duplicate-content split between
+  // https://suppdoc.io and https://www.suppdoc.io.
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "suppdoc.io" }],
+        destination: "https://www.suppdoc.io/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   // Allow Next.js to serve images from iHerb's Cloudinary CDN
   images: {
     remotePatterns: [

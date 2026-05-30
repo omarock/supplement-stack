@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { TH, FONTS } from "@/lib/theme";
+import { CONSENT_KEY as STORAGE_KEY, CONSENT_REOPEN_EVENT, notifyConsentChanged } from "@/lib/consent";
 
-const STORAGE_KEY = "suppdoc.cookieConsent.v1";
 const COOKIE_NAME = "suppdoc_consent";
 const COOKIE_DAYS = 180;
 
@@ -24,21 +24,29 @@ export default function CookieConsent() {
   const [customizing, setCustomizing] = useState(false);
   const [prefs, setPrefs] = useState<Prefs>({ analytics: true, affiliate: true });
 
-  // Show after mount if no prior decision (avoids SSR hydration flash)
+  // Show after mount if no prior decision (avoids SSR hydration flash).
+  // Also listen for the footer "Cookie preferences" link to re-open it anytime.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const prior = localStorage.getItem(STORAGE_KEY);
+    let t: ReturnType<typeof setTimeout> | undefined;
     if (!prior) {
       // Delay 600ms so it doesn't compete with hero animations
-      const t = setTimeout(() => setOpen(true), 600);
-      return () => clearTimeout(t);
+      t = setTimeout(() => setOpen(true), 600);
     }
+    const reopen = () => { setCustomizing(true); setOpen(true); };
+    window.addEventListener(CONSENT_REOPEN_EVENT, reopen);
+    return () => {
+      if (t) clearTimeout(t);
+      window.removeEventListener(CONSENT_REOPEN_EVENT, reopen);
+    };
   }, []);
 
   function persist(choice: Choice, p: Prefs) {
     const payload = { choice, prefs: p, at: new Date().toISOString() };
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(payload)); } catch { /* ignore */ }
     setConsentCookie(choice === "reject" ? "essential" : choice === "accept" ? "all" : `${p.analytics ? "a" : ""}${p.affiliate ? "f" : ""}` || "essential");
+    notifyConsentChanged();   // let the analytics gate react immediately
     setOpen(false);
   }
 

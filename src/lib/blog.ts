@@ -710,7 +710,7 @@ export const POSTS: BlogPost[] = [
 
   // ─── New SEO articles (20) ──────────────────────────────────────────────
   {
-    slug: "best-supplements-for-anxiety",
+    slug: "best-supplements-for-anxiety-without-sedation",
     title: "Best Supplements for Anxiety (Without Sedation)",
     excerpt: "Five evidence-led supplements that take the edge off without making you foggy or dependent.",
     description: "Evidence-based supplements for anxiety: L-theanine, ashwagandha, magnesium glycinate, lemon balm, and passionflower. Non-sedating, well-tolerated, with dosing.",

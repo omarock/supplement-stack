@@ -1254,6 +1254,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     iherbSearch: "Nature's Way Evening Primrose Oil 1300mg",
     warnings: ["blood-thinners"],
     category: "omega-fats",
+    foodSources: ["Borage seed oil", "Blackcurrant seed oil", "Hemp seeds & hemp oil", "Spirulina", "Oats & barley (trace GLA)"],
     description: "Evening primrose oil is extracted from the seeds of the wildflower Oenothera biennis. Its therapeutic value comes from its uniquely high content of gamma-linolenic acid (GLA), an omega-6 fatty acid that the body converts into prostaglandin E1, a signaling molecule with anti-inflammatory and hormonal-balancing effects. Clinical research has explored EPO for cyclical breast discomfort, PMS-related symptoms, atopic skin conditions, and mild joint inflammation. Because most modern Western diets are rich in pro-inflammatory omega-6 forms, GLA supplementation can shift the balance toward the more beneficial prostaglandins. Standard doses range from 1,300–3,000 mg per day (delivering 130–300 mg of GLA).",
   },
 

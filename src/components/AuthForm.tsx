@@ -164,10 +164,11 @@ export default function AuthForm({ mode }: { mode: Mode }) {
           {/* Email form */}
           <form onSubmit={handleEmail} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             <div>
-              <label style={{ fontSize: 13, fontWeight: 500, color: th.ink, display: "block", marginBottom: 8 }}>
+              <label htmlFor="auth-email" style={{ fontSize: 13, fontWeight: 500, color: th.ink, display: "block", marginBottom: 8 }}>
                 Email address
               </label>
               <input
+                id="auth-email"
                 type="email" autoComplete="email" required
                 placeholder="you@example.com"
                 value={email}

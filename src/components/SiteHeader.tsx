@@ -107,9 +107,22 @@ export default function SiteHeader() {
     router.push("/");
   }
 
+  function skipToContent(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    const main = document.querySelector("main");
+    if (main) {
+      main.setAttribute("tabindex", "-1");
+      (main as HTMLElement).focus();
+      main.scrollIntoView();
+    }
+  }
+
   return (
     <>
-      <nav style={{
+      <a className="skip-link" href="#main-content" onClick={skipToContent}>
+        Skip to main content
+      </a>
+      <nav aria-label="Primary" style={{
         position: "sticky", top: 0, zIndex: 60,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: scrolled ? "14px var(--nav-pad-x)" : "20px var(--nav-pad-x)",
@@ -252,7 +265,9 @@ export default function SiteHeader() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setOpenMobile(o => !o)}
-          aria-label="Toggle menu"
+          aria-label={openMobile ? "Close menu" : "Open menu"}
+          aria-expanded={openMobile}
+          aria-controls="mobile-menu"
           style={{
             display: "var(--burger-show)", alignItems: "center", justifyContent: "center",
             width: 40, height: 40, borderRadius: 999,
@@ -268,6 +283,7 @@ export default function SiteHeader() {
       {/* Mobile menu overlay, grouped */}
       {openMobile && (
         <div
+          id="mobile-menu"
           style={{
             position: "fixed", inset: 0, top: 64, zIndex: 59, background: TH.bg,
             padding: "20px 24px 40px", overflowY: "auto",

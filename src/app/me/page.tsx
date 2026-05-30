@@ -148,7 +148,7 @@ export default async function ProfilePage() {
                     : `Renews ${fmtShortDate(sub?.current_period_end)} · cancel anytime`}
                 </div>
               </div>
-              <Link href="/pricing" style={{
+              <Link href="/me/subscription" style={{
                 ...secondaryBtn, whiteSpace: "nowrap",
               }}>Manage plan →</Link>
             </div>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SuppdocLogo from "@/components/SuppdocLogo";
+import CookiePreferencesButton from "@/components/CookiePreferencesButton";
 import { TH } from "@/lib/theme";
 
 const COLS: [string, [string, string][]][] = [
@@ -68,6 +69,7 @@ export default function SiteFooter() {
                     {label}
                   </Link>
                 ))}
+                {heading === "Legal" && <CookiePreferencesButton />}
               </div>
             </div>
           ))}

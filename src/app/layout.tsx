@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
+import ConsentedAnalytics from "@/components/ConsentedAnalytics";
 import DeferredWidgets from "@/components/DeferredWidgets";
 import "./globals.css";
 
@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BRAND_JSONLD) }} />
         {children}
         <DeferredWidgets />
-        <Analytics />
+        <ConsentedAnalytics />
       </body>
     </html>
   );
