@@ -19,6 +19,7 @@ export interface Supplement {
   warnings?: string[];      // condition-tags that EXCLUDE this supp
   priority?: number;        // higher = stronger preference within tier (0-10)
   description?: string;     // long-form SEO copy for /ingredients/[slug] pages (2-3 paragraphs)
+  foodSources?: string[];   // natural dietary sources, e.g. ["Fatty fish", "Walnuts"]. Section is omitted when empty.
   category?: "vitamins" | "minerals" | "amino-acids" | "omega-fats" | "adaptogens" | "nootropics" | "antioxidants" | "joint" | "gut" | "sleep" | "hormonal" | "heart" | "performance" | "greens" | "specialty";
 }
 
@@ -51,6 +52,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     tags: ["energy", "immune", "general", "low-energy", "low-mood", "longevity", "female", "male", "bone"],
     vegan: false,
     iherbSearch: "Sports Research Vitamin D3 K2",
+    foodSources: ["Fatty fish (salmon, mackerel)", "Egg yolks", "Fortified milk & cereals", "Sunlight (D3 synthesis)", "Natto & hard cheeses (K2)"],
     category: "vitamins",
     description: "Vitamin D3 (cholecalciferol) is the form your skin produces from sunlight and the form your body uses for hundreds of processes, from immune function and mood regulation to bone density and calcium absorption. Modern life keeps most adults indoors, and roughly 40% of the global population is now estimated to have insufficient D3 levels. Pairing D3 with vitamin K2 (MK-7) is essential: K2 directs calcium into bones and away from arteries, mitigating the cardiovascular risk that high-dose D3 alone can carry. The combined daily dose of 5,000 IU D3 with 90 mcg K2 is well-evidenced for adults at all latitudes.",
   },
@@ -64,6 +66,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     tags: ["focus", "recovery", "general", "weight", "stress", "brain-fog", "low-mood", "joint", "longevity", "heart"],
     vegan: false,
     iherbSearch: "Sports Research Omega-3 Fish Oil Triple Strength",
+    foodSources: ["Salmon", "Mackerel", "Sardines", "Anchovies", "Herring"],
     warnings: ["blood-thinners"],
     category: "omega-fats",
     description: "Omega-3 fish oil delivers EPA and DHA, the two long-chain omega-3 fatty acids your brain, heart, joints, and inflammation pathways depend on. The triglyceride form used by premium brands like Sports Research is more bioavailable and stable than the ethyl ester form found in cheap supplements. Decades of research support omega-3s for cardiovascular function, mood, joint comfort, and recovery from physical stress. The American Heart Association recommends 1–2 g of combined EPA+DHA daily for general health and 2–4 g for cardiovascular support. Always store fish oil refrigerated and check the lot's third-party purity testing before buying.",
@@ -78,6 +81,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     tags: ["focus", "recovery", "general", "stress", "brain-fog", "vegan-only", "joint", "longevity", "heart"],
     vegan: true,
     iherbSearch: "Ovega-3 Algae Omega-3",
+    foodSources: ["Marine algae", "Algal oil", "Seaweed & nori"],
     warnings: ["fish-allergy", "blood-thinners"],
     category: "omega-fats",
     description: "Algae oil is the original source of EPA and DHA, fish only contain these long-chain omega-3s because they eat algae or other fish that ate algae. Direct algae supplements provide the same omega-3s without involving fish, making them the cleanest option for vegans, vegetarians, and people with fish or shellfish allergies. They are also typically free of the heavy-metal and PCB contamination concerns associated with ocean-sourced products. Ovega-3 and Nordic Naturals' algae line each provide 500–700 mg of combined EPA+DHA per serving. Daily intake of at least 500 mg of EPA+DHA is associated with cardiovascular and cognitive benefits.",
@@ -107,6 +111,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     tags: ["sleep", "stress", "recovery", "low-sleep", "high-stress", "general", "anxiety", "muscle-tension", "wake-at-night"],
     vegan: true,
     iherbSearch: "Doctor's Best High Absorption Magnesium Glycinate",
+    foodSources: ["Pumpkin seeds", "Dark leafy greens (spinach)", "Almonds", "Black beans", "Dark chocolate"],
     category: "minerals",
     description: "Magnesium glycinate combines the essential mineral magnesium with the amino acid glycine, creating one of the most bioavailable and gentle forms of magnesium available. Glycine itself has calming properties, which makes this form especially well-suited for evening use to support deep sleep and nervous system relaxation. An estimated 50% of adults in industrialized countries fall short of daily magnesium needs, a deficit linked to poor sleep quality, muscle tension, anxiety, and elevated blood pressure. Unlike magnesium citrate, glycinate does not cause laxative effects, making it appropriate for higher daily doses. Standard intake is 200–400 mg of elemental magnesium per evening, with food.",
   },
@@ -273,6 +278,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     tags: ["immune", "general", "skin", "frequent-illness"],
     vegan: true,
     iherbSearch: "Nature's Way Vitamin C Buffered",
+    foodSources: ["Citrus fruits (oranges)", "Bell peppers", "Strawberries", "Broccoli", "Kiwi"],
     category: "vitamins",
     description: "Vitamin C is a water-soluble vitamin that the human body, unlike most mammals, cannot synthesize. It functions as a powerful antioxidant, a cofactor for collagen synthesis (essential for skin, blood vessels, and connective tissue), and a key player in immune defense. Buffered vitamin C is paired with minerals like calcium, magnesium, or potassium, raising the pH and making it gentler on the stomach than ascorbic acid alone, particularly important at higher doses. While the 90 mg daily reference intake prevents scurvy, optimal intake for general health is debated but often cited as 500–1,000 mg per day. Doses above 2 g can cause loose stools.",
   },
@@ -286,6 +292,7 @@ export const SUPPLEMENT_DB: Supplement[] = [
     tags: ["immune", "general", "male", "active", "skin", "frequent-illness", "hair"],
     vegan: true,
     iherbSearch: "Thorne Zinc Picolinate 15mg",
+    foodSources: ["Oysters", "Beef", "Pumpkin seeds", "Chickpeas", "Cashews"],
     category: "minerals",
     description: "Zinc is an essential trace mineral involved in over 300 enzymatic reactions, immune function, taste, smell, wound healing, and testosterone synthesis. Its bioavailability varies dramatically by form: picolinate, citrate, and bisglycinate are well-absorbed; oxide is poorly absorbed and best avoided. Modern diets, especially those heavy in refined grains and low in oysters, red meat, and pumpkin seeds, often fall short of the 11 mg (men) or 8 mg (women) daily reference intake. Athletes, vegetarians, and people with frequent illness benefit most from supplementation. Standard daily doses are 10–25 mg with food. Doses above 40 mg long-term can interfere with copper absorption.",
   },

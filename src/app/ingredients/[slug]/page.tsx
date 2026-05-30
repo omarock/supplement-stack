@@ -10,10 +10,16 @@ import { iherbProductLink } from "@/lib/iherb";
 import { GOALS } from "@/lib/goals";
 import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
 import { BIOMARKERS } from "@/lib/biomarkers";
-import { RESEARCH } from "@/lib/research";
+import { RESEARCH, buildStudyLink } from "@/lib/research";
+import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BottleMockup from "@/components/BottleMockup";
+import ReviewedBy from "@/components/ReviewedBy";
+
+const BASE = "https://www.suppdoc.io";
+// Pinned review date (stable across builds); bump when the catalog is re-reviewed.
+const LAST_REVIEWED = "2026-05-30";
 
 const th = {
   bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
@@ -70,10 +76,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${supp.name}, Benefits, Dosage, Best Brands | suppdoc.io`,
     description: desc,
     keywords: [supp.name, ...supp.tags.slice(0, 6), "benefits", "dosage", "iHerb"].join(", "),
+    alternates: { canonical: `${BASE}/ingredients/${slug}` },
     openGraph: {
       title: `${supp.name}, Benefits, Dosage, Best Brands`,
       description: desc,
       type: "article",
+      url: `${BASE}/ingredients/${slug}`,
     },
   };
 }
@@ -104,9 +112,58 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
   const categoryLabel = supp.category ? CATEGORY_LABEL[supp.category] : "Supplement";
   const evidenceBadge = EVIDENCE_BADGE[supp.evidence];
   const showAmazon = amazonEnabled();
+  const desc = (supp.description ?? supp.why).slice(0, 300);
+
+  // ── Structured data (YMYL): only real, on-page facts; nothing fabricated ──
+  const studies = RESEARCH[supp.id]?.studies ?? [];
+  const citations = studies.map(st => ({
+    "@type": "MedicalScholarlyArticle",
+    name: st.title,
+    author: st.authors,
+    datePublished: String(st.year),
+    publisher: { "@type": "Organization", name: st.journal },
+    url: buildStudyLink(st),
+  }));
+  const reviewedBy = reviewedBySchema();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MedicalWebPage",
+        name: `${supp.name}: Benefits, Dosage & Evidence`,
+        description: desc,
+        url: `${BASE}/ingredients/${supp.id}`,
+        lastReviewed: LAST_REVIEWED,
+        author: authorSchema(),
+        ...(reviewedBy ? { reviewedBy } : {}),
+        mainEntity: { "@type": "DietarySupplement", name: supp.name },
+      },
+      {
+        "@type": "DietarySupplement",
+        name: supp.name,
+        description: desc,
+        activeIngredient: supp.name,
+        recommendedIntake: supp.dose,
+        mechanismOfAction: supp.why,
+        ...(supp.warnings && supp.warnings.length
+          ? { safetyConsideration: supp.warnings.map(w => warningLabel(w)).join("; ") }
+          : {}),
+        ...(citations.length ? { citation: citations } : {}),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: BASE },
+          { "@type": "ListItem", position: 2, name: "Ingredients", item: `${BASE}/ingredients` },
+          { "@type": "ListItem", position: 3, name: supp.name, item: `${BASE}/ingredients/${supp.id}` },
+        ],
+      },
+    ],
+  };
 
   return (
     <div style={{ minHeight: "100vh", background: th.bg, color: th.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
 
       {/* Breadcrumb */}
@@ -169,6 +226,14 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
             </Link>
           </div>
+
+          {/* E-E-A-T: reviewer byline + last-reviewed date */}
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 18, flexWrap: "wrap" }}>
+            <ReviewedBy />
+            <span style={{ ...MM, fontSize: 11, color: th.inkMute }}>
+              Last reviewed: {new Date(LAST_REVIEWED).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+            </span>
+          </div>
         </div>
       </section>
 
@@ -226,6 +291,28 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
           </aside>
         </div>
       </section>
+
+      {/* Natural food sources, only rendered when curated (no fabrication) */}
+      {supp.foodSources && supp.foodSources.length > 0 && (
+        <section style={{ padding: "0 var(--section-pad-x) 56px" }}>
+          <div style={{ maxWidth: 960, margin: "0 auto" }}>
+            <h2 style={{ ...S, fontSize: 32, margin: "0 0 16px", letterSpacing: "-0.02em" }}>
+              Natural food sources
+            </h2>
+            <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.6, margin: "0 0 16px", maxWidth: 640 }}>
+              Where possible, get {supp.name.split(" (")[0]} from whole foods first. Common dietary sources include:
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+              {supp.foodSources.map(food => (
+                <span key={food} style={{
+                  padding: "8px 16px", borderRadius: 999, fontSize: 14, fontWeight: 500,
+                  background: th.paper, border: `1px solid ${th.line}`, color: th.ink,
+                }}>{food}</span>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Buy buttons */}
       <section style={{ padding: "0 var(--section-pad-x) 64px" }}>
