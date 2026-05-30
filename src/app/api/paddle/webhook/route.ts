@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { verifyPaddleWebhook, planForPriceId } from "@/lib/paddle";
+import { verifyPaddleWebhook, planForPriceId, getPaddleCustomerEmail } from "@/lib/paddle";
 import { getAdminSupabase } from "@/lib/supabase-admin";
 
 export const runtime = "nodejs";
@@ -37,15 +37,18 @@ export async function POST(req: NextRequest) {
   }
 
   const data = event.data ?? {};
-  // The user's email is passed through checkout customData so we can match the
-  // Paddle subscription to a suppdoc account.
-  const email = String(
+  // Primary: the user's email passed through checkout customData. Fallback: look
+  // up the Paddle customer's email (covers checkouts where customData is missing).
+  let email = String(
     (data.custom_data?.user_email as string) ||
     (data.custom_data?.userEmail as string) ||
     ""
   ).trim().toLowerCase();
   if (!email) {
-    return Response.json({ ok: true, note: "no user_email in custom_data" });
+    email = (await getPaddleCustomerEmail(data.customer_id)) ?? "";
+  }
+  if (!email) {
+    return Response.json({ ok: true, note: "no email resolved for subscription" });
   }
 
   const admin = getAdminSupabase();

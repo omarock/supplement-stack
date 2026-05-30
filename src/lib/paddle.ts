@@ -39,6 +39,33 @@ export function paddleClientConfig(): PaddleClientConfig {
   };
 }
 
+function paddleApiBase(): string {
+  return process.env.NEXT_PUBLIC_PADDLE_ENV === "production"
+    ? "https://api.paddle.com"
+    : "https://sandbox-api.paddle.com";
+}
+
+/**
+ * Fetch a Paddle customer's email by id (server-side). Used as a fallback in the
+ * webhook to map a subscription to a suppdoc account when checkout customData is
+ * missing. Requires PADDLE_API_KEY.
+ */
+export async function getPaddleCustomerEmail(customerId: string | undefined): Promise<string | null> {
+  const key = process.env.PADDLE_API_KEY;
+  if (!key || !customerId) return null;
+  try {
+    const res = await fetch(`${paddleApiBase()}/customers/${customerId}`, {
+      headers: { Authorization: `Bearer ${key}` },
+    });
+    if (!res.ok) return null;
+    const body = await res.json();
+    const email = body?.data?.email;
+    return typeof email === "string" ? email.toLowerCase() : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Map a Paddle price id back to our internal plan name. */
 export function planForPriceId(priceId: string | undefined): "monthly" | "annual" | null {
   if (!priceId) return null;

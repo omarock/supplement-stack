@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import { getAdminSupabase } from "@/lib/supabase-admin";
+import { getSubscription, isPremium } from "@/lib/premium";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -97,6 +98,11 @@ export default async function ProfilePage() {
   const lastClick = clicks[0];
   const memberSince = fmtShortDate(user.created_at);
 
+  // Subscription / plan status
+  const sub = await getSubscription(email);
+  const premium = isPremium(sub);
+  const planLabel = sub?.plan === "annual" ? "Premium · Annual" : sub?.plan === "monthly" ? "Premium · Monthly" : "Premium";
+
   return (
     <div style={{ minHeight: "100vh", background: th.bg, color: th.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
       <SiteHeader />
@@ -114,6 +120,58 @@ export default async function ProfilePage() {
           <p style={{ fontSize: 17, color: th.inkSoft, margin: 0 }}>
             Signed in as <strong style={{ color: th.ink }}>{email}</strong> · Member since {memberSince}
           </p>
+        </section>
+
+        {/* Plan status */}
+        <section style={{ marginBottom: 36 }}>
+          {premium ? (
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap",
+              background: `linear-gradient(135deg, ${th.sage}14, #ffffff 70%)`,
+              border: `1.5px solid ${th.sage}66`, borderRadius: 18, padding: "20px 24px",
+              boxShadow: `0 10px 30px -16px ${th.sage}66`,
+            }}>
+              <div>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                  <span style={{
+                    ...MM, fontSize: 10.5, fontWeight: 700, color: "#fff", background: th.sage,
+                    padding: "3px 10px", borderRadius: 999, letterSpacing: "0.08em",
+                  }}>★ {planLabel.toUpperCase()}</span>
+                  <span style={{ ...MM, fontSize: 11, color: th.sageDeep, letterSpacing: "0.04em" }}>ACTIVE</span>
+                </div>
+                <div style={{ ...D, fontWeight: 600, fontSize: 20, color: th.ink, marginBottom: 4 }}>
+                  You&apos;re on Premium 🎉
+                </div>
+                <div style={{ fontSize: 13.5, color: th.inkSoft }}>
+                  {sub?.cancel_at_period_end
+                    ? `Access ends ${fmtShortDate(sub?.current_period_end)} (cancellation scheduled)`
+                    : `Renews ${fmtShortDate(sub?.current_period_end)} · cancel anytime`}
+                </div>
+              </div>
+              <Link href="/pricing" style={{
+                ...secondaryBtn, whiteSpace: "nowrap",
+              }}>Manage plan →</Link>
+            </div>
+          ) : (
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap",
+              background: th.paper, border: `1px solid ${th.line}`, borderRadius: 18, padding: "20px 24px",
+            }}>
+              <div>
+                <div style={{ ...MM, fontSize: 10.5, color: th.inkMute, letterSpacing: "0.08em", marginBottom: 8 }}>YOUR PLAN</div>
+                <div style={{ ...D, fontWeight: 600, fontSize: 20, color: th.ink, marginBottom: 4 }}>Free plan</div>
+                <div style={{ fontSize: 13.5, color: th.inkMute }}>
+                  Unlock bloodwork history, re-test comparison, full trends & AI memory.
+                </div>
+              </div>
+              <Link href="/pricing" style={{
+                display: "inline-flex", alignItems: "center", gap: 8, whiteSpace: "nowrap",
+                padding: "12px 20px", borderRadius: 999, textDecoration: "none",
+                background: `linear-gradient(180deg, ${th.sage}, ${th.sageDeep})`, color: "#fff",
+                ...D, fontWeight: 600, fontSize: 14.5, boxShadow: `0 8px 20px -6px ${th.sage}80`,
+              }}>Upgrade to Premium →</Link>
+            </div>
+          )}
         </section>
 
         {/* Stats grid */}
