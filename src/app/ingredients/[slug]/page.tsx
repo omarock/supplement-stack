@@ -276,11 +276,13 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
               <a
-                href={iherbLink(supp.iherbSearch)}
+                href={products[0]?.productPath
+                  ? iherbProductLink(products[0].productPath)
+                  : iherbLink(products[0]?.searchQuery ?? supp.iherbSearch)}
                 target="_blank" rel="noopener noreferrer sponsored"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 10,
-                  padding: "14px 24px", borderRadius: 12, fontSize: 15, fontWeight: 500,
+                  padding: "14px 24px", borderRadius: 12, fontSize: 15, fontWeight: 600,
                   background: th.burgundy, color: "#fff", textDecoration: "none",
                   boxShadow: "0 4px 14px rgba(10,37,64,0.18)",
                 }}
@@ -295,9 +297,9 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                   target="_blank" rel="noopener noreferrer sponsored"
                   style={{
                     display: "inline-flex", alignItems: "center", gap: 10,
-                    padding: "14px 24px", borderRadius: 12, fontSize: 15, fontWeight: 500,
-                    background: "#ff9900", color: "#fff", textDecoration: "none",
-                    boxShadow: "0 4px 14px rgba(255,153,0,0.25)",
+                    padding: "14px 24px", borderRadius: 12, fontSize: 15, fontWeight: 600,
+                    background: "#ffd814", color: "#0f1111", textDecoration: "none",
+                    border: "1px solid #fcd200", boxShadow: "0 4px 14px rgba(255,216,20,0.3)",
                   }}
                 >
                   Buy on Amazon →
@@ -365,7 +367,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                       background: th.burgundy, color: "#fff", textDecoration: "none",
                     }}
                   >
-                    View on iHerb →
+                    Buy on iHerb →
                   </a>
                   {amazonEnabled() && (
                     <a
