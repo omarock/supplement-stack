@@ -27,6 +27,7 @@ const COLS: [string, [string, string][]][] = [
   ["Legal", [
     ["Terms", "/terms"],
     ["Privacy", "/privacy"],
+    ["Refunds", "/refunds"],
     ["Cookies", "/cookies"],
   ]],
 ];

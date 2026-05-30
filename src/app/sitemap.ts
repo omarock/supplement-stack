@@ -118,7 +118,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   // ─── Tier 7: legal ──────────────────────────────────────────────────────
-  for (const path of ["/privacy", "/terms", "/disclaimer", "/cookies"]) {
+  for (const path of ["/privacy", "/terms", "/disclaimer", "/cookies", "/refunds"]) {
     entries.push({
       url: `${BASE}${path}`,
       lastModified: now, changeFrequency: "yearly", priority: 0.3,
