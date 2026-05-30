@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics";
 import { TH, FONTS } from "@/lib/theme";
+import { getSupabase } from "@/lib/supabase";
 import type { PaddleClientConfig } from "@/lib/paddle";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -61,6 +62,17 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
   const [plan, setPlan] = useState<"monthly" | "annual">("monthly");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Resolve the user's email client-side (reliable source of truth) so Paddle's
+  // checkout always gets a valid email + the customData needed to map the
+  // subscription back to this account. Falls back to the server-provided email.
+  const [authEmail, setAuthEmail] = useState<string | null>(email);
+  useEffect(() => {
+    const supa = getSupabase();
+    if (!supa) return;
+    supa.auth.getSession().then(({ data }) => {
+      if (data.session?.user?.email) setAuthEmail(data.session.user.email);
+    });
+  }, []);
 
   const upgrade = useCallback(async () => {
     track("checkout_click", { plan, signedIn, provider: paddle ? "paddle" : "stripe" });
@@ -73,10 +85,15 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
       try {
         const P = await loadPaddle(paddle);
         const priceId = plan === "annual" ? paddle.priceAnnual : paddle.priceMonthly;
+        const userEmail = (authEmail || email || "").trim();
+        // NOTE: we deliberately do NOT pass `customer: { email }`. Paddle.js 400s
+        // ("transaction-checkout") when that email already exists as a customer
+        // (which happens after any earlier checkout attempt). `customData` is what
+        // maps the subscription back to this account, so that's all we need; the
+        // overlay collects/loads the email itself.
         P.Checkout.open({
           items: [{ priceId, quantity: 1 }],
-          ...(email ? { customer: { email } } : {}),
-          customData: { user_email: email ?? "" },
+          ...(userEmail ? { customData: { user_email: userEmail } } : {}),
           settings: {
             displayMode: "overlay",
             theme: "light",
@@ -102,7 +119,7 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
       else setError("Couldn't start checkout. Please try again.");
     } catch { setError("Network error."); }
     finally { setBusy(false); }
-  }, [signedIn, email, billingEnabled, plan, paddle, router]);
+  }, [signedIn, email, authEmail, billingEnabled, plan, paddle, router]);
 
   const price = plan === "annual" ? "$79" : "$9";
   const per = plan === "annual" ? "/year" : "/month";
