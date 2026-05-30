@@ -8,6 +8,8 @@ import { IHERB_HOME } from "@/lib/iherb";
 import { trackQuizSubmission } from "@/lib/track";
 import SupplementGrid from "@/components/SupplementGrid";
 import TrackStackCTA from "@/components/TrackStackCTA";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import { track } from "@/lib/analytics";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
@@ -131,6 +133,7 @@ export default function ResultsPage() {
       minHeight: "100vh", background: th.bg, color: th.ink,
       fontFamily: '"Inter", system-ui, sans-serif',
     }}>
+      <SiteHeader />
 
       {/* Top bar */}
       <header style={{
@@ -324,6 +327,7 @@ export default function ResultsPage() {
         </p>
       </div>
 
+      <SiteFooter />
     </div>
   );
 }

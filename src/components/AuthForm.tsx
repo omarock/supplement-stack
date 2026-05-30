@@ -15,6 +15,16 @@ const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 type Mode = "signin" | "signup";
 
+// Where to land after auth: honor a safe ?redirect= param, else the account page.
+function nextPath(): string {
+  if (typeof window === "undefined") return "/me";
+  const r = new URLSearchParams(window.location.search).get("redirect");
+  return r && r.startsWith("/") && !r.startsWith("//") ? r : "/me";
+}
+function callbackUrl(): string {
+  return `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath())}`;
+}
+
 export default function AuthForm({ mode }: { mode: Mode }) {
   const [email, setEmail] = useState("");
   const [agree, setAgree] = useState(false);
@@ -54,7 +64,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
       const { error } = await supa.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: callbackUrl(),
         },
       });
       if (error) setError(error.message);
@@ -78,7 +88,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
     setBusy(true);
     const { error } = await supa.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo: callbackUrl() },
     });
     if (error) { setError(error.message); setBusy(false); }
     // OAuth redirects, so no need to setBusy(false) on success.

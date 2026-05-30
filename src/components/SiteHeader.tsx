@@ -1,9 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import SuppdocLogo from "@/components/SuppdocLogo";
+import { getSupabase } from "@/lib/supabase";
 import { TH, FONTS } from "@/lib/theme";
+
+// Account dropdown items shown when the user is signed in.
+const ACCOUNT_LINKS: { label: string; href: string }[] = [
+  { label: "My profile", href: "/me" },
+  { label: "Daily tracker", href: "/track" },
+  { label: "Bloodwork history", href: "/bloodwork/history" },
+  { label: "Billing & plan", href: "/pricing" },
+];
+
+function initials(email: string): string {
+  const name = email.split("@")[0] ?? email;
+  const parts = name.split(/[._-]+/).filter(Boolean);
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return name.slice(0, 2).toUpperCase();
+}
 
 type NavItem = { label: string; href: string; desc: string };
 type NavGroup = { label: string; items: NavItem[] };
@@ -41,9 +58,13 @@ const NAV: NavGroup[] = [
 ];
 
 export default function SiteHeader() {
+  const router = useRouter();
   const [openMobile, setOpenMobile] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<{ email: string } | null>(null);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 24);
@@ -51,6 +72,40 @@ export default function SiteHeader() {
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
+
+  // Auth: read the current session, then live-subscribe to sign-in/out events so
+  // the header reflects auth state instantly on every page, with no refresh.
+  useEffect(() => {
+    const supa = getSupabase();
+    if (!supa) return;
+    let active = true;
+    supa.auth.getSession().then(({ data }) => {
+      if (active) setUser(data.session?.user?.email ? { email: data.session.user.email } : null);
+    });
+    const { data: sub } = supa.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user?.email ? { email: session.user.email } : null);
+    });
+    return () => { active = false; sub.subscription.unsubscribe(); };
+  }, []);
+
+  // Close the account dropdown on outside click.
+  useEffect(() => {
+    if (!accountOpen) return;
+    const onClick = (e: MouseEvent) => {
+      if (accountRef.current && !accountRef.current.contains(e.target as Node)) setAccountOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, [accountOpen]);
+
+  async function logout() {
+    setAccountOpen(false);
+    setOpenMobile(false);
+    const supa = getSupabase();
+    if (supa) await supa.auth.signOut();
+    setUser(null);
+    router.push("/");
+  }
 
   return (
     <>
@@ -121,9 +176,11 @@ export default function SiteHeader() {
         </div>
 
         <div style={{ display: "var(--nav-show)", gap: 10, alignItems: "center" }}>
-          <Link href="/signin" style={{ fontSize: 14, color: TH.inkSoft, textDecoration: "none", padding: "8px 12px", fontWeight: 500 }}>
-            Sign in
-          </Link>
+          {!user && (
+            <Link href="/signin" style={{ fontSize: 14, color: TH.inkSoft, textDecoration: "none", padding: "8px 12px", fontWeight: 500 }}>
+              Sign in
+            </Link>
+          )}
           <Link href="/quiz" style={{
             background: TH.ink, color: TH.surface, textDecoration: "none",
             padding: "10px 18px", borderRadius: 999,
@@ -131,11 +188,65 @@ export default function SiteHeader() {
             display: "inline-flex", alignItems: "center", gap: 8,
             boxShadow: `0 4px 14px ${TH.ink}1a`,
           }}>
-            Build my stack
+            {user ? "My stack" : "Build my stack"}
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
               <path d="M5 12h14M13 5l7 7-7 7" />
             </svg>
           </Link>
+
+          {/* Account avatar + dropdown (signed in) */}
+          {user && (
+            <div ref={accountRef} style={{ position: "relative" }}>
+              <button
+                onClick={() => setAccountOpen(o => !o)}
+                aria-expanded={accountOpen} aria-haspopup="menu" aria-label="Account menu"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 7, cursor: "pointer",
+                  background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 999,
+                  padding: "5px 10px 5px 5px",
+                }}
+              >
+                <span style={{
+                  width: 30, height: 30, borderRadius: 999, flexShrink: 0,
+                  background: `linear-gradient(135deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  fontFamily: FONTS.mono, fontSize: 11.5, fontWeight: 700, letterSpacing: "0.02em",
+                }}>{initials(user.email)}</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke={TH.inkSoft} strokeWidth="2.4"
+                  style={{ transform: accountOpen ? "rotate(180deg)" : "none", transition: "transform .2s" }}>
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              {accountOpen && (
+                <div role="menu" style={{
+                  position: "absolute", top: "calc(100% + 10px)", right: 0, minWidth: 230,
+                  background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 16,
+                  boxShadow: "0 12px 40px -12px rgba(10,37,64,0.25)", padding: 8,
+                  animation: "sd-fade-in .16s ease-out",
+                }}>
+                  <div style={{ padding: "8px 12px 10px", borderBottom: `1px solid ${TH.edge}`, marginBottom: 6 }}>
+                    <div style={{ fontSize: 11, color: TH.muted, fontFamily: FONTS.mono, letterSpacing: "0.06em" }}>SIGNED IN AS</div>
+                    <div style={{ fontSize: 13.5, color: TH.ink, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user.email}</div>
+                  </div>
+                  {ACCOUNT_LINKS.map(item => (
+                    <Link key={item.href} href={item.href} role="menuitem" onClick={() => setAccountOpen(false)} style={{
+                      display: "block", padding: "9px 12px", borderRadius: 10, fontSize: 14, fontWeight: 500,
+                      color: TH.ink, textDecoration: "none",
+                    }}
+                      onMouseEnter={e => { e.currentTarget.style.background = TH.bg; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                    >{item.label}</Link>
+                  ))}
+                  <button onClick={logout} role="menuitem" style={{
+                    display: "block", width: "100%", textAlign: "left", padding: "9px 12px", marginTop: 4,
+                    borderTop: `1px solid ${TH.edge}`, paddingTop: 11,
+                    background: "transparent", border: "none", cursor: "pointer",
+                    fontFamily: FONTS.body, fontSize: 14, fontWeight: 500, color: "#b91c1c",
+                  }}>Sign out</button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -182,16 +293,42 @@ export default function SiteHeader() {
             </div>
           ))}
 
+          {/* Account section (signed in) */}
+          {user && (
+            <div>
+              <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>
+                My account
+              </div>
+              <div style={{ fontSize: 13, color: TH.inkSoft, marginBottom: 6 }}>{user.email}</div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {ACCOUNT_LINKS.map(item => (
+                  <Link key={item.href} href={item.href} onClick={() => setOpenMobile(false)} style={{
+                    padding: "12px 0", borderBottom: `1px solid ${TH.edge}`, textDecoration: "none",
+                    fontFamily: FONTS.display, fontWeight: 600, fontSize: 18, color: TH.ink,
+                  }}>{item.label}</Link>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 4 }}>
             <Link href="/quiz" onClick={() => setOpenMobile(false)} style={{
               padding: "15px 24px", background: TH.ink, color: TH.surface, textDecoration: "none",
               borderRadius: 999, fontSize: 15, fontWeight: 600, textAlign: "center",
               boxShadow: `0 8px 20px ${TH.ink}33`,
-            }}>Build my stack →</Link>
-            <Link href="/signin" onClick={() => setOpenMobile(false)} style={{
-              padding: "13px 24px", background: "transparent", color: TH.inkSoft, textDecoration: "none",
-              borderRadius: 999, fontSize: 14, fontWeight: 500, textAlign: "center", border: `1px solid ${TH.edge}`,
-            }}>Sign in</Link>
+            }}>{user ? "My stack →" : "Build my stack →"}</Link>
+            {user ? (
+              <button onClick={logout} style={{
+                padding: "13px 24px", background: "transparent", color: "#b91c1c", cursor: "pointer",
+                borderRadius: 999, fontSize: 14, fontWeight: 500, textAlign: "center",
+                border: `1px solid ${TH.edge}`, fontFamily: FONTS.body,
+              }}>Sign out</button>
+            ) : (
+              <Link href="/signin" onClick={() => setOpenMobile(false)} style={{
+                padding: "13px 24px", background: "transparent", color: TH.inkSoft, textDecoration: "none",
+                borderRadius: 999, fontSize: 14, fontWeight: 500, textAlign: "center", border: `1px solid ${TH.edge}`,
+              }}>Sign in</Link>
+            )}
           </div>
         </div>
       )}

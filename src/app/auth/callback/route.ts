@@ -15,7 +15,10 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/results";
+  // Land on the account dashboard by default (a page WITH the site header), not the
+  // headerless quiz-results page. Only accept safe, same-origin relative paths.
+  const requested = searchParams.get("next") ?? "/me";
+  const next = requested.startsWith("/") && !requested.startsWith("//") ? requested : "/me";
 
   if (!code) {
     return NextResponse.redirect(`${origin}/signin?error=missing_code`);
