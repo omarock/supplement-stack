@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SUPPLEMENT_DB, Supplement } from "@/lib/supplements";
-import { PRODUCTS, ProductOption } from "@/lib/products";
+import { PRODUCTS, ProductOption, productImage } from "@/lib/products";
 import { iherbProductLink, iherbLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ProductImageGallery from "@/components/ProductImageGallery";
+import BottleMockup from "@/components/BottleMockup";
 
 const th = {
   bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
@@ -293,18 +294,35 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             <div style={{
               display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 18,
             }}>
-              {alternatives.map((p, i) => (
+              {alternatives.map((p, i) => {
+                const img = productImage(p);
+                return (
                 <div key={i} style={{
                   background: th.paper, border: `1px solid ${th.line}`, borderRadius: 14, padding: 20,
                   display: "flex", flexDirection: "column", gap: 8,
                 }}>
-                  <span style={{
-                    alignSelf: "flex-start", padding: "4px 10px", borderRadius: 999,
-                    fontSize: 10, ...MM, fontWeight: 600, letterSpacing: "0.08em",
-                    background: p.brandBg, color: p.brandInk,
+                  {/* Product image (real photo, else branded bottle) */}
+                  <div style={{
+                    position: "relative", height: 150, borderRadius: 12, overflow: "hidden", marginBottom: 6,
+                    background: "#fff", border: `1px solid ${th.line}`,
+                    display: "flex", alignItems: "center", justifyContent: "center",
                   }}>
-                    {p.badge.toUpperCase()}
-                  </span>
+                    {img ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={img} alt={`${p.brand} ${p.productName}`} loading="lazy"
+                        style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} />
+                    ) : (
+                      <BottleMockup option={p} height={150} showBackgroundScene={false} />
+                    )}
+                    <span style={{
+                      position: "absolute", top: 10, left: 10,
+                      padding: "4px 10px", borderRadius: 999,
+                      fontSize: 10, ...MM, fontWeight: 600, letterSpacing: "0.08em",
+                      background: p.brandBg, color: p.brandInk,
+                    }}>
+                      {p.badge.toUpperCase()}
+                    </span>
+                  </div>
                   <div style={{ ...D, fontSize: 17, fontWeight: 600, lineHeight: 1.3 }}>
                     {p.productName}
                   </div>
@@ -317,14 +335,29 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                     target="_blank" rel="noopener noreferrer sponsored"
                     style={{
                       marginTop: 6, display: "block", textAlign: "center",
-                      padding: "10px 14px", borderRadius: 10, fontSize: 13, fontWeight: 500,
+                      padding: "11px 14px", borderRadius: 10, fontSize: 13, fontWeight: 600,
                       background: th.burgundy, color: "#fff", textDecoration: "none",
                     }}
                   >
-                    View on iHerb →
+                    Buy on iHerb →
                   </a>
+                  {amazonEnabled() && (
+                    <a
+                      href={p.amazonAsin ? amazonProductLink(p.amazonAsin) : amazonLink(`${p.brand} ${p.productName}`)}
+                      target="_blank" rel="noopener noreferrer sponsored"
+                      style={{
+                        display: "block", textAlign: "center",
+                        padding: "11px 14px", borderRadius: 10, fontSize: 13, fontWeight: 600,
+                        background: "#ffd814", color: "#0f1111", textDecoration: "none",
+                        border: "1px solid #fcd200",
+                      }}
+                    >
+                      Buy on Amazon →
+                    </a>
+                  )}
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
