@@ -92,9 +92,10 @@ export async function callClaude(opts: ClaudeOptions): Promise<ClaudeResult> {
         .map((c: { text?: string }) => c?.text ?? "")
         .join("");
 
+      const cleaned = opts.expectJson ? stripJsonPreamble(text) : text;
       return {
         ok: true,
-        text: opts.expectJson ? stripJsonPreamble(text) : text,
+        text: stripDashes(cleaned),   // never let an em/en dash reach the UI
         model: body?.model,
         stopReason: body?.stop_reason,
       };
@@ -120,6 +121,22 @@ function stripJsonPreamble(text: string): string {
   const start = candidate.search(/[\[{]/);
   if (start < 0) return candidate.trim();
   return candidate.slice(start).trim();
+}
+
+/**
+ * Remove em dashes (—) and en dashes (–) from model output. Founder hard rule:
+ * neither dash may ever appear in the UI, and LLMs love producing them. We can't
+ * rely on prompting alone, so we sanitize centrally here, every AI response
+ * (stack text, audit, bloodwork, chat, summaries) passes through this. Safe to
+ * run on raw JSON too: dashes only ever occur inside string values, never in
+ * JSON syntax. Spaced em dashes become a comma (clause break); the rest become
+ * a hyphen (covers ranges like "20–50" -> "20-50").
+ */
+export function stripDashes(text: string): string {
+  return text
+    .replace(/ — /g, ", ")
+    .replace(/—/g, "-")
+    .replace(/–/g, "-");
 }
 
 // ─── Streaming ─────────────────────────────────────────────────────────────
@@ -213,7 +230,7 @@ export async function streamClaude(opts: ClaudeStreamOptions): Promise<void> {
           if (event === "content_block_delta") {
             const delta = parsed.delta as { type?: string; text?: string } | undefined;
             if (delta?.type === "text_delta" && typeof delta.text === "string") {
-              await opts.onDelta(delta.text);
+              await opts.onDelta(stripDashes(delta.text));   // strip em/en dashes live
             }
           } else if (event === "message_start") {
             const message = parsed.message as { model?: string } | undefined;
