@@ -5,14 +5,15 @@ import type { NextConfig } from "next";
 // - 'unsafe-inline' + 'unsafe-eval' required for Next.js 16 hydration
 //   (without these, the app breaks because Next inlines runtime scripts/styles)
 // - Allow Cloudinary CDN for product images, Supabase for auth, Google Fonts,
-//   Vercel Analytics for stats
+//   Vercel Analytics + Google Analytics (googletagmanager.com loads gtag.js;
+//   *.google-analytics.com / *.analytics.google.com receive the hits) for stats
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel-insights.com https://*.vercel-analytics.com https://va.vercel-scripts.com https://*.paddle.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel-insights.com https://*.vercel-analytics.com https://va.vercel-scripts.com https://*.paddle.com https://www.googletagmanager.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.paddle.com",
-  "img-src 'self' data: blob: https://cloudinary.images-iherb.com https://s3.images-iherb.com https://*.googleusercontent.com https://*.paddle.com",
+  "img-src 'self' data: blob: https://cloudinary.images-iherb.com https://s3.images-iherb.com https://*.googleusercontent.com https://*.paddle.com https://www.googletagmanager.com https://*.google-analytics.com",
   "font-src 'self' data: https://fonts.gstatic.com https://*.paddle.com",
-  "connect-src 'self' https://*.supabase.co https://*.vercel-insights.com https://*.vercel-analytics.com https://*.paddle.com",
+  "connect-src 'self' https://*.supabase.co https://*.vercel-insights.com https://*.vercel-analytics.com https://*.paddle.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
   "frame-ancestors 'self'",
   "frame-src 'self' https://accounts.google.com https://*.paddle.com",
   "base-uri 'self'",
