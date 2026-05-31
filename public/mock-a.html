@@ -5,86 +5,88 @@
   :root{--bg:#f6f5f1;--surface:#fff;--ink:#0a2540;--inksoft:#3c4858;--muted:#6b7280;--muteddim:#a0a8b3;--sage:#5ba373;--saged:#3f7a52;--amber:#e8a04a;--amberd:#b5751e;--coral:#ff8b6b;--edge:rgba(10,37,64,.08);--edge2:rgba(10,37,64,.14)}
   *{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   .d{font-family:"Bricolage Grotesque";font-weight:600}.si{font-family:"Instrument Serif",serif;font-style:italic}.mm{font-family:"JetBrains Mono",monospace}
-  .wrap{max-width:1200px;margin:0 auto;padding:24px 40px 60px}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 40px}
+  .wrap{max-width:1200px;margin:0 auto;padding:14px 40px 44px}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px}
   .logo{font-family:"Bricolage Grotesque";font-weight:700;font-size:20px}.logo span{color:var(--sage)}
   .navlinks{display:flex;gap:26px;color:var(--inksoft);font-size:14px}
   .navr{display:flex;gap:14px;align-items:center}.btn-dark{background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;text-decoration:none}
   .badge{display:inline-flex;align-items:center;gap:9px;padding:6px 15px 6px 7px;background:#fff;border:1px solid var(--edge2);border-radius:999px;font-size:12.5px;color:var(--ink);font-weight:600}
   .badge .ic{width:22px;height:22px;border-radius:999px;background:linear-gradient(180deg,var(--sage),var(--saged));display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:12px}.badge .mut{color:var(--muted);font-weight:400}
-  h1{font-family:"Bricolage Grotesque";font-weight:500;font-size:48px;letter-spacing:-.04em;line-height:1.04;margin:16px 0 8px}
-  .sub{color:var(--inksoft);font-size:16px;max-width:580px;margin:0 auto;line-height:1.5}
-  .triptych{display:grid;grid-template-columns:1fr 1.22fr 1fr;gap:20px;align-items:stretch;margin-top:36px}
-  .card{background:#fff;border:1px solid var(--edge);border-radius:22px;padding:26px;display:flex;flex-direction:column;text-align:left;text-decoration:none;color:inherit;min-height:430px;box-shadow:0 12px 34px -18px rgba(10,37,64,.26)}
-  .card.rec{border:1.5px solid rgba(91,163,115,.6);background:linear-gradient(180deg,rgba(91,163,115,.06),#fff 55%);box-shadow:0 16px 40px -18px rgba(91,163,115,.55)}
-  .card.center{background:linear-gradient(180deg,#fff,#fbfbf9);border:1.5px solid var(--edge2);box-shadow:0 24px 56px -22px rgba(10,37,64,.32)}
+  h1{font-family:"Bricolage Grotesque";font-weight:500;font-size:46px;letter-spacing:-.04em;line-height:1.03;margin:14px 0 6px}
+  .sub{color:var(--inksoft);font-size:16px;max-width:600px;margin:0 auto;line-height:1.5}
+  .triptych{display:grid;grid-template-columns:1.18fr 1fr 1fr;gap:18px;align-items:stretch;margin-top:26px}
+  .card{background:#fff;border:1px solid var(--edge);border-radius:20px;padding:24px;display:flex;flex-direction:column;text-align:left;text-decoration:none;color:inherit;box-shadow:0 10px 28px -18px rgba(10,37,64,.22)}
+  /* QUIZ = the focus: bigger, sage-tinted, glow, elevated */
+  .card.rec{border:2px solid var(--sage);background:linear-gradient(165deg,rgba(91,163,115,.12),#fff 60%);box-shadow:0 20px 46px -16px rgba(91,163,115,.6);transform:scale(1.015)}
   .chip{display:inline-flex;align-items:center;font-family:"JetBrains Mono";font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:6px}
-  .iconwrap{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px}
-  .ctitle{font-family:"Bricolage Grotesque";font-weight:600;font-size:23px;margin:14px 0 2px;letter-spacing:-.01em}
-  .cdesc{color:var(--inksoft);font-size:14px;line-height:1.55;margin-top:10px}
-  .spacer{flex:1}
-  .buyline{font-family:"JetBrains Mono";font-size:9.5px;letter-spacing:.04em;color:var(--saged);text-transform:uppercase;margin:16px 0 12px}
-  /* All buttons identical, attractive, bottom-aligned */
-  .cbtn{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;height:52px;background:linear-gradient(180deg,var(--sage),var(--saged));color:#fff;box-shadow:0 10px 22px -6px rgba(91,163,115,.6);transition:transform .15s}
+  .iconwrap{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+  .ctitle{font-family:"Bricolage Grotesque";font-weight:600;font-size:21px;margin:12px 0 2px;letter-spacing:-.01em}
+  .rec .ctitle{font-size:26px}
+  .tagl{font-family:"Instrument Serif",serif;font-style:italic;font-size:14.5px}
+  .cdesc{color:var(--inksoft);font-size:13.5px;line-height:1.55;margin-top:9px}
+  .rec .cdesc{font-size:14.5px}
+  .spacer{flex:1;min-height:8px}
+  .buyline{font-family:"JetBrains Mono";font-size:9px;letter-spacing:.04em;color:var(--saged);text-transform:uppercase;margin:14px 0 11px}
+  .cbtn{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-weight:600;font-size:14.5px;text-decoration:none;height:50px;transition:transform .15s}
   .cbtn:hover{transform:translateY(-2px)}
-  /* build box */
+  .cbtn.primary{background:linear-gradient(180deg,var(--sage),var(--saged));color:#fff;box-shadow:0 12px 24px -6px rgba(91,163,115,.65);height:56px;font-size:16px}
+  .cbtn.green{background:linear-gradient(180deg,var(--sage),var(--saged));color:#fff;box-shadow:0 8px 18px -6px rgba(91,163,115,.5)}
+  .cbtn.ink{background:var(--ink);color:#fff;box-shadow:0 8px 18px -6px rgba(10,37,64,.3)}
   .label{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muteddim)}
-  .input{margin-top:9px;color:var(--muteddim);font-size:16px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
-  .gchip{border:1px solid var(--edge2);border-radius:999px;padding:6px 13px;font-size:12.5px;color:var(--inksoft)}
-  /* compact stats bar */
-  .stats{display:flex;justify-content:center;flex-wrap:wrap;gap:0;background:#fff;border:1px solid var(--edge);border-radius:14px;overflow:hidden;margin-top:26px;max-width:760px;margin-left:auto;margin-right:auto}
-  .stat{flex:1;min-width:120px;padding:11px 14px;text-align:center;border-left:1px solid var(--edge);display:flex;align-items:baseline;justify-content:center;gap:7px}
+  .input{margin-top:8px;color:var(--muteddim);font-size:15px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .gchip{border:1px solid var(--edge2);border-radius:999px;padding:5px 12px;font-size:12px;color:var(--inksoft)}
+  .stats{display:flex;justify-content:center;flex-wrap:wrap;background:#fff;border:1px solid var(--edge);border-radius:13px;overflow:hidden;margin:22px auto 0;max-width:720px}
+  .stat{flex:1;min-width:120px;padding:10px 14px;text-align:center;border-left:1px solid var(--edge);display:flex;align-items:baseline;justify-content:center;gap:6px}
   .stat:first-child{border-left:none}
-  .stat .v{font-family:"Bricolage Grotesque";font-weight:600;font-size:18px;letter-spacing:-.01em}.stat .l{font-family:"JetBrains Mono";font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.02em}
-  .tag{position:absolute;top:14px;left:18px;background:var(--ink);color:#fff;border-radius:999px;padding:5px 12px;font-family:"JetBrains Mono";font-size:11px}
+  .stat .v{font-family:"Bricolage Grotesque";font-weight:600;font-size:17px}.stat .l{font-family:"JetBrains Mono";font-size:8.5px;color:var(--muted);text-transform:uppercase}
+  .tag{position:absolute;top:12px;left:18px;background:var(--ink);color:#fff;border-radius:999px;padding:5px 12px;font-family:"JetBrains Mono";font-size:11px}
   @media (max-width:860px){
-    .wrap{padding:14px 18px 48px}.navlinks{display:none}
-    h1{font-size:34px}
-    .triptych{grid-template-columns:1fr;gap:14px;margin-top:26px}
-    .card{min-height:0;padding:22px}
-    .stat{min-width:46%}
+    .wrap{padding:10px 18px 40px}.navlinks{display:none}h1{font-size:33px}
+    .triptych{grid-template-columns:1fr;gap:13px;margin-top:22px}
+    .card.rec{transform:none}.rec .ctitle{font-size:23px}
+    .cbtn.primary{height:54px}.stat{min-width:46%}
   }
 </style></head>
 <body>
-<div style="position:relative"><span class="tag">MOCKUP A v2 · aligned buttons · bigger cards · compact stats</span></div>
+<div style="position:relative"><span class="tag">MOCKUP A v3 · quiz-focused · premium · tighter</span></div>
 <nav><div class="logo">suppdoc<span>.io</span></div><div class="navlinks"><span>Start ▾</span><span>Learn ▾</span><span>My plan ▾</span></div><div class="navr"><span style="color:var(--inksoft);font-size:14px">Sign in</span><a class="btn-dark" href="#">Build my stack →</a></div></nav>
 <div class="wrap" style="text-align:center">
   <span class="badge"><span class="ic">✦</span>Evidence-graded <span class="mut">· every claim cited · no house brand</span></span>
   <h1>The supplement stack <span class="si" style="color:var(--saged)">built for you</span>.</h1>
-  <p class="sub">Three ways in. Each ends with a clear stack you can buy from iHerb or Amazon in one click.</p>
+  <p class="sub">Your complete supplement service, personalised and evidence-led. Every path ends in a stack you can buy on iHerb or Amazon.</p>
 
   <div class="triptych">
-    <!-- Quiz -->
+    <!-- QUIZ, the focus -->
     <div class="card rec">
-      <div style="display:flex;align-items:center;gap:8px"><span class="iconwrap" style="background:rgba(91,163,115,.12);color:var(--saged)">☑</span><span class="chip" style="background:var(--sage);color:#fff">★ 01 · Recommended</span></div>
-      <div class="ctitle">Take the AI quiz</div>
-      <div class="si" style="color:var(--saged);font-size:14.5px">The fastest way in.</div>
-      <div class="cdesc">Answer a few questions about how you sleep, eat, and feel. We match you to evidence-backed ingredients.</div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="iconwrap" style="background:rgba(91,163,115,.16);color:var(--saged)">☑</span><span class="chip" style="background:var(--sage);color:#fff">★ Recommended · start here</span></div>
+      <div class="ctitle">Take the quiz</div>
+      <div class="tagl" style="color:var(--saged)">The most accurate, personalised path.</div>
+      <div class="cdesc">Answer a few questions about how you sleep, train, eat, and feel. We build you a complete stack matched to your body and goals, with the reasoning behind every pick.</div>
       <div class="spacer"></div>
-      <div class="buyline">→ generate a stack → buy on iHerb / Amazon</div>
-      <a class="cbtn" href="#">Start the quiz →</a>
+      <div class="buyline">→ your complete stack → buy on iHerb / Amazon</div>
+      <a class="cbtn primary" href="#">Start the quiz →</a>
     </div>
-    <!-- Build box (center) -->
-    <div class="card center">
-      <span class="chip" style="background:rgba(232,160,74,.15);color:var(--amberd);align-self:flex-start">02 · Build it yourself</span>
-      <div style="margin-top:14px;background:var(--bg);border:1px solid var(--edge);border-radius:16px;padding:16px">
+    <!-- BUILD, secondary -->
+    <div class="card">
+      <span class="chip" style="background:rgba(232,160,74,.15);color:var(--amberd);align-self:flex-start">Build it yourself</span>
+      <div style="margin-top:12px;background:var(--bg);border:1px solid var(--edge);border-radius:14px;padding:14px">
         <div class="label">What do you want to improve?</div>
         <div class="input">better sleep and steadier energy…</div>
-        <div class="chips"><span class="gchip">Sleep</span><span class="gchip">Energy</span><span class="gchip">Focus</span><span class="gchip">Stress</span><span class="gchip">Longevity</span></div>
+        <div class="chips"><span class="gchip">Sleep</span><span class="gchip">Energy</span><span class="gchip">Focus</span><span class="gchip">Stress</span></div>
       </div>
       <div class="spacer"></div>
-      <div class="buyline" style="text-align:center">describe it or pick a goal → generate → buy</div>
-      <a class="cbtn" href="#">✦ Build my stack</a>
+      <div class="buyline" style="text-align:center">describe it or pick a goal → buy the result</div>
+      <a class="cbtn green" href="#">✦ Build my stack</a>
     </div>
-    <!-- Audit -->
+    <!-- AUDIT, secondary -->
     <div class="card">
-      <div style="display:flex;align-items:center;justify-content:space-between"><span class="iconwrap" style="background:rgba(255,139,107,.14);color:var(--coral)">🔍</span><span class="chip" style="background:rgba(255,139,107,.16);color:#c2410c">03 · New</span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between"><span class="iconwrap" style="background:rgba(255,139,107,.14);color:var(--coral)">🔍</span><span class="chip" style="background:rgba(255,139,107,.16);color:#c2410c">New</span></div>
       <div class="ctitle">Audit my stack</div>
-      <div class="si" style="color:var(--coral);font-size:14.5px">Already taking supplements?</div>
-      <div class="cdesc">Paste what you take today (and your bloodwork) and we score interactions, doses, and gaps, then suggest fixes.</div>
+      <div class="tagl" style="color:var(--coral)">Already taking supplements?</div>
+      <div class="cdesc">Paste what you take (and your bloodwork) and we score interactions, doses, and gaps, then suggest the fixes worth buying.</div>
       <div class="spacer"></div>
       <div class="buyline">→ a cleaner stack → buy the upgrades</div>
-      <a class="cbtn" href="#">Audit my stack →</a>
+      <a class="cbtn ink" href="#">Audit my stack →</a>
     </div>
   </div>
 
