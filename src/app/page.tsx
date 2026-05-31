@@ -64,17 +64,18 @@ function Hero() {
     });
   }
 
-  // Primary action: the goal box feeds straight into the free quiz (the
-  // recommended, most-accurate path), carrying the goal so it pre-selects.
-  function startQuiz() {
+  // Primary action = the Build Stack flow, deliberately INDEPENDENT from the
+  // quiz. It only ever routes to /build (with the goal pre-filled) and never
+  // touches /quiz or any quiz state, so users are never dropped into a quiz.
+  function generateStack() {
     const finalGoal = (goal.trim() || picked.join(", ")).trim();
     track("home_goal_build", { hasGoal: finalGoal.length > 0, chips: picked.length });
-    router.push(finalGoal ? `/quiz/express?goal=${encodeURIComponent(finalGoal)}` : "/quiz/express");
+    router.push(finalGoal ? `/build?goal=${encodeURIComponent(finalGoal)}` : "/build");
   }
 
   // Intent-specific CTA label: when one goal is chosen, name it.
   const primaryGoal = picked.length === 1 ? picked[0].toLowerCase() : null;
-  const ctaLabel = primaryGoal ? `Get my free ${primaryGoal} stack` : "Get my free stack";
+  const ctaLabel = primaryGoal ? `Generate my free ${primaryGoal} stack` : "Generate my free stack";
 
   const arrow = (c: string, s = 12) => (
     <svg width={s} height={s} viewBox="0 0 14 14" fill="none">
@@ -136,7 +137,7 @@ function Hero() {
               onChange={e => setGoal(e.target.value)}
               rows={1}
               placeholder="better sleep and steadier energy…"
-              onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); startQuiz(); } }}
+              onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); generateStack(); } }}
               style={{
                 width: "100%", boxSizing: "border-box", border: "none", outline: "none", resize: "none",
                 fontFamily: FONTS.body, fontSize: 16, lineHeight: 1.4, color: TH.ink, background: "transparent", minHeight: 26,
@@ -156,7 +157,7 @@ function Hero() {
                 );
               })}
             </div>
-            <button type="button" onClick={startQuiz} style={{
+            <button type="button" onClick={generateStack} style={{
               marginTop: 14, width: "100%", height: 52, border: "none", borderRadius: 999, cursor: "pointer",
               background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
               fontFamily: FONTS.body, fontWeight: 600, fontSize: 15.5, letterSpacing: "-0.01em",
@@ -167,7 +168,7 @@ function Hero() {
               {ctaLabel}
             </button>
             <div style={{ textAlign: "center", marginTop: 9, ...MM, fontSize: 9.5, letterSpacing: "0.04em", color: TH.muted }}>
-              3-MINUTE QUIZ · FREE · NO CARD
+              FREE · NO SIGNUP · NO CARD
             </div>
           </div>
         </Reveal>

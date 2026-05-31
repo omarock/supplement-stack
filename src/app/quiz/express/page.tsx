@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { QuizData } from "@/types/quiz";
@@ -40,36 +40,6 @@ const EXPRESS_DEFAULTS: QuizData = {
 };
 
 const TOTAL = 6;
-const STORAGE = "suppdoc.expressQuiz.v1";
-
-// Map a free-text/chip goal from the homepage (?goal=) onto the quiz's goal
-// options, so picking "Sleep" on the homepage pre-selects "Better sleep" here.
-const GOAL_KEYWORDS: [string, string][] = [
-  ["sleep", "Better sleep"],
-  ["energy", "More energy"],
-  ["focus", "Sharper focus"],
-  ["stress", "Lower stress"],
-  ["muscle", "Muscle & Recovery"],
-  ["recovery", "Muscle & Recovery"],
-  ["longevity", "Healthy aging & longevity"],
-  ["aging", "Healthy aging & longevity"],
-  ["immun", "Stronger immunity"],
-  ["mood", "Better mood"],
-  ["skin", "Skin / hair / Beauty"],
-  ["hair", "Skin / hair / Beauty"],
-  ["beauty", "Skin / hair / Beauty"],
-  ["gut", "Gut health"],
-  ["digest", "Gut health"],
-];
-
-function goalsFromParam(raw: string): string[] {
-  const q = raw.toLowerCase();
-  const out: string[] = [];
-  for (const [kw, label] of GOAL_KEYWORDS) {
-    if (q.includes(kw) && !out.includes(label)) out.push(label);
-  }
-  return out.slice(0, 3);
-}
 
 function canProceed(step: number, d: QuizData): boolean {
   switch (step) {
@@ -85,37 +55,14 @@ function canProceed(step: number, d: QuizData): boolean {
 
 export default function ExpressQuiz() {
   const router = useRouter();
+  // The quiz is intentionally STATELESS across visits: it always starts at
+  // step 1 with fresh defaults. We never auto-restore a saved draft or step, so
+  // a user is never dropped onto a previously completed step (e.g. the last
+  // page) or made to resume unintentionally. The only persisted value is the
+  // final result (phylaQuizData, written in finish()), read by /results, which
+  // is a separate concern from this in-progress flow.
   const [data, setData] = useState<QuizData>(EXPRESS_DEFAULTS);
   const [step, setStep] = useState(1);
-
-  // Hydrate draft
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const raw = localStorage.getItem(STORAGE);
-      if (raw) {
-        const parsed = JSON.parse(raw) as { data: QuizData; step: number };
-        if (parsed.data) setData({ ...EXPRESS_DEFAULTS, ...parsed.data });
-        if (parsed.step && parsed.step >= 1 && parsed.step <= TOTAL) setStep(parsed.step);
-      }
-    } catch { /* ignore */ }
-  }, []);
-
-  // Persist draft
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try { localStorage.setItem(STORAGE, JSON.stringify({ data, step })); } catch { /* ignore */ }
-  }, [data, step]);
-
-  // Seamless handoff from the homepage goal box: pre-select goals from ?goal=
-  // (only when the user hasn't already chosen any, so we never override a draft).
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const raw = new URLSearchParams(window.location.search).get("goal");
-    if (!raw) return;
-    const mapped = goalsFromParam(raw);
-    if (mapped.length) setData(d => (d.goals.length ? d : { ...d, goals: mapped }));
-  }, []);
 
   const update = (u: Partial<QuizData>) => setData(d => ({ ...d, ...u }));
   const ok = canProceed(step, data);
