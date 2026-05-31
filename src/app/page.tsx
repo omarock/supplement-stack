@@ -87,21 +87,22 @@ function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
 function StatStrip() {
   return (
     <div role="list" aria-label="Platform facts" style={{
-      display: "grid", gridTemplateColumns: "var(--facts-cols)", gap: 1,
-      background: TH.edge, border: `1px solid ${TH.edge}`, borderRadius: 16, overflow: "hidden",
-      boxShadow: "0 1px 2px rgba(10,37,64,0.04)",
+      display: "grid", gridTemplateColumns: "var(--facts-cols)",
+      background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 13, overflow: "hidden",
+      maxWidth: 720, margin: "0 auto", boxShadow: "0 1px 2px rgba(10,37,64,0.04)",
     }}>
-      {FACTS.map(f => (
+      {FACTS.map((f, i) => (
         <div key={f.label} role="listitem" style={{
-          background: TH.surface, padding: "15px 10px", textAlign: "center",
-          display: "flex", flexDirection: "column", gap: 4, alignItems: "center", justifyContent: "center",
+          padding: "9px 12px", textAlign: "center",
+          borderLeft: i % 4 === 0 ? "none" : `1px solid ${TH.edge}`,
+          display: "flex", alignItems: "baseline", justifyContent: "center", gap: 6, flexWrap: "wrap",
         }}>
-          <div style={{ ...D, fontSize: 27, color: TH.ink, letterSpacing: "-0.02em", lineHeight: 1 }}>
+          <span style={{ ...D, fontSize: 17, color: TH.ink, letterSpacing: "-0.01em" }}>
             {f.display ?? <Counter to={f.value!} suffix={f.suffix} />}
-          </div>
-          <div style={{ ...MM, fontSize: 9.5, color: TH.muted, letterSpacing: "0.03em", lineHeight: 1.3, textTransform: "uppercase" }}>
+          </span>
+          <span style={{ ...MM, fontSize: 8.5, color: TH.muted, letterSpacing: "0.02em", textTransform: "uppercase" }}>
             {f.label}
-          </div>
+          </span>
         </div>
       ))}
     </div>
@@ -141,40 +142,60 @@ function Hero() {
     router.push(`/build?goal=${encodeURIComponent(finalGoal)}`);
   }
 
-  // Intent-specific CTA label: when one goal is chosen, name it.
+  // Build-box CTA label, named when a single goal is chosen.
   const primaryGoal = picked.length === 1 ? picked[0].toLowerCase() : null;
-  const ctaLabel = primaryGoal ? `Generate my free ${primaryGoal} stack` : "Generate my free stack";
+  const ctaLabel = primaryGoal ? `Build my ${primaryGoal} stack` : "Build my stack";
 
-  const arrow = (c: string, s = 12) => (
-    <svg width={s} height={s} viewBox="0 0 14 14" fill="none">
-      <path d="M3 7h8m-3-3l3 3-3 3" stroke={c} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  // ── Shared triptych styles (3 equal service cards) ──────────────────────
+  const triCard = (variant: "rec" | "center" | "plain"): CSSProperties => ({
+    display: "flex", flexDirection: "column", textDecoration: "none", color: "inherit",
+    borderRadius: 20, padding: 22,
+    background: variant === "rec" ? `linear-gradient(165deg, ${TH.sage}1f, ${TH.surface} 62%)` : TH.surface,
+    border: variant === "rec" ? `2px solid ${TH.sage}` : `1px solid ${TH.edge}`,
+    boxShadow: variant === "rec"
+      ? `0 18px 44px -18px ${TH.sage}88`
+      : variant === "center"
+        ? "0 16px 40px -20px rgba(10,37,64,0.26)"
+        : "0 10px 28px -18px rgba(10,37,64,0.2)",
+  });
+  const triBtn: CSSProperties = {
+    display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+    height: 50, borderRadius: 999, border: "none", cursor: "pointer",
+    background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
+    fontFamily: FONTS.body, fontWeight: 600, fontSize: 14.5, textDecoration: "none",
+    boxShadow: `0 10px 22px -6px ${TH.sage}80`,
+  };
+  const buylineStyle: CSSProperties = {
+    ...MM, fontSize: 9, letterSpacing: "0.04em", color: TH.sageDeep, textTransform: "uppercase", margin: "14px 0 11px",
+  };
+  const chipStyle = (bg: string, fg: string): CSSProperties => ({
+    ...MM, display: "inline-flex", alignItems: "center", fontSize: 9.5, fontWeight: 600,
+    letterSpacing: "0.06em", textTransform: "uppercase", padding: "4px 9px", borderRadius: 6, background: bg, color: fg,
+  });
+  const iconWrap = (bg: string, fg: string): CSSProperties => ({
+    width: 42, height: 42, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center",
+    background: bg, color: fg, flexShrink: 0,
+  });
+  const cardSpacer = <div style={{ flex: 1, minHeight: 8 }} />;
 
   return (
     <section id="engine" style={{ position: "relative", padding: "var(--hh-pad-y) var(--hero-pad-x) var(--hh-pad-b)" }}>
-      <div style={{ maxWidth: 1080, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "var(--hero2-cols)", gap: "var(--hero2-gap)", alignItems: "start" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
 
-          {/* LEFT column, the funnel */}
-          <div style={{ minWidth: 0 }}>
-
-        {/* Intro: honest badge + headline + subhead (left on desktop, centered on mobile) */}
-        <div className="sd-hero-intro">
+        {/* Centered intro */}
+        <div className="sd-hero-intro" style={{ maxWidth: 660, margin: "0 auto" }}>
           <Reveal>
             <div style={{
-              display: "inline-flex", alignItems: "center", gap: 9, marginBottom: 18,
+              display: "inline-flex", alignItems: "center", gap: 9, marginBottom: 16,
               padding: "6px 15px 6px 7px", background: TH.surface,
               border: `1px solid ${TH.edgeStrong}`, borderRadius: 999, boxShadow: `0 2px 6px ${TH.ink}0f`,
             }}>
               <span style={{
                 width: 22, height: 22, borderRadius: 999, background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, flexShrink: 0,
-                display: "inline-flex", alignItems: "center", justifyContent: "center",
-                boxShadow: `0 2px 5px ${TH.sage}66`,
+                display: "inline-flex", alignItems: "center", justifyContent: "center", boxShadow: `0 2px 5px ${TH.sage}66`,
               }} aria-hidden>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 5.5A2 2 0 0 1 6 4h13v15H6a2 2 0 0 0-2 2z" />
-                  <path d="M8 8h7M8 11.5h7" />
+                  <path d="M4 5.5A2 2 0 0 1 6 4h13v15H6a2 2 0 0 0-2 2z" /><path d="M8 8h7M8 11.5h7" />
                 </svg>
               </span>
               <span style={{ fontSize: 12.5, color: TH.ink, fontWeight: 600, letterSpacing: "-0.005em" }}>
@@ -182,118 +203,96 @@ function Hero() {
               </span>
             </div>
           </Reveal>
-
-          <h1 style={{ ...D, fontWeight: 500, fontSize: "var(--hh-h1)", lineHeight: 1.02, letterSpacing: "-0.04em", color: TH.ink, margin: 0 }}>
+          <h1 style={{ ...D, fontWeight: 500, fontSize: "var(--hh-h1)", lineHeight: 1.03, letterSpacing: "-0.04em", color: TH.ink, margin: 0 }}>
             The supplement stack{" "}
             <span style={{ ...SI, color: TH.sageDeep, letterSpacing: "-0.01em" }}>built for you</span>.
           </h1>
           <Reveal delay={0.1}>
-            <p style={{ fontSize: "var(--hh-sub)", lineHeight: 1.45, color: TH.inkSoft, maxWidth: 480, margin: "14px 0 0" }}>
-              Tell us your goal. Our evidence-graded AI builds your stack from 151 researched ingredients, and tells you what to{" "}
-              <span style={{ ...SI, color: TH.sageDeep }}>skip</span>.
+            <p style={{ fontSize: "var(--hh-sub)", lineHeight: 1.45, color: TH.inkSoft, maxWidth: 560, margin: "12px auto 0" }}>
+              Three ways in. Each ends with a clear stack you can buy from iHerb or Amazon in one click.
             </p>
           </Reveal>
         </div>
 
-        {/* Goal box, the primary action */}
+        {/* Triptych, three equal services */}
         <Reveal delay={0.15}>
-          <div style={{
-            marginTop: 22, background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, padding: 18,
-            boxShadow: "0 2px 4px rgba(10,37,64,0.04), 0 18px 40px -20px rgba(10,37,64,0.2)",
-          }}>
-            <div style={{ ...MM, fontSize: 10, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.mutedDim, marginBottom: 9 }}>
-              What do you want to improve?
-            </div>
-            <textarea
-              ref={goalRef}
-              value={goal}
-              onChange={e => { setGoal(e.target.value); if (needsGoal) setNeedsGoal(false); }}
-              rows={1}
-              aria-invalid={needsGoal}
-              placeholder="better sleep and steadier energy…"
-              onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); generateStack(); } }}
-              style={{
-                width: "100%", boxSizing: "border-box", border: "none", outline: "none", resize: "none",
-                fontFamily: FONTS.body, fontSize: 16, lineHeight: 1.4, color: TH.ink, background: "transparent", minHeight: 26,
-              }}
-            />
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginTop: 12 }}>
-              {GOAL_CHIPS.map(chip => {
-                const on = picked.includes(chip);
-                return (
-                  <button key={chip} type="button" onClick={() => toggleChip(chip)} style={{
-                    height: 30, padding: "0 13px", borderRadius: 999, cursor: "pointer",
-                    border: `1px solid ${on ? TH.sage : TH.edgeStrong}`,
-                    background: on ? TH.accentGlow : "transparent",
-                    color: on ? TH.sageDeep : TH.inkSoft, fontFamily: FONTS.body, fontSize: 12.5, fontWeight: on ? 600 : 500,
-                    transition: "all .15s",
-                  }}>{chip}</button>
-                );
-              })}
-            </div>
-            <button type="button" onClick={generateStack} style={{
-              marginTop: 14, width: "100%", height: 54, border: "none", borderRadius: 999, cursor: "pointer",
-              background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
-              fontFamily: FONTS.body, fontWeight: 600, fontSize: 15.5, letterSpacing: "-0.01em",
-              display: "flex", alignItems: "center", justifyContent: "center", gap: 9,
-              boxShadow: `0 1px 0 rgba(255,255,255,.25) inset, 0 12px 24px -6px ${TH.sage}99`,
-            }}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
-              {ctaLabel}
-            </button>
-            {needsGoal && (
-              <div role="alert" style={{
-                marginTop: 10, padding: "9px 12px", borderRadius: 10,
-                background: "#fff7ed", border: "1px solid #f5d3a8",
-                fontSize: 12.5, color: TH.amberDeep, textAlign: "center", lineHeight: 1.4,
-              }}>
-                Pick a goal or describe what you want to improve, then we&apos;ll build it.
+          <div style={{ display: "grid", gridTemplateColumns: "var(--tri-cols)", gap: 18, alignItems: "stretch", marginTop: 24 }}>
+
+            {/* Quiz, recommended focus */}
+            <Link href="/quiz" style={triCard("rec")}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={iconWrap(`${TH.sage}1f`, TH.sageDeep)}>
+                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke={TH.sageDeep} strokeWidth="1.4" strokeLinejoin="round" /></svg>
+                </span>
+                <span style={chipStyle(TH.sage, "#fff")}>★ 01 · Recommended</span>
               </div>
-            )}
-            <div style={{ textAlign: "center", marginTop: 9, ...MM, fontSize: 9.5, letterSpacing: "0.04em", color: TH.muted }}>
-              FREE · NO SIGNUP · NO CARD
+              <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Take the AI quiz</div>
+              <div style={{ ...SI, color: TH.sageDeep, fontSize: 14.5, marginTop: 2 }}>The fastest way in.</div>
+              <p style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Answer a few questions about how you sleep, eat, and feel. We match you to evidence-backed ingredients.</p>
+              {cardSpacer}
+              <div style={buylineStyle}>→ generate a stack → buy on iHerb / Amazon</div>
+              <span style={triBtn}>Start the quiz →</span>
+            </Link>
+
+            {/* Build box, center */}
+            <div style={triCard("center")}>
+              <span style={chipStyle(`${TH.amber}26`, TH.amberDeep)}>02 · Build it yourself</span>
+              <div style={{ marginTop: 12, background: TH.bg, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: 14 }}>
+                <div style={{ ...MM, fontSize: 10, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.mutedDim, marginBottom: 8 }}>What do you want to improve?</div>
+                <textarea
+                  ref={goalRef}
+                  value={goal}
+                  onChange={e => { setGoal(e.target.value); if (needsGoal) setNeedsGoal(false); }}
+                  rows={1}
+                  aria-invalid={needsGoal}
+                  placeholder="better sleep and steadier energy…"
+                  onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); generateStack(); } }}
+                  style={{ width: "100%", boxSizing: "border-box", border: "none", outline: "none", resize: "none", fontFamily: FONTS.body, fontSize: 15, lineHeight: 1.4, color: TH.ink, background: "transparent", minHeight: 24 }}
+                />
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 11 }}>
+                  {GOAL_CHIPS.slice(0, 5).map(chip => {
+                    const on = picked.includes(chip);
+                    return (
+                      <button key={chip} type="button" onClick={() => toggleChip(chip)} style={{
+                        height: 28, padding: "0 12px", borderRadius: 999, cursor: "pointer",
+                        border: `1px solid ${on ? TH.sage : TH.edgeStrong}`, background: on ? TH.accentGlow : "transparent",
+                        color: on ? TH.sageDeep : TH.inkSoft, fontFamily: FONTS.body, fontSize: 12, fontWeight: on ? 600 : 500, transition: "all .15s",
+                      }}>{chip}</button>
+                    );
+                  })}
+                </div>
+              </div>
+              {needsGoal && (
+                <div role="alert" style={{ marginTop: 10, padding: "8px 11px", borderRadius: 10, background: "#fff7ed", border: "1px solid #f5d3a8", fontSize: 12, color: TH.amberDeep, textAlign: "center", lineHeight: 1.4 }}>
+                  Pick a goal or describe what you want, then we&apos;ll build it.
+                </div>
+              )}
+              {cardSpacer}
+              <div style={{ ...buylineStyle, textAlign: "center" }}>describe it or pick a goal → generate → buy</div>
+              <button type="button" onClick={generateStack} style={triBtn}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
+                {ctaLabel}
+              </button>
             </div>
+
+            {/* Audit */}
+            <Link href="/audit" style={triCard("plain")}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={iconWrap(`${TH.coral}24`, TH.coral)}>
+                  <svg width="19" height="19" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke={TH.coral} strokeWidth="1.4" /><path d="M10.5 10.5l3 3" stroke={TH.coral} strokeWidth="1.6" strokeLinecap="round" /></svg>
+                </span>
+                <span style={chipStyle(`${TH.coral}26`, "#c2410c")}>03 · New</span>
+              </div>
+              <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Audit my stack</div>
+              <div style={{ ...SI, color: TH.coral, fontSize: 14.5, marginTop: 2 }}>Already taking supplements?</div>
+              <p style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Paste what you take today (and your bloodwork) and we score interactions, doses, and gaps, then suggest fixes.</p>
+              {cardSpacer}
+              <div style={buylineStyle}>→ a cleaner stack → buy the upgrades</div>
+              <span style={triBtn}>Audit my stack →</span>
+            </Link>
+
           </div>
         </Reveal>
-
-          </div>{/* end LEFT column */}
-
-          {/* RIGHT column, choose a path */}
-          <Reveal delay={0.1} style={{ minWidth: 0 }}>
-        <div style={{ ...MM, fontSize: 9.5, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.mutedDim, marginBottom: 12, paddingLeft: 2 }}>
-          Or choose a path
-        </div>
-
-        {/* Numbered premium paths. Quiz = recommended; Audit (the moat) second. */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <PathCard
-            num="01" href="/quiz" recommended badge="Recommended · Free"
-            title="Take the AI quiz" meta="3 MIN · THE MOST ACCURATE, PERSONALIZED PATH"
-            note="Answer a few questions, get a free stack matched to how you sleep, train, and feel."
-            icon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke={TH.sageDeep} strokeWidth="1.4" strokeLinejoin="round" /></svg>}
-            arrow={arrow}
-          />
-          <PathCard
-            num="02" href="/audit" badge="New"
-            title="Audit what I already take" meta="SCORE INTERACTIONS, DOSES & GAPS · FREE · 2 MIN"
-            note="Already have a routine? Check if it's optimized, paste your stack or your labs."
-            icon={<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke={TH.inkSoft} strokeWidth="1.4" /><path d="M10.5 10.5l3 3" stroke={TH.inkSoft} strokeWidth="1.6" strokeLinecap="round" /></svg>}
-            arrow={arrow}
-          />
-          <PathCard
-            num="03" href="/build"
-            title="Build it myself" meta="BROWSE 151 INGREDIENTS · NO QUIZ"
-            icon={<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="2.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="8.5" y="2.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="2.5" y="8.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="8.5" y="8.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /></svg>}
-            arrow={arrow}
-          />
-        </div>
-
-        <div style={{ marginTop: 14, textAlign: "center", ...MM, fontSize: 10, letterSpacing: "0.03em", color: TH.muted }}>
-          Free · no card · <span style={{ color: TH.sageDeep, fontWeight: 500 }}>we don&apos;t sell supplements</span>
-        </div>
-          </Reveal>{/* end RIGHT column */}
-
-        </div>{/* end hero grid */}
 
         {/* Full-width proof bar (balances the two columns, premium counters) */}
         <Reveal delay={0.2} style={{ marginTop: 26 }}>
@@ -302,58 +301,13 @@ function Hero() {
       </div>
 
       <style>{`
-        :root { --hh-pad-y: 22px; --hh-pad-b: 56px; --hh-h1: 48px; --hh-sub: 16px; --facts-cols: repeat(4, 1fr); --hero2-cols: 1.05fr 0.95fr; --hero2-gap: 44px; }
-        .sd-hero-intro { text-align: left; }
-        @media (max-width: 1024px) { :root { --hh-pad-y: 14px; --hh-pad-b: 44px; --hh-h1: 42px; } }
-        @media (max-width: 860px)  { :root { --hero2-cols: 1fr; --hero2-gap: 26px; } .sd-hero-intro { text-align: center; } }
-        @media (max-width: 640px)  { :root { --hh-pad-y: 6px; --hh-pad-b: 36px; --hh-h1: 33px; --hh-sub: 14.5px; --facts-cols: repeat(2, 1fr); } }
+        :root { --hh-pad-y: 18px; --hh-pad-b: 46px; --hh-h1: 46px; --hh-sub: 16px; --facts-cols: repeat(4, 1fr); --tri-cols: 1fr 1.18fr 1fr; }
+        .sd-hero-intro { text-align: center; }
+        @media (max-width: 1024px) { :root { --hh-pad-y: 12px; --hh-pad-b: 40px; --hh-h1: 40px; --tri-cols: 1fr 1.1fr 1fr; } }
+        @media (max-width: 860px)  { :root { --tri-cols: 1fr; } }
+        @media (max-width: 640px)  { :root { --hh-pad-y: 6px; --hh-pad-b: 34px; --hh-h1: 32px; --hh-sub: 14.5px; --facts-cols: repeat(2, 1fr); } }
       `}</style>
     </section>
-  );
-}
-
-function PathCard({ num, href, recommended = false, badge, title, meta, note, icon, arrow }: {
-  num?: string; href: string; recommended?: boolean; badge?: string; title: string; meta: string;
-  note?: string; icon: React.ReactNode; arrow: (c: string, s?: number) => React.ReactNode;
-}) {
-  return (
-    <Link href={href} className="sd-path" style={{
-      display: "flex", alignItems: recommended ? "flex-start" : "center", gap: 13, textDecoration: "none", color: "inherit",
-      background: recommended ? `linear-gradient(180deg, ${TH.sage}0f, ${TH.surface} 55%)` : TH.surface,
-      border: `${recommended ? 1.5 : 1}px solid ${recommended ? TH.sage + "80" : TH.edge}`,
-      borderRadius: 15, padding: recommended ? "15px 15px" : "13px 14px",
-      boxShadow: recommended ? `0 2px 4px rgba(10,37,64,0.04), 0 14px 30px -18px ${TH.sage}99` : "0 1px 2px rgba(10,37,64,0.04)",
-      transition: "transform .14s, box-shadow .14s, border-color .14s",
-    }}>
-      <span style={{
-        width: recommended ? 42 : 38, height: recommended ? 42 : 38, borderRadius: 12, flexShrink: 0,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        background: recommended ? TH.accentGlow : TH.bg,
-        marginTop: recommended ? 1 : 0,
-      }}>{icon}</span>
-      <span style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: recommended ? 4 : 3 }}>
-        <span style={{ display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap", fontSize: recommended ? 15.5 : 14.5, fontWeight: 600, color: TH.ink, letterSpacing: "-0.01em" }}>
-          {title}
-          {badge && <span style={{
-            ...MM, fontSize: 8.5, fontWeight: 600,
-            color: recommended ? "#fff" : TH.sageDeep,
-            background: recommended ? TH.sage : TH.accentGlow,
-            padding: "2px 7px", borderRadius: 5, letterSpacing: "0.05em", textTransform: "uppercase",
-          }}>{badge}</span>}
-        </span>
-        <span style={{ ...MM, fontSize: 10, color: TH.muted, letterSpacing: "0.02em" }}>
-          {num && <span style={{ color: recommended ? TH.sageDeep : TH.inkSoft, fontWeight: 700 }}>{num} · </span>}{meta}
-        </span>
-        {note && <span style={{ fontSize: 12.5, color: TH.inkSoft, lineHeight: 1.4, marginTop: 1 }}>{note}</span>}
-      </span>
-      <span style={{
-        width: recommended ? 30 : 27, height: recommended ? 30 : 27, borderRadius: 999, flexShrink: 0,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        background: recommended ? TH.sage : TH.bg,
-        boxShadow: recommended ? `0 2px 6px ${TH.sage}73` : "none",
-        marginTop: recommended ? 1 : 0,
-      }}>{arrow(recommended ? "#fff" : TH.inkSoft, 12)}</span>
-    </Link>
   );
 }
 
