@@ -352,13 +352,22 @@ export default function BuildClient() {
     setBuyOpen(true);
   }, [selected.length, totalCost]);
 
-  // Triggered by a direct click inside the modal, opens every iHerb product tab.
-  const openAllIherb = useCallback(() => {
+  // Triggered by a direct click inside the modal. We open each product as a new
+  // TAB (window.open with no "features" string) — passing a features string makes
+  // the browser treat each as a popup window, which is what the popup blocker was
+  // killing. Opening plain tabs synchronously inside the click gesture lets Chrome
+  // open the whole batch. We null the opener for security (replaces noopener).
+  const openAllAt = useCallback((which: "iherb" | "amazon") => {
     if (typeof window === "undefined") return;
     for (const s of selected) {
-      window.open(buyLinks(s).iherb, "_blank", "noopener,noreferrer");
+      const url = buyLinks(s)[which];
+      if (!url) continue;
+      const w = window.open(url, "_blank");
+      if (w) w.opener = null;
     }
   }, [selected]);
+  const openAllIherb = useCallback(() => openAllAt("iherb"), [openAllAt]);
+  const openAllAmazon = useCallback(() => openAllAt("amazon"), [openAllAt]);
 
   // ── Layout ────────────────────────────────────────────────────────────
   return (
@@ -738,6 +747,7 @@ export default function BuildClient() {
           name={stackName}
           total={totalCost}
           onOpenAll={openAllIherb}
+          onOpenAllAmazon={openAllAmazon}
           onClose={() => setBuyOpen(false)}
         />
       )}
@@ -1280,9 +1290,9 @@ function Stat({ label, value }: { label: string; value: string }) {
 }
 
 // ─── Buy full stack modal ───────────────────────────────────────────────────
-function BuyAllModal({ supps, name, total, onOpenAll, onClose }: {
+function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }: {
   supps: Supplement[]; name: string; total: number;
-  onOpenAll: () => void; onClose: () => void;
+  onOpenAll: () => void; onOpenAllAmazon: () => void; onClose: () => void;
 }) {
   const showAmazon = amazonEnabled();
   useEffect(() => {
@@ -1322,17 +1332,30 @@ function BuyAllModal({ supps, name, total, onOpenAll, onClose }: {
 
         {/* One-tap open all */}
         <div style={{ padding: "16px 24px 0" }}>
-          <button onClick={onOpenAll} style={{
-            width: "100%", minHeight: 52, borderRadius: 14, border: "none", cursor: "pointer",
-            background: TH.ink, color: "#fff", fontFamily: FONTS.body, fontWeight: 600, fontSize: 15,
-            display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
-            boxShadow: `0 8px 20px ${TH.ink}22`,
-          }}>
-            Open all {supps.length} on iHerb
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </button>
-          <p style={{ fontSize: 11.5, color: TH.muted, textAlign: "center", margin: "8px 0 0" }}>
-            Opens a tab per product, if your browser blocks them, use the buttons below.
+          <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+            <button onClick={onOpenAll} style={{
+              width: "100%", minHeight: 52, borderRadius: 14, border: "none", cursor: "pointer",
+              background: TH.ink, color: "#fff", fontFamily: FONTS.body, fontWeight: 600, fontSize: 15,
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
+              boxShadow: `0 8px 20px ${TH.ink}22`,
+            }}>
+              Open all {supps.length} on iHerb
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </button>
+            {showAmazon && (
+              <button onClick={onOpenAllAmazon} style={{
+                width: "100%", minHeight: 52, borderRadius: 14, border: "1px solid #e3ac00", cursor: "pointer",
+                background: "#ffd814", color: "#0f1111", fontFamily: FONTS.body, fontWeight: 600, fontSize: 15,
+                display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
+                boxShadow: "0 8px 20px rgba(227,172,0,0.25)",
+              }}>
+                Open all {supps.length} on Amazon
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </button>
+            )}
+          </div>
+          <p style={{ fontSize: 11.5, color: TH.muted, textAlign: "center", margin: "9px 0 0", lineHeight: 1.45 }}>
+            Opens one tab per product. If your browser blocks them, allow pop-ups for suppdoc.io, or use the per-product buttons below.
           </p>
         </div>
 
