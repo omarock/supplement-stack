@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ConsentedAnalytics from "@/components/ConsentedAnalytics";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import DeferredWidgets from "@/components/DeferredWidgets";
 import "./globals.css";
 
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <DeferredWidgets />
         <ConsentedAnalytics />
+        <GoogleAnalytics />
       </body>
     </html>
   );
