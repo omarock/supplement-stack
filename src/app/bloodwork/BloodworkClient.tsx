@@ -89,15 +89,15 @@ const SAMPLE_ANALYSIS: BloodworkAnalysis = {
   confidence: "high",
   summary: "Most markers look healthy. Two are worth attention, your ferritin (iron stores) is low and your vitamin D is on the low side, and a few metabolic markers are drifting up. None are alarming, but a few targeted changes could help your energy and long-term health.",
   biomarkers: [
-    { key: "ferritin", name: "Ferritin", value: 28, unit: "ng/mL", refRange: "30–400", status: "low", category: "blood", note: "Iron storage. Low ferritin is a leading cause of fatigue, especially in menstruating women." },
-    { key: "vitamin_d", name: "Vitamin D (25-OH)", value: 24, unit: "ng/mL", refRange: "30–100", status: "borderline-low", category: "vitamins", note: "Drives immune function, mood, bone health, and calcium handling." },
-    { key: "hba1c", name: "HbA1c", value: 5.8, unit: "%", refRange: "<5.7", status: "borderline-high", category: "metabolic", note: "Average blood sugar over ~3 months. 5.7–6.4% is the prediabetic range." },
+    { key: "ferritin", name: "Ferritin", value: 28, unit: "ng/mL", refRange: "30-400", status: "low", category: "blood", note: "Iron storage. Low ferritin is a leading cause of fatigue, especially in menstruating women." },
+    { key: "vitamin_d", name: "Vitamin D (25-OH)", value: 24, unit: "ng/mL", refRange: "30-100", status: "borderline-low", category: "vitamins", note: "Drives immune function, mood, bone health, and calcium handling." },
+    { key: "hba1c", name: "HbA1c", value: 5.8, unit: "%", refRange: "<5.7", status: "borderline-high", category: "metabolic", note: "Average blood sugar over ~3 months. 5.7-6.4% is the prediabetic range." },
     { key: "ldl", name: "LDL Cholesterol", value: 142, unit: "mg/dL", refRange: "<100", status: "borderline-high", category: "lipids", note: "The cholesterol carrier most associated with cardiovascular risk." },
-    { key: "b12", name: "Vitamin B12", value: 560, unit: "pg/mL", refRange: "300–900", status: "optimal", category: "vitamins", note: "Essential for nerve function, energy, and red blood cells." },
-    { key: "magnesium", name: "Magnesium (serum)", value: 2.1, unit: "mg/dL", refRange: "1.8–2.4", status: "optimal", category: "minerals", note: "Cofactor in 300+ reactions." },
+    { key: "b12", name: "Vitamin B12", value: 560, unit: "pg/mL", refRange: "300-900", status: "optimal", category: "vitamins", note: "Essential for nerve function, energy, and red blood cells." },
+    { key: "magnesium", name: "Magnesium (serum)", value: 2.1, unit: "mg/dL", refRange: "1.8-2.4", status: "optimal", category: "minerals", note: "Cofactor in 300+ reactions." },
   ],
   findings: [
-    { title: "Low iron stores", detail: "Ferritin of 28 is below range. Combined with fatigue, this is worth discussing with your doctor, and a simple recheck in 8–12 weeks.", severity: "flag", biomarkers: ["Ferritin"] },
+    { title: "Low iron stores", detail: "Ferritin of 28 is below range. Combined with fatigue, this is worth discussing with your doctor, and a simple recheck in 8-12 weeks.", severity: "flag", biomarkers: ["Ferritin"] },
     { title: "Metabolic markers drifting up", detail: "HbA1c (5.8%) and LDL (142) are both just over the ideal line. Diet, movement, and a couple of supplements can often nudge these back.", severity: "watch", biomarkers: ["HbA1c", "LDL Cholesterol"] },
     { title: "This is not a diagnosis", detail: "This analysis is educational and based only on the values shown. Lab ranges vary by lab, age, sex, and medications. Review results with a qualified clinician.", severity: "info" },
   ],
@@ -110,7 +110,7 @@ const SAMPLE_ANALYSIS: BloodworkAnalysis = {
   ],
   lifestyle: [
     "Add an iron-rich food (red meat, lentils, spinach) with a squeeze of lemon for absorption.",
-    "A 10–15 minute walk after meals blunts post-meal blood-sugar spikes.",
+    "A 10-15 minute walk after meals blunts post-meal blood-sugar spikes.",
     "Swap refined carbs and sugary drinks for whole grains and water to bring HbA1c down.",
   ],
   seeClinicianFor: [
@@ -307,7 +307,7 @@ function ProcessingState({ stage, fileName }: { stage: Stage; fileName: string |
       <div style={{ ...D, fontSize: 18, color: TH.ink, marginBottom: 6 }}>
         <ThinkingMessages phrases={stage === "reading" ? ["Reading your file…"] : PHRASES} interval={1100} noDot />
       </div>
-      <div style={{ fontSize: 13, color: TH.muted }}>{fileName ? `Analyzing ${fileName}` : "This usually takes 10–20 seconds"}</div>
+      <div style={{ fontSize: 13, color: TH.muted }}>{fileName ? `Analyzing ${fileName}` : "This usually takes 10-20 seconds"}</div>
     </div>
   );
 }

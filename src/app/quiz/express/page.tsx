@@ -35,7 +35,7 @@ const EXPRESS_DEFAULTS: QuizData = {
   pregnant: "No",
   allergies: ["None of these"],
   conditions: ["None of these"],
-  budget: "$20 – $50",
+  budget: "$20 - $50",
   veganOnly: false,
 };
 
@@ -244,7 +244,7 @@ function Step4({ data, update }: { data: QuizData; update: (u: Partial<QuizData>
 
 function Step5({ data, update }: { data: QuizData; update: (u: Partial<QuizData>) => void }) {
   const DIETS = ["Omnivore", "Pescatarian", "Vegetarian", "Vegan", "Keto / low-carb"];
-  const BUDGETS = ["Under $20", "$20 – $50", "$50 – $100", "$100+"];
+  const BUDGETS = ["Under $20", "$20 - $50", "$50 - $100", "$100+"];
   return (
     <div>
       <StepHeader tag="Step 5 of 6" title="Diet & budget" sub="So we can pick the right forms and stay within what you want to spend." />

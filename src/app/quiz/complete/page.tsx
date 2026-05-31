@@ -492,8 +492,8 @@ function Step10({ d, u }: { d: QuizData; u: Updater }) {
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {[
               ["Under $20 / month", "2-3 highest-impact essentials"],
-              ["$20 – $50 / month", "A solid foundational stack"],
-              ["$50 – $100 / month", "Comprehensive and targeted"],
+              ["$20 - $50 / month", "A solid foundational stack"],
+              ["$50 - $100 / month", "Comprehensive and targeted"],
               ["$100+ / month", "Full optimisation, no compromises"],
             ].map(([label, sub]) => (
               <Card key={label} label={label} sub={sub}

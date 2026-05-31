@@ -110,14 +110,14 @@ export const BIOMARKERS: BiomarkerDef[] = [
     unit: "mg/dL", category: "metabolic", lowerIsBetter: true,
     optimalMin: 70, optimalMax: 90, borderlineHigh: 100, high: 126,
     supplementsForHigh: ["berberine", "chromium", "ala"],
-    blurb: "Blood sugar after fasting. 100–125 = prediabetic range; 126+ on two tests = diabetic range.",
+    blurb: "Blood sugar after fasting. 100-125 = prediabetic range; 126+ on two tests = diabetic range.",
   },
   {
     key: "hba1c", label: "HbA1c", aliases: ["hba1c", "a1c", "hemoglobin a1c", "glycated"],
     unit: "%", category: "metabolic", lowerIsBetter: true,
     optimalMin: 4.0, optimalMax: 5.4, borderlineHigh: 5.7, high: 6.5,
     supplementsForHigh: ["berberine", "chromium", "ala"],
-    blurb: "Average blood sugar over ~3 months. 5.7–6.4% = prediabetic; 6.5%+ = diabetic range.",
+    blurb: "Average blood sugar over ~3 months. 5.7-6.4% = prediabetic; 6.5%+ = diabetic range.",
   },
   {
     key: "total_cholesterol", label: "Total Cholesterol", aliases: ["total cholesterol", "cholesterol, total", "cholesterol total"],

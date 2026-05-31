@@ -84,8 +84,8 @@ export function welcomeEmail(firstName?: string): EmailPayload {
           A few things to know before you start:
         </p>
         <ul style="font-size:15px;line-height:1.65;color:#3c4858;padding-left:20px;margin:0 0 28px;">
-          <li><strong>Take it slow.</strong> Add one supplement at a time over 2–3 weeks so you can tell what&apos;s working.</li>
-          <li><strong>Be consistent.</strong> Effects build over 4–8 weeks for most ingredients.</li>
+          <li><strong>Take it slow.</strong> Add one supplement at a time over 2-3 weeks so you can tell what&apos;s working.</li>
+          <li><strong>Be consistent.</strong> Effects build over 4-8 weeks for most ingredients.</li>
           <li><strong>Talk to a clinician</strong> if you have any health conditions or take prescription meds. We&apos;re educational, not medical.</li>
         </ul>
         ${button("Open my stack", `${BASE}/results`)}
@@ -103,8 +103,8 @@ export function welcomeEmail(firstName?: string): EmailPayload {
 Your suppdoc.io stack is ready at ${BASE}/results, bookmark it.
 
 A few things before you start:
-• Take it slow, add one supplement at a time over 2–3 weeks
-• Be consistent, effects build over 4–8 weeks
+• Take it slow, add one supplement at a time over 2-3 weeks
+• Be consistent, effects build over 4-8 weeks
 • Talk to a clinician if you have any conditions or take prescription meds
 
 Quick win: Take vitamin D with a meal containing fat (eggs, avocado, olive oil). Without fat, absorption drops by half.
@@ -130,7 +130,7 @@ export function day3Email(): EmailPayload {
           Some ingredients work fast (L-theanine, magnesium glycinate, GABA), you may already feel calmer evenings or better sleep onset.
         </p>
         <p style="font-size:16px;line-height:1.6;color:#3c4858;margin:0 0 28px;">
-          Others, like vitamin D, omega-3, and most adaptogens, take 4–8 weeks to fully show up in your blood markers and mood. Don&apos;t lose patience yet.
+          Others, like vitamin D, omega-3, and most adaptogens, take 4-8 weeks to fully show up in your blood markers and mood. Don&apos;t lose patience yet.
         </p>
         ${button("Re-open my stack", `${BASE}/results`)}
       `),
@@ -140,7 +140,7 @@ export function day3Email(): EmailPayload {
           <strong>&ldquo;I feel nothing yet.&rdquo;</strong> Normal. Most foundational supplements (D3, omega-3, B-complex) build up over weeks. Sleep + stress supplements act faster.
         </p>
         <p style="font-size:15px;line-height:1.6;color:#3c4858;margin:0 0 0;">
-          <strong>&ldquo;Should I take everything at once?&rdquo;</strong> No. Start with 1–2, hold for a week, add the next. Easier to spot what helps and what doesn&apos;t agree with you.
+          <strong>&ldquo;Should I take everything at once?&rdquo;</strong> No. Start with 1-2, hold for a week, add the next. Easier to spot what helps and what doesn&apos;t agree with you.
         </p>
       `),
     ].join(""),
@@ -150,11 +150,11 @@ export function day3Email(): EmailPayload {
 
 Fast-acting: L-theanine, magnesium glycinate, GABA, you may already feel calmer evenings or better sleep onset.
 
-Slow-acting: Vitamin D, omega-3, and most adaptogens, 4–8 weeks before you fully feel the difference.
+Slow-acting: Vitamin D, omega-3, and most adaptogens, 4-8 weeks before you fully feel the difference.
 
 Common questions:
 • "I feel nothing yet." Normal. Most foundational supplements build up over weeks.
-• "Should I take everything at once?" No, start with 1–2, hold a week, add the next.
+• "Should I take everything at once?" No, start with 1-2, hold a week, add the next.
 
 Re-open your stack: ${BASE}/results
 
@@ -196,7 +196,7 @@ export function day7Email(): EmailPayload {
       row(`
         <h2 style="font-size:20px;line-height:1.25;margin:0 0 14px;color:#0a2540;">Side effects?</h2>
         <p style="font-size:15px;line-height:1.6;color:#3c4858;margin:0;">
-          Most supplements have a 1–2 week settling period. If something doesn&apos;t agree with you, vivid dreams (5-HTP), loose stools (high-dose magnesium), morning grogginess (melatonin), stop that ingredient first, observe for 3–4 days, then resume the others. There&apos;s nothing wrong with adjusting your stack.
+          Most supplements have a 1-2 week settling period. If something doesn&apos;t agree with you, vivid dreams (5-HTP), loose stools (high-dose magnesium), morning grogginess (melatonin), stop that ingredient first, observe for 3-4 days, then resume the others. There&apos;s nothing wrong with adjusting your stack.
         </p>
       `),
     ].join(""),
@@ -211,7 +211,7 @@ One week in, look for subtle wins, not dramatic shifts:
 • Digestion, less bloating, more regular?
 
 Side effects?
-Most supplements have a 1–2 week settling period. If something doesn't agree with you (vivid dreams from 5-HTP, loose stools from too much magnesium, morning grogginess from melatonin), stop that one, observe 3–4 days, then resume the rest.
+Most supplements have a 1-2 week settling period. If something doesn't agree with you (vivid dreams from 5-HTP, loose stools from too much magnesium, morning grogginess from melatonin), stop that one, observe 3-4 days, then resume the rest.
 
 Re-take the quiz to compare: ${BASE}/quiz
 
@@ -237,7 +237,7 @@ export function day14Email(): EmailPayload {
         <h2 style="font-size:18px;line-height:1.3;margin:0 0 10px;color:#0a2540;">A simple 3-question audit:</h2>
         <ol style="font-size:15px;line-height:1.7;color:#3c4858;padding-left:20px;margin:0 0 22px;">
           <li><strong>What clearly improved?</strong> Keep those ingredients on. Pat yourself on the back.</li>
-          <li><strong>What feels unchanged?</strong> If it&apos;s a slow-acting one (D3, omega-3, adaptogens), give it 6–8 more weeks. If it&apos;s fast-acting (theanine, magnesium, GABA), it&apos;s probably not for you, drop it.</li>
+          <li><strong>What feels unchanged?</strong> If it&apos;s a slow-acting one (D3, omega-3, adaptogens), give it 6-8 more weeks. If it&apos;s fast-acting (theanine, magnesium, GABA), it&apos;s probably not for you, drop it.</li>
           <li><strong>What feels worse?</strong> Stop, observe a week, and consider whether to swap a different form (e.g. magnesium glycinate for magnesium citrate).</li>
         </ol>
         ${button("Compare with a fresh quiz", `${BASE}/quiz`, "#5ba373")}
@@ -258,7 +258,7 @@ export function day14Email(): EmailPayload {
 
 A simple 3-question audit:
 1. What clearly improved? Keep those ingredients on.
-2. What feels unchanged? If slow-acting (D3, omega-3, adaptogens), give it 6–8 more weeks. If fast-acting (theanine, magnesium, GABA) and you feel nothing, drop it.
+2. What feels unchanged? If slow-acting (D3, omega-3, adaptogens), give it 6-8 more weeks. If fast-acting (theanine, magnesium, GABA) and you feel nothing, drop it.
 3. What feels worse? Stop, observe a week, consider a different form.
 
 If you're ready to go deeper:

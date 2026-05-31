@@ -112,8 +112,11 @@ function Hero() {
   const router = useRouter();
   const [goal, setGoal] = useState("");
   const [picked, setPicked] = useState<string[]>([]);
+  const [needsGoal, setNeedsGoal] = useState(false);
+  const goalRef = useRef<HTMLTextAreaElement | null>(null);
 
   function toggleChip(chip: string) {
+    setNeedsGoal(false);
     setPicked(prev => {
       const next = prev.includes(chip) ? prev.filter(c => c !== chip) : [...prev, chip];
       // Mirror chips into the input unless the user typed something custom
@@ -123,12 +126,19 @@ function Hero() {
   }
 
   // Primary action = the Build Stack flow, deliberately INDEPENDENT from the
-  // quiz. It only ever routes to /build (with the goal pre-filled) and never
-  // touches /quiz or any quiz state, so users are never dropped into a quiz.
+  // quiz. It requires real input: with nothing entered we never navigate to
+  // /build (which would otherwise show a stale/pre-filled stack); instead we
+  // ask the user to pick a goal. With input, /build composes fresh from it.
   function generateStack() {
     const finalGoal = (goal.trim() || picked.join(", ")).trim();
-    track("home_goal_build", { hasGoal: finalGoal.length > 0, chips: picked.length });
-    router.push(finalGoal ? `/build?goal=${encodeURIComponent(finalGoal)}` : "/build");
+    if (!finalGoal) {
+      setNeedsGoal(true);
+      goalRef.current?.focus();
+      return;
+    }
+    setNeedsGoal(false);
+    track("home_goal_build", { hasGoal: true, chips: picked.length });
+    router.push(`/build?goal=${encodeURIComponent(finalGoal)}`);
   }
 
   // Intent-specific CTA label: when one goal is chosen, name it.
@@ -143,10 +153,14 @@ function Hero() {
 
   return (
     <section id="engine" style={{ position: "relative", padding: "var(--hh-pad-y) var(--hero-pad-x) var(--hh-pad-b)" }}>
-      <div style={{ maxWidth: 620, margin: "0 auto" }}>
+      <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "var(--hero2-cols)", gap: "var(--hero2-gap)", alignItems: "start" }}>
 
-        {/* Centered intro: honest badge + headline + subhead */}
-        <div style={{ textAlign: "center" }}>
+          {/* LEFT column, the funnel */}
+          <div style={{ minWidth: 0 }}>
+
+        {/* Intro: honest badge + headline + subhead (left on desktop, centered on mobile) */}
+        <div className="sd-hero-intro">
           <Reveal>
             <div style={{
               display: "inline-flex", alignItems: "center", gap: 9, marginBottom: 18,
@@ -174,7 +188,7 @@ function Hero() {
             <span style={{ ...SI, color: TH.sageDeep, letterSpacing: "-0.01em" }}>built for you</span>.
           </h1>
           <Reveal delay={0.1}>
-            <p style={{ fontSize: "var(--hh-sub)", lineHeight: 1.45, color: TH.inkSoft, maxWidth: 460, margin: "14px auto 0" }}>
+            <p style={{ fontSize: "var(--hh-sub)", lineHeight: 1.45, color: TH.inkSoft, maxWidth: 480, margin: "14px 0 0" }}>
               Tell us your goal. Our evidence-graded AI builds your stack from 151 researched ingredients, and tells you what to{" "}
               <span style={{ ...SI, color: TH.sageDeep }}>skip</span>.
             </p>
@@ -191,9 +205,11 @@ function Hero() {
               What do you want to improve?
             </div>
             <textarea
+              ref={goalRef}
               value={goal}
-              onChange={e => setGoal(e.target.value)}
+              onChange={e => { setGoal(e.target.value); if (needsGoal) setNeedsGoal(false); }}
               rows={1}
+              aria-invalid={needsGoal}
               placeholder="better sleep and steadier energy…"
               onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); generateStack(); } }}
               style={{
@@ -225,6 +241,15 @@ function Hero() {
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
               {ctaLabel}
             </button>
+            {needsGoal && (
+              <div role="alert" style={{
+                marginTop: 10, padding: "9px 12px", borderRadius: 10,
+                background: "#fff7ed", border: "1px solid #f5d3a8",
+                fontSize: 12.5, color: TH.amberDeep, textAlign: "center", lineHeight: 1.4,
+              }}>
+                Pick a goal or describe what you want to improve, then we&apos;ll build it.
+              </div>
+            )}
             <div style={{ textAlign: "center", marginTop: 9, ...MM, fontSize: 9.5, letterSpacing: "0.04em", color: TH.muted }}>
               FREE · NO SIGNUP · NO CARD
             </div>
@@ -232,15 +257,15 @@ function Hero() {
         </Reveal>
 
         {/* Premium proof counters */}
-        <Reveal delay={0.2} style={{ marginTop: 18 }}>
+        <Reveal delay={0.2} style={{ marginTop: 16 }}>
           <StatStrip />
         </Reveal>
+          </div>{/* end LEFT column */}
 
-        {/* Divider */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "20px 2px 14px" }}>
-          <span style={{ flex: 1, height: 1, background: TH.edge }} />
-          <span style={{ ...MM, fontSize: 9.5, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.mutedDim }}>or choose a path</span>
-          <span style={{ flex: 1, height: 1, background: TH.edge }} />
+          {/* RIGHT column, choose a path */}
+          <Reveal delay={0.1} style={{ minWidth: 0 }}>
+        <div style={{ ...MM, fontSize: 9.5, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.mutedDim, marginBottom: 12, paddingLeft: 2 }}>
+          Or choose a path
         </div>
 
         {/* Numbered premium paths. Quiz = recommended; Audit (the moat) second. */}
@@ -267,14 +292,19 @@ function Hero() {
           />
         </div>
 
-        <div style={{ marginTop: 18, textAlign: "center", ...MM, fontSize: 10, letterSpacing: "0.03em", color: TH.muted }}>
+        <div style={{ marginTop: 14, textAlign: "center", ...MM, fontSize: 10, letterSpacing: "0.03em", color: TH.muted }}>
           Free · no card · <span style={{ color: TH.sageDeep, fontWeight: 500 }}>we don&apos;t sell supplements</span>
         </div>
+          </Reveal>{/* end RIGHT column */}
+
+        </div>{/* end hero grid */}
       </div>
 
       <style>{`
-        :root { --hh-pad-y: 22px; --hh-pad-b: 56px; --hh-h1: 48px; --hh-sub: 16px; --facts-cols: repeat(4, 1fr); }
+        :root { --hh-pad-y: 22px; --hh-pad-b: 56px; --hh-h1: 48px; --hh-sub: 16px; --facts-cols: repeat(4, 1fr); --hero2-cols: 1.05fr 0.95fr; --hero2-gap: 44px; }
+        .sd-hero-intro { text-align: left; }
         @media (max-width: 1024px) { :root { --hh-pad-y: 14px; --hh-pad-b: 44px; --hh-h1: 42px; } }
+        @media (max-width: 860px)  { :root { --hero2-cols: 1fr; --hero2-gap: 26px; } .sd-hero-intro { text-align: center; } }
         @media (max-width: 640px)  { :root { --hh-pad-y: 6px; --hh-pad-b: 36px; --hh-h1: 33px; --hh-sub: 14.5px; --facts-cols: repeat(2, 1fr); } }
       `}</style>
     </section>

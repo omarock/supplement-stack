@@ -23,7 +23,7 @@ export const GOALS: Goal[] = [
     intro: "The most evidence-backed supplements for falling asleep faster and sleeping more deeply, and how to take them. Sleep supplements work best alongside good sleep habits, not instead of them.",
     tags: ["sleep", "low-sleep", "sleep-onset", "wake-at-night"], stackSlug: "best-supplements-for-sleep",
     faq: [
-      { q: "What is the best supplement for sleep?", a: "Magnesium glycinate and glycine are among the best-evidenced for sleep quality, with L-theanine for calming the mind and low-dose melatonin (0.5–1 mg) for sleep timing. The right one depends on whether your issue is falling asleep or staying asleep." },
+      { q: "What is the best supplement for sleep?", a: "Magnesium glycinate and glycine are among the best-evidenced for sleep quality, with L-theanine for calming the mind and low-dose melatonin (0.5-1 mg) for sleep timing. The right one depends on whether your issue is falling asleep or staying asleep." },
       { q: "Is melatonin safe to take every night?", a: "Short-term use of low-dose melatonin is generally considered safe for most adults, but it's best used occasionally or for resetting sleep timing rather than indefinitely. Talk to a clinician for ongoing sleep problems." },
     ],
   },
@@ -51,7 +51,7 @@ export const GOALS: Goal[] = [
     tags: ["stress", "high-stress", "anxiety"], stackSlug: "best-supplements-for-stress",
     faq: [
       { q: "What is the best supplement for stress?", a: "Ashwagandha has the strongest evidence for lowering cortisol and perceived stress; L-theanine and magnesium glycinate help with in-the-moment calm and relaxation." },
-      { q: "How long do stress supplements take to work?", a: "L-theanine and magnesium can feel calming within an hour; adaptogens like ashwagandha usually take 2–4 weeks of daily use to show their full effect." },
+      { q: "How long do stress supplements take to work?", a: "L-theanine and magnesium can feel calming within an hour; adaptogens like ashwagandha usually take 2-4 weeks of daily use to show their full effect." },
     ],
   },
   {
@@ -96,7 +96,7 @@ export const GOALS: Goal[] = [
     tags: ["joint", "joint-pain", "recovery"],
     faq: [
       { q: "What is the best supplement for joint pain?", a: "Curcumin and omega-3 have the best evidence for easing joint inflammation; glucosamine and MSM may help cartilage and comfort over time; boswellia is a useful anti-inflammatory add-on." },
-      { q: "How long until joint supplements work?", a: "Anti-inflammatories like curcumin can help within weeks; structural support from glucosamine often takes 2–3 months of consistent use." },
+      { q: "How long until joint supplements work?", a: "Anti-inflammatories like curcumin can help within weeks; structural support from glucosamine often takes 2-3 months of consistent use." },
     ],
   },
   {
@@ -123,7 +123,7 @@ export const GOALS: Goal[] = [
     tags: ["skin", "beauty"], stackSlug: "skin-hair-nails-stack",
     faq: [
       { q: "What supplements are good for skin?", a: "Collagen (with vitamin C, which is required to build it), hyaluronic acid for hydration, omega-3 for the skin barrier, and astaxanthin as a protective antioxidant." },
-      { q: "Does collagen actually improve skin?", a: "A growing body of trials suggests hydrolysed collagen can improve skin elasticity and hydration over 8–12 weeks. Pair it with vitamin C for best results." },
+      { q: "Does collagen actually improve skin?", a: "A growing body of trials suggests hydrolysed collagen can improve skin elasticity and hydration over 8-12 weeks. Pair it with vitamin C for best results." },
     ],
   },
   {

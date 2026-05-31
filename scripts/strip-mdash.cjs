@@ -1,20 +1,21 @@
 /**
- * Remove every em dash (—, U+2014) and its HTML entity (&mdash;) from the
- * website source. Founder preference: the em dash must never appear in the UI.
+ * Remove every em dash (—, U+2014) AND en dash (–, U+2013), plus their HTML
+ * entities (&mdash; / &ndash;), from the website source. Founder preference:
+ * neither dash may appear anywhere in the UI.
  *
  * Replacement rules (ordered):
- *   " — "  (spaced, prose)      -> ", "   (matches the earlier de-em-dash pass)
+ *   " — " (spaced em, prose)    -> ", "   (reads as a clause break)
  *   " &mdash; "                 -> ", "
- *   remaining "—" / "&mdash;"   -> "-"    (UI placeholders like empty cells)
- *
- * En dashes (–, U+2013, used for numeric ranges) are intentionally left alone.
+ *   remaining "—" / "&mdash;"   -> "-"    (placeholders, e.g. empty cells)
+ *   "–" / "&ndash;" (en, ranges)-> "-"    ("$20 – $50" -> "$20 - $50")
  */
 const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..", "src");
 const EXT = /\.(tsx?|jsx?|css|md|txt)$/;
-const MDASH = "—";
+const EM = "—"; // —
+const EN = "–"; // –
 
 const files = [];
 (function walk(dir) {
@@ -27,17 +28,20 @@ const files = [];
 
 let changedFiles = 0;
 let total = 0;
+const DASH_RE = new RegExp(`${EM}|${EN}|&mdash;|&ndash;`, "g");
 
 for (const f of files) {
   const orig = fs.readFileSync(f, "utf8");
-  const before = (orig.match(/—|&mdash;/g) || []).length;
+  const before = (orig.match(DASH_RE) || []).length;
   if (before === 0) continue;
 
   let s = orig
-    .replace(new RegExp(` ${MDASH} `, "g"), ", ")
+    .replace(new RegExp(` ${EM} `, "g"), ", ")  // spaced em dash -> comma
     .replace(/ &mdash; /g, ", ")
-    .replace(new RegExp(MDASH, "g"), "-")
-    .replace(/&mdash;/g, "-");
+    .replace(new RegExp(EM, "g"), "-")           // remaining em dash -> hyphen
+    .replace(/&mdash;/g, "-")
+    .replace(new RegExp(EN, "g"), "-")           // en dash -> hyphen
+    .replace(/&ndash;/g, "-");
 
   if (s !== orig) {
     fs.writeFileSync(f, s, "utf8");
@@ -47,4 +51,4 @@ for (const f of files) {
   }
 }
 
-console.log(`\nRemoved ${total} em dash(es) across ${changedFiles} file(s).`);
+console.log(`\nRemoved ${total} em/en dash(es) across ${changedFiles} file(s).`);

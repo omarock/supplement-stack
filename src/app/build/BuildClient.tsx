@@ -43,7 +43,6 @@ const MM = { fontFamily: FONTS.mono } as const;
 
 const MAX_SUPPS = 15;
 const SOFT_CAP = 10;
-const STORAGE_KEY = "suppdoc.customStack.v1";
 
 type Timing = "morning" | "midday" | "pre-train" | "evening";
 const TIMINGS: Timing[] = ["morning", "midday", "pre-train", "evening"];
@@ -174,38 +173,18 @@ export default function BuildClient() {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const undoRef = useRef<{ ids: string[]; name: string; gen: GeneratedMeta | null } | null>(null);
 
-  // Hydrate from URL hash or localStorage on mount
+  // Initialize cleanly. The builder ONLY restores state the user explicitly
+  // brought with them: a shared stack link (?s=) or a goal to compose from
+  // (?goal=, handled by the composer below). It deliberately does NOT auto-load
+  // a previous localStorage session, so /build never shows a stale, pre-filled
+  // stack the user didn't ask for. (No persisted-state leakage between visits.)
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const url = new URL(window.location.href);
-    const fromUrl = url.searchParams.get("s");
-    if (fromUrl) {
-      const ids = decodeStack(fromUrl).filter(id => SUPPLEMENT_DB.some(s => s.id === id));
-      if (ids.length) {
-        setSelectedIds(ids);
-        return;
-      }
-    }
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as { ids: string[]; name?: string; gen?: GeneratedMeta };
-        if (Array.isArray(parsed.ids)) {
-          setSelectedIds(parsed.ids.filter(id => SUPPLEMENT_DB.some(s => s.id === id)));
-          if (parsed.name) setStackName(parsed.name);
-          if (parsed.gen) setGenerated(parsed.gen);
-        }
-      }
-    } catch { /* ignore */ }
+    const fromUrl = new URL(window.location.href).searchParams.get("s");
+    if (!fromUrl) return;
+    const ids = decodeStack(fromUrl).filter(id => SUPPLEMENT_DB.some(s => s.id === id));
+    if (ids.length) setSelectedIds(ids);
   }, []);
-
-  // Persist on change
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ids: selectedIds, name: stackName, gen: generated }));
-    } catch { /* ignore */ }
-  }, [selectedIds, stackName, generated]);
 
   const selected = useMemo(
     () => selectedIds
@@ -1101,7 +1080,7 @@ function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void 
         alignItems: "center", gap: 10, flexWrap: "wrap",
       }}>
         <span style={{ fontSize: 12, color: TH.muted }}>
-          Plain English. We&apos;ll pick {`{4–8}`} ingredients within a medium budget.
+          Plain English. We&apos;ll pick {`{4-8}`} ingredients within a medium budget.
         </span>
         <button onClick={run} disabled={loading || text.trim().length < 5}
           style={{

@@ -53,7 +53,7 @@ export default function QuizChooser() {
               tag="Most popular · 2 minutes"
               title="Express Quiz"
               tagline="Fast. Beginner-friendly."
-              body="Six core questions about your goals, energy, sleep, and stress. We generate a 4–7 supplement stack instantly."
+              body="Six core questions about your goals, energy, sleep, and stress. We generate a 4-7 supplement stack instantly."
               points={[
                 "6 questions · 2 minutes",
                 "Goal-matched recommendations",

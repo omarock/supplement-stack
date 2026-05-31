@@ -123,7 +123,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 60,
       mgPerServing: "500 mg total omega-3 (135 mg EPA + 270 mg DHA)",
       certifications: ["Vegan", "Non-GMO", "Sustainably Sourced", "Mercury Free", "GMP"],
-      fullDescription: "Ovega-3 was one of the first algae-based omega-3 supplements on the US market, providing a fully vegan alternative to fish oil without compromising on EPA and DHA content. The omega-3s are extracted from sustainably-cultivated marine microalgae (Schizochytrium sp.) grown in closed-loop systems, entirely free of ocean contamination concerns. Each softgel delivers 500 mg of total omega-3s. Vegans, vegetarians, and people with fish or shellfish allergies depend on algae oil as their long-chain omega-3 source. Standard dose is 1–2 softgels daily with a fat-containing meal for optimal absorption.",
+      fullDescription: "Ovega-3 was one of the first algae-based omega-3 supplements on the US market, providing a fully vegan alternative to fish oil without compromising on EPA and DHA content. The omega-3s are extracted from sustainably-cultivated marine microalgae (Schizochytrium sp.) grown in closed-loop systems, entirely free of ocean contamination concerns. Each softgel delivers 500 mg of total omega-3s. Vegans, vegetarians, and people with fish or shellfish allergies depend on algae oil as their long-chain omega-3 source. Standard dose is 1-2 softgels daily with a fat-containing meal for optimal absorption.",
     },
     {
       brand: "Nordic Naturals", productName: "Algae Omega", size: "60 softgels",
@@ -229,7 +229,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 120,
       mgPerServing: "300 mg KSM-66 (root only, full-spectrum)",
       certifications: ["Vegetarian", "Non-GMO", "GMP", "Kosher", "Soy Free"],
-      fullDescription: "Jarrow Formulas Ashwagandha uses KSM-66, the most clinically studied ashwagandha extract in the world, with over 20 published randomized controlled trials demonstrating effects on stress, cortisol, sleep, and exercise recovery. KSM-66 is made exclusively from ashwagandha roots (no leaf, which contains different bioactives) using a green-chemistry process that requires no chemical solvents. The 5% withanolide standardization ensures consistent dosing batch to batch. Take 1–2 capsules daily for 600 mg, the dose used in most clinical research. Effects typically emerge within 2–4 weeks. Best taken with a meal to maximize absorption.",
+      fullDescription: "Jarrow Formulas Ashwagandha uses KSM-66, the most clinically studied ashwagandha extract in the world, with over 20 published randomized controlled trials demonstrating effects on stress, cortisol, sleep, and exercise recovery. KSM-66 is made exclusively from ashwagandha roots (no leaf, which contains different bioactives) using a green-chemistry process that requires no chemical solvents. The 5% withanolide standardization ensures consistent dosing batch to batch. Take 1-2 capsules daily for 600 mg, the dose used in most clinical research. Effects typically emerge within 2-4 weeks. Best taken with a meal to maximize absorption.",
     },
     {
       brand: "NOW Foods", productName: "Ashwagandha", size: "180 veg capsules",
@@ -303,7 +303,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 75,
       mgPerServing: "3 g free-form L-glycine",
       certifications: ["Non-GMO", "Vegan", "Kosher", "GMP", "Gluten Free"],
-      fullDescription: "NOW Foods Glycine Powder provides pure free-form L-glycine, the smallest of the amino acids and a precursor to glutathione, collagen, and creatine. The powder dissolves clearly in water with a faintly sweet taste, making it easy to add to evening tea or any wind-down ritual. Standard clinical sleep dose is 3 g (one level teaspoon) taken 30–60 minutes before bed. The 8 oz (227 g) tub provides 75 daily servings, roughly 2.5 months of nightly use. Pure glycine has no smell and won't alter the taste of most beverages.",
+      fullDescription: "NOW Foods Glycine Powder provides pure free-form L-glycine, the smallest of the amino acids and a precursor to glutathione, collagen, and creatine. The powder dissolves clearly in water with a faintly sweet taste, making it easy to add to evening tea or any wind-down ritual. Standard clinical sleep dose is 3 g (one level teaspoon) taken 30-60 minutes before bed. The 8 oz (227 g) tub provides 75 daily servings, roughly 2.5 months of nightly use. Pure glycine has no smell and won't alter the taste of most beverages.",
     },
     {
       brand: "Source Naturals", productName: "Glycine 500mg", size: "200 capsules",
@@ -373,7 +373,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 60,
       mgPerServing: "Full B-complex (B1, B2, B3, B5, B6, B7, B9, B12, active forms)",
       certifications: ["Gluten Free", "Dairy Free", "Soy Free", "Non-GMO"],
-      fullDescription: "Thorne Basic B Complex is the practitioner-grade foundational B-vitamin formula featuring all eight B vitamins in their active, bioavailable forms, including methylfolate (5-MTHF), methylcobalamin (B12), and P-5-P (B6). This is critical for the estimated 30–50% of adults with MTHFR variants who poorly activate synthetic folic acid and cyanocobalamin. Thorne is one of the most trusted clinician brands in the US, with strict purity testing on every batch and NSF Certified for Sport status on many products. Take 1 capsule with breakfast, B vitamins can be mildly energizing and are best avoided in the evening.",
+      fullDescription: "Thorne Basic B Complex is the practitioner-grade foundational B-vitamin formula featuring all eight B vitamins in their active, bioavailable forms, including methylfolate (5-MTHF), methylcobalamin (B12), and P-5-P (B6). This is critical for the estimated 30-50% of adults with MTHFR variants who poorly activate synthetic folic acid and cyanocobalamin. Thorne is one of the most trusted clinician brands in the US, with strict purity testing on every batch and NSF Certified for Sport status on many products. Take 1 capsule with breakfast, B vitamins can be mildly energizing and are best avoided in the evening.",
     },
     {
       brand: "Jarrow Formulas", productName: "B-Right Complex", size: "100 capsules",
@@ -409,7 +409,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 60,
       mgPerServing: "500 mg Rhodiola standardized extract",
       certifications: ["Non-GMO", "Vegan", "Kosher", "Halal", "GMP"],
-      fullDescription: "NOW Foods Rhodiola provides a standardized root extract of Rhodiola rosea, the Arctic adaptogen traditionally used to enhance stamina and stress resilience. Standardization to 3% rosavins and 1% salidrosides ensures consistent dosing of the two active marker compounds across batches. Take 1 capsule in the morning or early afternoon (avoid evening, Rhodiola is gently stimulating). Effects on perceived fatigue and stress tolerance typically appear within days, building over 2–4 weeks. Best taken on an empty stomach for fastest absorption. Avoid during pregnancy and with bipolar disorder.",
+      fullDescription: "NOW Foods Rhodiola provides a standardized root extract of Rhodiola rosea, the Arctic adaptogen traditionally used to enhance stamina and stress resilience. Standardization to 3% rosavins and 1% salidrosides ensures consistent dosing of the two active marker compounds across batches. Take 1 capsule in the morning or early afternoon (avoid evening, Rhodiola is gently stimulating). Effects on perceived fatigue and stress tolerance typically appear within days, building over 2-4 weeks. Best taken on an empty stomach for fastest absorption. Avoid during pregnancy and with bipolar disorder.",
     },
     {
       brand: "Gaia Herbs", productName: "Rhodiola Rosea", size: "60 veg capsules",
@@ -443,7 +443,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 60,
       mgPerServing: "1,000 mg Organic Hericium erinaceus",
       certifications: ["USDA Organic", "Non-GMO Project Verified", "Vegan", "Kosher", "Gluten Free"],
-      fullDescription: "Host Defense was founded by world-renowned mycologist Paul Stamets and grows all its mushrooms organically in the Pacific Northwest. The Lion's Mane formula uses both fruiting body and mycelium to deliver the full spectrum of bioactive compounds, hericenones (concentrated in the fruiting body) and erinacines (concentrated in the mycelium). Both compound classes have been studied for their support of nerve growth factor (NGF). Take 2 capsules daily; effects on cognition, focus, and memory build over 8–12 weeks of consistent use, paralleling the natural pace of neuroplastic change.",
+      fullDescription: "Host Defense was founded by world-renowned mycologist Paul Stamets and grows all its mushrooms organically in the Pacific Northwest. The Lion's Mane formula uses both fruiting body and mycelium to deliver the full spectrum of bioactive compounds, hericenones (concentrated in the fruiting body) and erinacines (concentrated in the mycelium). Both compound classes have been studied for their support of nerve growth factor (NGF). Take 2 capsules daily; effects on cognition, focus, and memory build over 8-12 weeks of consistent use, paralleling the natural pace of neuroplastic change.",
     },
     {
       brand: "Real Mushrooms", productName: "Organic Lions Mane Extract", size: "120 capsules",
@@ -480,7 +480,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 120,
       mgPerServing: "5 g creatine monohydrate",
       certifications: ["Informed Choice", "GMP", "Gluten Free"],
-      fullDescription: "Optimum Nutrition Micronized Creatine is the unflavored, micronized form of the most-researched performance supplement in the world. Micronization reduces particle size, improving dissolution in water and minimizing the rare gut discomfort that plain creatine can cause. Each 5 g serving delivers a clinically-effective daily dose of pure creatine monohydrate, no fillers, no stimulants, no flavors. The 600 g tub provides 120 daily servings (a 4-month supply), making this one of the best per-serving values available. Mix with water, juice, or a post-workout shake; effects build over 2–4 weeks as muscle phosphocreatine stores saturate.",
+      fullDescription: "Optimum Nutrition Micronized Creatine is the unflavored, micronized form of the most-researched performance supplement in the world. Micronization reduces particle size, improving dissolution in water and minimizing the rare gut discomfort that plain creatine can cause. Each 5 g serving delivers a clinically-effective daily dose of pure creatine monohydrate, no fillers, no stimulants, no flavors. The 600 g tub provides 120 daily servings (a 4-month supply), making this one of the best per-serving values available. Mix with water, juice, or a post-workout shake; effects build over 2-4 weeks as muscle phosphocreatine stores saturate.",
     },
     {
       brand: "NOW Foods", productName: "Creatine Monohydrate Pure Powder", size: "1 kg",
@@ -515,7 +515,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 41,
       mgPerServing: "11 g hydrolyzed collagen peptides (18 amino acids)",
       certifications: ["Grass-Fed", "Non-GMO Project Verified", "Paleo Friendly", "Keto Certified", "Gluten Free"],
-      fullDescription: "Sports Research Collagen Peptides are sourced from grass-fed, pasture-raised cattle, then hydrolyzed into small di- and tripeptides that the body absorbs easily and uses for skin elasticity, joint comfort, and connective tissue repair. The unflavored powder dissolves clear in hot or cold beverages, coffee, smoothies, water, soups, without clumping or grit. Each scoop delivers 11 g of Type I and III collagen plus all 18 collagen amino acids. Standard daily dose is 1–2 scoops. Visible improvements in skin elasticity, hair, and nails typically emerge after 8–12 weeks of consistent use.",
+      fullDescription: "Sports Research Collagen Peptides are sourced from grass-fed, pasture-raised cattle, then hydrolyzed into small di- and tripeptides that the body absorbs easily and uses for skin elasticity, joint comfort, and connective tissue repair. The unflavored powder dissolves clear in hot or cold beverages, coffee, smoothies, water, soups, without clumping or grit. Each scoop delivers 11 g of Type I and III collagen plus all 18 collagen amino acids. Standard daily dose is 1-2 scoops. Visible improvements in skin elasticity, hair, and nails typically emerge after 8-12 weeks of consistent use.",
     },
     {
       brand: "Vital Proteins", productName: "Collagen Peptides", size: "284 g",
@@ -552,7 +552,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 120,
       mgPerServing: "500 mg curcuminoids + 5 mg BioPerine",
       certifications: ["Vegan", "Non-GMO", "Gluten Free", "Soy Free", "GMP"],
-      fullDescription: "Doctor's Best Curcumin pairs C3 Complex, a clinically-validated standardized extract delivering 95% total curcuminoids (curcumin, demethoxycurcumin, and bisdemethoxycurcumin), with BioPerine, a patented black-pepper extract that increases curcumin bioavailability by up to 2,000%. Without piperine or another bioavailability enhancer, plain curcumin is poorly absorbed. Take 1–2 capsules daily with a meal containing fat for additional absorption support. Pause use for 1–2 weeks before any scheduled surgery and use cautiously alongside blood-thinning medications due to mild antiplatelet effects.",
+      fullDescription: "Doctor's Best Curcumin pairs C3 Complex, a clinically-validated standardized extract delivering 95% total curcuminoids (curcumin, demethoxycurcumin, and bisdemethoxycurcumin), with BioPerine, a patented black-pepper extract that increases curcumin bioavailability by up to 2,000%. Without piperine or another bioavailability enhancer, plain curcumin is poorly absorbed. Take 1-2 capsules daily with a meal containing fat for additional absorption support. Pause use for 1-2 weeks before any scheduled surgery and use cautiously alongside blood-thinning medications due to mild antiplatelet effects.",
     },
     {
       brand: "Thorne", productName: "Meriva-SF", size: "120 capsules",
@@ -587,7 +587,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 60,
       mgPerServing: "1,500 mg Glucosamine + 1,200 mg Chondroitin + 500 mg MSM",
       certifications: ["GMP", "Non-GMO"],
-      fullDescription: "NOW Foods Glucosamine, Chondroitin & MSM is the classic joint-support triad delivered in the clinically-referenced 1,500/1,200/500 mg daily ratio. Glucosamine HCl provides the precursor for cartilage glycosaminoglycans; chondroitin sulfate attracts water to the cartilage matrix and inhibits cartilage-degrading enzymes; MSM contributes bioavailable sulfur for connective tissue and joint comfort. Allow 8–12 weeks of consistent daily use to gauge response. Important: glucosamine is shellfish-derived, this product is not appropriate for those with shellfish allergies.",
+      fullDescription: "NOW Foods Glucosamine, Chondroitin & MSM is the classic joint-support triad delivered in the clinically-referenced 1,500/1,200/500 mg daily ratio. Glucosamine HCl provides the precursor for cartilage glycosaminoglycans; chondroitin sulfate attracts water to the cartilage matrix and inhibits cartilage-degrading enzymes; MSM contributes bioavailable sulfur for connective tissue and joint comfort. Allow 8-12 weeks of consistent daily use to gauge response. Important: glucosamine is shellfish-derived, this product is not appropriate for those with shellfish allergies.",
     },
     {
       brand: "Doctor's Best", productName: "Glucosamine Chondroitin MSM", size: "240 capsules",
@@ -624,7 +624,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 90,
       mgPerServing: "1,000 mg buffered Vitamin C + bioflavonoid complex",
       certifications: ["Non-GMO Project Verified", "Vegan", "Gluten Free"],
-      fullDescription: "Nature's Way Buffered Vitamin C combines calcium ascorbate, a non-acidic, pH-balanced form of vitamin C, with citrus bioflavonoids (rutin, hesperidin, and quercetin), the natural plant compounds that accompany vitamin C in whole foods and enhance its antioxidant activity. The buffered form is significantly gentler on the stomach than plain ascorbic acid, making higher daily doses (1,000–2,000 mg) comfortable for sensitive digestive systems. Vitamin C is water-soluble; split larger doses across the day for sustained tissue saturation.",
+      fullDescription: "Nature's Way Buffered Vitamin C combines calcium ascorbate, a non-acidic, pH-balanced form of vitamin C, with citrus bioflavonoids (rutin, hesperidin, and quercetin), the natural plant compounds that accompany vitamin C in whole foods and enhance its antioxidant activity. The buffered form is significantly gentler on the stomach than plain ascorbic acid, making higher daily doses (1,000-2,000 mg) comfortable for sensitive digestive systems. Vitamin C is water-soluble; split larger doses across the day for sustained tissue saturation.",
     },
     {
       brand: "Nature's Way", productName: "Vitamin C Buffered", size: "100 capsules",
@@ -658,7 +658,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 60,
       mgPerServing: "15 mg elemental zinc (as zinc picolinate)",
       certifications: ["NSF Certified for Sport", "Gluten Free", "Dairy Free", "Soy Free"],
-      fullDescription: "Thorne Zinc Picolinate delivers 15 mg of elemental zinc bound to picolinic acid, a chelate that significantly enhances absorption compared to cheaper forms like zinc oxide. Thorne is one of the most-trusted practitioner brands in the US and one of the few supplement companies to hold NSF Certified for Sport status on many products, ensuring purity, potency, and freedom from over 200 banned substances. Take 1 capsule with food. Long-term doses above 40 mg/day can disrupt copper balance, pair with 1–2 mg of copper if dosing higher or for extended periods.",
+      fullDescription: "Thorne Zinc Picolinate delivers 15 mg of elemental zinc bound to picolinic acid, a chelate that significantly enhances absorption compared to cheaper forms like zinc oxide. Thorne is one of the most-trusted practitioner brands in the US and one of the few supplement companies to hold NSF Certified for Sport status on many products, ensuring purity, potency, and freedom from over 200 banned substances. Take 1 capsule with food. Long-term doses above 40 mg/day can disrupt copper balance, pair with 1-2 mg of copper if dosing higher or for extended periods.",
     },
     {
       brand: "NOW Foods", productName: "Zinc Picolinate 50mg", size: "120 veg capsules",
@@ -695,7 +695,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 23,
       mgPerServing: "~3,800 mg elderberry fruit equivalent",
       certifications: ["Kosher", "Gluten Free", "Non-GMO"],
-      fullDescription: "Sambucol Black Elderberry is the original clinically-studied elderberry preparation, the same syrup used in the placebo-controlled trials that established elderberry's role in upper respiratory immune support. Developed by Israeli virologist Dr. Madeleine Mumcuoglu, the extract is standardized to a consistent anthocyanin content (the dark purple pigments that drive elderberry's antiviral activity). At the first sign of cold or flu symptoms, take 1 teaspoon four times daily for 3–5 days. Not recommended for daily preventive use in people with autoimmune conditions, as elderberry gently activates immune signaling.",
+      fullDescription: "Sambucol Black Elderberry is the original clinically-studied elderberry preparation, the same syrup used in the placebo-controlled trials that established elderberry's role in upper respiratory immune support. Developed by Israeli virologist Dr. Madeleine Mumcuoglu, the extract is standardized to a consistent anthocyanin content (the dark purple pigments that drive elderberry's antiviral activity). At the first sign of cold or flu symptoms, take 1 teaspoon four times daily for 3-5 days. Not recommended for daily preventive use in people with autoimmune conditions, as elderberry gently activates immune signaling.",
     },
     {
       brand: "Gaia Herbs", productName: "Black Elderberry Syrup", size: "89 ml",
@@ -874,7 +874,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       servingsPerContainer: 120,
       mgPerServing: "5,000 mcg D-Biotin (with 130 mg coconut oil)",
       certifications: ["Non-GMO", "Gluten Free", "Soy Free", "Vegetarian", "Made in USA"],
-      fullDescription: "Sports Research Biotin uses a unique liquid-softgel format where 5,000 mcg of D-biotin is suspended in cold-pressed organic coconut oil, providing additional MCT support and improving stability and bioavailability. The 120-softgel bottle provides a 4-month supply at one daily softgel. Visible hair shaft thickness and nail growth improvements typically emerge after 2–3 months of consistent use. Important caveat: discontinue at least 48 hours before any blood test to avoid interference with thyroid, hormone, and other biotin-based laboratory immunoassays.",
+      fullDescription: "Sports Research Biotin uses a unique liquid-softgel format where 5,000 mcg of D-biotin is suspended in cold-pressed organic coconut oil, providing additional MCT support and improving stability and bioavailability. The 120-softgel bottle provides a 4-month supply at one daily softgel. Visible hair shaft thickness and nail growth improvements typically emerge after 2-3 months of consistent use. Important caveat: discontinue at least 48 hours before any blood test to avoid interference with thyroid, hormone, and other biotin-based laboratory immunoassays.",
     },
     {
       brand: "Doctor's Best", productName: "Best Biotin 5000 mcg", size: "60 veg capsules",
@@ -1829,7 +1829,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04756/v/55.jpg",
     imageUrls: ["https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04756/v/45.jpg","https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04756/v/60.jpg","https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04756/v/65.jpg"],
     form: "Softgels",
-    ingredientForm: "Saw Palmetto Extract (45–95% fatty acids and sterols)",
+    ingredientForm: "Saw Palmetto Extract (45-95% fatty acids and sterols)",
     servingSize: "1 softgel",
     servingsPerContainer: 90,
     mgPerServing: "320 mg Saw Palmetto Extract",

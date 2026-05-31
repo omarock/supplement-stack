@@ -56,7 +56,7 @@ export default async function Image() {
           fontSize: 28, color: "#3c4858", lineHeight: 1.4, maxWidth: 900,
           marginBottom: 50,
         }}>
-          Take the quiz. Get a curated stack of 5–9 evidence-based supplements
+          Take the quiz. Get a curated stack of 5-9 evidence-based supplements
           tailored to your goals, body, and budget. From top-rated, third-party-tested brands.
         </div>
 

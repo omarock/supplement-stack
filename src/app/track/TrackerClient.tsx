@@ -461,7 +461,7 @@ function CheckinCard({ today, existing, onSaved }: { today: string; existing: Ch
       <div style={{ height: 1, background: TH.edge, margin: "0 0 20px" }} />
 
       <div style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 14 }}>
-        How do you feel? (0–10)
+        How do you feel? (0-10)
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
         {WELLNESS_METRICS.map(m => (

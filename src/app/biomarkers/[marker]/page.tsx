@@ -50,12 +50,12 @@ function rangeBands(b: BiomarkerDef): { label: string; range: string; hue: strin
   if (b.lowerIsBetter) {
     const okMax = b.optimalMax ?? b.borderlineHigh;
     if (okMax !== undefined) bands.push({ label: "Optimal", range: `under ${okMax} ${u}`, hue: "#3f7a52" });
-    if (b.borderlineHigh !== undefined && b.high !== undefined) bands.push({ label: "Borderline", range: `${b.borderlineHigh}–${b.high} ${u}`, hue: "#b5751e" });
+    if (b.borderlineHigh !== undefined && b.high !== undefined) bands.push({ label: "Borderline", range: `${b.borderlineHigh}-${b.high} ${u}`, hue: "#b5751e" });
     if (b.high !== undefined) bands.push({ label: "High", range: `over ${b.high} ${u}`, hue: "#b91c1c" });
   } else {
     if (b.low !== undefined) bands.push({ label: "Low", range: `under ${b.low} ${u}`, hue: "#b91c1c" });
-    if (b.borderlineLow !== undefined) bands.push({ label: "Borderline low", range: `${b.low ?? "?"}–${b.borderlineLow} ${u}`, hue: "#b5751e" });
-    if (b.optimalMin !== undefined && b.optimalMax !== undefined) bands.push({ label: "Optimal", range: `${b.optimalMin}–${b.optimalMax} ${u}`, hue: "#3f7a52" });
+    if (b.borderlineLow !== undefined) bands.push({ label: "Borderline low", range: `${b.low ?? "?"}-${b.borderlineLow} ${u}`, hue: "#b5751e" });
+    if (b.optimalMin !== undefined && b.optimalMax !== undefined) bands.push({ label: "Optimal", range: `${b.optimalMin}-${b.optimalMax} ${u}`, hue: "#3f7a52" });
     if (b.high !== undefined) bands.push({ label: "High", range: `over ${b.high} ${u}`, hue: "#b91c1c" });
   }
   return bands;

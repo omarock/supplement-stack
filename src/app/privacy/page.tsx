@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <LegalPage eyebrow="Legal" title="Privacy Policy" lastUpdated="May 2026">
       <p>
-        Your privacy matters to us, and because suppdoc.io handles health-related information, we try to be unusually clear about it. This policy explains what we collect, how it is used, who processes it on our behalf, and the controls you have. suppdoc.io is a consumer wellness and education tool. It is <strong>not</strong> a healthcare provider, and using it does not create a doctor&ndash;patient relationship.
+        Your privacy matters to us, and because suppdoc.io handles health-related information, we try to be unusually clear about it. This policy explains what we collect, how it is used, who processes it on our behalf, and the controls you have. suppdoc.io is a consumer wellness and education tool. It is <strong>not</strong> a healthcare provider, and using it does not create a doctor-patient relationship.
       </p>
 
       <h2>1. What We Collect</h2>
