@@ -12,6 +12,7 @@ import type { ChatMessage } from "./Message";
 
 const STORAGE_KEY = "suppdoc.chat.v1";
 const MM = { fontFamily: FONTS.mono } as const;
+const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
 
 // Pages where the launcher should hide entirely
 const HIDE_PATHS = [/^\/admin/, /^\/auth/, /^\/signin/, /^\/signup/];
@@ -116,8 +117,11 @@ function loadHistory(): ChatMessage[] {
     if (!raw) return [];
     const parsed = JSON.parse(raw) as ChatMessage[];
     if (!Array.isArray(parsed)) return [];
-    // Drop streaming/errored flags on rehydrate
-    return parsed.map(m => ({ id: m.id, role: m.role, content: m.content }));
+    // Drop streaming/errored flags on rehydrate, and scrub any stale internal
+    // greeting sentinel that older sessions may have persisted as a user message.
+    return parsed
+      .filter(m => !(m.role === "user" && typeof m.content === "string" && m.content.includes(GREETING_MARKER)))
+      .map(m => ({ id: m.id, role: m.role, content: m.content }));
   } catch { return []; }
 }
 function saveHistory(messages: ChatMessage[]) {
@@ -254,19 +258,10 @@ export default function ChatAssistant() {
     setDraft("");
   }, [streaming]);
 
-  // ── On-open greeting (if no history yet) ───────────────────────────────
-  const greetingFired = useRef(false);
-  useEffect(() => {
-    if (!open || !mounted) return;
-    if (messages.length > 0) return;
-    if (greetingFired.current) return;
-    greetingFired.current = true;
-    // Send a hidden greeting marker so the API knows to produce an opener
-    void send(GREETING_MARKER);
-  }, [open, mounted, messages.length, send]);
-
-  // Reset the "greeting fired" guard when conversation is cleared
-  useEffect(() => { if (messages.length === 0) greetingFired.current = false; }, [messages.length]);
+  // No marker is sent on open anymore. When there's no history we show an
+  // instant, premium welcome (EmptyState) instead of round-tripping a hidden
+  // sentinel through the API, which previously leaked into the thread as a
+  // "<<suppdoc:greeting>>" bubble. The real conversation starts on first send.
 
   if (hidden) return null;
   if (!mounted) return null;
@@ -302,10 +297,37 @@ export default function ChatAssistant() {
 function EmptyState({ suggestions, onPick }: { suggestions: { label: string; text: string }[]; onPick: (text: string) => void }) {
   return (
     <div style={{
-      flex: 1, padding: "20px 18px",
+      flex: 1, padding: "22px 18px 18px",
       display: "flex", flexDirection: "column", justifyContent: "flex-end",
-      gap: 14,
+      gap: 18,
     }}>
+      {/* Premium welcome */}
+      <div>
+        <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 12 }}>
+          <span aria-hidden style={{
+            width: 40, height: 40, borderRadius: 13, flexShrink: 0,
+            background: `linear-gradient(135deg, ${TH.sage} 0%, ${TH.sageDeep} 100%)`,
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            color: "#fff", boxShadow: `0 6px 16px -4px ${TH.sage}99`,
+          }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4L12 3z" />
+            </svg>
+          </span>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ ...D, fontSize: 16, color: TH.ink, lineHeight: 1.2, letterSpacing: "-0.01em" }}>
+              Your evidence-led coach
+            </div>
+            <div style={{ ...MM, fontSize: 10.5, color: TH.sageDeep, letterSpacing: "0.04em", marginTop: 2 }}>
+              PERSONALIZED · CITED · NO UPSELL
+            </div>
+          </div>
+        </div>
+        <p style={{ fontSize: 14, color: TH.inkSoft, lineHeight: 1.58, margin: 0 }}>
+          Ask me anything about supplements, doses, timing, or interactions. I read your goals and saved stack, weigh the published research, and give you a straight, cited answer, including what to skip.
+        </p>
+      </div>
+
       <div>
         <div style={{
           ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.12em",
