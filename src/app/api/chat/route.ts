@@ -131,7 +131,7 @@ export async function POST(req: NextRequest) {
   if (prepared.length === 0) return new Response(JSON.stringify({ ok: false, error: "no user message" }), { status: 400 });
   const greeting = isGreetingTurn(v.messages);
 
-  // H6 — persistent health memory: for signed-in users, inject a server-sourced
+  // H6, persistent health memory: for signed-in users, inject a server-sourced
   // snapshot of their tracked stack, check-in trends, recent bloodwork, and goals
   // so the coach reasons longitudinally. Best-effort; never blocks the reply.
   if (anthropicEnabled()) {

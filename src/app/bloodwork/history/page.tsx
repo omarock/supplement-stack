@@ -99,9 +99,9 @@ async function HistoryBody({ email }: { email: string }) {
             {comparison.map((c, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", background: TH.bg, borderRadius: 12 }}>
                 <span style={{ flex: 1, fontSize: 14, fontWeight: 600, color: TH.ink }}>{c.name}</span>
-                <span style={{ ...MM, fontSize: 13, color: TH.muted }}>{c.from ?? "—"}</span>
+                <span style={{ ...MM, fontSize: 13, color: TH.muted }}>{c.from ?? "-"}</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={TH.mutedDim} strokeWidth="2"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
-                <span style={{ ...D, fontSize: 16, color: TH.ink }}>{c.to ?? "—"}</span>
+                <span style={{ ...D, fontSize: 16, color: TH.ink }}>{c.to ?? "-"}</span>
                 {c.delta !== null && (
                   <span style={{
                     ...MM, fontSize: 12, fontWeight: 600, minWidth: 54, textAlign: "right",

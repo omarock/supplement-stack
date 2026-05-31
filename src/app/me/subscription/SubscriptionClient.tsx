@@ -29,7 +29,7 @@ export interface BillingRow {
 type Action = "cancel" | "reactivate" | "change-plan" | "portal";
 
 function fmtDate(d: string | null | undefined): string {
-  if (!d) return "—";
+  if (!d) return "-";
   return new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
 }
 
@@ -231,7 +231,7 @@ export default function SubscriptionClient({ initial, billing }: {
                     <Td>{fmtDate(b.date)}</Td>
                     <Td>{b.amount}</Td>
                     <Td><span style={{ ...MM, fontSize: 11, color: statusTone(b.status).fg }}>{b.status}</span></Td>
-                    <Td>{b.invoice ? `#${b.invoice}` : "—"}</Td>
+                    <Td>{b.invoice ? `#${b.invoice}` : "-"}</Td>
                   </tr>
                 ))}
               </tbody>

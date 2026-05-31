@@ -19,8 +19,8 @@ export interface Study {
   year: number;
   type: StudyType;
   sample: string;           // "n=126 healthy adults" / "60 RCTs pooled"
-  dose: string;             // "5,000 IU/day" or "—" if not applicable
-  duration: string;         // "12 weeks" or "—"
+  dose: string;             // "5,000 IU/day" or "-" if not applicable
+  duration: string;         // "12 weeks" or "-"
   finding: string;          // 1-2 sentences, plain English
   pubmedQuery: string;      // search query that resolves on PubMed
   pmid?: string;            // optional, used to build a direct link when confident
@@ -811,8 +811,8 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         year: 2013,
         type: "Systematic Review",
         sample: "40 studies pooled",
-        dose: "—",
-        duration: "—",
+        dose: "-",
+        duration: "-",
         finding: "B12 deficiency prevalence: 62% in pregnant vegetarians, 25–86% in children, 21–41% in adolescents, 11–90% in elderly. Supplementation effectively reverses status.",
         pubmedQuery: pm("vitamin B12 deficiency vegetarians vegans Pawlak"),
       },
@@ -823,7 +823,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         year: 2016,
         type: "Cohort",
         sample: "Diabetes Prevention Program participants",
-        dose: "—",
+        dose: "-",
         duration: "Long-term metformin use",
         finding: "Long-term metformin use significantly increased B12 deficiency risk (OR 2.92). Annual B12 testing recommended for chronic metformin users.",
         pubmedQuery: pm("metformin B12 deficiency Aroda"),
@@ -869,7 +869,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         type: "RCT",
         sample: "40 iron-deficient women",
         dose: "60–120 mg ferrous sulfate",
-        duration: "—",
+        duration: "-",
         finding: "Alternate-day dosing (rather than daily) significantly improved iron absorption and reduced GI side effects. This changed clinical practice globally.",
         pubmedQuery: pm("iron alternate day Stoffel Lancet"),
       },
@@ -902,7 +902,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         type: "Meta-analysis",
         sample: "10 RCTs",
         dose: "0.5–5 mg at destination bedtime",
-        duration: "—",
+        duration: "-",
         finding: "Melatonin was highly effective for jet lag from eastward travel across 5+ time zones. Doses 0.5–5 mg performed similarly, lower doses sufficient.",
         pubmedQuery: pm("melatonin jet lag Herxheimer Cochrane"),
       },
@@ -1606,7 +1606,7 @@ export const RESEARCH: Record<string, ResearchEntry> = {
         type: "Systematic Review",
         sample: "Narrative/systematic review",
         dose: "100–200 mg/day to saturate tissues",
-        duration: "—",
+        duration: "-",
         finding: "Vitamin C supports multiple aspects of immunity (barrier integrity, phagocyte function, antimicrobial activity); deficiency impairs immunity and supplementation helps prevent and treat respiratory and systemic infections.",
         pubmedQuery: pm("vitamin C immune function Carr Maggini 2017 Nutrients"),
       },

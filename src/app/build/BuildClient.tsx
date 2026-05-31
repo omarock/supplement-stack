@@ -353,7 +353,7 @@ export default function BuildClient() {
   }, [selected.length, totalCost]);
 
   // Triggered by a direct click inside the modal. We open each product as a new
-  // TAB (window.open with no "features" string) — passing a features string makes
+  // TAB (window.open with no "features" string), passing a features string makes
   // the browser treat each as a popup window, which is what the popup blocker was
   // killing. Opening plain tabs synchronously inside the click gesture lets Chrome
   // open the whole batch. We null the opener for security (replaces noopener).

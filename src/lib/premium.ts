@@ -7,7 +7,7 @@ export interface Subscription {
   cancel_at_period_end: boolean | null;
 }
 
-/** Full row including processor IDs — used only by the management layer (server-side). */
+/** Full row including processor IDs, used only by the management layer (server-side). */
 export interface FullSubscription extends Subscription {
   user_email: string;
   paddle_subscription_id: string | null;

@@ -21,7 +21,7 @@ export default function ContactPage() {
       <SiteHeader />
 
       <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 48px", textAlign: "center" }}>
-        <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>— GET IN TOUCH —</div>
+        <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>- GET IN TOUCH -</div>
         <h1 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.025em", lineHeight: 1.05 }}>
           We&apos;d love to <em style={{ color: th.burgundy }}>hear from you</em>.
         </h1>

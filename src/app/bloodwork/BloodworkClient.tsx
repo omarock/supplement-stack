@@ -563,7 +563,7 @@ function BiomarkerCard({ b }: { b: ExtractedBiomarker }) {
         <span style={{ fontSize: 10.5, fontWeight: 600, color: meta.hue, background: meta.bg, padding: "3px 8px", borderRadius: 999, whiteSpace: "nowrap" }}>{meta.label}</span>
       </div>
       <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginTop: 8 }}>
-        <span style={{ ...D, fontSize: 24, color: TH.ink, letterSpacing: "-0.01em" }}>{b.value ?? "—"}</span>
+        <span style={{ ...D, fontSize: 24, color: TH.ink, letterSpacing: "-0.01em" }}>{b.value ?? "-"}</span>
         {b.unit && <span style={{ fontSize: 12, color: TH.muted }}>{b.unit}</span>}
       </div>
       {b.refRange && <div style={{ ...MM, fontSize: 10.5, color: TH.mutedDim, marginTop: 2 }}>ref: {b.refRange}</div>}

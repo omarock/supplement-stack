@@ -41,11 +41,11 @@ export default function Page() {
 
       <h2>3. Who Processes Your Data (Subprocessors)</h2>
       <ul>
-        <li><strong>Supabase</strong> &mdash; database and authentication.</li>
-        <li><strong>Anthropic</strong> &mdash; AI processing of quiz, audit, chat, and bloodwork inputs.</li>
-        <li><strong>Paddle</strong> &mdash; payment processing (Merchant of Record).</li>
-        <li><strong>Vercel</strong> &mdash; hosting and infrastructure.</li>
-        <li><strong>Resend</strong> &mdash; transactional emails (e.g. magic links, digests).</li>
+        <li><strong>Supabase</strong>, database and authentication.</li>
+        <li><strong>Anthropic</strong>, AI processing of quiz, audit, chat, and bloodwork inputs.</li>
+        <li><strong>Paddle</strong>, payment processing (Merchant of Record).</li>
+        <li><strong>Vercel</strong>, hosting and infrastructure.</li>
+        <li><strong>Resend</strong>, transactional emails (e.g. magic links, digests).</li>
       </ul>
 
       <h2>4. What We Don&apos;t Do</h2>

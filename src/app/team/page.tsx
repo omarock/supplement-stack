@@ -11,7 +11,7 @@ const MM = { fontFamily: FONTS.mono } as const;
 const BASE = "https://www.suppdoc.io";
 
 export const metadata: Metadata = {
-  title: "Our team & clinical reviewers — suppdoc.io",
+  title: "Our team & clinical reviewers, suppdoc.io",
   description: "The people and clinical reviewers behind suppdoc's evidence-graded supplement guidance, and how our editorial review process works.",
   alternates: { canonical: `${BASE}/team` },
 };
@@ -57,7 +57,7 @@ export default function TeamPage() {
             <section style={{ background: `linear-gradient(135deg, ${TH.surface} 0%, ${TH.bg} 100%)`, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: "26px 28px" }}>
               <h2 style={{ ...D, fontSize: 20, color: TH.ink, margin: "0 0 8px", letterSpacing: "-0.02em" }}>Building our clinical board</h2>
               <p style={{ fontSize: 15, color: TH.inkSoft, lineHeight: 1.6, margin: "0 0 14px" }}>
-                We&apos;re recruiting licensed clinicians — a pharmacist (PharmD), a registered dietitian (RD), and a physician (MD) — to review our evidence content. As reviewers join, their names, credentials, and the pages they&apos;ve reviewed appear here and on each page byline.
+                We&apos;re recruiting licensed clinicians, a pharmacist (PharmD), a registered dietitian (RD), and a physician (MD), to review our evidence content. As reviewers join, their names, credentials, and the pages they&apos;ve reviewed appear here and on each page byline.
               </p>
               <p style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, margin: 0 }}>
                 Are you a clinician who shares our evidence-first, no-house-brand approach? We&apos;d love to talk:{" "}

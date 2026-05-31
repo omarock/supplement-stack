@@ -49,7 +49,7 @@ async function checkAdmin() {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function fmtDate(d: string | null) {
-  if (!d) return "—";
+  if (!d) return "-";
   return new Date(d).toLocaleString("en-GB", {
     day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit",
   });
@@ -133,7 +133,7 @@ export default async function AdminDashboard() {
   for (const q of allQuizzesForAgg ?? []) {
     if (q.budget) budgetCounts[q.budget] = (budgetCounts[q.budget] ?? 0) + 1;
   }
-  const topBudget = Object.entries(budgetCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "—";
+  const topBudget = Object.entries(budgetCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "-";
 
   // Quiz → click conversion (rough)
   const conversion = totalQuizzes && totalQuizzes > 0

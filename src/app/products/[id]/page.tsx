@@ -150,7 +150,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             {/* Key Information card */}
             <Card title="KEY INFORMATION">
               <KvRow label="Serving Size" value={bestseller.servingSize ?? supp.dose} />
-              <KvRow label="Total Servings" value={bestseller.servingsPerContainer ? `${bestseller.servingsPerContainer}` : "—"} />
+              <KvRow label="Total Servings" value={bestseller.servingsPerContainer ? `${bestseller.servingsPerContainer}` : "-"} />
               <KvRow label="Per Serving" value={bestseller.mgPerServing ?? supp.dose} />
               <KvRow label="Best Time" value={timingLabel(supp.timing)} last />
             </Card>

@@ -432,7 +432,7 @@ function CheckinCard({ today, existing, onSaved }: { today: string; existing: Ch
             <div key={m} style={{ display: "flex", alignItems: "center", gap: 7 }}>
               <span style={{ width: 9, height: 9, borderRadius: 999, background: METRIC_META[m].hue }} />
               <span style={{ fontSize: 12.5, color: TH.muted }}>{METRIC_META[m].label}</span>
-              <span style={{ ...D, fontSize: 14, color: TH.ink }}>{existing[m] ?? "—"}</span>
+              <span style={{ ...D, fontSize: 14, color: TH.ink }}>{existing[m] ?? "-"}</span>
             </div>
           ))}
         </div>
@@ -620,7 +620,7 @@ function WellnessSection({ checkins, today, trends }: { checkins: Checkin[]; tod
               <span style={{ width: 8, height: 8, borderRadius: 999, background: t.hue }} />{t.label}
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-              <span style={{ ...D, fontSize: 18, color: TH.ink }}>{t.recentAvg ?? "—"}</span>
+              <span style={{ ...D, fontSize: 18, color: TH.ink }}>{t.recentAvg ?? "-"}</span>
               {t.deltaPct !== null && t.samples >= 4 && (
                 <span style={{ fontSize: 12, fontWeight: 600, color: t.deltaPct >= 0 ? TH.sageDeep : "#b91c1c" }}>
                   {t.deltaPct >= 0 ? "▲" : "▼"} {Math.abs(t.deltaPct)}%

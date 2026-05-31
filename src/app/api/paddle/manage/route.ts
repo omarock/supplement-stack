@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
   }
   const subId = sub.paddle_subscription_id;
 
-  // 3. Hosted portal (payment method + official invoices) — return a deep link.
+  // 3. Hosted portal (payment method + official invoices), return a deep link.
   if (action === "portal") {
     if (!sub.paddle_customer_id) {
       return Response.json({ ok: false, error: "No billing profile yet." }, { status: 409 });

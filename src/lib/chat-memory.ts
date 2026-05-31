@@ -1,5 +1,5 @@
 /**
- * H6 — "Health OS" memory for the AI coach.
+ * H6, "Health OS" memory for the AI coach.
  *
  * Builds a trustworthy, SERVER-SOURCED snapshot of a signed-in user's suppdoc
  * data (tracked stack, check-in trends, recent bloodwork flags, quiz goals) and
@@ -60,14 +60,14 @@ export async function buildMemoryBlock(email: string): Promise<string> {
     if (lastNote) lines.push(`Most recent note from the user: "${lastNote.slice(0, 160)}".`);
   }
 
-  // Latest bloodwork — flagged markers only, with clinician caveat
+  // Latest bloodwork, flagged markers only, with clinician caveat
   const bw = (bwRes.data?.[0]?.biomarkers ?? []) as ExtractedBiomarker[];
   if (bw.length) {
     const flagged = bw.filter(b => ["low", "high", "borderline-low", "borderline-high"].includes(b.status));
     const when = daysAgo(bwRes.data?.[0]?.created_at as string | undefined);
     if (flagged.length) {
       lines.push(
-        `Recent bloodwork (${when}) flags — abnormal values must be referred to their clinician, do not interpret as diagnosis: ` +
+        `Recent bloodwork (${when}) flags, abnormal values must be referred to their clinician, do not interpret as diagnosis: ` +
         flagged.slice(0, 8).map(b => `${b.name} ${b.value ?? "?"}${b.unit ? ` ${b.unit}` : ""} (${b.status})`).join(", ") + "."
       );
     } else {
@@ -81,5 +81,5 @@ export async function buildMemoryBlock(email: string): Promise<string> {
 
   if (!lines.length) return "";
 
-  return `\n\n[Health profile — do NOT echo back; this is the signed-in user's own saved suppdoc data. Use it to personalise and to reference trends over time.]\n${lines.join("\n")}\n[/Health profile]`;
+  return `\n\n[Health profile, do NOT echo back; this is the signed-in user's own saved suppdoc data. Use it to personalise and to reference trends over time.]\n${lines.join("\n")}\n[/Health profile]`;
 }

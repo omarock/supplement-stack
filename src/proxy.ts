@@ -30,7 +30,7 @@ export async function proxy(request: NextRequest) {
   });
 
   // IMPORTANT: refresh the session. Do not run other logic between createServerClient
-  // and getUser() — it can cause hard-to-debug logout bugs.
+  // and getUser(), it can cause hard-to-debug logout bugs.
   await supabase.auth.getUser();
 
   return response;

@@ -42,13 +42,13 @@ async function getUser() {
 }
 
 function fmtDate(d: string | null | undefined) {
-  if (!d) return "—";
+  if (!d) return "-";
   return new Date(d).toLocaleString("en-GB", {
     day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit",
   });
 }
 function fmtShortDate(d: string | null | undefined) {
-  if (!d) return "—";
+  if (!d) return "-";
   return new Date(d).toLocaleString("en-GB", {
     day: "2-digit", month: "short", year: "numeric",
   });
@@ -181,7 +181,7 @@ export default async function ProfilePage() {
         }}>
           <StatCard label="QUIZZES TAKEN" value={quizzes.length} sub={lastQuiz ? `Last: ${fmtShortDate(lastQuiz.created_at)}` : "Take your first one"} />
           <StatCard label="PRODUCTS EXPLORED" value={clicks.length} sub={lastClick ? `Last: ${fmtShortDate(lastClick.created_at)}` : "Browse supplements"} />
-          <StatCard label="CURRENT STACK SIZE" value={lastQuiz?.supplement_count ?? "—"} sub={lastQuiz ? `~$${lastQuiz.total_monthly_cost}/mo` : "Take the quiz"} />
+          <StatCard label="CURRENT STACK SIZE" value={lastQuiz?.supplement_count ?? "-"} sub={lastQuiz ? `~$${lastQuiz.total_monthly_cost}/mo` : "Take the quiz"} />
         </section>
 
         {/* Feature cards: tracker + bloodwork */}
@@ -248,10 +248,10 @@ export default async function ProfilePage() {
                   {quizzes.slice(0, 10).map(q => (
                     <tr key={q.id} style={{ borderTop: `1px solid ${th.line}` }}>
                       <Td>{fmtDate(q.created_at)}</Td>
-                      <Td>{(q.goals ?? []).slice(0, 3).join(", ") || "—"}</Td>
-                      <Td>{q.supplement_count ?? "—"}</Td>
-                      <Td>{q.budget ?? "—"}</Td>
-                      <Td>{q.total_monthly_cost ? `$${q.total_monthly_cost}` : "—"}</Td>
+                      <Td>{(q.goals ?? []).slice(0, 3).join(", ") || "-"}</Td>
+                      <Td>{q.supplement_count ?? "-"}</Td>
+                      <Td>{q.budget ?? "-"}</Td>
+                      <Td>{q.total_monthly_cost ? `$${q.total_monthly_cost}` : "-"}</Td>
                     </tr>
                   ))}
                 </tbody>
@@ -290,11 +290,11 @@ export default async function ProfilePage() {
                           <Link href={`/ingredients/${c.supplement_id}`} style={{ color: th.sage, textDecoration: "none" }}>
                             {c.supplement_name ?? c.supplement_id}
                           </Link>
-                        ) : c.supplement_name ?? "—"}
+                        ) : c.supplement_name ?? "-"}
                       </Td>
-                      <Td>{c.product_brand ?? "—"}</Td>
-                      <Td>{c.product_name ?? "—"}</Td>
-                      <Td><span style={{ ...MM, fontSize: 11, color: th.inkMute }}>{c.source_page ?? "—"}</span></Td>
+                      <Td>{c.product_brand ?? "-"}</Td>
+                      <Td>{c.product_name ?? "-"}</Td>
+                      <Td><span style={{ ...MM, fontSize: 11, color: th.inkMute }}>{c.source_page ?? "-"}</span></Td>
                     </tr>
                   ))}
                 </tbody>

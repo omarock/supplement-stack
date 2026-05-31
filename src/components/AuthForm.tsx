@@ -118,7 +118,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
           {/* Heading */}
           <div style={{ marginBottom: 28, textAlign: "center" }}>
             <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 14 }}>
-              {mode === "signin" ? "— SIGN IN —" : "— CREATE ACCOUNT —"}
+              {mode === "signin" ? "- SIGN IN -" : "- CREATE ACCOUNT -"}
             </div>
             <h1 style={{ ...S, fontSize: 44, color: th.ink, margin: 0, letterSpacing: "-0.025em", lineHeight: 1 }}>
               {headerText}

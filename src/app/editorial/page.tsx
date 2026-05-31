@@ -10,7 +10,7 @@ const MM = { fontFamily: FONTS.mono } as const;
 const BASE = "https://www.suppdoc.io";
 
 export const metadata: Metadata = {
-  title: "Editorial standards & how we evaluate evidence — suppdoc.io",
+  title: "Editorial standards & how we evaluate evidence, suppdoc.io",
   description: "How suppdoc researches, grades evidence, cites sources, reviews content, discloses conflicts of interest, and uses AI responsibly. Our editorial standards for an evidence-led, honest supplement platform.",
   alternates: { canonical: `${BASE}/editorial` },
 };
@@ -22,11 +22,11 @@ const TIERS = [
 ];
 
 const PRINCIPLES = [
-  { h: "We grade the evidence, openly", p: "Every ingredient carries a visible evidence tier — Very strong, Strong, or Moderate — based on the weight and quality of published human research, not marketing claims. When the evidence is thin, we say so." },
-  { h: "We cite primary sources", p: "Claims link to the underlying research — meta-analyses, randomised controlled trials, and reputable bodies (PubMed, NIH, the Cochrane reviews, Examine). We prefer human data over mechanism or animal studies, and we note when only the latter exists." },
-  { h: "We tell you what NOT to take", p: "An honest platform says when a supplement isn't worth it, when a cheaper option is just as good, and when the right answer is food, sleep, or a doctor — not a pill. We flag redundancy, interactions, and timing issues." },
+  { h: "We grade the evidence, openly", p: "Every ingredient carries a visible evidence tier, Very strong, Strong, or Moderate, based on the weight and quality of published human research, not marketing claims. When the evidence is thin, we say so." },
+  { h: "We cite primary sources", p: "Claims link to the underlying research, meta-analyses, randomised controlled trials, and reputable bodies (PubMed, NIH, the Cochrane reviews, Examine). We prefer human data over mechanism or animal studies, and we note when only the latter exists." },
+  { h: "We tell you what NOT to take", p: "An honest platform says when a supplement isn't worth it, when a cheaper option is just as good, and when the right answer is food, sleep, or a doctor, not a pill. We flag redundancy, interactions, and timing issues." },
   { h: "We don't sell our own supplements", p: "suppdoc has no house brand. We earn the same affiliate rate regardless of which product you choose, so a recommendation is never biased toward our own inventory. Affiliate links are disclosed." },
-  { h: "We're educational, not medical", p: "Nothing here is medical advice, diagnosis, or treatment. We prompt you to involve a qualified clinician for anything that warrants it — pregnancy, medications, medical conditions, or abnormal lab results." },
+  { h: "We're educational, not medical", p: "Nothing here is medical advice, diagnosis, or treatment. We prompt you to involve a qualified clinician for anything that warrants it, pregnancy, medications, medical conditions, or abnormal lab results." },
   { h: "We use AI responsibly", p: "We use AI to help structure and personalise information at scale, but content is written to this methodology, grounded in cited research, and moving under named clinical review. AI accelerates the work; it does not replace the evidence or the reviewer." },
   { h: "We correct mistakes", p: "If we get something wrong, we fix it and date the update. Each evidence page shows when it was last reviewed. Spot an error? Tell us at hello@suppdoc.io." },
 ];
@@ -63,7 +63,7 @@ export default function EditorialPage() {
             How we evaluate the <span style={SI}>evidence</span>.
           </h1>
           <p style={{ fontSize: 18, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 32px" }}>
-            suppdoc exists because supplement information online is dominated by hype and affiliate spam. These are the standards that make us different — and that you can hold us to.
+            suppdoc exists because supplement information online is dominated by hype and affiliate spam. These are the standards that make us different, and that you can hold us to.
           </p>
 
           {/* Evidence tiers */}
@@ -96,7 +96,7 @@ export default function EditorialPage() {
           <section style={{ background: `linear-gradient(135deg, ${TH.surface} 0%, ${TH.bg} 100%)`, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: "24px 26px" }}>
             <h2 style={{ ...D, fontSize: 20, color: TH.ink, margin: "0 0 8px", letterSpacing: "-0.02em" }}>Clinical review</h2>
             <p style={{ fontSize: 15, color: TH.inkSoft, lineHeight: 1.6, margin: "0 0 14px" }}>
-              We are building a board of licensed clinicians — a pharmacist, a registered dietitian, and a physician — to review our evidence content. Reviewers and their credentials are published on our{" "}
+              We are building a board of licensed clinicians, a pharmacist, a registered dietitian, and a physician, to review our evidence content. Reviewers and their credentials are published on our{" "}
               <Link href="/team" style={{ color: TH.sageDeep, fontWeight: 600, textDecoration: "none" }}>team page</Link>, and reviewed pages carry their name and the date of review.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>

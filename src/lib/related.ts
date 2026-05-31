@@ -1,8 +1,8 @@
 /**
- * Relationship resolver — the semantic graph that interlinks every entity
+ * Relationship resolver, the semantic graph that interlinks every entity
  * (ingredient ↔ goal ↔ biomarker ↔ interaction ↔ stack ↔ research).
  *
- * Everything is *computed from existing structured data* — no generated prose,
+ * Everything is *computed from existing structured data*, no generated prose,
  * no fabricated relationships. This is what turns isolated programmatic pages
  * into a tightly connected topical-authority web (and a graph AI engines can
  * traverse for retrieval).

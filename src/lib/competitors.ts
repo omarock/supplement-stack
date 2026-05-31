@@ -208,10 +208,10 @@ export const COMPETITORS: Competitor[] = [
     bottomLine: "Care/of was the original DTC personalised vitamin subscription, acquired by Bayer in 2020 and shut down in December 2024 after Bayer divested. Former Care/of customers looking for a similar quiz-driven recommendation experience can use suppdoc.io free, we cover the same personalization without the subscription lock-in or fulfillment dependency.",
     rows: [
       { label: "Operating status", suppdoc: "Active", competitor: "Shut down Dec 2024", winner: "suppdoc" },
-      { label: "Cost", suppdoc: "Free", competitor: "—", winner: "suppdoc" },
-      { label: "Personalised quiz", suppdoc: "Yes (2 versions)", competitor: "—", winner: "suppdoc" },
-      { label: "Brand choice", suppdoc: "151 ingredients, multiple brands", competitor: "—", winner: "suppdoc" },
-      { label: "Audit existing stack", suppdoc: "Yes", competitor: "—", winner: "suppdoc" },
+      { label: "Cost", suppdoc: "Free", competitor: "-", winner: "suppdoc" },
+      { label: "Personalised quiz", suppdoc: "Yes (2 versions)", competitor: "-", winner: "suppdoc" },
+      { label: "Brand choice", suppdoc: "151 ingredients, multiple brands", competitor: "-", winner: "suppdoc" },
+      { label: "Audit existing stack", suppdoc: "Yes", competitor: "-", winner: "suppdoc" },
     ],
     pros: [
       "Was a pioneer of the personalised-vitamin DTC model",

@@ -17,9 +17,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const r = REVIEWERS.find(x => x.slug === slug);
-  if (!r) return { title: "Team — suppdoc.io" };
+  if (!r) return { title: "Team, suppdoc.io" };
   return {
-    title: `${r.name}, ${r.credential} — suppdoc.io`,
+    title: `${r.name}, ${r.credential}, suppdoc.io`,
     description: `${r.name}${r.title ? `, ${r.title}` : ""} (${r.credential}) reviews evidence content for suppdoc.`,
     alternates: { canonical: `${BASE}/team/${r.slug}` },
   };

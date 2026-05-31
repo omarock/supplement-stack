@@ -47,7 +47,7 @@
    Global keyboard-focus visibility, motion safety, a screen-reader utility,
    and a skip-to-content link. Applied site-wide via the root layout. */
 
-/* 2.4.7 Focus Visible — a clear ring for keyboard users on every interactive el.
+/* 2.4.7 Focus Visible, a clear ring for keyboard users on every interactive el.
    :focus-visible only shows for keyboard/programmatic focus, not mouse clicks. */
 a:focus-visible,
 button:focus-visible,
@@ -61,7 +61,7 @@ textarea:focus-visible,
   border-radius: 4px;
 }
 
-/* 2.3.3 Animation from Interactions — respect users who ask for less motion. */
+/* 2.3.3 Animation from Interactions, respect users who ask for less motion. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

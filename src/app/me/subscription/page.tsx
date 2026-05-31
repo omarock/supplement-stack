@@ -40,9 +40,9 @@ async function getUser() {
 }
 
 function fmtMoney(minor: string | undefined | null, currency: string | undefined): string {
-  if (!minor) return "—";
+  if (!minor) return "-";
   const n = Number(minor) / 100;
-  if (!Number.isFinite(n)) return "—";
+  if (!Number.isFinite(n)) return "-";
   try {
     return new Intl.NumberFormat("en-US", { style: "currency", currency: currency || "USD" }).format(n);
   } catch {
@@ -103,7 +103,7 @@ export default async function ManageSubscriptionPage() {
       nextBilledAt: full.cancel_at_period_end ? null : full.current_period_end,
       cancelScheduled: Boolean(full.cancel_at_period_end),
       cancelEffectiveAt: full.cancel_at_period_end ? full.current_period_end : null,
-      priceLabel: full.plan === "annual" ? "$79.00" : full.plan === "monthly" ? "$9.00" : "—",
+      priceLabel: full.plan === "annual" ? "$79.00" : full.plan === "monthly" ? "$9.00" : "-",
       intervalLabel: full.plan === "annual" ? "per year" : full.plan === "monthly" ? "per month" : "",
     };
   }
