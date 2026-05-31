@@ -48,7 +48,7 @@ function Reveal({ children, delay = 0, y = 24, style }: {
 // Hero
 // ════════════════════════════════════════════════════════════════════════════
 
-const GOAL_CHIPS = ["Sleep", "Energy", "Focus", "Stress", "Longevity"];
+const GOAL_CHIPS = ["Sleep", "Energy", "Focus", "Stress", "Muscle Growth", "Longevity"];
 
 function Hero() {
   const router = useRouter();
@@ -64,11 +64,17 @@ function Hero() {
     });
   }
 
-  function build() {
+  // Primary action: the goal box feeds straight into the free quiz (the
+  // recommended, most-accurate path), carrying the goal so it pre-selects.
+  function startQuiz() {
     const finalGoal = (goal.trim() || picked.join(", ")).trim();
     track("home_goal_build", { hasGoal: finalGoal.length > 0, chips: picked.length });
-    router.push(finalGoal ? `/build?goal=${encodeURIComponent(finalGoal)}` : "/build");
+    router.push(finalGoal ? `/quiz/express?goal=${encodeURIComponent(finalGoal)}` : "/quiz/express");
   }
+
+  // Intent-specific CTA label: when one goal is chosen, name it.
+  const primaryGoal = picked.length === 1 ? picked[0].toLowerCase() : null;
+  const ctaLabel = primaryGoal ? `Get my free ${primaryGoal} stack` : "Get my free stack";
 
   const arrow = (c: string, s = 12) => (
     <svg width={s} height={s} viewBox="0 0 14 14" fill="none">
@@ -87,25 +93,19 @@ function Hero() {
             padding: "6px 14px 6px 7px", background: TH.surface,
             border: `1px solid ${TH.edge}`, borderRadius: 999, boxShadow: `0 1px 2px ${TH.ink}0d`,
           }}>
-            <div style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-              {["MD", "RD", "Rx"].map((l, i) => (
-                <span key={l} style={{
-                  width: 24, height: 24, borderRadius: 999, background: TH.surface, color: TH.ink,
-                  border: `1.5px solid ${TH.edge}`, marginLeft: i === 0 ? 0 : -8,
-                  ...MM, fontSize: 8.5, fontWeight: 600, display: "inline-flex", alignItems: "center", justifyContent: "center",
-                  boxShadow: `0 1px 2px ${TH.ink}10`, position: "relative", zIndex: 3 - i,
-                }}>{l}</span>
-              ))}
-              <span style={{
-                width: 24, height: 24, borderRadius: 999, background: TH.sage, marginLeft: -8,
-                border: `1.5px solid ${TH.surface}`, display: "inline-flex", alignItems: "center", justifyContent: "center",
-                boxShadow: `0 2px 5px ${TH.sage}66`,
-              }} aria-hidden>
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5L5.5 10.5 11.5 4" stroke="#fff" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              </span>
-            </div>
+            <span style={{
+              width: 24, height: 24, borderRadius: 999, background: TH.sage, flexShrink: 0,
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+              boxShadow: `0 2px 5px ${TH.sage}66`,
+            }} aria-hidden>
+              {/* research / journal mark */}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 5.5A2 2 0 0 1 6 4h13v15H6a2 2 0 0 0-2 2z" />
+                <path d="M8 8h7M8 11.5h7" />
+              </svg>
+            </span>
             <span style={{ fontSize: 12.5, color: TH.inkSoft, fontWeight: 500 }}>
-              Evidence-graded <span style={{ color: TH.muted, fontWeight: 400 }}>· every claim cited</span>
+              Evidence-graded <span style={{ color: TH.muted, fontWeight: 400 }}>· every claim cited · no house brand</span>
             </span>
           </div>
         </Reveal>
@@ -136,7 +136,7 @@ function Hero() {
               onChange={e => setGoal(e.target.value)}
               rows={1}
               placeholder="better sleep and steadier energy…"
-              onKeyDown={e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) build(); }}
+              onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); startQuiz(); } }}
               style={{
                 width: "100%", boxSizing: "border-box", border: "none", outline: "none", resize: "none",
                 fontFamily: FONTS.body, fontSize: 16, lineHeight: 1.4, color: TH.ink, background: "transparent", minHeight: 26,
@@ -156,7 +156,7 @@ function Hero() {
                 );
               })}
             </div>
-            <button type="button" onClick={build} style={{
+            <button type="button" onClick={startQuiz} style={{
               marginTop: 14, width: "100%", height: 52, border: "none", borderRadius: 999, cursor: "pointer",
               background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
               fontFamily: FONTS.body, fontWeight: 600, fontSize: 15.5, letterSpacing: "-0.01em",
@@ -164,8 +164,11 @@ function Hero() {
               boxShadow: `0 1px 0 rgba(255,255,255,.25) inset, 0 10px 22px -6px ${TH.sage}80`,
             }}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
-              Build my stack
+              {ctaLabel}
             </button>
+            <div style={{ textAlign: "center", marginTop: 9, ...MM, fontSize: 9.5, letterSpacing: "0.04em", color: TH.muted }}>
+              3-MINUTE QUIZ · FREE · NO CARD
+            </div>
           </div>
         </Reveal>
 
@@ -176,25 +179,27 @@ function Hero() {
           <span style={{ flex: 1, height: 1, background: TH.edge }} />
         </div>
 
-        {/* 3 guided paths, Quiz is the recommended primary entry point */}
+        {/* Guided paths, Quiz is the recommended primary entry point. Audit is
+            surfaced second to capture people who already take supplements. */}
         <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
           <PathCard
-            href="/quiz" recommended badge="Recommended"
+            href="/quiz" recommended badge="Recommended · Free"
             title="Take the AI quiz" meta="3 MIN · THE MOST ACCURATE, PERSONALIZED PATH"
-            note="Answer a few questions, get a stack matched to how you sleep, train, and feel."
+            note="Answer a few questions, get a free stack matched to how you sleep, train, and feel."
             icon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke={TH.sageDeep} strokeWidth="1.4" strokeLinejoin="round" /></svg>}
             arrow={arrow}
           />
           <PathCard
-            href="/build"
-            title="Build a stack myself" meta="BROWSE 151 EVIDENCE-GRADED INGREDIENTS"
-            icon={<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="2.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="8.5" y="2.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="2.5" y="8.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="8.5" y="8.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /></svg>}
+            href="/audit"
+            title="Audit what I already take" meta="SCORE INTERACTIONS, DOSES & GAPS · FREE · 2 MIN"
+            note="Already have a routine? Check if it's optimized, paste your stack or your labs."
+            icon={<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke={TH.inkSoft} strokeWidth="1.4" /><path d="M10.5 10.5l3 3" stroke={TH.inkSoft} strokeWidth="1.6" strokeLinecap="round" /></svg>}
             arrow={arrow}
           />
           <PathCard
-            href="/audit"
-            title="Audit what I take · or my labs" meta="SCORE INTERACTIONS, DOSES & GAPS · 2 MIN"
-            icon={<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke={TH.inkSoft} strokeWidth="1.4" /><path d="M10.5 10.5l3 3" stroke={TH.inkSoft} strokeWidth="1.6" strokeLinecap="round" /></svg>}
+            href="/build"
+            title="Build it myself" meta="BROWSE 151 INGREDIENTS · NO QUIZ"
+            icon={<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="2.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="8.5" y="2.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="2.5" y="8.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="8.5" y="8.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /></svg>}
             arrow={arrow}
           />
         </div>
@@ -870,14 +875,16 @@ export default function HomePage() {
     <>
       <SiteHeader />
       <HeroSpotlight />
-      <main>
+      <main id="main-content">
         <Hero />
         <Trust />
-        <How />
-        <Stats />
-        <Ingredients />
+        {/* Show the actual output early (reduces uncertainty), then the trust
+            reasons, before the deeper how/ingredient detail. */}
         <Sample />
         <Testimonials />
+        <How />
+        <Ingredients />
+        <Stats />
         <FAQ />
         <CTA />
       </main>

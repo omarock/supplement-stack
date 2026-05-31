@@ -42,6 +42,35 @@ const EXPRESS_DEFAULTS: QuizData = {
 const TOTAL = 6;
 const STORAGE = "suppdoc.expressQuiz.v1";
 
+// Map a free-text/chip goal from the homepage (?goal=) onto the quiz's goal
+// options, so picking "Sleep" on the homepage pre-selects "Better sleep" here.
+const GOAL_KEYWORDS: [string, string][] = [
+  ["sleep", "Better sleep"],
+  ["energy", "More energy"],
+  ["focus", "Sharper focus"],
+  ["stress", "Lower stress"],
+  ["muscle", "Muscle & Recovery"],
+  ["recovery", "Muscle & Recovery"],
+  ["longevity", "Healthy aging & longevity"],
+  ["aging", "Healthy aging & longevity"],
+  ["immun", "Stronger immunity"],
+  ["mood", "Better mood"],
+  ["skin", "Skin / hair / Beauty"],
+  ["hair", "Skin / hair / Beauty"],
+  ["beauty", "Skin / hair / Beauty"],
+  ["gut", "Gut health"],
+  ["digest", "Gut health"],
+];
+
+function goalsFromParam(raw: string): string[] {
+  const q = raw.toLowerCase();
+  const out: string[] = [];
+  for (const [kw, label] of GOAL_KEYWORDS) {
+    if (q.includes(kw) && !out.includes(label)) out.push(label);
+  }
+  return out.slice(0, 3);
+}
+
 function canProceed(step: number, d: QuizData): boolean {
   switch (step) {
     case 1: { const age = parseInt(d.age); return d.age !== "" && age >= 13 && age <= 100 && d.gender !== ""; }
@@ -77,6 +106,16 @@ export default function ExpressQuiz() {
     if (typeof window === "undefined") return;
     try { localStorage.setItem(STORAGE, JSON.stringify({ data, step })); } catch { /* ignore */ }
   }, [data, step]);
+
+  // Seamless handoff from the homepage goal box: pre-select goals from ?goal=
+  // (only when the user hasn't already chosen any, so we never override a draft).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const raw = new URLSearchParams(window.location.search).get("goal");
+    if (!raw) return;
+    const mapped = goalsFromParam(raw);
+    if (mapped.length) setData(d => (d.goals.length ? d : { ...d, goals: mapped }));
+  }, []);
 
   const update = (u: Partial<QuizData>) => setData(d => ({ ...d, ...u }));
   const ok = canProceed(step, data);

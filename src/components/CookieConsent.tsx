@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { TH, FONTS } from "@/lib/theme";
 import { CONSENT_KEY as STORAGE_KEY, CONSENT_REOPEN_EVENT, notifyConsentChanged } from "@/lib/consent";
@@ -23,6 +23,16 @@ export default function CookieConsent() {
   const [open, setOpen] = useState(false);
   const [customizing, setCustomizing] = useState(false);
   const [prefs, setPrefs] = useState<Prefs>({ analytics: true, affiliate: true });
+  const barRef = useRef<HTMLDivElement | null>(null);
+
+  // Reserve space at the bottom of the page so the fixed bar never hides content
+  // (e.g. the hero path cards). Cleared the moment the user decides.
+  useEffect(() => {
+    if (!open) { document.body.style.paddingBottom = ""; return; }
+    const h = barRef.current?.offsetHeight ?? 72;
+    document.body.style.paddingBottom = `${h}px`;
+    return () => { document.body.style.paddingBottom = ""; };
+  }, [open, customizing]);
 
   // Show after mount if no prior decision (avoids SSR hydration flash).
   // Also listen for the footer "Cookie preferences" link to re-open it anytime.
@@ -54,96 +64,68 @@ export default function CookieConsent() {
 
   return (
     <div
+      ref={barRef}
       role="dialog"
       aria-label="Cookie preferences"
       aria-modal="false"
       style={{
-        position: "fixed", zIndex: 200,
-        left: "var(--cookie-left)", right: "var(--cookie-right)", bottom: "var(--cookie-bottom)",
-        maxWidth: "var(--cookie-max)",
+        position: "fixed", zIndex: 200, left: 0, right: 0, bottom: 0,
         background: TH.surface,
-        border: `1px solid ${TH.edge}`,
-        borderRadius: 18,
-        boxShadow: "0 18px 50px rgba(10,37,64,0.18), 0 6px 14px rgba(10,37,64,0.06)",
-        padding: 22,
-        fontFamily: FONTS.body,
-        color: TH.ink,
-        animation: "sd-rise .35s cubic-bezier(.2,.7,.2,1) both",
+        borderTop: `1px solid ${TH.edge}`,
+        boxShadow: "0 -10px 30px rgba(10,37,64,0.10)",
+        padding: "12px var(--section-pad-x)",
+        fontFamily: FONTS.body, color: TH.ink,
+        animation: "sd-rise .3s cubic-bezier(.2,.7,.2,1) both",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-        <span aria-hidden style={{ fontSize: 22 }}>🍪</span>
-        <strong style={{ fontFamily: FONTS.display, fontSize: 16, letterSpacing: "-0.01em" }}>
-          Cookies on suppdoc.io
-        </strong>
+      <div style={{
+        maxWidth: 1180, margin: "0 auto",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        gap: 14, flexWrap: "wrap",
+      }}>
+        {!customizing ? (
+          <>
+            <p style={{ flex: "1 1 320px", fontSize: 13, lineHeight: 1.5, color: TH.inkSoft, margin: 0 }}>
+              <span aria-hidden style={{ marginRight: 7 }}>🍪</span>
+              We use essential cookies to run the site, plus optional analytics and affiliate-link cookies.{" "}
+              <Link href="/cookies" style={{ color: TH.sageDeep, textDecoration: "underline" }}>Learn more</Link>.
+            </p>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", flexShrink: 0 }}>
+              <button onClick={() => setCustomizing(true)} style={btnGhost()}>Customize</button>
+              <button onClick={() => persist("reject", { analytics: false, affiliate: false })} style={btnSecondary()}>Reject optional</button>
+              <button onClick={() => persist("accept", { analytics: true, affiliate: true })} style={btnPrimary()}>Accept all</button>
+            </div>
+          </>
+        ) : (
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p style={{ fontSize: 13, lineHeight: 1.5, color: TH.inkSoft, margin: "0 0 6px" }}>
+              Choose which optional cookies you allow. Essential cookies are always on, they keep you signed in and remember your stack drafts.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "var(--cookie-rows)", gap: "0 28px" }}>
+              <ConsentRow
+                title="Analytics"
+                description="Anonymized page views via Vercel Analytics so we can improve the site."
+                checked={prefs.analytics}
+                onChange={v => setPrefs(p => ({ ...p, analytics: v }))}
+              />
+              <ConsentRow
+                title="Affiliate attribution"
+                description="Adds our rewards code when you click an iHerb or Amazon link. No personal data is shared."
+                checked={prefs.affiliate}
+                onChange={v => setPrefs(p => ({ ...p, affiliate: v }))}
+              />
+            </div>
+            <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
+              <button onClick={() => persist("custom", prefs)} style={btnPrimary()}>Save preferences</button>
+              <button onClick={() => setCustomizing(false)} style={btnGhost()}>Back</button>
+            </div>
+          </div>
+        )}
       </div>
 
-      {!customizing ? (
-        <>
-          <p style={{ fontSize: 13.5, lineHeight: 1.55, color: TH.inkSoft, margin: "0 0 14px" }}>
-            We use essential cookies to run the site, plus optional cookies for analytics and our retailer affiliate links (so we earn a small commission at no cost to you).{" "}
-            <Link href="/cookies" style={{ color: TH.sageDeep, textDecoration: "underline" }}>Learn more</Link>.
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            <button onClick={() => persist("accept", { analytics: true, affiliate: true })}
-              style={btnPrimary()}>
-              Accept all
-            </button>
-            <button onClick={() => persist("reject", { analytics: false, affiliate: false })}
-              style={btnSecondary()}>
-              Reject optional
-            </button>
-            <button onClick={() => setCustomizing(true)}
-              style={btnGhost()}>
-              Customize
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          <p style={{ fontSize: 13, lineHeight: 1.5, color: TH.inkSoft, margin: "0 0 14px" }}>
-            Choose which optional cookies you allow. Essential cookies are always on, they keep you signed in and remember your stack drafts.
-          </p>
-
-          <ConsentRow
-            title="Analytics"
-            description="Anonymized page views via Vercel Analytics so we can improve the site."
-            checked={prefs.analytics}
-            onChange={v => setPrefs(p => ({ ...p, analytics: v }))}
-          />
-          <ConsentRow
-            title="Affiliate attribution"
-            description="Adds our rewards code when you click an iHerb or Amazon link. No personal data is shared."
-            checked={prefs.affiliate}
-            onChange={v => setPrefs(p => ({ ...p, affiliate: v }))}
-          />
-
-          <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
-            <button onClick={() => persist("custom", prefs)} style={btnPrimary()}>
-              Save preferences
-            </button>
-            <button onClick={() => setCustomizing(false)} style={btnGhost()}>
-              Back
-            </button>
-          </div>
-        </>
-      )}
-
       <style>{`
-        :root {
-          --cookie-left: auto;
-          --cookie-right: 22px;
-          --cookie-bottom: 22px;
-          --cookie-max: 420px;
-        }
-        @media (max-width: 640px) {
-          :root {
-            --cookie-left: 12px;
-            --cookie-right: 12px;
-            --cookie-bottom: 12px;
-            --cookie-max: none;
-          }
-        }
+        :root { --cookie-rows: 1fr 1fr; }
+        @media (max-width: 640px) { :root { --cookie-rows: 1fr; } }
       `}</style>
     </div>
   );
