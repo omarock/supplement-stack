@@ -24,11 +24,13 @@ Calcium 500mg`;
 
 export default function AuditClient() {
   const [text, setText] = useState("");
+  const [bloodwork, setBloodwork] = useState("");
+  const [showLabs, setShowLabs] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AuditResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const runAudit = useCallback(async (input: string) => {
+  const runAudit = useCallback(async (input: string, labs: string) => {
     setLoading(true);
     setError(null);
     setResult(null);
@@ -36,7 +38,7 @@ export default function AuditClient() {
       const res = await fetch("/api/audit-stack", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text: input }),
+        body: JSON.stringify({ text: input, bloodwork: labs.trim() || undefined }),
       });
       const body: AuditResponse = await res.json();
       if (!body.ok) {
@@ -75,7 +77,7 @@ export default function AuditClient() {
             fontSize: 18, color: TH.inkSoft, maxWidth: 620, margin: "0 auto",
             lineHeight: 1.55,
           }}>
-            Paste what you take today. We&apos;ll find what&apos;s redundant, missing, risky, or mistimed, then suggest a cleaner version. Free, instant, no signup.
+            Paste what you take today. We&apos;ll find what&apos;s redundant, missing, risky, or mistimed, then suggest a cleaner version. Add your recent bloodwork for a deeper, lab-aware check. Free, instant, no signup.
           </p>
         </header>
 
@@ -121,6 +123,50 @@ export default function AuditClient() {
             onBlur={e => { e.currentTarget.style.borderColor = TH.edge; e.currentTarget.style.boxShadow = "none"; }}
           />
 
+          {/* Optional bloodwork, for a deeper, lab-aware audit */}
+          <div style={{ marginTop: 14 }}>
+            {!showLabs ? (
+              <button
+                type="button"
+                onClick={() => setShowLabs(true)}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: 12,
+                  background: `${TH.sage}0d`, border: `1px dashed ${TH.sage}80`,
+                  cursor: "pointer", color: TH.sageDeep, fontSize: 13.5, fontWeight: 500,
+                  fontFamily: FONTS.body, display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                }}
+              >
+                <span aria-hidden>🩸</span> Add recent lab results for a deeper, lab-aware audit
+                <span style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.04em" }}>OPTIONAL</span>
+              </button>
+            ) : (
+              <div>
+                <label htmlFor="audit-labs" style={{ display: "block", fontSize: 13, fontWeight: 500, color: TH.inkSoft, marginBottom: 8 }}>
+                  Recent lab / bloodwork results
+                  <span style={{ color: TH.muted, fontWeight: 400 }}> we&apos;ll cross-check them against your stack (flag conflicts, spot deficiencies)</span>
+                </label>
+                <textarea
+                  id="audit-labs"
+                  value={bloodwork}
+                  onChange={e => setBloodwork(e.target.value)}
+                  placeholder={"e.g.\nVitamin D 22 ng/mL\nFerritin 180 ng/mL\nB12 350 pg/mL\nMagnesium 1.8 mg/dL"}
+                  rows={5}
+                  spellCheck={false}
+                  style={{
+                    width: "100%", boxSizing: "border-box",
+                    padding: "14px 16px", border: `1.5px solid ${TH.edge}`,
+                    borderRadius: 14, fontSize: 15, lineHeight: 1.6,
+                    fontFamily: FONTS.body, color: TH.ink, background: TH.bg,
+                    outline: "none", resize: "vertical",
+                    transition: "border-color .2s, box-shadow .2s",
+                  }}
+                  onFocus={e => { e.currentTarget.style.borderColor = TH.sage; e.currentTarget.style.boxShadow = `0 0 0 4px ${TH.accentGlow}`; }}
+                  onBlur={e => { e.currentTarget.style.borderColor = TH.edge; e.currentTarget.style.boxShadow = "none"; }}
+                />
+              </div>
+            )}
+          </div>
+
           <div style={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
             marginTop: 14, flexWrap: "wrap", gap: 10,
@@ -130,7 +176,7 @@ export default function AuditClient() {
             </div>
             <button
               type="button"
-              onClick={() => runAudit(text)}
+              onClick={() => runAudit(text, bloodwork)}
               disabled={loading || text.trim().length < 5}
               style={{
                 padding: "13px 22px", borderRadius: 999, border: "none",
@@ -204,7 +250,7 @@ export default function AuditClient() {
         {/* Result */}
         {result && (
           <section id="audit-result" style={{ marginTop: 36, animation: "sd-fade-in .4s ease-out" }}>
-            <AuditResult data={result} onRedo={() => { setResult(null); setText(""); }} />
+            <AuditResult data={result} onRedo={() => { setResult(null); setText(""); setBloodwork(""); setShowLabs(false); }} />
           </section>
         )}
       </div>

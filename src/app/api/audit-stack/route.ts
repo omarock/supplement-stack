@@ -8,6 +8,9 @@ export const runtime = "nodejs";
 interface AuditRequest {
   // Free-form text the user pasted (e.g. "Magnesium glycinate 400mg, vit D 5000, omega 3 1g, ashwagandha 600mg")
   text: string;
+  // Optional pasted lab/bloodwork values (e.g. "Vitamin D 22 ng/mL, Ferritin 180, B12 350"),
+  // cross-referenced against the stack for a deeper audit.
+  bloodwork?: string;
 }
 
 export interface AuditFinding {
@@ -218,7 +221,7 @@ function rulesBasedAudit(text: string): AuditResponse {
 }
 
 // ─── Claude-powered audit (preferred when API key is set) ────────────────
-async function claudeAudit(text: string): Promise<AuditResponse> {
+async function claudeAudit(text: string, bloodwork?: string): Promise<AuditResponse> {
   const detected = detect(text);
   const knownIds = detected.filter(d => d.matched).map(d => d.id);
 
@@ -249,11 +252,16 @@ Score rubric:
 - 35-64 = significant issues (drug interactions, dangerous combinations)
 - Below 35 = stop and see a clinician
 
+If the user also pastes recent lab/bloodwork results, CROSS-REFERENCE them with the stack:
+- Flag (kind "warning") any supplement that conflicts with a lab value, e.g. iron when ferritin is already high, vitamin A or D when levels are high, potassium with high serum potassium.
+- Add (kind "missing") clear deficiencies the labs reveal that the stack doesn't address, e.g. low vitamin D, low B12, low ferritin, low magnesium.
+- Always name the specific marker and value in the finding detail. Labs are context, not a diagnosis, recommend confirming with a clinician.
+
 Be honest. Don't pad with fake positives. If the user has a great stack, say so.`;
 
   const userPrompt = `My current stack:
 ${text}
-
+${bloodwork ? `\nMy recent lab/bloodwork results:\n${bloodwork}\n(Cross-reference these against my stack.)\n` : ""}
 Detected supplements (matched to your catalog): ${JSON.stringify(knownIds)}
 
 Catalog of known supplements (use these ids in suggestedStack): ${JSON.stringify(catalog).slice(0, 12000)}
@@ -314,7 +322,8 @@ export async function POST(req: NextRequest) {
   if (text.length > 4000) {
     return Response.json({ ok: false, score: 0, detected: [], findings: [], poweredBy: "rules", error: "stack too long (max 4000 chars)" } satisfies AuditResponse, { status: 400 });
   }
+  const bloodwork = (body?.bloodwork ?? "").trim().slice(0, 2000);
 
-  const result = anthropicEnabled() ? await claudeAudit(text) : rulesBasedAudit(text);
+  const result = anthropicEnabled() ? await claudeAudit(text, bloodwork || undefined) : rulesBasedAudit(text);
   return Response.json(result);
 }
