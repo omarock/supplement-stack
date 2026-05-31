@@ -226,7 +226,7 @@ function Hero() {
                 </span>
                 <span style={chipStyle(TH.sage, "#fff")}>★ 01 · Recommended</span>
               </div>
-              <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Take the AI quiz</div>
+              <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Take the quiz</div>
               <div style={{ ...SI, color: TH.sageDeep, fontSize: 14.5, marginTop: 2 }}>The fastest way in.</div>
               <p style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Answer a few questions about how you sleep, eat, and feel. We match you to evidence-backed ingredients.</p>
               {cardSpacer}
