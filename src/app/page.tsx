@@ -256,10 +256,6 @@ function Hero() {
           </div>
         </Reveal>
 
-        {/* Premium proof counters */}
-        <Reveal delay={0.2} style={{ marginTop: 16 }}>
-          <StatStrip />
-        </Reveal>
           </div>{/* end LEFT column */}
 
           {/* RIGHT column, choose a path */}
@@ -298,6 +294,11 @@ function Hero() {
           </Reveal>{/* end RIGHT column */}
 
         </div>{/* end hero grid */}
+
+        {/* Full-width proof bar (balances the two columns, premium counters) */}
+        <Reveal delay={0.2} style={{ marginTop: 26 }}>
+          <StatStrip />
+        </Reveal>
       </div>
 
       <style>{`
@@ -651,8 +652,8 @@ function Sample() {
     }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Reveal>
-          <div style={{ textAlign: "center", marginBottom: 48, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
-            <div style={{ fontSize: 14, color: TH.sage, fontWeight: 600, marginBottom: 12 }}>
+          <div style={{ textAlign: "center", marginBottom: 32, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
+            <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, fontWeight: 500, marginBottom: 12, letterSpacing: "0.1em", textTransform: "uppercase" }}>
               See it in action
             </div>
             <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.02, color: TH.ink, margin: 0 }}>
@@ -688,29 +689,44 @@ function Sample() {
                 </div>
               </div>
 
-              <div style={{ fontSize: 13, color: TH.muted, fontWeight: 500, marginBottom: 18 }}>Wellness scores</div>
+              <div style={{ ...MM, fontSize: 10.5, color: TH.muted, fontWeight: 500, marginBottom: 16, letterSpacing: "0.1em", textTransform: "uppercase" }}>Wellness scores</div>
               {[
                 ["Energy", 72, TH.amber],
-                ["Sleep", 61, "#7eb5d4"],
+                ["Sleep", 61, "#5d97b8"],
                 ["Recovery", 80, TH.sage],
                 ["Focus", 75, TH.coral],
               ].map(([l, v, c]) => (
-                <div key={l as string} style={{ marginBottom: 14 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 6, color: TH.ink }}>
-                    <span style={{ fontWeight: 500 }}>{l}</span>
-                    <span>
-                      <span style={{ color: c as string, fontWeight: 600 }}>{v}</span>
-                      <span style={{ color: TH.mutedDim }}>/100</span>
+                <div key={l as string} style={{ marginBottom: 16 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 7, color: TH.ink }}>
+                    <span style={{ fontWeight: 500, fontSize: 13.5 }}>{l}</span>
+                    <span style={{ display: "inline-flex", alignItems: "baseline", gap: 1 }}>
+                      <span style={{ ...D, color: c as string, fontSize: 16, letterSpacing: "-0.02em" }}>{v}</span>
+                      <span style={{ ...MM, color: TH.mutedDim, fontSize: 10 }}>/100</span>
                     </span>
                   </div>
-                  <div style={{ height: 5, background: TH.bg, borderRadius: 5, overflow: "hidden" }}>
+                  <div style={{ height: 8, background: `${c}1f`, borderRadius: 999, overflow: "hidden" }}>
                     <div style={{
-                      height: "100%", width: `${v}%`, background: c as string, borderRadius: 5,
+                      height: "100%", width: `${v}%`, borderRadius: 999,
+                      background: `linear-gradient(90deg, ${c}cc, ${c})`,
+                      boxShadow: `0 1px 4px ${c}55`,
                       animation: "sd-bar 1.4s cubic-bezier(.2,.7,.2,1)",
                     }} />
                   </div>
                 </div>
               ))}
+
+              {/* Insight, ties the scores to the picks and fills the column */}
+              <div style={{
+                marginTop: 22, padding: "14px 16px", borderRadius: 14,
+                background: TH.surface, border: `1px solid ${TH.edge}`,
+              }}>
+                <div style={{ ...MM, fontSize: 9.5, color: TH.sageDeep, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 7 }}>
+                  Why these picks
+                </div>
+                <p style={{ fontSize: 12.5, color: TH.inkSoft, lineHeight: 1.55, margin: 0 }}>
+                  Light sleep and evening stress point to magnesium and ashwagandha at night; training 4x a week adds creatine and omega-3 for recovery, with D3+K2 covering the basics.
+                </p>
+              </div>
             </div>
 
             <div style={{ padding: 32 }}>
