@@ -50,6 +50,64 @@ function Reveal({ children, delay = 0, y = 24, style }: {
 
 const GOAL_CHIPS = ["Sleep", "Energy", "Focus", "Stress", "Muscle Growth", "Longevity"];
 
+// Real, verifiable platform numbers (no fabrication) for the proof strip.
+const FACTS: { value: number | null; display?: string; suffix?: string; label: string }[] = [
+  { value: 151, suffix: "", label: "researched ingredients" },
+  { value: 107, suffix: "+", label: "studies cited" },
+  { value: 148, suffix: "+", label: "interactions mapped" },
+  { value: null, display: "$0", label: "to get started" },
+];
+
+/** Animated count-up that ALWAYS lands on the real value. Triggers on mount and
+ *  has a non-rAF fallback so the number is correct even if rAF is throttled
+ *  (background tab) or motion is reduced. It must never get stuck showing 0. */
+function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
+  const [n, setN] = useState(to);
+  useEffect(() => {
+    const reduce = typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) { setN(to); return; }
+    let raf = 0;
+    const dur = 1100;
+    const start = performance.now();
+    setN(0);
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - start) / dur);
+      setN(Math.round(to * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    const fallback = setTimeout(() => setN(to), dur + 200); // guarantees final value
+    return () => { cancelAnimationFrame(raf); clearTimeout(fallback); };
+  }, [to]);
+  return <>{n.toLocaleString()}{suffix}</>;
+}
+
+/** Premium proof counters: high-contrast numbers on white cells with hairline dividers. */
+function StatStrip() {
+  return (
+    <div role="list" aria-label="Platform facts" style={{
+      display: "grid", gridTemplateColumns: "var(--facts-cols)", gap: 1,
+      background: TH.edge, border: `1px solid ${TH.edge}`, borderRadius: 16, overflow: "hidden",
+      boxShadow: "0 1px 2px rgba(10,37,64,0.04)",
+    }}>
+      {FACTS.map(f => (
+        <div key={f.label} role="listitem" style={{
+          background: TH.surface, padding: "15px 10px", textAlign: "center",
+          display: "flex", flexDirection: "column", gap: 4, alignItems: "center", justifyContent: "center",
+        }}>
+          <div style={{ ...D, fontSize: 27, color: TH.ink, letterSpacing: "-0.02em", lineHeight: 1 }}>
+            {f.display ?? <Counter to={f.value!} suffix={f.suffix} />}
+          </div>
+          <div style={{ ...MM, fontSize: 9.5, color: TH.muted, letterSpacing: "0.03em", lineHeight: 1.3, textTransform: "uppercase" }}>
+            {f.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Hero() {
   const router = useRouter();
   const [goal, setGoal] = useState("");
@@ -85,49 +143,49 @@ function Hero() {
 
   return (
     <section id="engine" style={{ position: "relative", padding: "var(--hh-pad-y) var(--hero-pad-x) var(--hh-pad-b)" }}>
-      <div style={{ maxWidth: 600, margin: "0 auto" }}>
+      <div style={{ maxWidth: 620, margin: "0 auto" }}>
 
-        {/* Credibility pill, refined credential cluster. Real names/photos slot in once reviewers are recruited. */}
-        <Reveal>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 18,
-            padding: "6px 14px 6px 7px", background: TH.surface,
-            border: `1px solid ${TH.edge}`, borderRadius: 999, boxShadow: `0 1px 2px ${TH.ink}0d`,
-          }}>
-            <span style={{
-              width: 24, height: 24, borderRadius: 999, background: TH.sage, flexShrink: 0,
-              display: "inline-flex", alignItems: "center", justifyContent: "center",
-              boxShadow: `0 2px 5px ${TH.sage}66`,
-            }} aria-hidden>
-              {/* research / journal mark */}
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 5.5A2 2 0 0 1 6 4h13v15H6a2 2 0 0 0-2 2z" />
-                <path d="M8 8h7M8 11.5h7" />
-              </svg>
-            </span>
-            <span style={{ fontSize: 12.5, color: TH.inkSoft, fontWeight: 500 }}>
-              Evidence-graded <span style={{ color: TH.muted, fontWeight: 400 }}>· every claim cited · no house brand</span>
-            </span>
-          </div>
-        </Reveal>
+        {/* Centered intro: honest badge + headline + subhead */}
+        <div style={{ textAlign: "center" }}>
+          <Reveal>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 9, marginBottom: 18,
+              padding: "6px 15px 6px 7px", background: TH.surface,
+              border: `1px solid ${TH.edgeStrong}`, borderRadius: 999, boxShadow: `0 2px 6px ${TH.ink}0f`,
+            }}>
+              <span style={{
+                width: 22, height: 22, borderRadius: 999, background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, flexShrink: 0,
+                display: "inline-flex", alignItems: "center", justifyContent: "center",
+                boxShadow: `0 2px 5px ${TH.sage}66`,
+              }} aria-hidden>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 5.5A2 2 0 0 1 6 4h13v15H6a2 2 0 0 0-2 2z" />
+                  <path d="M8 8h7M8 11.5h7" />
+                </svg>
+              </span>
+              <span style={{ fontSize: 12.5, color: TH.ink, fontWeight: 600, letterSpacing: "-0.005em" }}>
+                Evidence-graded <span style={{ color: TH.muted, fontWeight: 400 }}>· every claim cited · no house brand</span>
+              </span>
+            </div>
+          </Reveal>
 
-        {/* Headline */}
-        <h1 style={{ ...D, fontWeight: 500, fontSize: "var(--hh-h1)", lineHeight: 1.03, letterSpacing: "-0.04em", color: TH.ink, margin: 0 }}>
-          The supplement stack{" "}
-          <span style={{ ...SI, color: TH.sageDeep, letterSpacing: "-0.01em" }}>built for you</span>.
-        </h1>
-        <Reveal delay={0.1}>
-          <p style={{ fontSize: "var(--hh-sub)", lineHeight: 1.45, color: TH.inkSoft, maxWidth: 420, margin: "12px 0 0" }}>
-            Tell us your goal, our evidence-graded AI builds your stack from 151 researched ingredients, and tells you what to{" "}
-            <span style={{ ...SI, color: TH.sageDeep }}>skip</span>.
-          </p>
-        </Reveal>
+          <h1 style={{ ...D, fontWeight: 500, fontSize: "var(--hh-h1)", lineHeight: 1.02, letterSpacing: "-0.04em", color: TH.ink, margin: 0 }}>
+            The supplement stack{" "}
+            <span style={{ ...SI, color: TH.sageDeep, letterSpacing: "-0.01em" }}>built for you</span>.
+          </h1>
+          <Reveal delay={0.1}>
+            <p style={{ fontSize: "var(--hh-sub)", lineHeight: 1.45, color: TH.inkSoft, maxWidth: 460, margin: "14px auto 0" }}>
+              Tell us your goal. Our evidence-graded AI builds your stack from 151 researched ingredients, and tells you what to{" "}
+              <span style={{ ...SI, color: TH.sageDeep }}>skip</span>.
+            </p>
+          </Reveal>
+        </div>
 
-        {/* Goal search, the focal element */}
+        {/* Goal box, the primary action */}
         <Reveal delay={0.15}>
           <div style={{
-            marginTop: 20, background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, padding: 18,
-            boxShadow: "0 2px 4px rgba(10,37,64,0.04), 0 16px 36px -20px rgba(10,37,64,0.16)",
+            marginTop: 22, background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, padding: 18,
+            boxShadow: "0 2px 4px rgba(10,37,64,0.04), 0 18px 40px -20px rgba(10,37,64,0.2)",
           }}>
             <div style={{ ...MM, fontSize: 10, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.mutedDim, marginBottom: 9 }}>
               What do you want to improve?
@@ -158,11 +216,11 @@ function Hero() {
               })}
             </div>
             <button type="button" onClick={generateStack} style={{
-              marginTop: 14, width: "100%", height: 52, border: "none", borderRadius: 999, cursor: "pointer",
+              marginTop: 14, width: "100%", height: 54, border: "none", borderRadius: 999, cursor: "pointer",
               background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
               fontFamily: FONTS.body, fontWeight: 600, fontSize: 15.5, letterSpacing: "-0.01em",
               display: "flex", alignItems: "center", justifyContent: "center", gap: 9,
-              boxShadow: `0 1px 0 rgba(255,255,255,.25) inset, 0 10px 22px -6px ${TH.sage}80`,
+              boxShadow: `0 1px 0 rgba(255,255,255,.25) inset, 0 12px 24px -6px ${TH.sage}99`,
             }}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
               {ctaLabel}
@@ -173,32 +231,36 @@ function Hero() {
           </div>
         </Reveal>
 
+        {/* Premium proof counters */}
+        <Reveal delay={0.2} style={{ marginTop: 18 }}>
+          <StatStrip />
+        </Reveal>
+
         {/* Divider */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "18px 2px 14px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "20px 2px 14px" }}>
           <span style={{ flex: 1, height: 1, background: TH.edge }} />
           <span style={{ ...MM, fontSize: 9.5, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.mutedDim }}>or choose a path</span>
           <span style={{ flex: 1, height: 1, background: TH.edge }} />
         </div>
 
-        {/* Guided paths, Quiz is the recommended primary entry point. Audit is
-            surfaced second to capture people who already take supplements. */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+        {/* Numbered premium paths. Quiz = recommended; Audit (the moat) second. */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           <PathCard
-            href="/quiz" recommended badge="Recommended · Free"
+            num="01" href="/quiz" recommended badge="Recommended · Free"
             title="Take the AI quiz" meta="3 MIN · THE MOST ACCURATE, PERSONALIZED PATH"
             note="Answer a few questions, get a free stack matched to how you sleep, train, and feel."
             icon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke={TH.sageDeep} strokeWidth="1.4" strokeLinejoin="round" /></svg>}
             arrow={arrow}
           />
           <PathCard
-            href="/audit"
+            num="02" href="/audit" badge="New"
             title="Audit what I already take" meta="SCORE INTERACTIONS, DOSES & GAPS · FREE · 2 MIN"
             note="Already have a routine? Check if it's optimized, paste your stack or your labs."
             icon={<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke={TH.inkSoft} strokeWidth="1.4" /><path d="M10.5 10.5l3 3" stroke={TH.inkSoft} strokeWidth="1.6" strokeLinecap="round" /></svg>}
             arrow={arrow}
           />
           <PathCard
-            href="/build"
+            num="03" href="/build"
             title="Build it myself" meta="BROWSE 151 INGREDIENTS · NO QUIZ"
             icon={<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="2.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="8.5" y="2.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="2.5" y="8.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /><rect x="8.5" y="8.5" width="5" height="5" rx="1" stroke={TH.inkSoft} strokeWidth="1.4" /></svg>}
             arrow={arrow}
@@ -211,16 +273,16 @@ function Hero() {
       </div>
 
       <style>{`
-        :root { --hh-pad-y: 22px; --hh-pad-b: 56px; --hh-h1: 46px; --hh-sub: 15.5px; }
-        @media (max-width: 1024px) { :root { --hh-pad-y: 14px; --hh-pad-b: 44px; --hh-h1: 40px; } }
-        @media (max-width: 640px)  { :root { --hh-pad-y: 6px; --hh-pad-b: 36px; --hh-h1: 32px; --hh-sub: 14px; } }
+        :root { --hh-pad-y: 22px; --hh-pad-b: 56px; --hh-h1: 48px; --hh-sub: 16px; --facts-cols: repeat(4, 1fr); }
+        @media (max-width: 1024px) { :root { --hh-pad-y: 14px; --hh-pad-b: 44px; --hh-h1: 42px; } }
+        @media (max-width: 640px)  { :root { --hh-pad-y: 6px; --hh-pad-b: 36px; --hh-h1: 33px; --hh-sub: 14.5px; --facts-cols: repeat(2, 1fr); } }
       `}</style>
     </section>
   );
 }
 
-function PathCard({ href, recommended = false, badge, title, meta, note, icon, arrow }: {
-  href: string; recommended?: boolean; badge?: string; title: string; meta: string;
+function PathCard({ num, href, recommended = false, badge, title, meta, note, icon, arrow }: {
+  num?: string; href: string; recommended?: boolean; badge?: string; title: string; meta: string;
   note?: string; icon: React.ReactNode; arrow: (c: string, s?: number) => React.ReactNode;
 }) {
   return (
@@ -248,7 +310,9 @@ function PathCard({ href, recommended = false, badge, title, meta, note, icon, a
             padding: "2px 7px", borderRadius: 5, letterSpacing: "0.05em", textTransform: "uppercase",
           }}>{badge}</span>}
         </span>
-        <span style={{ ...MM, fontSize: 10, color: TH.muted, letterSpacing: "0.02em" }}>{meta}</span>
+        <span style={{ ...MM, fontSize: 10, color: TH.muted, letterSpacing: "0.02em" }}>
+          {num && <span style={{ color: recommended ? TH.sageDeep : TH.inkSoft, fontWeight: 700 }}>{num} · </span>}{meta}
+        </span>
         {note && <span style={{ fontSize: 12.5, color: TH.inkSoft, lineHeight: 1.4, marginTop: 1 }}>{note}</span>}
       </span>
       <span style={{
