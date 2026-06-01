@@ -4,15 +4,16 @@ import type { NextConfig } from "next";
 // Notes:
 // - 'unsafe-inline' + 'unsafe-eval' required for Next.js 16 hydration
 //   (without these, the app breaks because Next inlines runtime scripts/styles)
-// - Allow Cloudinary CDN for product images, Supabase for auth, Google Fonts,
+// - Allow Cloudinary CDN for product images, Supabase for auth,
 //   Vercel Analytics + Google Analytics (googletagmanager.com loads gtag.js;
 //   *.google-analytics.com / *.analytics.google.com receive the hits) for stats
+// - Fonts are self-hosted via next/font, so no Google Fonts origins are needed.
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel-insights.com https://*.vercel-analytics.com https://va.vercel-scripts.com https://*.paddle.com https://www.googletagmanager.com",
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.paddle.com",
+  "style-src 'self' 'unsafe-inline' https://*.paddle.com",
   "img-src 'self' data: blob: https://cloudinary.images-iherb.com https://s3.images-iherb.com https://*.googleusercontent.com https://*.paddle.com https://www.googletagmanager.com https://*.google-analytics.com",
-  "font-src 'self' data: https://fonts.gstatic.com https://*.paddle.com",
+  "font-src 'self' data: https://*.paddle.com",
   "connect-src 'self' https://*.supabase.co https://*.vercel-insights.com https://*.vercel-analytics.com https://*.paddle.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
   "frame-ancestors 'self'",
   "frame-src 'self' https://accounts.google.com https://*.paddle.com",

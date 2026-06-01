@@ -1,8 +1,42 @@
 import type { Metadata } from "next";
+import { Bricolage_Grotesque, Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import ConsentedAnalytics from "@/components/ConsentedAnalytics";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import DeferredWidgets from "@/components/DeferredWidgets";
 import "./globals.css";
+
+// Self-hosted at build time via next/font: no render-blocking request to Google,
+// no layout shift. Each exposes a CSS variable consumed by globals.css and the
+// FONTS tokens in lib/theme.ts, so every existing usage keeps working unchanged.
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  axes: ["opsz"],
+  display: "swap",
+  variable: "--font-display",
+  fallback: ["system-ui", "sans-serif"],
+});
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+  fallback: ["system-ui", "sans-serif"],
+});
+const instrumentSerif = Instrument_Serif({
+  weight: "400",
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-serif",
+  fallback: ["Georgia", "serif"],
+});
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
+  fallback: ["ui-monospace", "monospace"],
+});
+
+const fontVariables = `${bricolage.variable} ${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.suppdoc.io"),
@@ -49,15 +83,7 @@ const BRAND_JSONLD = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..700&family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={fontVariables}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BRAND_JSONLD) }} />
         {children}

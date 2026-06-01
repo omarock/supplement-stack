@@ -22,11 +22,14 @@ export const TH = {
   accentGlow: "rgba(91,163,115,0.12)",
 } as const;
 
+// These reference the CSS variables defined by next/font (src/app/layout.tsx),
+// self-hosted, so inline-style usages render the same self-hosted fonts as the
+// stylesheet. The trailing names stay as an ultimate fallback.
 export const FONTS = {
-  display: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif',
-  serifItalic: '"Instrument Serif", Georgia, serif',
-  body: '"Inter", system-ui, sans-serif',
-  mono: '"JetBrains Mono", ui-monospace, monospace',
+  display: 'var(--font-display), "Inter Display", system-ui, sans-serif',
+  serifItalic: 'var(--font-serif), Georgia, serif',
+  body: 'var(--font-sans), system-ui, sans-serif',
+  mono: 'var(--font-mono), ui-monospace, monospace',
 } as const;
 
 // Convenience style snippets

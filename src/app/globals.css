@@ -1,12 +1,10 @@
 @import "tailwindcss";
 
-/* ─── Base type families ──────────────────────────────────────────────── */
+/* ─── Base type families ──────────────────────────────────────────────────
+   --font-display / --font-sans / --font-serif / --font-mono are defined by
+   next/font (see src/app/layout.tsx) and applied on <html>, self-hosted with a
+   metric-matched fallback so there is no render-blocking request and no CLS. */
 :root {
-  --font-display: "Bricolage Grotesque", "Inter Display", system-ui, sans-serif;
-  --font-serif:   "Instrument Serif", Georgia, serif;
-  --font-sans:    "Inter", system-ui, sans-serif;
-  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
-
   /* Brand colors as CSS vars (for places that need raw color access) */
   --c-bg:       #f6f5f1;
   --c-surface:  #ffffff;
