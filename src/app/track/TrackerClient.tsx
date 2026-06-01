@@ -142,7 +142,7 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
             </span>
             <span style={{ flex: 1 }}>
               <span style={{ display: "block", ...D, fontSize: 15, color: TH.ink }}>See your full history & trends</span>
-              <span style={{ display: "block", fontSize: 12.5, color: TH.muted, marginTop: 1 }}>Premium unlocks long-term analytics, AI memory & reminders, $9/mo.</span>
+              <span style={{ display: "block", fontSize: 12.5, color: TH.muted, marginTop: 1 }}>Premium unlocks long-term analytics, coach memory & reminders, $9/mo.</span>
             </span>
             <span style={{ color: TH.sageDeep, fontWeight: 600, fontSize: 13, whiteSpace: "nowrap" }}>Upgrade →</span>
           </Link>
@@ -275,7 +275,7 @@ function EnrollIntro({ onEnrolled }: { onEnrolled: (e: TrackerEnrollment) => voi
         {[
           ["①", "Check in", "60 seconds a day"],
           ["②", "See trends", "14-day wellness graph"],
-          ["③", "Get insights", "AI weekly summary"],
+          ["③", "Get insights", "Weekly summary"],
         ].map(([n, t, d]) => (
           <div key={t} style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ ...D, fontSize: 18, color: TH.sage }}>{n}</span>
@@ -715,7 +715,7 @@ function SummaryCard({ checkinCount }: { checkinCount: number }) {
       borderRadius: 22, padding: "26px 28px", marginBottom: 22, animation: "sd-fade-in .5s ease-out",
     }}>
       <div style={{ ...MM, fontSize: 11, color: TH.sage, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
-        <span>✦ AI Weekly Summary</span>
+        <span>✦ Weekly Summary</span>
       </div>
 
       {loading && (

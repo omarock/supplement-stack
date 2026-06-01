@@ -6,12 +6,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.suppdoc.io"),
-  title: "suppdoc.io, AI supplement stacks, audit & bloodwork analysis",
+  title: "suppdoc.io, personalised supplement stacks, audit & bloodwork analysis",
   description:
-    "suppdoc is the evidence-graded AI supplement platform. Get a personalised stack, check your supplements for interactions, and turn your bloodwork into a plan, free, grounded in published research. We don't sell our own pills.",
+    "suppdoc is the evidence-graded supplement platform. Get a personalised stack, check your supplements for interactions, and turn your bloodwork into a plan, free, grounded in published research. We don't sell our own pills.",
   applicationName: "suppdoc.io",
   keywords:
-    "suppdoc, suppdoc.io, AI supplement stack, supplement audit, supplement interaction checker, bloodwork supplement analysis, evidence-based supplements, personalized supplements",
+    "suppdoc, suppdoc.io, personalised supplement stack, supplement audit, supplement interaction checker, bloodwork supplement analysis, evidence-based supplements, personalized supplements",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -34,7 +34,7 @@ const BRAND_JSONLD = {
       alternateName: "suppdoc.io",
       url: "https://www.suppdoc.io",
       logo: "https://www.suppdoc.io/favicon.svg",
-      description: "Evidence-graded AI supplement platform. Personalised stacks, interaction checking, and bloodwork analysis, we don't sell our own supplements.",
+      description: "Evidence-graded supplement platform. Personalised stacks, interaction checking, and bloodwork analysis, we don't sell our own supplements.",
     },
     {
       "@type": "WebSite",

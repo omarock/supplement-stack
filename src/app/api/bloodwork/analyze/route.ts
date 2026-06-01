@@ -73,7 +73,7 @@ function rulesAnalyze(text: string): BloodworkAnalysis {
     ok: true,
     biomarkers,
     summary: biomarkers.length
-      ? `Recognized ${biomarkers.length} marker${biomarkers.length === 1 ? "" : "s"}${flagged.length ? `, ${flagged.length} outside the typical range` : ""}. This is a basic rule-based reading, connect an AI key for full report parsing.`
+      ? `Recognized ${biomarkers.length} marker${biomarkers.length === 1 ? "" : "s"}${flagged.length ? `, ${flagged.length} outside the typical range` : ""}. This is a basic rule-based reading; full report parsing is not enabled yet.`
       : "We couldn't recognize specific biomarkers in the text. Try pasting lines like 'Vitamin D 22 ng/mL'.",
     findings: [DISCLAIMER_FINDING],
     recommendations: [...recMap.values()].map(r => ({ supplementId: SUPPLEMENT_DB.find(s => s.name === r.name)?.id, ...r })),
@@ -212,7 +212,7 @@ export async function POST(req: NextRequest) {
 
   if (!anthropicEnabled()) {
     if (hasText) return Response.json(rulesAnalyze(body.text!));
-    return Response.json({ ok: false, error: "AI analysis isn't available right now. You can paste your values as text instead." }, { status: 503 });
+    return Response.json({ ok: false, error: "Full analysis isn't available right now. You can paste your values as text instead." }, { status: 503 });
   }
 
   const analysis = await claudeAnalyze(body);

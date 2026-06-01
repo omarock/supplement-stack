@@ -161,7 +161,7 @@ export default async function ProfilePage() {
                 <div style={{ ...MM, fontSize: 10.5, color: th.inkMute, letterSpacing: "0.08em", marginBottom: 8 }}>YOUR PLAN</div>
                 <div style={{ ...D, fontWeight: 600, fontSize: 20, color: th.ink, marginBottom: 4 }}>Free plan</div>
                 <div style={{ fontSize: 13.5, color: th.inkMute }}>
-                  Unlock bloodwork history, re-test comparison, full trends & AI memory.
+                  Unlock bloodwork history, re-test comparison, full trends & coach memory.
                 </div>
               </div>
               <Link href="/pricing" style={{
@@ -208,7 +208,7 @@ export default async function ProfilePage() {
             <div style={{ fontSize: 24, marginBottom: 8 }} aria-hidden>🩸</div>
             <div style={{ ...D, fontWeight: 600, fontSize: 18, color: th.ink, marginBottom: 4 }}>Bloodwork analysis</div>
             <div style={{ fontSize: 13.5, color: th.inkMute, lineHeight: 1.5 }}>
-              Upload a lab report, AI flags deficiencies and matches targeted supplements. <span style={{ color: th.sage, fontWeight: 600 }}>Analyze →</span>
+              Upload a lab report, we flag deficiencies and match targeted supplements. <span style={{ color: th.sage, fontWeight: 600 }}>Analyze →</span>
             </div>
           </Link>
         </section>

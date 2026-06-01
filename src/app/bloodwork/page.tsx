@@ -6,20 +6,20 @@ import SiteFooter from "@/components/SiteFooter";
 import BloodworkClient from "./BloodworkClient";
 
 export const metadata: Metadata = {
-  title: "Bloodwork Supplement Analysis (free AI), upload your labs | suppdoc.io",
-  description: "Free bloodwork supplement analysis: upload a blood test PDF or photo and our AI reads your biomarkers, flags what's low or high, and suggests evidence-led, targeted supplements. Private, educational, not a diagnosis.",
+  title: "Bloodwork Supplement Analysis (free), upload your labs | suppdoc.io",
+  description: "Free bloodwork supplement analysis: upload a blood test PDF or photo and we read your biomarkers, flag what's low or high, and suggests evidence-led, targeted supplements. Private, educational, not a diagnosis.",
   keywords: "bloodwork supplement analysis, blood test supplement recommendations, analyze blood test results, biomarker supplements, lab results supplements, what supplements for low ferritin vitamin d",
   alternates: { canonical: "https://www.suppdoc.io/bloodwork" },
   openGraph: {
     title: "Bloodwork Supplement Analysis, suppdoc.io",
-    description: "Upload your labs. AI reads your biomarkers and matches evidence-led supplements. Private and educational, never a diagnosis.",
+    description: "Upload your labs. We read your biomarkers and match evidence-led supplements. Private and educational, never a diagnosis.",
   },
 };
 
 export const dynamic = "force-dynamic";
 
 const BLOODWORK_FAQ = [
-  { q: "Can AI analyze my blood test results?", a: "Yes. Upload a blood test PDF or photo and suppdoc's AI extracts your biomarkers, compares them to healthy ranges, flags what's low or high, and suggests evidence-led, targeted supplements, with clear prompts on what to discuss with your doctor." },
+  { q: "Can suppdoc analyze my blood test results?", a: "Yes. Upload a blood test PDF or photo and suppdoc extracts your biomarkers, compares them to healthy ranges, flags what's low or high, and suggests evidence-led, targeted supplements, with clear prompts on what to discuss with your doctor." },
   { q: "Which biomarkers does it read?", a: "Vitamin D, ferritin, B12, magnesium, TSH and thyroid markers, fasting glucose, HbA1c, a full lipid panel, hs-CRP, homocysteine, testosterone, and more." },
   { q: "Is my data private?", a: "Yes. Your file is read once and never stored. Only signed-in users who choose to save get a de-identified, structured copy of the results, never the original file." },
   { q: "Is this a diagnosis?", a: "No. It's educational and evidence-led, not medical advice or diagnosis. Reference ranges vary by lab, age, sex, and medication, always review results with a qualified clinician." },

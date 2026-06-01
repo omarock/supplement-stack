@@ -54,7 +54,7 @@ export default function Panel({ open, onClose, onClear, children, hasHistory }: 
       <div
         ref={panelRef}
         role="dialog"
-        aria-label="suppdoc AI assistant"
+        aria-label="suppdoc supplement coach"
         aria-modal="false"
         style={{
           position: "fixed",
@@ -95,7 +95,7 @@ export default function Panel({ open, onClose, onClear, children, hasHistory }: 
             }}>sd</span>
             <div>
               <div style={{ ...D, fontSize: 15, color: TH.ink, lineHeight: 1.2, letterSpacing: "-0.01em" }}>
-                suppdoc AI
+                suppdoc coach
               </div>
               <div style={{ fontSize: 11, color: TH.muted, ...MM, letterSpacing: "0.04em", marginTop: 1 }}>
                 <span style={{

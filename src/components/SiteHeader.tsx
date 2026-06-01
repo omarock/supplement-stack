@@ -29,7 +29,7 @@ const NAV: NavGroup[] = [
   {
     label: "Start",
     items: [
-      { label: "AI quiz", href: "/quiz", desc: "Personalised recommendation" },
+      { label: "Personalised quiz", href: "/quiz", desc: "Personalised recommendation" },
       { label: "Build a stack", href: "/build", desc: "From 151 researched ingredients" },
       { label: "Audit my stack", href: "/audit", desc: "Score what you already take" },
       { label: "Bloodwork", href: "/bloodwork", desc: "Read your labs into a plan" },

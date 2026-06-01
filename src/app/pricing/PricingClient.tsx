@@ -42,7 +42,7 @@ function loadPaddle(cfg: PaddleClientConfig): Promise<PaddleGlobal> {
 
 const FREE = [
   "All guides, studies, stacks & journal",
-  "AI quiz + stack builder + audit",
+  "Personalised quiz + stack builder + audit",
   "1 bloodwork analysis",
   "14 days of tracking",
 ];
@@ -51,7 +51,7 @@ const PREMIUM = [
   "Unlimited bloodwork + saved history",
   "Re-test comparison (ferritin 18 → 47)",
   "Full tracking history + trend analytics",
-  "AI coach with memory of your data",
+  "Coach with memory of your data",
   "Daily reminders + weekly reports",
 ];
 

@@ -155,7 +155,7 @@ export default async function InteractionPage({ params }: { params: Promise<{ pa
           {/* CTA to the live checker */}
           <div style={{ background: TH.ink, color: "#fff", borderRadius: 18, padding: "24px 26px", textAlign: "center", marginBottom: 22 }}>
             <h2 style={{ ...D, fontSize: 21, margin: "0 0 8px", letterSpacing: "-0.02em" }}>Check your whole stack at once</h2>
-            <p style={{ fontSize: 14, opacity: 0.85, margin: "0 0 16px" }}>Paste everything you take, our free AI checker flags every interaction, redundancy, and timing issue.</p>
+            <p style={{ fontSize: 14, opacity: 0.85, margin: "0 0 16px" }}>Paste everything you take, our free checker flags every interaction, redundancy, and timing issue.</p>
             <Link href="/audit" style={{
               display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 999,
               background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14.5,

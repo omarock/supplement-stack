@@ -14,7 +14,7 @@ export default function Launcher({ onClick, open }: Props) {
     <button
       type="button"
       onClick={onClick}
-      aria-label={open ? "Close AI assistant" : "Open AI assistant"}
+      aria-label={open ? "Close supplement coach" : "Open supplement coach"}
       aria-expanded={open}
       style={{
         position: "fixed", zIndex: 90,
@@ -42,7 +42,7 @@ export default function Launcher({ onClick, open }: Props) {
         letterSpacing: "0.04em",
         position: "relative",
       }}>
-        AI
+        sd
         <span style={{
           position: "absolute", top: -2, right: -2,
           width: 10, height: 10, borderRadius: 999,

@@ -13,7 +13,7 @@ const BASE = "https://www.suppdoc.io";
 
 export const metadata: Metadata = {
   title: "Supplement Interaction Checker, free & evidence-led | suppdoc.io",
-  description: "Free supplement interaction checker. See which supplements work better together, which to space apart, which are redundant, and which need caution, each explained with the evidence. Or paste your whole stack for an instant AI check.",
+  description: "Free supplement interaction checker. See which supplements work better together, which to space apart, which are redundant, and which need caution, each explained with the evidence. Or paste your whole stack for an instant check.",
   keywords: "supplement interaction checker, supplement interactions, do supplements interact, supplement combinations, which supplements not to take together",
   alternates: { canonical: `${BASE}/interactions` },
   openGraph: { title: "Supplement Interaction Checker, suppdoc.io", description: "Which supplements work together, which to separate, and which are redundant, explained with evidence." },
@@ -26,7 +26,7 @@ function nameOf(id: string): string {
 const ORDER: InteractionKind[] = ["caution", "timing", "redundant", "synergy"];
 
 const INDEX_FAQ = [
-  { q: "Is there a free supplement interaction checker?", a: "Yes. suppdoc's interaction checker is free, paste your supplements and our AI flags interactions, redundancies, and timing issues instantly, each explained with the evidence." },
+  { q: "Is there a free supplement interaction checker?", a: "Yes. suppdoc's interaction checker is free, paste your supplements and we flag interactions, redundancies, and timing issues instantly, each explained with the evidence." },
   { q: "Which supplements should not be taken together?", a: "Common ones to separate or reconsider include iron with calcium (timing), two omega-3 sources or CoQ10 with ubiquinol (redundant), and blood-thinning combinations like omega-3 with ginkgo (caution). See the full list below." },
 ];
 

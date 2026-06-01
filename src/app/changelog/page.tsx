@@ -35,8 +35,8 @@ const ENTRIES: Entry[] = [
   {
     date: "2026-05-29",
     kind: "Feature",
-    title: "AI chat assistant",
-    body: "Added a floating AI coach (bottom-right corner) powered by Claude Sonnet 4.6. Context-aware, it knows which page you're on, what's in your saved stack, and your quiz results. Cites real internal pages.",
+    title: "Chat coach",
+    body: "Added a floating supplement coach (bottom-right corner) powered by Claude Sonnet 4.6. Context-aware, it knows which page you're on, what's in your saved stack, and your quiz results. Cites real internal pages.",
     link: { label: "Try it", href: "/" },
   },
   {

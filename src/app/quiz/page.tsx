@@ -11,7 +11,7 @@ const MM = { fontFamily: FONTS.mono } as const;
 export const metadata: Metadata = {
   title: "Take the Quiz, Express or Complete | suppdoc.io",
   description: "Get a personalised supplement stack. Choose the 2-minute Express quiz for fast goal-matched recommendations, or the 5-minute Complete quiz for deep personalization including bloodwork analysis.",
-  keywords: "supplement quiz, personalised supplements, AI supplement quiz, express supplement quiz",
+  keywords: "supplement quiz, personalised supplements, personalised supplement quiz, express supplement quiz",
   alternates: { canonical: "/quiz" },
 };
 
@@ -26,7 +26,7 @@ export default function QuizChooser() {
             <div style={{
               ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em",
               marginBottom: 14, textTransform: "uppercase",
-            }}>Service 01 · AI Quiz</div>
+            }}>Service 01 · Personalised Quiz</div>
             <h1 style={{
               ...D, fontSize: "clamp(36px, 6vw, 60px)", lineHeight: 1.04,
               letterSpacing: "-0.03em", margin: "0 0 16px",

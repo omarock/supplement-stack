@@ -1034,7 +1034,7 @@ function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void 
           ...MM, fontSize: 10, padding: "3px 8px", borderRadius: 999,
           background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
           color: TH.surface, fontWeight: 600, letterSpacing: "0.06em",
-        }}>AI</span>
+        }}>FOR YOU</span>
         <h2 style={{ ...D, fontSize: 18, color: TH.ink, margin: 0, letterSpacing: "-0.015em" }}>
           Describe your goals, we&apos;ll compose the stack
         </h2>
@@ -1112,7 +1112,7 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
   onBuy: () => void; onClear: () => void;
 }) {
   const sourceLabel =
-    meta.poweredBy === "claude" ? "AI-composed for you" :
+    meta.poweredBy === "claude" ? "Composed for you" :
     meta.poweredBy === "template" ? "Ready-made stack" : "Composed for you";
   // The strongest evidence tier present, surfaced as a headline trust signal
   const tierRank = { "very strong": 3, strong: 2, moderate: 1 } as const;
@@ -1137,7 +1137,7 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
             ...MM, fontSize: 10, padding: "3px 9px", borderRadius: 999,
             background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
             color: "#fff", fontWeight: 700, letterSpacing: "0.06em",
-          }}>{meta.poweredBy === "template" ? "STACK" : "AI"}</span>
+          }}>{meta.poweredBy === "template" ? "STACK" : "FOR YOU"}</span>
           <span style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.04em", textTransform: "uppercase" }}>
             {sourceLabel}
           </span>

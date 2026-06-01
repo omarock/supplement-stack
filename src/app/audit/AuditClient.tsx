@@ -66,7 +66,7 @@ export default function AuditClient() {
           <div style={{
             ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em",
             marginBottom: 14, textTransform: "uppercase",
-          }}>Service 03 · AI Audit</div>
+          }}>Service 03 · Stack Audit</div>
           <h1 style={{
             ...D, fontSize: "clamp(36px, 6vw, 60px)", lineHeight: 1.04,
             letterSpacing: "-0.03em", margin: "0 0 16px",

@@ -191,7 +191,7 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
             Turn your labs into a <span style={SI}>plan</span>.
           </h1>
           <p style={{ fontSize: 16, color: TH.inkSoft, maxWidth: 560, margin: "0 auto", lineHeight: 1.5 }}>
-            Upload a blood test, PDF or photo. Our AI reads your biomarkers, flags what&apos;s low or high, and suggests evidence-led, targeted supplements. Private and educational, never a diagnosis.
+            Upload a blood test, PDF or photo. We read your biomarkers, flag what&apos;s low or high, and suggest evidence-led, targeted supplements. Private and educational, never a diagnosis.
           </p>
         </header>
 

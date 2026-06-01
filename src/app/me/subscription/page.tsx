@@ -150,7 +150,7 @@ function NoSubscription() {
         You&apos;re on the Free plan
       </div>
       <p style={{ fontSize: 14.5, color: th.inkSoft, lineHeight: 1.55, margin: "0 0 18px" }}>
-        Upgrade to Premium for unlimited bloodwork history, re-test comparison, full trend analytics, and the AI coach with memory of your data.
+        Upgrade to Premium for unlimited bloodwork history, re-test comparison, full trend analytics, and the coach with memory of your data.
       </p>
       <Link href="/pricing" style={{
         display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 22px", borderRadius: 999,

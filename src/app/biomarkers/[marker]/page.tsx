@@ -155,7 +155,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
           {/* CTA to bloodwork */}
           <div style={{ background: TH.ink, color: "#fff", borderRadius: 18, padding: "24px 26px", textAlign: "center", marginBottom: 22 }}>
             <h2 style={{ ...D, fontSize: 21, margin: "0 0 8px", letterSpacing: "-0.02em" }}>See your own {b.label}</h2>
-            <p style={{ fontSize: 14, opacity: 0.85, margin: "0 0 16px" }}>Upload your blood test, our AI reads {b.label.toLowerCase()} and your other markers, then matches evidence-led supplements.</p>
+            <p style={{ fontSize: 14, opacity: 0.85, margin: "0 0 16px" }}>Upload your blood test, we read {b.label.toLowerCase()} and your other markers, then match evidence-led supplements.</p>
             <Link href="/bloodwork" style={{
               display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 999,
               background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14.5,

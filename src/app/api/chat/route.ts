@@ -95,7 +95,7 @@ function fallbackReply(messages: IncomingMessage[]): string {
 
   const lowered = lastUser.content.toLowerCase();
   if (lowered.includes(GREETING_MARKER) || lowered.length < 5) {
-    return `Hi 👋 I'm suppdoc.io's AI coach. I can answer questions about supplements, interactions, dosing, and timing.\n\nWhile our full AI is being set up, you can:\n\n- Browse the [151 ingredients](/ingredients) in our library\n- See the [15 ready-made stacks](/stacks)\n- Use the free [stack audit tool](/audit) to check what you take today`;
+    return `Hi 👋 I'm suppdoc.io's supplement coach. I can answer questions about supplements, interactions, dosing, and timing.\n\nWhile the full coach is being set up, you can:\n\n- Browse the [151 ingredients](/ingredients) in our library\n- See the [15 ready-made stacks](/stacks)\n- Use the free [stack audit tool](/audit) to check what you take today`;
   }
 
   const detected = detectSupplementsInText(lastUser.content);
@@ -104,10 +104,10 @@ function fallbackReply(messages: IncomingMessage[]): string {
       const s = lookupSupplement(id);
       return s ? `- **${s.name}**, ${s.purpose}. [Read more](${s.url}) · [Research](${s.researchUrl})` : null;
     }).filter(Boolean).join("\n");
-    return `Our AI assistant is being set up, meanwhile, here's what we have on the supplements you mentioned:\n\n${supps}\n\nFor an interaction check, try the [Audit My Stack tool](/audit), paste your stack and we'll flag redundancies, missing nutrients, and timing issues.`;
+    return `Our coach is being set up, meanwhile, here's what we have on the supplements you mentioned:\n\n${supps}\n\nFor an interaction check, try the [Audit My Stack tool](/audit), paste your stack and we'll flag redundancies, missing nutrients, and timing issues.`;
   }
 
-  return `Our AI assistant is being set up. While that's connecting, you can:\n\n- [Take the quiz](/quiz) to get a personalised stack in 2 minutes\n- [Audit your current stack](/audit) for interactions and gaps\n- [Build a stack from scratch](/build) using our 151-ingredient library`;
+  return `Our coach is being set up. While that's connecting, you can:\n\n- [Take the quiz](/quiz) to get a personalised stack in 2 minutes\n- [Audit your current stack](/audit) for interactions and gaps\n- [Build a stack from scratch](/build) using our 151-ingredient library`;
 }
 
 // ─── Handler ───────────────────────────────────────────────────────────────

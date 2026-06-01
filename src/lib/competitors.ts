@@ -38,11 +38,11 @@ export const COMPETITORS: Competitor[] = [
     oneLineVerdict: "Closest direct competitor, similar AI-quiz approach, suppdoc adds an audit tool and broader ingredient library.",
     bottomLine: "my-stack.ai pioneered the AI supplement quiz format and has a polished chat experience. suppdoc.io has a deeper ingredient library (151 vs ~100), adds the unique 'Audit My Stack' tool for people who already take supplements, and has more honest positioning, no fabricated stats, no fake testimonials, no claim that supplements replace lifestyle changes.",
     rows: [
-      { label: "Personalised AI quiz", suppdoc: "Yes (Express + Complete)", competitor: "Yes", winner: "tie" },
+      { label: "Personalised quiz", suppdoc: "Yes (Express + Complete)", competitor: "Yes", winner: "tie" },
       { label: "Audit existing stack", suppdoc: "Yes (free)", competitor: "Limited", winner: "suppdoc" },
       { label: "Ingredient library", suppdoc: "151 ingredients", competitor: "~100", winner: "suppdoc" },
       { label: "Pre-made stacks", suppdoc: "15", competitor: "10+", winner: "suppdoc" },
-      { label: "AI chat assistant", suppdoc: "Coming soon", competitor: "Yes", winner: "competitor" },
+      { label: "Chat coach", suppdoc: "Coming soon", competitor: "Yes", winner: "competitor" },
       { label: "Plain-English stack builder", suppdoc: "Yes", competitor: "Yes", winner: "tie" },
       { label: "Sells own private label", suppdoc: "No (affiliate model)", competitor: "No", winner: "tie" },
       { label: "Pricing model", suppdoc: "Free", competitor: "Free", winner: "tie" },
