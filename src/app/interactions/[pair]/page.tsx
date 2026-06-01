@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
-import { INTERACTIONS, interactionSlug, interactionBySlug, KIND_META } from "@/lib/interactions";
+import { INTERACTIONS, interactionSlug, interactionBySlug, interactionIndexable, KIND_META } from "@/lib/interactions";
 import ReviewedBy from "@/components/ReviewedBy";
 import RelatedContent from "@/components/RelatedContent";
 import { goalsForIngredient, biomarkersForIngredient, otherInteractionsFor } from "@/lib/related";
@@ -31,17 +31,16 @@ export async function generateMetadata({ params }: { params: Promise<{ pair: str
   const a = nameOf(it.a), b = nameOf(it.b);
   const title = `Does ${a} interact with ${b}?, suppdoc.io`;
   const description = `${a} and ${b}: ${it.summary} ${it.advice}`;
-  // Thin-content guard: many one-liner interaction entries carry too little unique
-  // copy to index well. Keep them crawlable (follow) but noindex the short ones until
-  // their summary/detail/advice are enriched. Substantive pairs stay indexed.
-  const uniqueWords = `${it.summary} ${it.detail} ${it.advice}`.trim().split(/\s+/).filter(Boolean).length;
+  // Thin-content guard: short one-liner pairs carry too little unique copy to index
+  // well. Keep them crawlable (follow) but noindex until enriched. Uses the shared
+  // interactionIndexable() helper so the page and the sitemap can never disagree.
   return {
     title,
     description,
     keywords: `${a} and ${b}, does ${a} interact with ${b}, ${a} ${b} together, supplement interactions`,
     alternates: { canonical: `${BASE}/interactions/${pair}` },
     openGraph: { title, description },
-    robots: uniqueWords < 60 ? { index: false, follow: true } : undefined,
+    robots: interactionIndexable(it) ? undefined : { index: false, follow: true },
   };
 }
 
@@ -92,7 +91,7 @@ export default async function InteractionPage({ params }: { params: Promise<{ pa
     <div style={{ minHeight: "100vh", background: TH.bg, color: TH.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
-      <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
+      <main id="main-content" style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <nav style={{ ...MM, fontSize: 11, color: TH.muted, marginBottom: 18 }}>
             <Link href="/interactions" style={{ color: TH.sageDeep, textDecoration: "none" }}>Interactions</Link>

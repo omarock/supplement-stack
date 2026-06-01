@@ -186,6 +186,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
 
+      <main id="main-content">
       {/* Breadcrumb */}
       <div style={{ padding: "20px var(--section-pad-x) 0", fontSize: 13, color: th.inkMute }}>
         <Link href="/" style={{ color: th.inkMute, textDecoration: "none" }}>Home</Link>
@@ -198,7 +199,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
       {/* Hero */}
       <section style={{ padding: "32px var(--section-pad-x) 48px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
-          <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 12 }}>
+          <div style={{ fontSize: 12, color: th.sageDeep, ...MM, letterSpacing: "0.1em", marginBottom: 12 }}>
           {categoryLabel.toUpperCase()}
           </div>
           <h1 style={{
@@ -638,6 +639,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
         </div>
       </section>
 
+      </main>
       <SiteFooter />
     </div>
   );

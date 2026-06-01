@@ -6,7 +6,7 @@ const MM = { fontFamily: FONTS.mono } as const;
 
 const TIER: Record<EvidenceTier, { filled: number; label: string; hue: string }> = {
   "very strong": { filled: 3, label: "Very strong", hue: TH.sageDeep },
-  "strong":      { filled: 2, label: "Strong", hue: TH.sage },
+  "strong":      { filled: 2, label: "Strong", hue: TH.sageDeep },
   "moderate":    { filled: 1, label: "Moderate", hue: TH.amberDeep },
 };
 

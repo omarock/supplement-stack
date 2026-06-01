@@ -385,6 +385,7 @@ function HowItWorks() {
 function AnalysisReport({ data, sourceKind, signedIn, onReset, isSample = false }: { data: BloodworkAnalysis; sourceKind: "pdf" | "image" | "text"; signedIn: boolean; onReset: () => void; isSample?: boolean }) {
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [saveErr, setSaveErr] = useState<string | null>(null);
 
   const flagged = data.biomarkers.filter(b => ["low", "high"].includes(b.status));
   const watch = data.biomarkers.filter(b => ["borderline-low", "borderline-high"].includes(b.status));
@@ -392,14 +393,22 @@ function AnalysisReport({ data, sourceKind, signedIn, onReset, isSample = false 
   const ordered = [...flagged, ...watch, ...ok, ...data.biomarkers.filter(b => b.status === "unknown")];
 
   const save = async () => {
-    setSaving(true);
+    setSaving(true); setSaveErr(null);
     try {
       const res = await fetch("/api/bloodwork/save", {
         method: "POST", headers: { "content-type": "application/json" },
         body: JSON.stringify({ biomarkers: data.biomarkers, analysis: { summary: data.summary, findings: data.findings, recommendations: data.recommendations, lifestyle: data.lifestyle, seeClinicianFor: data.seeClinicianFor }, confidence: data.confidence, sourceKind }),
       });
-      const body = await res.json();
-      if (body.ok) { setSaved(true); track("bloodwork_save", { markers: data.biomarkers.length }); }
+      const body = await res.json().catch(() => ({}));
+      if (res.ok && body.ok) {
+        setSaved(true); track("bloodwork_save", { markers: data.biomarkers.length });
+      } else if (res.status === 401) {
+        setSaveErr("Your session expired. Please sign in again to save this report.");
+      } else {
+        setSaveErr("Could not save right now. Please try again in a moment.");
+      }
+    } catch {
+      setSaveErr("Network error while saving. Check your connection and try again.");
     } finally { setSaving(false); }
   };
 
@@ -536,6 +545,10 @@ function AnalysisReport({ data, sourceKind, signedIn, onReset, isSample = false 
           Track progress over time →
         </Link>
       </div>
+
+      {saveErr && (
+        <p role="alert" style={{ fontSize: 13, color: "#b91c1c", textAlign: "center", margin: "2px 0 0" }}>{saveErr}</p>
+      )}
 
       <p style={{ fontSize: 12, color: TH.muted, lineHeight: 1.6, textAlign: "center", marginTop: 4 }}>
         This analysis is for education only and is not medical advice, diagnosis, or treatment. Reference ranges differ by laboratory, age, sex, and medication. Always consult a qualified clinician before acting on these results or changing your supplements, especially if you are pregnant, nursing, have a medical condition, or take prescription medication.

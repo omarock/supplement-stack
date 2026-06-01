@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { SUPPLEMENT_DB, type Supplement } from "@/lib/supplements";
 import { callClaude, anthropicEnabled, safeParseJson } from "@/lib/anthropic";
 
@@ -309,6 +310,13 @@ function clamp(min: number, max: number, n: number) {
 }
 
 export async function POST(req: NextRequest) {
+  const rl = checkRateLimit(`audit:${getClientIp(req)}`, 40);
+  if (!rl.ok) {
+    return Response.json(
+      { ok: false, error: "Too many requests. Please wait a moment." },
+      { status: 429, headers: rl.retryAfterSec ? { "Retry-After": String(rl.retryAfterSec) } : undefined },
+    );
+  }
   let body: AuditRequest;
   try {
     body = await req.json();

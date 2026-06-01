@@ -138,6 +138,10 @@ textarea:focus-visible,
     --footer-cols: 1fr;
     --nav-pad-x: 16px;
   }
+  /* Prevent iOS Safari auto-zoom on focus: typeable fields must be >=16px on
+     mobile (QA M4). Excludes range/checkbox/radio where font-size is irrelevant. */
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+  textarea, select { font-size: 16px !important; }
 }
 
 html { scroll-behavior: smooth; }

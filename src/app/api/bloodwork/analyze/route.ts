@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { callClaude, anthropicEnabled, safeParseJson, type ContentBlock } from "@/lib/anthropic";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import {
@@ -187,6 +188,14 @@ Return the JSON analysis now.`;
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limit: bloodwork sends a paid image/PDF Claude call; cap anonymous abuse.
+  const rl = checkRateLimit(`bloodwork:${getClientIp(req)}`, 12);
+  if (!rl.ok) {
+    return Response.json(
+      { ok: false, error: "Too many requests. Please wait a minute and try again." },
+      { status: 429, headers: rl.retryAfterSec ? { "Retry-After": String(rl.retryAfterSec) } : undefined },
+    );
+  }
   let body: AnalyzeBody;
   try { body = await req.json(); } catch {
     return Response.json({ ok: false, error: "invalid_json" } satisfies Partial<BloodworkAnalysis>, { status: 400 });

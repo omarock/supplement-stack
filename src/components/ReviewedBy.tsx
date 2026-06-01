@@ -32,7 +32,7 @@ export default function ReviewedBy({ updated }: { updated?: string }) {
           ? <>Medically reviewed by <strong style={{ color: TH.ink }}>{names}</strong></>
           : <>Written to our <Link href="/editorial" style={{ color: TH.sageDeep, textDecoration: "none", fontWeight: 600 }}>editorial standards</Link> · reviewed against published research</>}
       </span>
-      <span style={{ ...MM, fontSize: 10.5, color: TH.mutedDim }}>· Updated {fmt(updated)}</span>
+      <span style={{ ...MM, fontSize: 10.5, color: TH.muted }}>· Updated {fmt(updated)}</span>
     </div>
   );
 }

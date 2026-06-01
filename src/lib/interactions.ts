@@ -288,3 +288,18 @@ export function findInteraction(a: string, b: string): Interaction | undefined {
 export function interactionBySlug(slug: string): Interaction | undefined {
   return INTERACTIONS.find(i => interactionSlug(i.a, i.b) === slug);
 }
+
+/** Unique on-page copy length (summary + detail + advice), in words. */
+export function interactionWordCount(it: Interaction): number {
+  return `${it.summary} ${it.detail} ${it.advice}`.trim().split(/\s+/).filter(Boolean).length;
+}
+
+/**
+ * Single source of truth for "is this interaction page substantive enough to
+ * index?". Used by BOTH the page noindex gate and the sitemap so they cannot
+ * drift (the QA audit caught the sitemap submitting noindexed pages).
+ */
+export const INTERACTION_MIN_WORDS = 60;
+export function interactionIndexable(it: Interaction): boolean {
+  return interactionWordCount(it) >= INTERACTION_MIN_WORDS;
+}

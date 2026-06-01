@@ -4,7 +4,7 @@ import { STACKS } from "@/lib/stacks";
 import { POSTS } from "@/lib/blog";
 import { COMPETITORS } from "@/lib/competitors";
 import { RESEARCH } from "@/lib/research";
-import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
+import { INTERACTIONS, interactionSlug, interactionIndexable } from "@/lib/interactions";
 import { GOALS } from "@/lib/goals";
 import { BIOMARKERS } from "@/lib/biomarkers";
 
@@ -50,16 +50,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE}/ingredients/${s.id}`,
       lastModified: now, changeFrequency: "monthly", priority: 0.7,
     });
-    // Research subpages, only the curated ones get higher priority
+    // Research subpages: ONLY include curated ones. Pages with no RESEARCH entry
+    // emit robots noindex, so listing them in the sitemap = "Submitted URL marked
+    // noindex" in GSC. Gate inclusion on the same RESEARCH[] guard the page uses.
     if (RESEARCH[s.id]) {
       entries.push({
         url: `${BASE}/ingredients/${s.id}/research`,
         lastModified: now, changeFrequency: "monthly", priority: 0.75,
-      });
-    } else {
-      entries.push({
-        url: `${BASE}/ingredients/${s.id}/research`,
-        lastModified: now, changeFrequency: "monthly", priority: 0.5,
       });
     }
   }
@@ -82,6 +79,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now, changeFrequency: "monthly", priority: 0.85,
   });
   for (const it of INTERACTIONS) {
+    // Only list interactions substantive enough to be indexed (short ones emit
+    // noindex). Shared guard with the page so they cannot drift.
+    if (!interactionIndexable(it)) continue;
     entries.push({
       url: `${BASE}/interactions/${interactionSlug(it.a, it.b)}`,
       lastModified: now, changeFrequency: "monthly", priority: 0.7,

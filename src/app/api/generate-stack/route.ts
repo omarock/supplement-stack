@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { callClaude, anthropicEnabled, safeParseJson } from "@/lib/anthropic";
 
@@ -209,6 +210,11 @@ Return the JSON stack now.`;
 }
 
 export async function POST(req: NextRequest) {
+  const rl = checkRateLimit(`genstack:${getClientIp(req)}`, 40);
+  if (!rl.ok) return Response.json(
+    { ok: false, error: "Too many requests. Please wait a moment.", goals: [], stackName: "", summary: "", stack: [], monthlyCost: 0, poweredBy: "rules" } satisfies GenerateResponse,
+    { status: 429 },
+  );
   const err = (error: string) => Response.json(
     { ok: false, error, goals: [], stackName: "", summary: "", stack: [], monthlyCost: 0, poweredBy: "rules" } satisfies GenerateResponse,
     { status: 400 }

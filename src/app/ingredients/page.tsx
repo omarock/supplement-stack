@@ -60,9 +60,10 @@ export default function IngredientsIndexPage() {
     <div style={{ minHeight: "100vh", background: th.bg, color: th.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
       <SiteHeader />
 
+      <main id="main-content">
       {/* Hero */}
       <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 24px", textAlign: "center" }}>
-        <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>
+        <div style={{ fontSize: 13, color: th.sageDeep, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>
           INGREDIENT LIBRARY
         </div>
         <h1 style={{
@@ -133,6 +134,7 @@ export default function IngredientsIndexPage() {
         </div>
       </section>
 
+      </main>
       <SiteFooter />
     </div>
   );
@@ -166,7 +168,7 @@ function IngredientCard({ s }: { s: Supplement }) {
           fontSize: 11, color: th.inkMute, ...MM, letterSpacing: "0.03em",
         }}>
           <span>~${s.monthlyCost}/mo</span>
-          <span style={{ color: th.sage }}>Read →</span>
+          <span style={{ color: th.sageDeep }}>Read →</span>
         </div>
       </div>
     </Link>

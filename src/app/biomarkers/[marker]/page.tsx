@@ -97,11 +97,11 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
     <div style={{ minHeight: "100vh", background: TH.bg, color: TH.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
-      <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
+      <main id="main-content" style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <nav style={{ ...MM, fontSize: 11, color: TH.muted, marginBottom: 18 }}>
             <Link href="/biomarkers" style={{ color: TH.sageDeep, textDecoration: "none" }}>Biomarkers</Link>
-            <span style={{ color: TH.mutedDim }}> / {b.label}</span>
+            <span style={{ color: TH.muted }}> / {b.label}</span>
           </nav>
 
           <h1 style={{ ...D, fontSize: "clamp(28px, 5vw, 42px)", lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 0 14px" }}>
@@ -123,7 +123,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
                 </div>
               ))}
             </div>
-            <div style={{ fontSize: 12, color: TH.mutedDim, marginTop: 12, lineHeight: 1.5 }}>
+            <div style={{ fontSize: 12, color: TH.muted, marginTop: 12, lineHeight: 1.5 }}>
               Ranges vary by laboratory, age, and sex, your lab&apos;s own reference range always takes precedence.
             </div>
           </section>

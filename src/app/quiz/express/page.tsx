@@ -271,7 +271,7 @@ function StepEmail({ data, update }: { data: QuizData; update: (u: Partial<QuizD
           value={(data as QuizData & { email?: string }).email ?? ""}
           onChange={e => {
             const email = e.target.value;
-            update({ ...(data as object), } as Partial<QuizData>);
+            update({ email } as Partial<QuizData>);
             // Stash email in localStorage for the email-drip cron to pick up
             try {
               localStorage.setItem("phylaQuizEmail", email);

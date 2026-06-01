@@ -49,19 +49,31 @@ export default function AuthForm({ mode }: { mode: Mode }) {
   const [agree, setAgree] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null); // neutral info (e.g. "please sign in")
   const [sent, setSent] = useState<string | null>(null); // email we sent a link to
 
   const configured = isSupabaseConfigured();
 
-  // Surface any ?error=... query param coming back from /auth/callback.
+  // Surface any ?error=... coming back from /auth/callback as friendly copy.
+  // "please_sign_in" is a normal gated-route redirect, shown as a neutral notice,
+  // not a scary error. Unknown codes get a generic message, never the raw token.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const err = params.get("error");
-    if (err) {
-      setError(`Sign in failed: ${decodeURIComponent(err)}`);
-      window.history.replaceState({}, "", window.location.pathname);
+    if (!err) return;
+    if (err === "please_sign_in") {
+      setNotice("Please sign in to continue.");
+    } else {
+      const map: Record<string, string> = {
+        missing_code: "That sign-in link looks incomplete. Please request a new one below.",
+        expired: "That sign-in link has expired. Please request a new one below.",
+        supabase_not_configured: "Sign-in is temporarily unavailable. Please try again shortly.",
+        auth_not_configured: "Sign-in is temporarily unavailable. Please try again shortly.",
+      };
+      setError(map[err] ?? "We could not complete sign-in. Please request a new link below.");
     }
+    window.history.replaceState({}, "", window.location.pathname);
   }, []);
 
   async function submitEmail() {
@@ -164,6 +176,9 @@ export default function AuthForm({ mode }: { mode: Mode }) {
           <div className="sdauth-card sdauth-fade">
             {!sent ? (
               <>
+                {notice && (
+                  <div className="sdauth-notice" role="status" aria-live="polite">{notice}</div>
+                )}
                 <div style={{ marginBottom: 26 }}>
                   <div style={{
                     fontFamily: FONTS.mono, fontSize: 11, letterSpacing: "0.16em",
@@ -395,6 +410,10 @@ const CSS = `
 .sdauth-alert {
   margin-top: 18px; padding: 12px 15px; background: #fef2f2; border: 1px solid #fca5a5;
   border-radius: 11px; font-family: ${FONTS.body}; font-size: 13px; color: #991b1b; line-height: 1.45;
+}
+.sdauth-notice {
+  margin-bottom: 18px; padding: 12px 15px; background: ${TH.accentGlow}; border: 1px solid ${TH.sage}55;
+  border-radius: 11px; font-family: ${FONTS.body}; font-size: 13.5px; color: ${TH.sageDeep}; line-height: 1.45;
 }
 
 /* Mobile trust strip */
