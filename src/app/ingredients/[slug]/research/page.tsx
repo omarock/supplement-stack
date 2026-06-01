@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       ? `${studyCount} clinical studies on ${supp.name}. Real published research, plain-English summaries, PubMed links. Evidence level: ${research?.evidenceLevel ?? supp.evidence}.`
       : `Search the published research on ${supp.name}. Direct PubMed access, curated by suppdoc.io.`,
     keywords: `${supp.name} research, ${supp.name} clinical studies, ${supp.name} evidence, ${supp.name} PubMed`,
+    alternates: { canonical: `/ingredients/${slug}/research` },
     // Thin-content guard: research pages with no curated studies only render outbound
     // PubMed search links, so keep them crawlable (follow) but out of the index until
     // a real RESEARCH[] entry is added. Reversible per-slug as studies are curated.

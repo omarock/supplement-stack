@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Journal, suppdoc.io",
   description: "Evidence-led articles on supplements, sleep, stress, and personalised wellness. Curated from peer-reviewed research, written in plain language.",
   keywords: "supplement journal, evidence-based supplements, wellness articles, supplement guide",
+  alternates: { canonical: "/journal" },
 };
 
 export default function JournalPage() {

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Supplement Ingredients A-Z, suppdoc.io",
   description: `Browse ${SUPPLEMENT_DB.length}+ evidence-based supplement ingredients. Benefits, dosage, safety, and where to buy each one. Vitamins, minerals, amino acids, adaptogens, nootropics, and more.`,
   keywords: "supplement ingredients, supplement encyclopedia, supplement library, vitamins, minerals, adaptogens, nootropics, amino acids",
+  alternates: { canonical: "/ingredients" },
 };
 
 const CATEGORY_ORDER: { key: string; label: string; tagline: string }[] = [

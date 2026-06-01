@@ -10,6 +10,7 @@ import { paddleConfigured, paddleClientConfig } from "@/lib/paddle";
 export const metadata: Metadata = {
   title: "Pricing, suppdoc.io",
   description: "Free to start. Premium ($9/mo or $79/yr) unlocks bloodwork history, re-test comparison, full tracking trends, and a coach that remembers your data.",
+  alternates: { canonical: "/pricing" },
 };
 
 export const dynamic = "force-dynamic";

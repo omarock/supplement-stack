@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${stack.name}, suppdoc.io`,
     description: stack.description,
     keywords: `${stack.name}, ${stack.bestFor.join(", ")}, supplement stack`,
+    alternates: { canonical: `/stacks/${slug}` },
     openGraph: {
       title: stack.name,
       description: stack.tagline,

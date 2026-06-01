@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `suppdoc.io vs ${comp.name}, Honest Comparison | suppdoc.io`,
     description: comp.metaDescription,
     keywords: comp.keywords,
+    alternates: { canonical: `/compare/${slug}` },
     openGraph: {
       title: `suppdoc.io vs ${comp.name}`,
       description: comp.oneLineVerdict,
