@@ -114,6 +114,19 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
   const showAmazon = amazonEnabled();
   const desc = (supp.description ?? supp.why).slice(0, 300);
 
+  // Answer-first summary + FAQ, built only from real on-page fields (no fabrication).
+  const shortName = supp.name.split(" (")[0];
+  const quickAnswer = `${shortName}: ${supp.purpose}. ${supp.why} Standard dose ${supp.dose}, taken in the ${timingLabel(supp.timing).toLowerCase()}, about $${supp.monthlyCost}/month. Evidence rating: ${EVIDENCE_BADGE[supp.evidence].label.toLowerCase()}.`;
+  const faq: { q: string; a: string }[] = [
+    { q: `What is ${shortName}?`, a: supp.description ?? supp.why },
+    { q: `What is ${shortName} used for?`, a: `${supp.purpose}. ${supp.why}` },
+    { q: `What is the standard dose of ${shortName}?`, a: `${supp.dose}, typically taken in the ${timingLabel(supp.timing).toLowerCase()}. Approximate cost is $${supp.monthlyCost} per month.` },
+    ...(supp.warnings && supp.warnings.length
+      ? [{ q: `Who should avoid ${shortName}?`, a: `Use extra caution, and speak to a clinician first, if you are ${supp.warnings.map(w => warningLabel(w)).join(", ")}.` }]
+      : []),
+    { q: `How strong is the evidence for ${shortName}?`, a: `${EVIDENCE_BADGE[supp.evidence].label} for its primary uses. See the full study list on the research page.` },
+  ];
+
   // ── Structured data (YMYL): only real, on-page facts; nothing fabricated ──
   const studies = RESEARCH[supp.id]?.studies ?? [];
   const citations = studies.map(st => ({
@@ -157,6 +170,13 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
           { "@type": "ListItem", position: 2, name: "Ingredients", item: `${BASE}/ingredients` },
           { "@type": "ListItem", position: 3, name: supp.name, item: `${BASE}/ingredients/${supp.id}` },
         ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faq.map(f => ({
+          "@type": "Question", name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
       },
     ],
   };
@@ -233,6 +253,16 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             <span style={{ ...MM, fontSize: 11, color: th.inkMute }}>
               Last reviewed: {new Date(LAST_REVIEWED).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
             </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Answer-first summary, quotable by AI search engines */}
+      <section style={{ padding: "0 var(--section-pad-x) 8px" }}>
+        <div style={{ maxWidth: 960, margin: "0 auto" }}>
+          <div style={{ background: th.paper, border: `1px solid ${th.line}`, borderLeft: `3px solid ${th.sage}`, borderRadius: 14, padding: "18px 20px" }}>
+            <div style={{ ...MM, fontSize: 10.5, color: th.sageDeep, letterSpacing: "0.1em", marginBottom: 8 }}>QUICK ANSWER</div>
+            <p style={{ margin: 0, fontSize: 16.5, lineHeight: 1.6, color: th.ink }}>{quickAnswer}</p>
           </div>
         </div>
       </section>
@@ -569,6 +599,21 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
           </div>
         </section>
       )}
+
+      {/* FAQ (visible + matches FAQPage JSON-LD) */}
+      <section style={{ padding: "0 var(--section-pad-x) 56px" }}>
+        <div style={{ maxWidth: 960, margin: "0 auto" }}>
+          <h2 style={{ ...S, fontSize: 32, margin: "0 0 18px", letterSpacing: "-0.02em" }}>Common questions</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {faq.map((f, i) => (
+              <div key={i} style={{ background: th.paper, border: `1px solid ${th.line}`, borderRadius: 14, padding: "16px 18px" }}>
+                <div style={{ fontSize: 15.5, fontWeight: 600, color: th.ink, marginBottom: 6 }}>{f.q}</div>
+                <div style={{ fontSize: 14.5, color: th.inkSoft, lineHeight: 1.6 }}>{f.a}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <section style={{ padding: "48px var(--section-pad-x) 64px" }}>
