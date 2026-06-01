@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import EvidenceBadge, { type EvidenceTier } from "@/components/EvidenceBadge";
-import { BIOMARKERS, type BiomarkerDef } from "@/lib/biomarkers";
+import { BIOMARKERS, BIOMARKER_DETAIL, type BiomarkerDef } from "@/lib/biomarkers";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import ReviewedBy from "@/components/ReviewedBy";
 import RelatedContent from "@/components/RelatedContent";
@@ -67,6 +67,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
   if (!b) notFound();
 
   const bands = rangeBands(b);
+  const detail = BIOMARKER_DETAIL[b.key];
   const lowSupps = (b.supplementsForLow ?? []).map(supp).filter(Boolean);
   const highSupps = (b.supplementsForHigh ?? []).map(supp).filter(Boolean);
   const actionSupps = b.lowerIsBetter ? highSupps : lowSupps;
@@ -74,7 +75,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
   const outOfRange = b.lowerIsBetter ? "high" : "low";
 
   const faq = [
-    { q: `What does a ${outOfRange} ${b.label} mean?`, a: `${b.blurb} A ${outOfRange} result is worth discussing with your clinician, who can look at the full picture and your lab's own reference range.` },
+    { q: `What does a ${outOfRange} ${b.label} mean?`, a: `${detail?.causes?.length ? `Common drivers include ${detail.causes.slice(0, 3).map(c => c.charAt(0).toLowerCase() + c.slice(1)).join("; ")}. ` : ""}A result outside the optimal range is best read in context: discuss it with your clinician, who can weigh the full picture and your lab's own reference range.` },
     actionSupps.length
       ? { q: `What supplements help ${actionVerb} ${b.label}?`, a: `Evidence-led options include ${actionSupps.map(s => s!.name.split(" (")[0]).join(", ")}. They support, but don't replace, diet, lifestyle, and medical care.` }
       : { q: `How is ${b.label} best supported?`, a: `Through diet, lifestyle, and addressing the underlying cause with your clinician. Upload your labs to suppdoc for a tailored read.` },
@@ -127,6 +128,34 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
             </div>
           </section>
 
+          {/* In-depth, curated per-marker context */}
+          {detail && (
+            <section style={{ marginBottom: 24, display: "flex", flexDirection: "column", gap: 18 }}>
+              {detail.causes.length > 0 && (
+                <div>
+                  <h2 style={{ ...D, fontSize: 22, color: TH.ink, margin: "0 0 10px", letterSpacing: "-0.02em" }}>Common causes</h2>
+                  <ul style={{ margin: 0, paddingLeft: 20, color: TH.inkSoft, fontSize: 15, lineHeight: 1.6 }}>
+                    {detail.causes.map((c, i) => <li key={i} style={{ marginBottom: 4 }}>{c}</li>)}
+                  </ul>
+                </div>
+              )}
+              {detail.symptoms.length > 0 && (
+                <div>
+                  <h2 style={{ ...D, fontSize: 22, color: TH.ink, margin: "0 0 10px", letterSpacing: "-0.02em" }}>What it can feel like</h2>
+                  <ul style={{ margin: 0, paddingLeft: 20, color: TH.inkSoft, fontSize: 15, lineHeight: 1.6 }}>
+                    {detail.symptoms.map((s, i) => <li key={i} style={{ marginBottom: 4 }}>{s}</li>)}
+                  </ul>
+                </div>
+              )}
+              {detail.whoShouldTest && (
+                <div>
+                  <h2 style={{ ...D, fontSize: 22, color: TH.ink, margin: "0 0 10px", letterSpacing: "-0.02em" }}>Who should test</h2>
+                  <p style={{ margin: 0, color: TH.inkSoft, fontSize: 15, lineHeight: 1.6 }}>{detail.whoShouldTest}</p>
+                </div>
+              )}
+            </section>
+          )}
+
           {/* Supplements that help */}
           {actionSupps.length > 0 && (
             <section style={{ marginBottom: 24 }}>
@@ -134,6 +163,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
                 Supplements that help {actionVerb} {b.label}
               </h2>
               <p style={{ fontSize: 13, color: TH.muted, margin: "0 0 14px" }}>Evidence-led, and only a piece of the picture, diet, lifestyle, and your clinician matter most.</p>
+              {detail?.mechanism && <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.6, margin: "0 0 14px" }}>{detail.mechanism}</p>}
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {actionSupps.map(s => (
                   <Link key={s!.id} href={`/ingredients/${s!.id}`} style={{
