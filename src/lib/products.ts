@@ -41,7 +41,9 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       brand: "NOW Foods", productName: "Vitamin D-3 & K-2", size: "120 veg capsules",
       approxPrice: 12, rating: 4.8, reviewCount: 11500, badge: "Bestseller",
     amazonAsin: "B0032BH76O",
-      productPath: "/pr/now-foods-vitamin-d3-2-000-iu-120-softgels/8229",
+      // QA H1: old /8229 path resolved to plain D3 (no K2). Use a precise search
+      // to the correct D3+K2 product until the exact path is re-verified.
+      searchQuery: "NOW Foods Vitamin D3 K2 veg capsules",
       brandBg: "#fdebe1", brandInk: "#c2410c",
       imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now00367/v/73.jpg",
     imageUrls: ["https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now00367/v/78.jpg","https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now00367/v/83.jpg"],
@@ -77,7 +79,9 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       brand: "Sports Research", productName: "Triple Strength Omega-3 Fish Oil", size: "90 softgels",
       approxPrice: 24, rating: 4.8, reviewCount: 15200, badge: "Bestseller",
     amazonAsin: "B0F8R6CP6S",
-      productPath: "/pr/sports-research-alaskan-omega-3-fish-oil-triple-strength-180-softgels/72037",
+      // QA H1: old path pointed to a different Sports Research SKU (Alaskan 180).
+      // Card/image describe the 90-softgel Triple Strength; search to it directly.
+      searchQuery: "Sports Research Triple Strength Omega-3 Fish Oil",
       brandBg: "#fef3c7", brandInk: "#92400e",
       imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sre/sre01050/v/52.jpg",
     imageUrls: ["https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sre/sre01050/v/32.jpg","https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sre/sre01050/v/57.jpg"],
@@ -111,9 +115,11 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
 
   "omega3-algae": [
     {
-      brand: "Ovega-3", productName: "Plant-Based Omega-3", size: "60 softgels",
+      brand: "Swanson", productName: "Plant-Based Omega-3", size: "120 vegan capsules",
       approxPrice: 28, rating: 4.6, reviewCount: 2400, badge: "Bestseller",
     amazonAsin: "B00AN86PGC",
+      // QA H1: card now matches the actual linked product + image (Swanson),
+      // which were already Swanson while only the brand label said "Ovega-3".
       productPath: "/pr/swanson-vitamins-plant-based-omega-3-120-liquid-vegan-capsules/149122",
       brandBg: "#d1fae5", brandInk: "#065f46",
       imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/swv/swv17104/v/8.jpg",
@@ -183,7 +189,9 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       brand: "Doctor's Best", productName: "High Absorption Magnesium Glycinate", size: "240 tablets",
       approxPrice: 18, rating: 4.7, reviewCount: 32000, badge: "Bestseller",
     amazonAsin: "B0GTBSTGJ6",
-      productPath: "/pr/doctor-s-best-high-absorption-magnesium-120-tablets-100-mg-per-tablet/15",
+      // QA H1: old path was the 120-tablet SKU; card describes 240. Search to the
+      // correct Doctor's Best glycinate until the exact 240-ct path is verified.
+      searchQuery: "Doctor's Best High Absorption Magnesium Glycinate",
       brandBg: "#dbeafe", brandInk: "#1e40af",
       imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/drb/drb00025/v/124.jpg",
     imageUrls: ["https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/drb/drb00025/v/129.jpg","https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/drb/drb00025/v/134.jpg"],
@@ -578,7 +586,9 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       brand: "NOW Foods", productName: "Glucosamine & Chondroitin with MSM", size: "180 veg capsules",
       approxPrice: 25, rating: 4.7, reviewCount: 6900, badge: "Bestseller",
     amazonAsin: "B0013OSMRK",
-      productPath: "/pr/now-foods-glucosamine-chondroitin-with-msm-90-capsules/37832",
+      // QA H1: old path was the 90-ct SKU; card describes 180. Search to the
+      // correct NOW Foods product until the exact 180-ct path is verified.
+      searchQuery: "NOW Foods Glucosamine Chondroitin MSM",
       brandBg: "#fdebe1", brandInk: "#c2410c",
       imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/ecl/ecl38870/v/0.jpg",
       form: "Capsules",
