@@ -12,7 +12,7 @@ const ACCOUNT_LINKS: { label: string; href: string }[] = [
   { label: "My profile", href: "/me" },
   { label: "Daily tracker", href: "/track" },
   { label: "Bloodwork history", href: "/bloodwork/history" },
-  { label: "Billing & plan", href: "/pricing" },
+  { label: "Manage subscription", href: "/me/subscription" },
 ];
 
 function initials(email: string): string {
