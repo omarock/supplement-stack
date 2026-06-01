@@ -31,12 +31,17 @@ export async function generateMetadata({ params }: { params: Promise<{ pair: str
   const a = nameOf(it.a), b = nameOf(it.b);
   const title = `Does ${a} interact with ${b}?, suppdoc.io`;
   const description = `${a} and ${b}: ${it.summary} ${it.advice}`;
+  // Thin-content guard: many one-liner interaction entries carry too little unique
+  // copy to index well. Keep them crawlable (follow) but noindex the short ones until
+  // their summary/detail/advice are enriched. Substantive pairs stay indexed.
+  const uniqueWords = `${it.summary} ${it.detail} ${it.advice}`.trim().split(/\s+/).filter(Boolean).length;
   return {
     title,
     description,
     keywords: `${a} and ${b}, does ${a} interact with ${b}, ${a} ${b} together, supplement interactions`,
     alternates: { canonical: `${BASE}/interactions/${pair}` },
     openGraph: { title, description },
+    robots: uniqueWords < 60 ? { index: false, follow: true } : undefined,
   };
 }
 
