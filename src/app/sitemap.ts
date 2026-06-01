@@ -7,6 +7,7 @@ import { RESEARCH } from "@/lib/research";
 import { INTERACTIONS, interactionSlug, interactionIndexable } from "@/lib/interactions";
 import { GOALS } from "@/lib/goals";
 import { BIOMARKERS } from "@/lib/biomarkers";
+import { TIMING, TIMING_IDS, timingIndexable } from "@/lib/timing";
 
 const BASE = "https://www.suppdoc.io";
 
@@ -86,6 +87,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE}/interactions/${interactionSlug(it.a, it.b)}`,
       lastModified: now, changeFrequency: "monthly", priority: 0.7,
     });
+  }
+
+  // ─── Tier 4b2: supplement timing ("best time to take X") ───────────────
+  entries.push({ url: `${BASE}/timing`, lastModified: now, changeFrequency: "monthly", priority: 0.85 });
+  for (const id of TIMING_IDS) {
+    // Same word-count gate as the page so the sitemap never lists a noindex URL.
+    if (!timingIndexable(TIMING[id])) continue;
+    entries.push({ url: `${BASE}/timing/${id}`, lastModified: now, changeFrequency: "monthly", priority: 0.75 });
   }
 
   // ─── Tier 4c: best-for-goal guides ─────────────────────────────────────

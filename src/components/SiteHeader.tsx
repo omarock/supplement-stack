@@ -41,6 +41,7 @@ const NAV: NavGroup[] = [
       { label: "Best for your goal", href: "/best", desc: "Best supplements for sleep, energy…" },
       { label: "Ingredients", href: "/ingredients", desc: "151 evidence-graded guides" },
       { label: "Interactions", href: "/interactions", desc: "What works together & what to separate" },
+      { label: "Supplement timing", href: "/timing", desc: "Best time to take each supplement" },
       { label: "Biomarkers", href: "/biomarkers", desc: "What your blood test means" },
       { label: "Stacks", href: "/stacks", desc: "15 ready-made protocols" },
       { label: "Journal", href: "/journal", desc: "Evidence-led articles" },

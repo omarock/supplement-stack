@@ -9,6 +9,7 @@ import { PRODUCTS, productImage, type ProductOption } from "@/lib/products";
 import { iherbProductLink } from "@/lib/iherb";
 import { GOALS } from "@/lib/goals";
 import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
+import { TIMING } from "@/lib/timing";
 import { BIOMARKERS } from "@/lib/biomarkers";
 import { RESEARCH, buildStudyLink } from "@/lib/research";
 import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
@@ -309,6 +310,14 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             <FactRow label="When to take" value={timingLabel(supp.timing)} />
             <FactRow label="Approx. monthly cost" value={`$${supp.monthlyCost}`} />
             <FactRow label="Common form" value={`${supp.brand}, ${supp.name}`} />
+            {TIMING[supp.id] && (
+              <Link href={`/timing/${supp.id}`} style={{
+                display: "block", marginTop: 16, paddingTop: 16, borderTop: `1px solid ${th.line}`,
+                fontSize: 13.5, color: th.sage, fontWeight: 600, textDecoration: "none",
+              }}>
+                Best time to take {shortName} →
+              </Link>
+            )}
             {supp.warnings && supp.warnings.length > 0 && (
               <div style={{ marginTop: 18, paddingTop: 18, borderTop: `1px solid ${th.line}` }}>
                 <div style={{ fontSize: 11, ...MM, color: "#b91c1c", letterSpacing: "0.08em", marginBottom: 6 }}>
