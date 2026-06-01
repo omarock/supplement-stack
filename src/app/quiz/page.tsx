@@ -15,9 +15,22 @@ export const metadata: Metadata = {
   alternates: { canonical: "/quiz" },
 };
 
+const QUIZ_FAQ = [
+  { q: "Is the supplement quiz free?", a: "Yes. Both the 2-minute Express and the 5-minute Complete quiz are free with no signup. You answer a few questions about your goals, sleep, energy, and stress, and get a personalised 4 to 7 supplement stack instantly, each pick with its dose, timing, and the evidence behind it." },
+  { q: "How does the quiz decide what supplements I need?", a: "It matches your goals and answers against an evidence-graded database of 151 ingredients, then ranks the best fits and checks them for interactions and redundancies, so the stack you get is coherent rather than a random list." },
+  { q: "Which quiz should I take, Express or Complete?", a: "Take Express. It gives about 90% of the accuracy in 30% of the time. Choose Complete if you want to factor in current supplements, medications, health conditions, or upload bloodwork for a deeper match." },
+  { q: "Do you sell the supplements?", a: "No. suppdoc does not sell its own supplements. We recommend evidence-led options and link to trusted retailers, so the advice is not biased toward a house brand." },
+];
+
 export default function QuizChooser() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: QUIZ_FAQ.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  };
   return (
     <div style={{ minHeight: "100vh", background: TH.bg, color: TH.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
       <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -123,6 +136,40 @@ export default function QuizChooser() {
                 <div style={{ ...D, fontSize: 16, color: TH.ink, marginBottom: 4 }}>Audit my current stack →</div>
                 <div style={{ fontSize: 13, color: TH.muted, lineHeight: 1.5 }}>Paste what you take today. We&apos;ll find redundancies, gaps, and timing issues.</div>
               </Link>
+            </div>
+          </section>
+
+          {/* Free guides (internal links) */}
+          <section style={{ marginTop: 44, textAlign: "center" }}>
+            <div style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.12em", marginBottom: 14, textTransform: "uppercase" }}>
+              Prefer to browse? Free evidence-led guides
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center" }}>
+              {[
+                ["Best for your goal", "/best"],
+                ["All 151 ingredients", "/ingredients"],
+                ["Interaction checker", "/interactions"],
+                ["Best time to take each supplement", "/timing"],
+                ["What your bloodwork means", "/biomarkers"],
+              ].map(([label, href]) => (
+                <Link key={href} href={href} style={{
+                  padding: "9px 16px", background: TH.surface, border: `1px solid ${TH.edge}`,
+                  borderRadius: 999, textDecoration: "none", color: TH.inkSoft, fontSize: 13.5, fontWeight: 500,
+                }}>{label}</Link>
+              ))}
+            </div>
+          </section>
+
+          {/* FAQ (visible + matches JSON-LD) */}
+          <section style={{ marginTop: 48 }}>
+            <h2 style={{ ...D, fontSize: 24, color: TH.ink, margin: "0 0 16px", letterSpacing: "-0.02em", textAlign: "center" }}>Supplement quiz, FAQ</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: 760, margin: "0 auto" }}>
+              {QUIZ_FAQ.map((f, i) => (
+                <div key={i} style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: "16px 18px" }}>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: TH.ink, marginBottom: 6 }}>{f.q}</div>
+                  <div style={{ fontSize: 14, color: TH.inkSoft, lineHeight: 1.55 }}>{f.a}</div>
+                </div>
+              ))}
             </div>
           </section>
         </div>

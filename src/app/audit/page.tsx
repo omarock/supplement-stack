@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import AuditClient from "./AuditClient";
@@ -42,6 +43,19 @@ export default function AuditPage() {
               <div style={{ fontSize: 15, fontWeight: 600, color: TH.ink, marginBottom: 6 }}>{f.q}</div>
               <div style={{ fontSize: 14, color: TH.inkSoft, lineHeight: 1.55 }}>{f.a}</div>
             </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 28, display: "flex", flexWrap: "wrap", gap: 10 }}>
+          {[
+            ["Interaction checker", "/interactions"],
+            ["Best time to take each supplement", "/timing"],
+            ["All 151 ingredients", "/ingredients"],
+            ["What your bloodwork means", "/biomarkers"],
+          ].map(([label, href]) => (
+            <Link key={href} href={href} style={{
+              padding: "9px 16px", background: TH.surface, border: `1px solid ${TH.edge}`,
+              borderRadius: 999, textDecoration: "none", color: TH.inkSoft, fontSize: 13.5, fontWeight: 500,
+            }}>{label}</Link>
           ))}
         </div>
       </section>

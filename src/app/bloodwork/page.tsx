@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import SiteHeader from "@/components/SiteHeader";
@@ -57,6 +58,19 @@ export default async function BloodworkPage() {
               <div style={{ fontSize: 15, fontWeight: 600, color: "#0a2540", marginBottom: 6 }}>{f.q}</div>
               <div style={{ fontSize: 14, color: "#3c4858", lineHeight: 1.55 }}>{f.a}</div>
             </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 28, display: "flex", flexWrap: "wrap", gap: 10 }}>
+          {[
+            ["What your biomarkers mean", "/biomarkers"],
+            ["All 151 ingredients", "/ingredients"],
+            ["Best time to take each supplement", "/timing"],
+            ["Interaction checker", "/interactions"],
+          ].map(([label, href]) => (
+            <Link key={href} href={href} style={{
+              padding: "9px 16px", background: "#ffffff", border: "1px solid rgba(10,37,64,0.08)",
+              borderRadius: 999, textDecoration: "none", color: "#3c4858", fontSize: 13.5, fontWeight: 500,
+            }}>{label}</Link>
           ))}
         </div>
       </section>
