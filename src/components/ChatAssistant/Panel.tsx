@@ -189,7 +189,7 @@ export default function Panel({ open, onClose, onClear, children, hasHistory }: 
 
 function iconBtnStyle(): React.CSSProperties {
   return {
-    width: 32, height: 32, borderRadius: 999,
+    width: 44, height: 44, borderRadius: 999,
     background: "transparent", border: "none",
     color: TH.inkSoft, cursor: "pointer",
     display: "inline-flex", alignItems: "center", justifyContent: "center",

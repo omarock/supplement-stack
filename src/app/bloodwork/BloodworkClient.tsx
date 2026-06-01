@@ -162,12 +162,23 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
   const onFile = useCallback(async (file: File) => {
     setError(null);
     if (!ALLOWED.includes(file.type)) { setError("Please upload a PDF or a photo (JPG/PNG)."); setStage("error"); return; }
+    // PDFs are sent as-is (only images are downscaled), so enforce the real 3.5 MB
+    // limit up front with a PDF-specific message that matches the on-screen chip.
+    if (file.type === "application/pdf" && file.size > MAX_BYTES) {
+      setError("This PDF is over 3.5 MB. Export or print just the results page, or paste the values as text.");
+      setStage("error"); return;
+    }
     if (file.size > 12 * 1024 * 1024) { setError("That file is very large. Upload a photo of just the results page, or paste the values."); setStage("error"); return; }
     setStage("reading"); setFileName(file.name);
     try {
       const prep = await prepareFile(file);
       const approxBytes = Math.floor((prep.base64.length * 3) / 4);
-      if (approxBytes > MAX_BYTES) { setError("Still too large after compression (max ~3.5 MB). Try a tighter photo or paste the values as text."); setStage("error"); return; }
+      if (approxBytes > MAX_BYTES) {
+        setError(prep.kind === "pdf"
+          ? "This PDF is too large (max ~3.5 MB). Export just the results page, or paste the values as text."
+          : "Still too large after compression (max ~3.5 MB). Try a tighter photo, or paste the values as text.");
+        setStage("error"); return;
+      }
       setSourceKind(prep.kind);
       await analyze({ mediaType: prep.mediaType, dataBase64: prep.base64 });
     } catch { setError("Couldn't read that file. Try another, or paste your values."); setStage("error"); }

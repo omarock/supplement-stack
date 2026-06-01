@@ -10,6 +10,7 @@ import { TH, FONTS } from "@/lib/theme";
 import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
 import EvidenceBadge from "@/components/EvidenceBadge";
 import { track } from "@/lib/analytics";
+import { trackClick } from "@/lib/track";
 import { encodeShareToken } from "@/lib/share";
 import type { GenerateResponse } from "@/app/api/generate-stack/route";
 
@@ -343,6 +344,9 @@ export default function BuildClient() {
       if (!url) continue;
       const w = window.open(url, "_blank");
       if (w) w.opener = null;
+      // QA M1: record the affiliate click for attribution (buy-all was untracked).
+      const opt = getPrimaryProduct(s.id);
+      if (opt) trackClick(s, opt, `build-buy-all-${which}`).catch(() => {});
     }
   }, [selected]);
   const openAllIherb = useCallback(() => openAllAt("iherb"), [openAllAt]);
@@ -529,7 +533,7 @@ export default function BuildClient() {
                   Max $/mo:
                   <input type="number" min={0} max={100} value={budgetCap || ""} onChange={e => setBudgetCap(parseInt(e.target.value) || 0)}
                     placeholder="any"
-                    style={{ width: 70, padding: "4px 8px", border: `1px solid ${TH.edge}`, borderRadius: 8, fontSize: 13 }} />
+                    style={{ width: 70, padding: "8px 10px", border: `1px solid ${TH.edge}`, borderRadius: 8, fontSize: 13 }} />
                 </label>
                 {(evidenceFilter !== "all" || veganOnly || budgetCap > 0 || categoryFilter !== "all") && (
                   <button onClick={() => { setEvidenceFilter("all"); setVeganOnly(false); setBudgetCap(0); setCategoryFilter("all"); }}
