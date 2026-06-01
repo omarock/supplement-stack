@@ -8,7 +8,7 @@ import type { NextConfig } from "next";
 //   Vercel Analytics + Google Analytics (googletagmanager.com loads gtag.js;
 //   *.google-analytics.com / *.analytics.google.com receive the hits) for stats
 // - Fonts are self-hosted via next/font, so no Google Fonts origins are needed.
-const csp = [
+const cspDirectives = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel-insights.com https://*.vercel-analytics.com https://va.vercel-scripts.com https://*.paddle.com https://www.googletagmanager.com",
   "style-src 'self' 'unsafe-inline' https://*.paddle.com",
@@ -21,7 +21,15 @@ const csp = [
   "form-action 'self' https://*.supabase.co https://accounts.google.com",
   "object-src 'none'",
   "upgrade-insecure-requests",
-].join("; ");
+];
+const csp = cspDirectives.join("; ");
+
+// Embeddable widgets under /embed/* are designed to be iframed on third-party
+// sites, so we relax ONLY frame-ancestors there (and drop X-Frame-Options).
+// Every other protection (XSS, object-src, etc.) stays identical.
+const embedCsp = cspDirectives
+  .map(d => (d.startsWith("frame-ancestors") ? "frame-ancestors *" : d))
+  .join("; ");
 
 // Security headers applied to every response — protects against XSS,
 // clickjacking, MIME-sniffing, content injection, and forces HTTPS.
@@ -45,13 +53,19 @@ const securityHeaders = [
   { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
 ];
 
+// Headers for /embed/* only: identical to the above but framable anywhere
+// (no X-Frame-Options, CSP frame-ancestors *) so the widget renders on any site.
+const embedSecurityHeaders = securityHeaders
+  .filter(h => h.key !== "X-Frame-Options")
+  .map(h => (h.key === "Content-Security-Policy" ? { key: h.key, value: embedCsp } : h));
+
 const nextConfig: NextConfig = {
   async headers() {
     return [
-      {
-        source: "/(.*)",
-        headers: securityHeaders,
-      },
+      // /embed/* is framable on third-party sites (relaxed frame-ancestors only).
+      { source: "/embed/:path*", headers: embedSecurityHeaders },
+      // Everything else keeps the full lock-down (X-Frame-Options + frame-ancestors 'self').
+      { source: "/((?!embed).*)", headers: securityHeaders },
     ];
   },
 

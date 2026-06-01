@@ -4,6 +4,8 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { INTERACTIONS, interactionSlug, KIND_META, type InteractionKind } from "@/lib/interactions";
+import InteractionChecker from "@/components/InteractionChecker";
+import { buildCheckerData, checkerStats } from "@/lib/checker";
 import { TH, FONTS } from "@/lib/theme";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -31,6 +33,8 @@ const INDEX_FAQ = [
 ];
 
 export default function InteractionsIndex() {
+  const { options, data } = buildCheckerData();
+  const stats = checkerStats();
   const grouped = ORDER.map(kind => ({
     kind,
     items: INTERACTIONS.filter(i => i.kind === kind).sort((x, y) => nameOf(x.a).localeCompare(nameOf(y.a))),
@@ -53,18 +57,25 @@ export default function InteractionsIndex() {
             <h1 style={{ ...D, fontSize: "clamp(32px, 6vw, 52px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 16px" }}>
               Supplement <span style={SI}>interaction</span> checker.
             </h1>
-            <p style={{ fontSize: 18, color: TH.inkSoft, maxWidth: 600, margin: "0 auto 22px", lineHeight: 1.55 }}>
-              Which supplements work better together, which to space apart, which are redundant, and which need caution, each explained with the evidence.
+            <p style={{ fontSize: 18, color: TH.inkSoft, maxWidth: 620, margin: "0 auto 14px", lineHeight: 1.55 }}>
+              Pick any two of {stats.ingredients} supplements and see whether they work better together, should be spaced apart, are redundant, or need caution, each explained with the evidence. {stats.pairs} interactions and counting.
             </p>
+            <div style={{ ...MM, fontSize: 11, color: TH.muted, marginBottom: 22 }}>Free · no signup · evidence-led</div>
+          </header>
+
+          {/* Interactive checker (the linkable tool) */}
+          <div style={{ maxWidth: 620, margin: "0 auto 16px" }}>
+            <InteractionChecker options={options} data={data} />
+          </div>
+          <div style={{ textAlign: "center", marginBottom: 36 }}>
             <Link href="/audit" style={{
-              display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 26px", borderRadius: 999,
-              background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 15,
+              display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 22px", borderRadius: 999,
+              background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14.5,
               boxShadow: `0 10px 24px -8px ${TH.sage}80`,
             }}>
-              Check your whole stack →
+              Or check your whole stack at once →
             </Link>
-            <div style={{ ...MM, fontSize: 11, color: TH.muted, marginTop: 10 }}>Free · no signup · evidence-led</div>
-          </header>
+          </div>
 
           {grouped.map(group => {
             const m = KIND_META[group.kind];
@@ -95,6 +106,25 @@ export default function InteractionsIndex() {
               </section>
             );
           })}
+
+          {/* Embed (link-earning): bloggers paste this; the widget carries a backlink */}
+          <section style={{ marginTop: 8, marginBottom: 30 }}>
+            <div style={{ background: TH.ink, color: "#fff", borderRadius: 18, padding: "26px 26px" }}>
+              <h2 style={{ ...D, fontSize: 22, margin: "0 0 8px", letterSpacing: "-0.02em" }}>Add this checker to your site, free</h2>
+              <p style={{ fontSize: 14.5, opacity: 0.85, margin: "0 0 14px", lineHeight: 1.55, maxWidth: 620 }}>
+                Run a health, nutrition, or fitness site? Embed the interaction checker for your readers at no cost. Just paste this snippet where you want it to appear.
+              </p>
+              <pre style={{
+                ...MM, fontSize: 12.5, color: "#dbe7ff", background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.14)", borderRadius: 12, padding: "14px 16px",
+                overflowX: "auto", margin: "0 0 12px", whiteSpace: "pre-wrap", wordBreak: "break-all",
+              }}>{`<iframe src="${BASE}/embed/interaction-checker" width="100%" height="440" style="border:0;border-radius:16px;max-width:620px" title="Supplement Interaction Checker by suppdoc.io" loading="lazy"></iframe>
+<p style="font:13px system-ui,sans-serif;margin:8px 0 0;color:#6b7280">Powered by <a href="${BASE}/interactions" target="_blank" rel="noopener">suppdoc.io Supplement Interaction Checker</a></p>`}</pre>
+              <p style={{ fontSize: 12.5, opacity: 0.7, margin: 0 }}>
+                Free to embed with attribution. <Link href="/embed/interaction-checker" style={{ color: "#a9c8ff", textDecoration: "none", fontWeight: 600 }}>Preview the widget →</Link>
+              </p>
+            </div>
+          </section>
 
           <section style={{ marginTop: 8, marginBottom: 24 }}>
             <h2 style={{ ...D, fontSize: 22, color: TH.ink, margin: "0 0 14px", letterSpacing: "-0.02em" }}>Common questions</h2>
