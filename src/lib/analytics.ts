@@ -22,6 +22,7 @@ export type SuppEvent =
   | "track_enroll"
   | "checkin_save"
   | "checkout_click"
+  | "founding_interest"
   | "interaction_to_audit";
 
 type Props = Record<string, string | number | boolean | null>;
