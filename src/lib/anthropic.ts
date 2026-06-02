@@ -28,6 +28,15 @@ export interface ClaudeOptions {
   // If the model is asked to return JSON, set this to a tight prefix that we
   // strip from the response (handles the "Here is the JSON" preamble issue).
   expectJson?: boolean;
+  // Server-side tools (e.g. web_search), passed straight through to the API.
+  // Used by the content agents (Trend Discovery, Digital PR) to read the open
+  // web. The model runs these tools itself; we only read the final text.
+  tools?: unknown[];
+}
+
+export interface TokenUsage {
+  input_tokens: number;
+  output_tokens: number;
 }
 
 export interface ClaudeResult {
@@ -36,6 +45,12 @@ export interface ClaudeResult {
   error?: string;
   model?: string;
   stopReason?: string;
+  usage?: TokenUsage;
+}
+
+/** A web_search server tool spec, for agents that need live web data. */
+export function webSearchTool(maxUses = 5): Record<string, unknown> {
+  return { type: "web_search_20250305", name: "web_search", max_uses: maxUses };
 }
 
 // Verified against /v1/models on 2026-05-28. Sonnet 4.6 is the best quality
@@ -71,6 +86,7 @@ export async function callClaude(opts: ClaudeOptions): Promise<ClaudeResult> {
           max_tokens: opts.maxTokens ?? 1500,
           system: opts.system,
           messages: opts.messages,
+          ...(opts.tools && opts.tools.length ? { tools: opts.tools } : {}),
         }),
       });
 
@@ -98,6 +114,10 @@ export async function callClaude(opts: ClaudeOptions): Promise<ClaudeResult> {
         text: stripDashes(cleaned),   // never let an em/en dash reach the UI
         model: body?.model,
         stopReason: body?.stop_reason,
+        usage: {
+          input_tokens: body?.usage?.input_tokens ?? 0,
+          output_tokens: body?.usage?.output_tokens ?? 0,
+        },
       };
     } catch (err) {
       return { ok: false, text: "", error: err instanceof Error ? err.message : String(err) };

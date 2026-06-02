@@ -10,10 +10,11 @@ import { BIOMARKERS } from "@/lib/biomarkers";
 import { TIMING, TIMING_IDS, timingIndexable } from "@/lib/timing";
 import { SYMPTOMS, SYMPTOM_SLUGS, symptomIndexable } from "@/lib/symptoms";
 import { directionParams } from "@/lib/biomarker-directions";
+import { allPublishedDrafts } from "@/lib/agents/store";
 
 const BASE = "https://www.suppdoc.io";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const entries: MetadataRoute.Sitemap = [];
@@ -76,6 +77,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(post.date), changeFrequency: "monthly", priority: 0.7,
     });
   }
+
+  // ─── Tier 4a2: agent-published library (DB-backed) ─────────────────────
+  // Guarded: if Supabase is unreachable, the sitemap still builds from static
+  // data rather than throwing. Only published SEO drafts are listed.
+  entries.push({ url: `${BASE}/library`, lastModified: now, changeFrequency: "weekly", priority: 0.8 });
+  try {
+    const published = await allPublishedDrafts();
+    for (const it of published) {
+      if (!it.slug) continue;
+      entries.push({
+        url: `${BASE}/library/${it.slug}`,
+        lastModified: it.approved_at ? new Date(it.approved_at) : now,
+        changeFrequency: "monthly", priority: 0.7,
+      });
+    }
+  } catch { /* keep static sitemap on DB error */ }
 
   // ─── Tier 4b: interaction checker (index + programmatic pairs) ─────────
   entries.push({

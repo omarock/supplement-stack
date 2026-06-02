@@ -8,6 +8,30 @@
     {
       "path": "/api/cron/tracker-digest",
       "schedule": "0 16 * * 1"
+    },
+    {
+      "path": "/api/agents/trend",
+      "schedule": "0 10 * * 1,4"
+    },
+    {
+      "path": "/api/agents/seo",
+      "schedule": "0 11 * * *"
+    },
+    {
+      "path": "/api/agents/visual",
+      "schedule": "0 12 * * *"
+    },
+    {
+      "path": "/api/agents/social",
+      "schedule": "0 13 * * *"
+    },
+    {
+      "path": "/api/agents/newsletter",
+      "schedule": "0 15 * * 3"
+    },
+    {
+      "path": "/api/agents/pr",
+      "schedule": "30 12 * * 5"
     }
   ],
   "headers": [

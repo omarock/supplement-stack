@@ -174,6 +174,22 @@ export default async function AdminDashboard() {
           </p>
         </div>
 
+        {/* Content engine entry point */}
+        <Link href="/admin/agents" style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap",
+          background: `linear-gradient(135deg, ${th.sage} 0%, #3f7a52 100%)`, color: "#fff",
+          borderRadius: 16, padding: "20px 24px", textDecoration: "none", marginBottom: 24,
+          boxShadow: "0 4px 14px rgba(63,122,82,0.25)",
+        }}>
+          <div>
+            <div style={{ ...S, fontSize: 22, letterSpacing: "-0.015em" }}>Your content team →</div>
+            <div style={{ fontSize: 13.5, opacity: 0.9, marginTop: 4 }}>
+              Six agents draft pages, posts, your newsletter, and backlink outreach. Review and approve everything in one inbox.
+            </div>
+          </div>
+          <span style={{ ...S, fontSize: 13, background: "rgba(255,255,255,0.18)", padding: "8px 16px", borderRadius: 999 }}>Open agents</span>
+        </Link>
+
         {/* Founding-member grant tool (manual Payoneer validation phase) */}
         <AdminGrantPremium />
 
