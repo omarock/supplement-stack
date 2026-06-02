@@ -99,7 +99,7 @@ export default function AdminAgents() {
       <section>
         <h2 style={{ ...D, fontSize: 22, margin: "0 0 4px" }}>The six agents</h2>
         <p style={{ fontSize: 13, color: th.inkMute, margin: "0 0 14px" }}>
-          They run automatically on schedule. You can also run any one now. Everything they make waits below for your approval, nothing publishes or sends on its own.
+          Automatic schedules are off, so nothing spends on its own. The free way to feed these is the Import box below (content generated in your Claude Code chat). &ldquo;Run now&rdquo; still works if you ever want the website to generate something itself, it uses your API key and costs a few cents per run.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12 }}>
           {agents.map(a => {
@@ -122,6 +122,9 @@ export default function AdminAgents() {
           })}
         </div>
       </section>
+
+      {/* Import from Claude Code (zero API cost) */}
+      <ImportBox onDone={load} setFlash={setFlash} />
 
       {/* Queue */}
       <section>
@@ -337,6 +340,50 @@ function NewsletterBody({ item, p, busy, act }: { item: Item; p: Json; busy: str
         <button disabled={!!busy} onClick={() => act("reject", item)} style={btn("", th.red, true)}>Discard</button>
       </div>
     </div>
+  );
+}
+
+function ImportBox({ onDone, setFlash }: { onDone: () => void; setFlash: (f: { ok: boolean; text: string } | null) => void }) {
+  const [open, setOpen] = useState(false);
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  async function importItems() {
+    setBusy(true); setFlash(null);
+    let items: unknown;
+    try { items = JSON.parse(text.trim()); }
+    catch { setFlash({ ok: false, text: "That is not valid JSON. Paste the whole block I gave you, including the [ and ]." }); setBusy(false); return; }
+    if (!Array.isArray(items)) items = [items];
+    try {
+      const r = await fetch("/api/admin/agents", {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ action: "import", items }),
+      }).then(x => x.json());
+      if (r.ok) { setFlash({ ok: true, text: `Imported ${r.imported} item(s) into your inbox.` }); setText(""); setOpen(false); onDone(); }
+      else setFlash({ ok: false, text: r.error || "Import failed." });
+    } catch { setFlash({ ok: false, text: "Network error." }); }
+    finally { setBusy(false); }
+  }
+
+  return (
+    <section style={{ background: th.paper, border: `1px dashed ${th.sage}`, borderRadius: 14, padding: 16 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+        <div>
+          <div style={{ ...D, fontSize: 16, color: th.ink }}>Import from chat (free, no API cost)</div>
+          <div style={{ fontSize: 12.5, color: th.inkMute, marginTop: 2 }}>Paste the content block from your Claude Code chat here. It lands in the inbox below, exactly like an agent run, but costs nothing.</div>
+        </div>
+        <button onClick={() => setOpen(o => !o)} style={btn("", th.sageDeep, true)}>{open ? "Close" : "Open"}</button>
+      </div>
+      {open && (
+        <div style={{ marginTop: 12 }}>
+          <textarea value={text} onChange={e => setText(e.target.value)} rows={8} placeholder='Paste the JSON block here, e.g. [ { "kind": "seo_draft", ... } ]'
+            style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${th.line}`, fontSize: 12.5, fontFamily: '"JetBrains Mono", monospace', lineHeight: 1.5, boxSizing: "border-box", resize: "vertical" }} />
+          <button disabled={busy || !text.trim()} onClick={importItems} style={{ ...btn(th.sage, "#fff"), marginTop: 8, opacity: busy || !text.trim() ? 0.6 : 1 }}>
+            {busy ? "Importing…" : "Import to inbox"}
+          </button>
+        </div>
+      )}
+    </section>
   );
 }
 

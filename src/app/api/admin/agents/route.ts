@@ -4,8 +4,17 @@ import { createServerClient } from "@supabase/ssr";
 import { getAdminSupabase, isAdminEmail } from "@/lib/supabase-admin";
 import { renderNewsletter } from "@/lib/newsletter";
 import { sendViaResend } from "@/lib/resend";
-import { getItem, updateItem, type AgentItem } from "@/lib/agents/store";
+import { getItem, updateItem, insertItems, type AgentItem, type NewItem, type AgentKey, type ItemKind } from "@/lib/agents/store";
 import { AGENTS, AGENT_ORDER } from "@/lib/agents/registry";
+
+// kind -> default producing agent, for items imported from Claude Code (chat).
+const KIND_AGENT: Record<string, AgentKey> = {
+  opportunity: "trend", seo_draft: "seo", social_post: "social",
+  visual: "visual", newsletter: "newsletter", pr_target: "pr",
+};
+function slugify(s: string): string {
+  return String(s).toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80) || "untitled";
+}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -79,10 +88,39 @@ export async function POST(req: NextRequest) {
   const admin = await adminEmail();
   if (!admin) return Response.json({ ok: false, error: "not authorized" }, { status: 403 });
 
-  let body: { action?: string; id?: string; edited?: Record<string, unknown>; note?: string; mode?: string; subject?: string; text?: string; testEmail?: string };
+  let body: { action?: string; id?: string; edited?: Record<string, unknown>; note?: string; mode?: string; subject?: string; text?: string; testEmail?: string; items?: unknown };
   try { body = await req.json(); } catch { return Response.json({ ok: false, error: "bad json" }, { status: 400 }); }
 
   const action = String(body.action ?? "");
+
+  // Import a batch generated in Claude Code (no API cost). Runs before the
+  // single-item id check, since import has no id.
+  if (action === "import") {
+    const raw = Array.isArray(body.items) ? body.items : null;
+    if (!raw) return Response.json({ ok: false, error: "items must be a JSON array" }, { status: 400 });
+    const toInsert: NewItem[] = [];
+    const skipped: string[] = [];
+    for (const r of raw as Record<string, unknown>[]) {
+      const kind = String(r?.kind ?? "") as ItemKind;
+      if (!KIND_AGENT[kind]) { skipped.push(`bad kind: ${kind || "(missing)"}`); continue; }
+      const payload = (r?.payload && typeof r.payload === "object") ? r.payload as Record<string, unknown> : (r as Record<string, unknown>);
+      const title = String(r?.title ?? payload.title ?? payload.outlet ?? "Untitled");
+      const item: NewItem = {
+        agent: (String(r?.agent ?? "") as AgentKey) || KIND_AGENT[kind],
+        kind,
+        title,
+        priority: Number(r?.priority) || Number(payload.priority_score) || 0,
+        payload,
+        needs_review: Boolean(r?.needs_review ?? payload.needs_clinical_review),
+      };
+      if (kind === "seo_draft") item.slug = slugify(String(r?.slug ?? payload.slug ?? title));
+      toInsert.push(item);
+    }
+    if (toInsert.length === 0) return Response.json({ ok: false, error: `nothing to import (${skipped.join("; ") || "empty"})` }, { status: 400 });
+    const created = await insertItems(toInsert, null);
+    return Response.json({ ok: true, imported: created, skipped });
+  }
+
   const id = String(body.id ?? "");
   if (!id) return Response.json({ ok: false, error: "id required" }, { status: 400 });
   const item = await getItem(id);
