@@ -9,6 +9,7 @@ import { GOALS } from "@/lib/goals";
 import { BIOMARKERS } from "@/lib/biomarkers";
 import { TIMING, TIMING_IDS, timingIndexable } from "@/lib/timing";
 import { SYMPTOMS, SYMPTOM_SLUGS, symptomIndexable } from "@/lib/symptoms";
+import { directionParams } from "@/lib/biomarker-directions";
 
 const BASE = "https://www.suppdoc.io";
 
@@ -116,6 +117,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   entries.push({ url: `${BASE}/biomarkers`, lastModified: now, changeFrequency: "monthly", priority: 0.85 });
   for (const b of BIOMARKERS) {
     entries.push({ url: `${BASE}/biomarkers/${b.key.replace(/_/g, "-")}`, lastModified: now, changeFrequency: "monthly", priority: 0.75 });
+  }
+  // Biomarker high/low split (the exact "low ferritin" / "high homocysteine" queries)
+  for (const p of directionParams()) {
+    entries.push({ url: `${BASE}/biomarkers/${p.marker.replace(/_/g, "-")}/${p.direction}`, lastModified: now, changeFrequency: "monthly", priority: 0.7 });
   }
 
   // ─── Tier 5: compare pages ─────────────────────────────────────────────

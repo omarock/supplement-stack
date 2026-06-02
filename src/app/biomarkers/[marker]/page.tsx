@@ -5,6 +5,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import EvidenceBadge, { type EvidenceTier } from "@/components/EvidenceBadge";
 import { BIOMARKERS, BIOMARKER_DETAIL, type BiomarkerDef } from "@/lib/biomarkers";
+import { BIOMARKER_DIRECTION } from "@/lib/biomarker-directions";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import ReviewedBy from "@/components/ReviewedBy";
 import RelatedContent from "@/components/RelatedContent";
@@ -127,6 +128,24 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
               Ranges vary by laboratory, age, and sex, your lab&apos;s own reference range always takes precedence.
             </div>
           </section>
+
+          {/* High/low split deep-dives */}
+          {(BIOMARKER_DIRECTION[b.key]?.low || BIOMARKER_DIRECTION[b.key]?.high) && (
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 24 }}>
+              {BIOMARKER_DIRECTION[b.key]?.low && (
+                <Link href={`/biomarkers/${marker}/low`} style={{ flex: "1 1 220px", padding: "13px 16px", background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 14, textDecoration: "none", color: "inherit" }}>
+                  <span style={{ ...D, fontSize: 14.5, color: TH.ink }}>What does low {b.label.toLowerCase()} mean?</span>
+                  <span style={{ display: "block", fontSize: 12.5, color: TH.sageDeep, fontWeight: 600, marginTop: 2 }}>Causes, symptoms &amp; what to do →</span>
+                </Link>
+              )}
+              {BIOMARKER_DIRECTION[b.key]?.high && (
+                <Link href={`/biomarkers/${marker}/high`} style={{ flex: "1 1 220px", padding: "13px 16px", background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 14, textDecoration: "none", color: "inherit" }}>
+                  <span style={{ ...D, fontSize: 14.5, color: TH.ink }}>What does high {b.label.toLowerCase()} mean?</span>
+                  <span style={{ display: "block", fontSize: 12.5, color: TH.sageDeep, fontWeight: 600, marginTop: 2 }}>Causes, symptoms &amp; what to do →</span>
+                </Link>
+              )}
+            </div>
+          )}
 
           {/* In-depth, curated per-marker context */}
           {detail && (
