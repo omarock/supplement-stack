@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/bloodwork`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/bloodwork/history`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/pricing`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE}/research/state-of-supplement-stacking`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
   );
 
   // ─── Tier 2: stacks index + individual stacks ──────────────────────────

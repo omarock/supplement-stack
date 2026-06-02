@@ -19,6 +19,7 @@ const COLS: [string, [string, string][]][] = [
     ["Best for your goal", "/best"],
     ["Pre-made stacks", "/stacks"],
     ["Compare", "/compare"],
+    ["Data report", "/research/state-of-supplement-stacking"],
     ["Journal", "/journal"],
   ]],
   ["Company", [
