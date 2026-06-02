@@ -30,8 +30,9 @@ export async function GET() {
   const db = getAdminSupabase();
   if (!db) return Response.json({ ok: false, error: "service role not configured" }, { status: 500 });
 
-  const [{ data: pending }, { data: runs }] = await Promise.all([
+  const [{ data: pending }, { data: history }, { data: runs }] = await Promise.all([
     db.from("agent_items").select("*").eq("status", "pending").order("priority", { ascending: false }).order("created_at", { ascending: false }).limit(300),
+    db.from("agent_items").select("*").in("status", ["approved", "published", "sent"]).order("approved_at", { ascending: false }).limit(200),
     db.from("agent_runs").select("*").order("created_at", { ascending: false }).limit(20),
   ]);
 
@@ -39,7 +40,7 @@ export async function GET() {
     key: k, title: AGENTS[k].title, blurb: AGENTS[k].blurb, schedule: AGENTS[k].schedule, model: AGENTS[k].model,
   }));
 
-  return Response.json({ ok: true, adminEmail: admin, agents, items: pending ?? [], runs: runs ?? [] });
+  return Response.json({ ok: true, adminEmail: admin, agents, items: pending ?? [], history: history ?? [], runs: runs ?? [] });
 }
 
 // ─── helpers for approve ────────────────────────────────────────────────────

@@ -37,6 +37,7 @@ const btn = (bg: string, color: string, ghost = false): React.CSSProperties => (
 export default function AdminAgents() {
   const [agents, setAgents] = useState<AgentMeta[]>([]);
   const [items, setItems] = useState<Item[]>([]);
+  const [history, setHistory] = useState<Item[]>([]);
   const [runs, setRuns] = useState<Run[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState<string | null>(null);
@@ -46,7 +47,7 @@ export default function AdminAgents() {
     setLoading(true);
     try {
       const r = await fetch("/api/admin/agents").then(x => x.json());
-      if (r.ok) { setAgents(r.agents); setItems(r.items); setRuns(r.runs); }
+      if (r.ok) { setAgents(r.agents); setItems(r.items); setHistory(r.history ?? []); setRuns(r.runs); }
       else setFlash({ ok: false, text: r.error || "Failed to load." });
     } catch { setFlash({ ok: false, text: "Network error." }); }
     finally { setLoading(false); }
@@ -135,6 +136,9 @@ export default function AdminAgents() {
           </div>
         )}
       </section>
+
+      {/* Published & approved */}
+      <HistorySection history={history} />
 
       {/* Run log */}
       <section>
@@ -331,6 +335,78 @@ function NewsletterBody({ item, p, busy, act }: { item: Item; p: Json; busy: str
           {isBusy("newsletter_send") ? "Sending…" : "Send to all"}
         </button>
         <button disabled={!!busy} onClick={() => act("reject", item)} style={btn("", th.red, true)}>Discard</button>
+      </div>
+    </div>
+  );
+}
+
+function HistorySection({ history }: { history: Item[] }) {
+  const live = history.filter(i => i.kind === "seo_draft" && i.status === "published");
+  const ideas = history.filter(i => i.kind === "opportunity" && i.status === "approved");
+  const ready = history.filter(i => ["social_post", "pr_target", "visual"].includes(i.kind) && i.status === "approved");
+  const sent = history.filter(i => i.kind === "newsletter" && i.status === "sent");
+
+  const READY_LABEL: Record<string, string> = { social_post: "Posts ready to publish", pr_target: "Outreach ready to send", visual: "Visuals approved" };
+
+  return (
+    <section>
+      <h2 style={{ ...D, fontSize: 22, margin: "0 0 4px" }}>Published &amp; approved</h2>
+      <p style={{ fontSize: 13, color: th.inkMute, margin: "0 0 14px" }}>
+        Everything you have signed off. Approved ideas wait here until the SEO and Social agents pick them up on their next run.
+      </p>
+      {history.length === 0 ? (
+        <p style={{ color: th.inkMute, fontSize: 13 }}>Nothing approved yet. Approve items in the inbox above and they will show up here.</p>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {live.length > 0 && (
+            <div style={{ background: th.paper, border: `1px solid ${th.line}`, borderRadius: 14, padding: 16 }}>
+              <div style={{ ...D, fontSize: 15, color: th.ink, marginBottom: 4 }}>Live on your site <span style={{ color: th.sage }}>({live.length})</span></div>
+              <div style={{ fontSize: 12, color: th.inkMute, marginBottom: 10 }}>Real, indexable pages. Click to open them.</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                {live.map(i => (
+                  <a key={i.id} href={`https://www.suppdoc.io/library/${i.slug}`} target="_blank" rel="noopener noreferrer"
+                    style={{ display: "flex", justifyContent: "space-between", gap: 10, textDecoration: "none", padding: "8px 10px", borderRadius: 8, background: th.bg }}>
+                    <span style={{ fontSize: 13.5, color: th.ink, fontWeight: 600 }}>{i.title}</span>
+                    <span style={{ fontSize: 12, color: th.sageDeep, whiteSpace: "nowrap" }}>/library/{i.slug} ↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+          {ideas.length > 0 && (
+            <HistoryGroup title="Approved ideas, waiting for the writers" sub="The SEO and Social agents turn these into pages and posts on their next run." items={ideas} color={th.amber} />
+          )}
+          {ready.length > 0 && (
+            <div style={{ background: th.paper, border: `1px solid ${th.line}`, borderRadius: 14, padding: 16 }}>
+              <div style={{ ...D, fontSize: 15, color: th.ink, marginBottom: 10 }}>Approved, ready for you <span style={{ color: th.sage }}>({ready.length})</span></div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                {ready.map(i => (
+                  <div key={i.id} style={{ display: "flex", justifyContent: "space-between", gap: 10, padding: "8px 10px", borderRadius: 8, background: th.bg }}>
+                    <span style={{ fontSize: 13, color: th.ink }}>{i.title}</span>
+                    <span style={{ fontSize: 11, color: th.inkMute, whiteSpace: "nowrap" }}>{READY_LABEL[i.kind] ?? i.kind}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {sent.length > 0 && (
+            <HistoryGroup title="Newsletters sent" sub="Issues emailed to your list." items={sent} color={th.sageDeep} />
+          )}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function HistoryGroup({ title, sub, items, color }: { title: string; sub: string; items: Item[]; color: string }) {
+  return (
+    <div style={{ background: th.paper, border: `1px solid ${th.line}`, borderRadius: 14, padding: 16 }}>
+      <div style={{ ...D, fontSize: 15, color: th.ink, marginBottom: 4 }}>{title} <span style={{ color }}>({items.length})</span></div>
+      <div style={{ fontSize: 12, color: th.inkMute, marginBottom: 10 }}>{sub}</div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        {items.map(i => (
+          <div key={i.id} style={{ fontSize: 13, color: th.inkSoft, padding: "7px 10px", borderRadius: 8, background: th.bg }}>{i.title}</div>
+        ))}
       </div>
     </div>
   );
