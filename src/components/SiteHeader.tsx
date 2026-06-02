@@ -39,6 +39,7 @@ const NAV: NavGroup[] = [
     label: "Learn",
     items: [
       { label: "Best for your goal", href: "/best", desc: "Best supplements for sleep, energy…" },
+      { label: "Supplements for symptoms", href: "/symptoms", desc: "Tired, foggy, cramping? What to check" },
       { label: "Ingredients", href: "/ingredients", desc: "151 evidence-graded guides" },
       { label: "Interactions", href: "/interactions", desc: "What works together & what to separate" },
       { label: "Supplement timing", href: "/timing", desc: "Best time to take each supplement" },

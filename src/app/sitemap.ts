@@ -8,6 +8,7 @@ import { INTERACTIONS, interactionSlug, interactionIndexable } from "@/lib/inter
 import { GOALS } from "@/lib/goals";
 import { BIOMARKERS } from "@/lib/biomarkers";
 import { TIMING, TIMING_IDS, timingIndexable } from "@/lib/timing";
+import { SYMPTOMS, SYMPTOM_SLUGS, symptomIndexable } from "@/lib/symptoms";
 
 const BASE = "https://www.suppdoc.io";
 
@@ -95,6 +96,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Same word-count gate as the page so the sitemap never lists a noindex URL.
     if (!timingIndexable(TIMING[id])) continue;
     entries.push({ url: `${BASE}/timing/${id}`, lastModified: now, changeFrequency: "monthly", priority: 0.75 });
+  }
+
+  // ─── Tier 4b3: symptoms & deficiencies pillar ─────────────────────────
+  entries.push({ url: `${BASE}/symptoms`, lastModified: now, changeFrequency: "monthly", priority: 0.85 });
+  for (const slug of SYMPTOM_SLUGS) {
+    if (!symptomIndexable(SYMPTOMS[slug])) continue;
+    entries.push({ url: `${BASE}/symptoms/${slug}`, lastModified: now, changeFrequency: "monthly", priority: 0.75 });
   }
 
   // ─── Tier 4c: best-for-goal guides ─────────────────────────────────────

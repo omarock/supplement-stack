@@ -14,6 +14,7 @@ const COLS: [string, [string, string][]][] = [
     ["Ingredients", "/ingredients"],
     ["Interactions", "/interactions"],
     ["Supplement timing", "/timing"],
+    ["Supplements for symptoms", "/symptoms"],
     ["Biomarkers", "/biomarkers"],
     ["Best for your goal", "/best"],
     ["Pre-made stacks", "/stacks"],

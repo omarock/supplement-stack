@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.suppdoc.io"),
   title: "suppdoc.io, personalised supplement stacks, audit & bloodwork analysis",
   description:
-    "suppdoc is the evidence-graded supplement platform. Get a personalised stack, check your supplements for interactions, and turn your bloodwork into a plan, free, grounded in published research. We don't sell our own pills.",
+    "Get a personalised supplement stack, check it for interactions, and turn your bloodwork into a plan. Free, evidence-graded, and we don't sell our own pills.",
   applicationName: "suppdoc.io",
   keywords:
     "suppdoc, suppdoc.io, personalised supplement stack, supplement audit, supplement interaction checker, bloodwork supplement analysis, evidence-based supplements, personalized supplements",
