@@ -8,6 +8,7 @@ import { IHERB_HOME } from "@/lib/iherb";
 import { trackQuizSubmission } from "@/lib/track";
 import SupplementGrid from "@/components/SupplementGrid";
 import TrackStackCTA from "@/components/TrackStackCTA";
+import EmailCapture from "@/components/EmailCapture";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { track } from "@/lib/analytics";
@@ -208,6 +209,11 @@ export default function ResultsPage() {
             stackIds={rec.supplements.map(s => s.id)}
             source="results"
           />
+        </section>
+
+        {/* Email capture, after the user has their stack */}
+        <section style={{ marginBottom: 56 }}>
+          <EmailCapture source="quiz-results" headline="Want your stack emailed to you?" sub="Get your personalised stack plus a short weekly evidence brief. No spam, unsubscribe anytime." tone="dark" />
         </section>
 
         {/* Reasoning */}

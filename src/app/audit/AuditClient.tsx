@@ -6,6 +6,7 @@ import { TH, FONTS } from "@/lib/theme";
 import type { AuditResponse, AuditFinding } from "@/app/api/audit-stack/route";
 import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
 import TrackStackCTA from "@/components/TrackStackCTA";
+import EmailCapture from "@/components/EmailCapture";
 import { track } from "@/lib/analytics";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -251,6 +252,9 @@ export default function AuditClient() {
         {result && (
           <section id="audit-result" style={{ marginTop: 36, animation: "sd-fade-in .4s ease-out" }}>
             <AuditResult data={result} onRedo={() => { setResult(null); setText(""); setBloodwork(""); setShowLabs(false); }} />
+            <div style={{ maxWidth: 760, margin: "24px auto 0" }}>
+              <EmailCapture source="audit" headline="Get your audit by email" sub="We'll send your audit plus a short weekly evidence brief. No spam, unsubscribe anytime." />
+            </div>
           </section>
         )}
       </div>

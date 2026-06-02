@@ -7,6 +7,7 @@ import ThinkingMessages from "@/components/ThinkingMessages";
 import { STATUS_META, rangeBarModel, type BloodworkAnalysis, type ExtractedBiomarker, type BiomarkerStatus } from "@/lib/biomarkers";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import ConfidenceCard from "@/components/ConfidenceCard";
+import EmailCapture from "@/components/EmailCapture";
 import type { EvidenceTier } from "@/components/EvidenceBadge";
 import { track } from "@/lib/analytics";
 
@@ -299,6 +300,9 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
         {stage === "done" && result && (
           <section id="bw-result" style={{ animation: "sd-fade-in .4s ease-out" }}>
             <AnalysisReport data={result} sourceKind={sourceKind} signedIn={signedIn} onReset={reset} isSample={isSample} />
+            <div style={{ maxWidth: 760, margin: "24px auto 0" }}>
+              <EmailCapture source="bloodwork" headline="Get the weekly evidence brief" sub="A short weekly brief on supplements and biomarkers, evidence-led. We never email your lab data. Unsubscribe anytime." />
+            </div>
           </section>
         )}
       </div>

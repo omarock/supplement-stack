@@ -5,6 +5,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { INTERACTIONS, interactionSlug, KIND_META, type InteractionKind } from "@/lib/interactions";
 import InteractionChecker from "@/components/InteractionChecker";
+import EmailCapture from "@/components/EmailCapture";
 import { buildCheckerData, checkerStats } from "@/lib/checker";
 import { TH, FONTS } from "@/lib/theme";
 
@@ -124,6 +125,10 @@ export default function InteractionsIndex() {
                 Free to embed with attribution. <Link href="/embed/interaction-checker" style={{ color: "#a9c8ff", textDecoration: "none", fontWeight: 600 }}>Preview the widget →</Link>
               </p>
             </div>
+          </section>
+
+          <section style={{ marginTop: 8, marginBottom: 30 }}>
+            <EmailCapture source="interactions" headline="One safe-stacking tip a week" sub="A short weekly brief on what works together, what to separate, and what to skip. Evidence-led, no spam." cta="Get the brief" />
           </section>
 
           <section style={{ marginTop: 8, marginBottom: 24 }}>

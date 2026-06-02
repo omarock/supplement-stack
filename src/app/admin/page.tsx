@@ -6,6 +6,7 @@ import { createServerClient } from "@supabase/ssr";
 import { getAdminSupabase, isAdminEmail } from "@/lib/supabase-admin";
 import SuppdocLogo from "@/components/SuppdocLogo";
 import AdminGrantPremium from "@/components/AdminGrantPremium";
+import AdminNewsletter from "@/components/AdminNewsletter";
 
 export const metadata: Metadata = {
   title: "Admin, suppdoc.io",
@@ -175,6 +176,9 @@ export default async function AdminDashboard() {
 
         {/* Founding-member grant tool (manual Payoneer validation phase) */}
         <AdminGrantPremium />
+
+        {/* Newsletter broadcast to the email list */}
+        <AdminNewsletter />
 
         {/* KPI cards */}
         <section style={{ marginBottom: 24 }}>
