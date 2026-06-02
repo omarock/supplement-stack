@@ -12,7 +12,7 @@
  *   newsletter -> one weekly issue            [you pick subject -> send]
  *   pr      -> outreach pitches               [you approve -> you send]
  */
-import { callClaude, safeParseJson, webSearchTool, type TokenUsage } from "@/lib/anthropic";
+import { callClaude, parseJsonLoose, asArray, webSearchTool, type TokenUsage } from "@/lib/anthropic";
 import {
   TREND_PROMPT, SEO_PROMPT, SOCIAL_PROMPT, VISUAL_PROMPT, NEWSLETTER_PROMPT, PR_PROMPT,
 } from "@/lib/agents/prompts";
@@ -51,18 +51,25 @@ interface RunOutput {
 /** One Claude call returning parsed JSON (array or object), or null. */
 async function complete<T>(opts: {
   model: string; system: string; user: string; usage: Usage; maxTokens?: number; web?: boolean;
-}): Promise<{ parsed: T | null; ok: boolean; error?: string }> {
+}): Promise<{ parsed: T | null; ok: boolean; error?: string; raw?: string; stopReason?: string }> {
   const res = await callClaude({
     model: opts.model,
     system: opts.system,
     messages: [{ role: "user", content: opts.user }],
-    maxTokens: opts.maxTokens ?? 4000,
+    maxTokens: opts.maxTokens ?? 8000,
     expectJson: true,
     tools: opts.web && webSearchEnabled() ? [webSearchTool(5)] : undefined,
   });
   opts.usage.add(res.usage);
   if (!res.ok) return { parsed: null, ok: false, error: res.error };
-  return { parsed: safeParseJson<T>(res.text), ok: true };
+  return { parsed: parseJsonLoose<T>(res.text), ok: true, raw: res.text, stopReason: res.stopReason };
+}
+
+/** Build a short diagnostic when a call returned text we could not turn into items. */
+function diag(label: string, raw?: string, stopReason?: string): string {
+  const snippet = (raw ?? "").replace(/\s+/g, " ").trim().slice(0, 160);
+  const trunc = stopReason === "max_tokens" ? " [hit max_tokens, output truncated]" : "";
+  return `${label}${trunc}. Model said: ${snippet || "(empty response)"}`;
 }
 
 function slugify(s: string): string {
@@ -98,16 +105,17 @@ const trend: AgentDef = {
       ``,
       `Coverage hint: these ingredient ids have NO interaction page yet, so "X and Y" interaction topics around them are likely gaps: ${gaps}.`,
       ``,
-      `Produce 15 to 25 ranked opportunities as a JSON array, per your instructions.`,
+      `Produce 12 to 18 ranked opportunities as a JSON array (a bare array, not wrapped in an object). Keep every field to one short sentence so the whole array fits in the response.`,
     ].join("\n");
-    const { parsed, ok, error } = await complete<Record<string, unknown>[]>({
-      model: OPUS, system: TREND_PROMPT, user, usage, web: true, maxTokens: 8000,
+    const { parsed, ok, error, raw, stopReason } = await complete<Record<string, unknown>[]>({
+      model: OPUS, system: TREND_PROMPT, user, usage, web: true, maxTokens: 16000,
     });
     if (!ok) return { items: [], usage: usage.total, model: OPUS, status: "error", error };
-    if (!Array.isArray(parsed)) return { items: [], usage: usage.total, model: OPUS, status: "empty" };
-    const items: NewItem[] = parsed
-      .filter(o => o && (o.coverage_gap === "new" || o.coverage_gap === "refresh"))
-      .slice(0, 25)
+    const arr = asArray<Record<string, unknown>>(parsed);
+    if (!arr) return { items: [], usage: usage.total, model: OPUS, status: "empty", error: diag("trend: could not parse opportunities", raw, stopReason) };
+    const items: NewItem[] = arr
+      .filter(o => o && o.coverage_gap !== "none")
+      .slice(0, 20)
       .map(o => ({
         agent: "trend" as const,
         kind: "opportunity" as const,
@@ -116,7 +124,11 @@ const trend: AgentDef = {
         payload: o,
         needs_review: Boolean(o.needs_clinical_review),
       }));
-    return { items, usage: usage.total, model: OPUS, status: items.length ? "ok" : "empty" };
+    return {
+      items, usage: usage.total, model: OPUS,
+      status: items.length ? "ok" : "empty",
+      error: items.length ? undefined : `trend: parsed ${arr.length} rows but all were duplicates of existing pages (coverage_gap none).`,
+    };
   },
 };
 
@@ -132,17 +144,18 @@ const seo: AgentDef = {
     const opps = await approvedOpportunitiesFor("seo", 5);
     if (opps.length === 0) return { items: [], usage: usage.total, model: OPUS, status: "empty" };
     const items: NewItem[] = [];
+    let lastDiag: string | undefined;
     for (const opp of opps) {
       const user = [
         siteBrief(),
         ``,
-        `OPPORTUNITY to turn into one publish-ready page (JSON object per your instructions):`,
+        `OPPORTUNITY to turn into one publish-ready page (a single JSON object, not wrapped in an array):`,
         JSON.stringify(opp.payload),
       ].join("\n");
-      const { parsed } = await complete<Record<string, unknown>>({
-        model: OPUS, system: SEO_PROMPT, user, usage, maxTokens: 8000,
+      const { parsed, raw, stopReason } = await complete<Record<string, unknown>>({
+        model: OPUS, system: SEO_PROMPT, user, usage, maxTokens: 16000,
       });
-      if (!parsed || Array.isArray(parsed)) continue;
+      if (!parsed || Array.isArray(parsed)) { lastDiag = diag("seo: could not parse a page object", raw, stopReason); continue; }
       const slug = slugify(String(parsed.slug ?? parsed.title ?? opp.title ?? ""));
       items.push({
         agent: "seo", kind: "seo_draft",
@@ -153,7 +166,7 @@ const seo: AgentDef = {
         needs_review: Boolean(parsed.needs_clinical_review),
       });
     }
-    return { items, usage: usage.total, model: OPUS, status: items.length ? "ok" : "empty" };
+    return { items, usage: usage.total, model: OPUS, status: items.length ? "ok" : "empty", error: items.length ? undefined : lastDiag };
   },
 };
 
@@ -180,13 +193,14 @@ const social: AgentDef = {
         `full opportunity: ${JSON.stringify(p)}`,
       ].join("\n");
       const { parsed } = await complete<Record<string, unknown>[]>({
-        model: SONNET, system: SOCIAL_PROMPT, user, usage, maxTokens: 4000,
+        model: SONNET, system: SOCIAL_PROMPT, user, usage, maxTokens: 6000,
       });
-      if (!Array.isArray(parsed) || parsed.length === 0) continue;
+      const variants = asArray<Record<string, unknown>>(parsed);
+      if (!variants || variants.length === 0) continue;
       items.push({
         agent: "social", kind: "social_post",
         title: String(opp.title),
-        payload: { variants: parsed },
+        payload: { variants },
         parent_id: opp.id,
       });
     }
@@ -216,13 +230,14 @@ const visual: AgentDef = {
         `Requested asset types: og (1200x630) and x_card (1600x900).`,
       ].join("\n");
       const { parsed } = await complete<Record<string, unknown>[]>({
-        model: SONNET, system: VISUAL_PROMPT, user, usage, maxTokens: 6000,
+        model: SONNET, system: VISUAL_PROMPT, user, usage, maxTokens: 8000,
       });
-      if (!Array.isArray(parsed) || parsed.length === 0) continue;
+      const assets = asArray<Record<string, unknown>>(parsed);
+      if (!assets || assets.length === 0) continue;
       items.push({
         agent: "visual", kind: "visual",
         title: String(p.title ?? d.title),
-        payload: { assets: parsed },
+        payload: { assets },
         parent_id: d.id,
       });
     }
@@ -258,11 +273,11 @@ const newsletter: AgentDef = {
       `Founding Member status: ${fm.spotsLeft} of ${fm.total} spots left. Email list size: ${fm.listSize}.`,
       `Write one weekly issue as a JSON object per your instructions.`,
     ].join("\n");
-    const { parsed, ok, error } = await complete<Record<string, unknown>>({
-      model: SONNET, system: NEWSLETTER_PROMPT, user, usage, maxTokens: 4000,
+    const { parsed, ok, error, raw, stopReason } = await complete<Record<string, unknown>>({
+      model: SONNET, system: NEWSLETTER_PROMPT, user, usage, maxTokens: 6000,
     });
     if (!ok) return { items: [], usage: usage.total, model: SONNET, status: "error", error };
-    if (!parsed || Array.isArray(parsed)) return { items: [], usage: usage.total, model: SONNET, status: "empty" };
+    if (!parsed || Array.isArray(parsed)) return { items: [], usage: usage.total, model: SONNET, status: "empty", error: diag("newsletter: could not parse the issue object", raw, stopReason) };
     const subjects = parsed.subject_line_options as string[] | undefined;
     const items: NewItem[] = [{
       agent: "newsletter", kind: "newsletter",
@@ -288,12 +303,13 @@ const pr: AgentDef = {
       `suppdoc's hero linkable asset: the embeddable interaction checker at ${url.tool.embed}.`,
       `Already contacted outlets (do not pitch again): ${contacted.length ? contacted.join("; ") : "none yet"}.`,
     ].join("\n");
-    const { parsed, ok, error } = await complete<Record<string, unknown>[]>({
-      model: OPUS, system: PR_PROMPT, user, usage, web: true, maxTokens: 8000,
+    const { parsed, ok, error, raw, stopReason } = await complete<Record<string, unknown>[]>({
+      model: OPUS, system: PR_PROMPT, user, usage, web: true, maxTokens: 12000,
     });
     if (!ok) return { items: [], usage: usage.total, model: OPUS, status: "error", error };
-    if (!Array.isArray(parsed)) return { items: [], usage: usage.total, model: OPUS, status: "empty" };
-    const items: NewItem[] = parsed.slice(0, 12).map(t => ({
+    const arr = asArray<Record<string, unknown>>(parsed);
+    if (!arr) return { items: [], usage: usage.total, model: OPUS, status: "empty", error: diag("pr: could not parse outreach targets", raw, stopReason) };
+    const items: NewItem[] = arr.slice(0, 12).map(t => ({
       agent: "pr" as const, kind: "pr_target" as const,
       title: String(t.outlet ?? t.pitch_subject ?? "PR target"),
       priority: Number(t.relevance_score) || 0,

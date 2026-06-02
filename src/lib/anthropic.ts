@@ -299,3 +299,60 @@ export function safeParseJson<T = unknown>(text: string): T | null {
     return null;
   }
 }
+
+/**
+ * Tolerant JSON parse for model output. Models (especially with web search) wrap
+ * JSON in prose, fence it, return {"items": [...]} instead of a bare array, or
+ * get truncated at max_tokens mid-array. This recovers all of those:
+ *   1. direct parse
+ *   2. fenced ```json block
+ *   3. balanced-bracket extraction (first complete [...] or {...} after prose)
+ *   4. truncation repair (trim a cut-off array to its last complete object)
+ */
+export function parseJsonLoose<T = unknown>(text: string): T | null {
+  if (!text) return null;
+  const tryParse = (s: string): T | null => { try { return JSON.parse(s) as T; } catch { return null; } };
+
+  let r = tryParse(text.trim());
+  if (r !== null) return r;
+
+  const fence = /```(?:json)?\s*([\s\S]*?)```/i.exec(text);
+  if (fence) { r = tryParse(fence[1].trim()); if (r !== null) return r; }
+
+  for (const open of ["[", "{"] as const) {
+    const close = open === "[" ? "]" : "}";
+    const start = text.indexOf(open);
+    if (start < 0) continue;
+    // Balanced scan (string-aware) to find the matching close.
+    let depth = 0, inStr = false, esc = false, end = -1;
+    for (let i = start; i < text.length; i++) {
+      const c = text[i];
+      if (inStr) { if (esc) esc = false; else if (c === "\\") esc = true; else if (c === '"') inStr = false; continue; }
+      if (c === '"') { inStr = true; continue; }
+      if (c === open) depth++;
+      else if (c === close && --depth === 0) { end = i; break; }
+    }
+    if (end > start) { r = tryParse(text.slice(start, end + 1)); if (r !== null) return r; }
+    // Truncation repair: array cut off mid-stream -> keep complete objects.
+    if (open === "[") {
+      const sub = text.slice(start);
+      const lastObj = sub.lastIndexOf("}");
+      if (lastObj > 0) { r = tryParse(sub.slice(0, lastObj + 1).replace(/,\s*$/, "") + "]"); if (r !== null) return r; }
+    }
+  }
+  return null;
+}
+
+/**
+ * Coerce a parsed value to an array. Accepts a bare array, or an object whose
+ * first array-valued property is the list (e.g. {"opportunities": [...]}).
+ */
+export function asArray<T = unknown>(parsed: unknown): T[] | null {
+  if (Array.isArray(parsed)) return parsed as T[];
+  if (parsed && typeof parsed === "object") {
+    for (const v of Object.values(parsed as Record<string, unknown>)) {
+      if (Array.isArray(v)) return v as T[];
+    }
+  }
+  return null;
+}
