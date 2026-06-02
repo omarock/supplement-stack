@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics";
 import { TH, FONTS } from "@/lib/theme";
 import { getSupabase } from "@/lib/supabase";
+import { trackEmailSignup } from "@/lib/track";
 import type { PaddleClientConfig } from "@/lib/paddle";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -55,8 +56,8 @@ const PREMIUM = [
   "Daily reminders + weekly reports",
 ];
 
-export default function PricingClient({ signedIn, email, isPremium, billingEnabled, paddle }: {
-  signedIn: boolean; email: string | null; isPremium: boolean; billingEnabled: boolean; paddle: PaddleClientConfig | null;
+export default function PricingClient({ signedIn, email, isPremium, billingEnabled, paddle, foundingMode }: {
+  signedIn: boolean; email: string | null; isPremium: boolean; billingEnabled: boolean; paddle: PaddleClientConfig | null; foundingMode: boolean;
 }) {
   const router = useRouter();
   const [plan, setPlan] = useState<"monthly" | "annual">("monthly");
@@ -73,6 +74,28 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
       if (data.session?.user?.email) setAuthEmail(data.session.user.email);
     });
   }, []);
+
+  // ── Founding-member capture (manual Payoneer validation phase) ──
+  const [foundingEmail, setFoundingEmail] = useState(email ?? "");
+  const [foundingBusy, setFoundingBusy] = useState(false);
+  const [foundingDone, setFoundingDone] = useState(false);
+  const [foundingErr, setFoundingErr] = useState<string | null>(null);
+
+  const scrollToFounding = useCallback(() => {
+    document.getElementById("founding-offer")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => document.getElementById("founding-email-input")?.focus(), 350);
+  }, []);
+
+  const submitFounding = useCallback(async () => {
+    const e = foundingEmail.trim().toLowerCase();
+    if (!e.includes("@")) { setFoundingErr("Please enter a valid email."); return; }
+    setFoundingBusy(true); setFoundingErr(null);
+    try {
+      await trackEmailSignup(e, "founding-member");
+      track("founding_interest", { signedIn });
+    } catch { /* storage hiccup shouldn't block the user; we still mark done */ }
+    finally { setFoundingBusy(false); setFoundingDone(true); }
+  }, [foundingEmail, signedIn]);
 
   const upgrade = useCallback(async () => {
     track("checkout_click", { plan, signedIn, provider: paddle ? "paddle" : "stripe" });
@@ -124,6 +147,10 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
   const price = plan === "annual" ? "$79" : "$9";
   const per = plan === "annual" ? "/year" : "/month";
   const sub = plan === "annual" ? "≈ $6.58/mo · 2 months free" : "billed monthly · cancel anytime";
+  // Founding phase: Premium is sold as a one-time lifetime membership.
+  const dispPrice = foundingMode ? "$79" : price;
+  const dispPer = foundingMode ? " once" : per;
+  const dispSub = foundingMode ? "lifetime access · founding offer" : sub;
 
   return (
     <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
@@ -138,7 +165,59 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
           </p>
         </header>
 
+        {/* Founding-member offer (validation phase): one-time lifetime membership */}
+        {foundingMode && (
+          <section id="founding-offer" style={{
+            background: TH.ink, color: "#fff", borderRadius: 22, padding: "30px 30px",
+            marginBottom: 28, boxShadow: "0 20px 50px -22px rgba(10,37,64,0.55)",
+          }}>
+            <div style={{ ...MM, fontSize: 11, color: TH.amber, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+              Founding offer · only 50 spots
+            </div>
+            <h2 style={{ ...D, fontSize: "clamp(24px, 4vw, 34px)", lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 10px" }}>
+              Get Premium <span style={{ fontFamily: FONTS.serifItalic, fontStyle: "italic", fontWeight: 400 }}>for life</span>, $79 once.
+            </h2>
+            <p style={{ fontSize: 15.5, opacity: 0.85, lineHeight: 1.6, margin: "0 0 20px", maxWidth: 580 }}>
+              Be one of our first 50 founding members. A single $79 payment, lifetime access to everything in Premium, no subscription ever. Lock it in before monthly billing switches on.
+            </p>
+            {foundingDone ? (
+              <div style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.18)", borderRadius: 14, padding: "18px 20px", maxWidth: 580 }}>
+                <div style={{ ...D, fontSize: 16, marginBottom: 4 }}>You&apos;re on the list 🎉</div>
+                <div style={{ fontSize: 14, opacity: 0.85, lineHeight: 1.55 }}>
+                  We&apos;ll email you a secure payment link and switch on your lifetime access within 24 hours.
+                </div>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", maxWidth: 580 }}>
+                  <input
+                    id="founding-email-input" type="email" inputMode="email" value={foundingEmail}
+                    onChange={e => setFoundingEmail(e.target.value)}
+                    onKeyDown={e => { if (e.key === "Enter") submitFounding(); }}
+                    placeholder="you@email.com"
+                    style={{
+                      flex: "1 1 240px", minWidth: 200, padding: "14px 16px", borderRadius: 12, border: "none",
+                      fontSize: 16, fontFamily: FONTS.body, color: TH.ink,
+                    }}
+                  />
+                  <button onClick={submitFounding} disabled={foundingBusy} style={{
+                    padding: "14px 24px", borderRadius: 12, border: "none", cursor: foundingBusy ? "wait" : "pointer",
+                    background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", ...D, fontWeight: 600, fontSize: 15,
+                  }}>
+                    {foundingBusy ? "…" : "Claim my spot"}
+                  </button>
+                </div>
+                {foundingErr && <div role="alert" style={{ marginTop: 10, fontSize: 13, color: TH.amber }}>{foundingErr}</div>}
+                <div style={{ ...MM, fontSize: 10.5, opacity: 0.6, marginTop: 12 }}>
+                  One-time $79 · lifetime access · secure invoice · we don&apos;t sell supplements
+                </div>
+              </>
+            )}
+          </section>
+        )}
+
         {/* Billing toggle */}
+        {!foundingMode && (
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
           <div style={{ display: "inline-flex", background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 999, padding: 4 }}>
             {(["monthly", "annual"] as const).map(p => (
@@ -154,6 +233,7 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
             ))}
           </div>
         </div>
+        )}
 
         {/* Plans */}
         <div style={{ display: "grid", gridTemplateColumns: "var(--pricing-cols)", gap: 16 }}>
@@ -176,23 +256,26 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
             }}>Most popular</span>
             <div style={{ ...D, fontSize: 20, color: TH.ink }}>Premium</div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 6, margin: "8px 0 2px" }}>
-              <span style={{ ...D, fontSize: 40, color: TH.ink, letterSpacing: "-0.03em" }}>{price}</span>
-              <span style={{ fontSize: 15, color: TH.muted }}>{per}</span>
+              <span style={{ ...D, fontSize: 40, color: TH.ink, letterSpacing: "-0.03em" }}>{dispPrice}</span>
+              <span style={{ fontSize: 15, color: TH.muted }}>{dispPer}</span>
             </div>
-            <div style={{ fontSize: 13, color: TH.muted, marginBottom: 18 }}>{sub}</div>
+            <div style={{ fontSize: 13, color: TH.muted, marginBottom: 18 }}>{dispSub}</div>
             <Bullets items={PREMIUM} highlight />
-            <button onClick={upgrade} disabled={busy || isPremium} style={{
+            <button onClick={foundingMode ? scrollToFounding : upgrade} disabled={busy || isPremium} style={{
               marginTop: 20, width: "100%", padding: "14px 20px", borderRadius: 999, border: "none",
               background: isPremium ? TH.bg : `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`,
               color: isPremium ? TH.sageDeep : "#fff", ...D, fontWeight: 600, fontSize: 15,
               cursor: isPremium ? "default" : busy ? "wait" : "pointer",
               boxShadow: isPremium ? "none" : `0 8px 20px -6px ${TH.sage}80`,
             }}>
-              {isPremium ? "✓ You're on Premium" : busy ? "Starting checkout…" : signedIn ? `Upgrade, ${price}${per}` : "Sign in to upgrade"}
+              {isPremium ? "✓ You're on Premium"
+                : foundingMode ? "Claim my founding spot →"
+                : busy ? "Starting checkout…"
+                : signedIn ? `Upgrade, ${price}${per}` : "Sign in to upgrade"}
             </button>
-            {error && <div role="alert" style={{ marginTop: 10, fontSize: 12.5, color: "#b91c1c", textAlign: "center" }}>{error}</div>}
+            {error && !foundingMode && <div role="alert" style={{ marginTop: 10, fontSize: 12.5, color: "#b91c1c", textAlign: "center" }}>{error}</div>}
             <div style={{ marginTop: 10, ...MM, fontSize: 10, color: TH.mutedDim, textAlign: "center", letterSpacing: "0.03em" }}>
-              Cancel anytime · secure checkout by {paddle ? "Paddle" : "Stripe"}
+              {foundingMode ? "One-time $79 · lifetime access · secure invoice" : <>Cancel anytime · secure checkout by {paddle ? "Paddle" : "Stripe"}</>}
             </div>
           </div>
         </div>

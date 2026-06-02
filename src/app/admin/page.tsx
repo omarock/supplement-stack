@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import { getAdminSupabase, isAdminEmail } from "@/lib/supabase-admin";
 import SuppdocLogo from "@/components/SuppdocLogo";
+import AdminGrantPremium from "@/components/AdminGrantPremium";
 
 export const metadata: Metadata = {
   title: "Admin, suppdoc.io",
@@ -171,6 +172,9 @@ export default async function AdminDashboard() {
             Real-time KPIs across signups, quizzes, and iHerb clicks. Data refreshes on each page load.
           </p>
         </div>
+
+        {/* Founding-member grant tool (manual Payoneer validation phase) */}
+        <AdminGrantPremium />
 
         {/* KPI cards */}
         <section style={{ marginBottom: 24 }}>

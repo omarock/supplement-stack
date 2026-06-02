@@ -15,6 +15,14 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
+// Founding-member validation phase: automated recurring billing (Paddle) was
+// declined for the health/supplements category, so we sell a one-time lifetime
+// "founding member" membership, invoiced manually via Payoneer and granted by
+// hand in /admin. This also stops any leftover sandbox checkout from showing to
+// real visitors. Flip to false once a real recurring processor (Stripe via a US
+// entity) is live, and the normal monthly/annual checkout returns automatically.
+const FOUNDING_MODE = true;
+
 export default async function PricingPage() {
   const user = await getSessionUser();
   const sub = user ? await getSubscription(user.email) : null;
@@ -27,8 +35,9 @@ export default async function PricingPage() {
         signedIn={Boolean(user)}
         email={user?.email ?? null}
         isPremium={isPremium(sub)}
-        billingEnabled={paddleOn || stripeEnabled()}
-        paddle={paddleOn ? paddleClientConfig() : null}
+        foundingMode={FOUNDING_MODE}
+        billingEnabled={!FOUNDING_MODE && (paddleOn || stripeEnabled())}
+        paddle={FOUNDING_MODE ? null : paddleOn ? paddleClientConfig() : null}
       />
       <SiteFooter />
     </div>
