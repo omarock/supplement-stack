@@ -23,12 +23,18 @@ import {
   type AgentKey, type NewItem,
 } from "@/lib/agents/store";
 
-const OPUS = "claude-opus-4-8";
 const SONNET = "claude-sonnet-4-6";
 const HAIKU = "claude-haiku-4-5-20251001";
+// Cost control: the heavier agents (trend, seo, pr) default to Sonnet, the same
+// cheap model the rest of the site already uses, so a run costs a few cents
+// instead of a few dollars. Set AGENTS_PREMIUM=opus on Vercel to use Opus for
+// maximum quality when you are ready to spend more.
+const OPUS = process.env.AGENTS_PREMIUM === "opus" ? "claude-opus-4-8" : SONNET;
 
+// Web search is OFF by default (it adds cost and is what made the first run
+// pricey). Set AGENTS_WEB_SEARCH=on to let trend + pr read live web data.
 export function webSearchEnabled(): boolean {
-  return process.env.AGENTS_WEB_SEARCH !== "off";
+  return process.env.AGENTS_WEB_SEARCH === "on";
 }
 
 // Accumulates token usage across the (possibly several) Claude calls one agent
@@ -95,7 +101,7 @@ const trend: AgentDef = {
   title: "Trend Discovery",
   blurb: "Finds and ranks what US supplement users are searching this week, scored against your 885 pages.",
   schedule: "Mon + Thu, 06:00 ET",
-  model: "Opus",
+  model: "Sonnet",
   async run() {
     const usage = new Usage();
     const gaps = ingredientsWithoutInteraction().slice(0, 40).join(", ");
@@ -138,7 +144,7 @@ const seo: AgentDef = {
   title: "SEO Content",
   blurb: "Turns each approved opportunity into a publish-ready, evidence-backed page (goes live at /library).",
   schedule: "Daily, 07:00 ET (up to 5)",
-  model: "Opus",
+  model: "Sonnet",
   async run() {
     const usage = new Usage();
     const opps = await approvedOpportunitiesFor("seo", 5);
@@ -294,7 +300,7 @@ const pr: AgentDef = {
   title: "Digital PR",
   blurb: "Finds backlink and citation targets and drafts personalised outreach you can send.",
   schedule: "Fri, 08:00 ET",
-  model: "Opus",
+  model: "Sonnet",
   async run() {
     const usage = new Usage();
     const contacted = await existingPrOutlets();
