@@ -81,6 +81,14 @@ export default function BestIndex() {
             </div>
           </header>
 
+          {/* Answer block (AEO: self-contained, key-phrase first) */}
+          <div style={{ maxWidth: 720, margin: "0 auto 30px", background: TH.surface, border: `1px solid ${TH.edge}`, borderLeft: `3px solid ${TH.sage}`, borderRadius: 14, padding: "16px 20px", textAlign: "left" }}>
+            <div style={{ ...MM, fontSize: 10.5, color: TH.sageDeep, letterSpacing: "0.1em", marginBottom: 8 }}>THE SHORT ANSWER</div>
+            <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: TH.ink }}>
+              The best supplements for a goal are the few with the strongest evidence for that specific outcome, not the longest list. For each goal we rank ingredients by evidence tier, with dose, timing, and cost, and we flag where lifestyle matters more than any pill. We do not sell supplements, so the ranking stays unbiased.
+            </p>
+          </div>
+
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))", gap: 16 }}>
             {GOALS.map(g => {
               const supps = ingredientsForGoal(g, 99);

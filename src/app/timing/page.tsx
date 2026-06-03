@@ -68,6 +68,14 @@ export default function TimingIndex() {
             <div style={{ ...MM, fontSize: 11, color: TH.muted, marginTop: 10 }}>Free · no signup · evidence-led</div>
           </header>
 
+          {/* Answer block (AEO: self-contained, key-phrase first) */}
+          <div style={{ maxWidth: 720, margin: "0 auto 26px", background: TH.surface, border: `1px solid ${TH.edge}`, borderLeft: `3px solid ${TH.sage}`, borderRadius: 14, padding: "16px 20px", textAlign: "left" }}>
+            <div style={{ ...MM, fontSize: 10.5, color: TH.sageDeep, letterSpacing: "0.1em", marginBottom: 8 }}>THE SHORT ANSWER</div>
+            <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: TH.ink }}>
+              The best time to take a supplement depends on what it is. Fat-soluble vitamins (D, K, E, A) and omega-3 absorb best with a meal that contains fat. Stimulating ingredients suit the morning, calming ones like magnesium glycinate suit the evening, and iron works best on an empty stomach with vitamin C.
+            </p>
+          </div>
+
           {grouped.map(group => {
             const m = WINDOW_META[group.window];
             return (
