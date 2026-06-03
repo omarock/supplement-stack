@@ -17,8 +17,6 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BottleMockup from "@/components/BottleMockup";
 import ReviewedBy from "@/components/ReviewedBy";
-import { EvidenceMeter, BenefitCards, ProfileCards, SynergyCard, ContextualCTA, LearnSection } from "@/components/learn/LearnUI";
-import { benefitsFromPurpose, profilesFromTags, synergiesFor, pickContextualCTA, pickMidCTA } from "@/lib/learn";
 
 const BASE = "https://www.suppdoc.io";
 // Pinned review date (stable across builds); bump when the catalog is re-reviewed.
@@ -111,13 +109,6 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
   const relatedInteractions = INTERACTIONS.filter(i => i.a === supp.id || i.b === supp.id).slice(0, 6);
   const relatedBiomarkers = BIOMARKERS.filter(b => (b.supplementsForLow ?? []).includes(supp.id) || (b.supplementsForHigh ?? []).includes(supp.id)).slice(0, 6);
   const hasResearch = Boolean(RESEARCH[supp.id]);
-
-  // ── Learn UI kit: visual modules derived from real data (no fabrication) ───
-  const benefits = benefitsFromPurpose(supp.purpose);
-  const profiles = profilesFromTags(supp.tags);
-  const synergies = synergiesFor(supp.id);
-  const cta = pickContextualCTA(supp, relatedBiomarkers.length > 0);
-  const midCta = pickMidCTA(supp, relatedInteractions.length > 0);
 
   const categoryLabel = supp.category ? CATEGORY_LABEL[supp.category] : "Supplement";
   const evidenceBadge = EVIDENCE_BADGE[supp.evidence];
@@ -312,10 +303,6 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16,
             padding: 24, height: "fit-content",
           }}>
-            <div style={{ marginBottom: 18, paddingBottom: 18, borderBottom: `1px solid ${th.line}` }}>
-              <div style={{ fontSize: 11, ...MM, color: th.inkMute, letterSpacing: "0.08em", marginBottom: 10 }}>EVIDENCE STRENGTH</div>
-              <EvidenceMeter tier={supp.evidence} />
-            </div>
             <h3 style={{ ...D, fontSize: 14, ...MM, fontWeight: 600, color: th.sage, letterSpacing: "0.1em", margin: "0 0 18px" }}>
               QUICK FACTS
             </h3>
@@ -344,29 +331,6 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
           </aside>
         </div>
       </section>
-
-      {/* What it supports, visual benefit cards (from purpose) */}
-      {benefits.length > 0 && (
-        <LearnSection title={`What ${shortName} supports`}>
-          <BenefitCards items={benefits} />
-        </LearnSection>
-      )}
-
-      {/* Who should consider it, profile cards (from matching tags) */}
-      {profiles.length > 0 && (
-        <LearnSection title={`Who should consider ${shortName}`} sub="If one of these sounds like you, it may be worth a look. This is education, not a diagnosis.">
-          <ProfileCards items={profiles} />
-        </LearnSection>
-      )}
-
-      {/* Mid-page contextual nudge (only when there is a real audit angle) */}
-      {midCta && (
-        <section style={{ padding: "0 var(--section-pad-x) 48px" }}>
-          <div style={{ maxWidth: 960, margin: "0 auto" }}>
-            <ContextualCTA {...midCta} />
-          </div>
-        </section>
-      )}
 
       {/* Natural food sources, only rendered when curated (no fabrication) */}
       {supp.foodSources && supp.foodSources.length > 0 && (
@@ -581,15 +545,6 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
         </section>
       )}
 
-      {/* Stack synergies, real "works well with" pairs from interaction data */}
-      {synergies.length > 0 && (
-        <LearnSection title="Stack synergies" sub={`Pairings where ${shortName} works better alongside another ingredient, based on our interaction data.`}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 14 }}>
-            {synergies.map((s, i) => <SynergyCard key={i} {...s} />)}
-          </div>
-        </LearnSection>
-      )}
-
       {/* Explore further, internal-linking web to goal / interaction / biomarker hubs */}
       {(relatedGoals.length > 0 || relatedInteractions.length > 0 || relatedBiomarkers.length > 0 || hasResearch) && (
         <section style={{ padding: "0 var(--section-pad-x) 56px" }}>
@@ -670,10 +625,26 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
         </div>
       </section>
 
-      {/* CTA, contextual: matched to this ingredient (bloodwork / sleep / audit / quiz) */}
+      {/* CTA */}
       <section style={{ padding: "48px var(--section-pad-x) 64px" }}>
-        <div style={{ maxWidth: 960, margin: "0 auto" }}>
-          <ContextualCTA {...cta} />
+        <div style={{
+          maxWidth: 960, margin: "0 auto",
+          background: `linear-gradient(135deg, ${th.sage} 0%, ${th.amber} 100%)`,
+          borderRadius: 24, padding: "40px 32px", textAlign: "center", color: "#fff",
+        }}>
+          <h2 style={{ ...S, fontSize: 36, margin: 0, color: "#fff", letterSpacing: "-0.02em" }}>
+            Not sure if {supp.name.split(" (")[0]} is right for you?
+          </h2>
+          <p style={{ fontSize: 17, opacity: 0.95, margin: "12px auto 24px", maxWidth: 520, lineHeight: 1.5 }}>
+            Take our quiz. We&apos;ll compose a personalised stack that fits your goals, body, and budget, in minutes.
+          </p>
+          <Link href="/quiz" style={{
+            display: "inline-flex", padding: "16px 36px", borderRadius: 999, fontSize: 15, fontWeight: 600,
+            background: "#fff", color: th.ink, textDecoration: "none",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
+          }}>
+            Take the quiz →
+          </Link>
         </div>
       </section>
 
