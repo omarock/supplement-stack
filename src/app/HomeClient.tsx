@@ -17,16 +17,27 @@ import { STACKS } from "@/lib/stacks";
 
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [seen, setSeen] = useState(false);
+  // Default VISIBLE: SSR and first paint render content opacity 1, so the hero
+  // (the LCP element) is never hidden behind a fade, and no-JS clients see
+  // everything. On the client we only hide + scroll-reveal elements that start
+  // BELOW the fold, so the entrance animation is preserved where it is actually
+  // seen, without an observer per above-the-fold node (cuts hydration / TBT).
+  const [seen, setSeen] = useState(true);
   useEffect(() => {
-    if (!ref.current || seen) return;
+    const el = ref.current;
+    if (!el) return;
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return; // honour reduced motion: stay visible, no animation
+    const belowFold = el.getBoundingClientRect().top > window.innerHeight * 0.9;
+    if (!belowFold) return; // above/in the fold: stay visible, no animation, no observer
+    setSeen(false); // below the fold: hide (off-screen, no visible flash), then reveal on scroll
     const io = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } }),
       { threshold, rootMargin: "0px 0px -10% 0px" }
     );
-    io.observe(ref.current);
+    io.observe(el);
     return () => io.disconnect();
-  }, [seen, threshold]);
+  }, [threshold]);
   return { ref, seen };
 }
 
