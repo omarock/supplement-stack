@@ -88,7 +88,7 @@ export default function CookieConsent() {
             <p style={{ flex: "1 1 320px", fontSize: 13, lineHeight: 1.5, color: TH.inkSoft, margin: 0 }}>
               <span aria-hidden style={{ marginRight: 7 }}>🍪</span>
               We use essential cookies to run the site, plus optional analytics and affiliate-link cookies.{" "}
-              <Link href="/cookies" style={{ color: TH.sageDeep, textDecoration: "underline" }}>Learn more</Link>.
+              <Link href="/cookies" style={{ color: TH.sageDeep, textDecoration: "underline" }}>Learn more about our cookie policy</Link>.
             </p>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", flexShrink: 0 }}>
               <button onClick={() => setCustomizing(true)} style={btnGhost()}>Customize</button>
