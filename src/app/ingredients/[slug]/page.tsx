@@ -332,29 +332,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
         </div>
       </section>
 
-      {/* Natural food sources, only rendered when curated (no fabrication) */}
-      {supp.foodSources && supp.foodSources.length > 0 && (
-        <section style={{ padding: "0 var(--section-pad-x) 56px" }}>
-          <div style={{ maxWidth: 960, margin: "0 auto" }}>
-            <h2 style={{ ...S, fontSize: 32, margin: "0 0 16px", letterSpacing: "-0.02em" }}>
-              Natural food sources
-            </h2>
-            <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.6, margin: "0 0 16px", maxWidth: 640 }}>
-              Where possible, get {supp.name.split(" (")[0]} from whole foods first. Common dietary sources include:
-            </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-              {supp.foodSources.map(food => (
-                <span key={food} style={{
-                  padding: "8px 16px", borderRadius: 999, fontSize: 14, fontWeight: 500,
-                  background: th.paper, border: `1px solid ${th.line}`, color: th.ink,
-                }}>{food}</span>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Buy buttons */}
+      {/* Buy buttons, moved up so the purchase path sits right after the intro */}
       <section style={{ padding: "0 var(--section-pad-x) 64px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
           <h2 style={{ ...S, fontSize: 32, margin: "0 0 20px", letterSpacing: "-0.02em" }}>
@@ -513,6 +491,28 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                 </div>
                 );
               })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Natural food sources, only rendered when curated (no fabrication) */}
+      {supp.foodSources && supp.foodSources.length > 0 && (
+        <section style={{ padding: "0 var(--section-pad-x) 56px" }}>
+          <div style={{ maxWidth: 960, margin: "0 auto" }}>
+            <h2 style={{ ...S, fontSize: 32, margin: "0 0 16px", letterSpacing: "-0.02em" }}>
+              Natural food sources
+            </h2>
+            <p style={{ color: th.inkSoft, fontSize: 16, lineHeight: 1.6, margin: "0 0 16px", maxWidth: 640 }}>
+              Where possible, get {supp.name.split(" (")[0]} from whole foods first. Common dietary sources include:
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+              {supp.foodSources.map(food => (
+                <span key={food} style={{
+                  padding: "8px 16px", borderRadius: 999, fontSize: 14, fontWeight: 500,
+                  background: th.paper, border: `1px solid ${th.line}`, color: th.ink,
+                }}>{food}</span>
+              ))}
             </div>
           </div>
         </section>

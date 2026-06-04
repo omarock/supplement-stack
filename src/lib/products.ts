@@ -2821,6 +2821,146 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "NOW Foods", productName: "Taurine 1000 mg", size: "100 veg capsules", approxPrice: 9, rating: 4.8, reviewCount: 3600, badge: "Best Value", searchQuery: "NOW Foods Taurine 1000", ...tint.now },
     { brand: "Thorne", productName: "Taurine", size: "90 capsules", approxPrice: 16, rating: 4.7, reviewCount: 500, badge: "Premium", searchQuery: "Thorne Taurine", ...tint.thorne },
   ],
+  collagen: [
+    { brand: "Vital Proteins", productName: "Collagen Peptides (Unflavored)", size: "567 g", approxPrice: 43, rating: 4.8, reviewCount: 9000, badge: "Premium", searchQuery: "Vital Proteins Collagen Peptides unflavored", brandBg: "#f0fdfa", brandInk: "#0f766e" },
+    { brand: "California Gold Nutrition", productName: "CollagenUP Marine Collagen", size: "464 g", approxPrice: 30, rating: 4.7, reviewCount: 6500, badge: "Best Value", searchQuery: "California Gold Nutrition CollagenUP", ...tint.cgn },
+  ],
+  glucosamine: [
+    { brand: "Doctor's Best", productName: "Glucosamine Chondroitin MSM", size: "240 caps", approxPrice: 28, rating: 4.7, reviewCount: 5200, badge: "Best Value", searchQuery: "Doctor's Best Glucosamine Chondroitin MSM", ...tint.doctors },
+    { brand: "NOW Foods", productName: "Glucosamine & Chondroitin with MSM", size: "180 veg caps", approxPrice: 30, rating: 4.7, reviewCount: 3100, badge: "Premium", searchQuery: "NOW Foods Glucosamine Chondroitin MSM", ...tint.now },
+  ],
+  iron: [
+    { brand: "Thorne", productName: "Iron Bisglycinate 25 mg", size: "60 capsules", approxPrice: 13, rating: 4.8, reviewCount: 2400, badge: "Premium", searchQuery: "Thorne Iron Bisglycinate", ...tint.thorne },
+    { brand: "Solgar", productName: "Gentle Iron 25 mg", size: "90 veg caps", approxPrice: 11, rating: 4.8, reviewCount: 4600, badge: "Best Value", searchQuery: "Solgar Gentle Iron", ...tint.solgar },
+  ],
+  biotin: [
+    { brand: "NOW Foods", productName: "Biotin 10,000 mcg", size: "120 veg caps", approxPrice: 13, rating: 4.8, reviewCount: 5800, badge: "Best Value", searchQuery: "NOW Foods Biotin 10000", ...tint.now },
+    { brand: "Sports Research", productName: "Biotin 10,000 mcg with Coconut Oil", size: "120 softgels", approxPrice: 16, rating: 4.7, reviewCount: 3000, badge: "Premium", searchQuery: "Sports Research Biotin coconut oil", ...tint.sr },
+  ],
+  rhodiola: [
+    { brand: "NOW Foods", productName: "Rhodiola 500 mg", size: "60 veg caps", approxPrice: 15, rating: 4.7, reviewCount: 2700, badge: "Best Value", searchQuery: "NOW Foods Rhodiola 500", ...tint.now },
+    { brand: "Thorne", productName: "Rhodiola", size: "60 capsules", approxPrice: 24, rating: 4.7, reviewCount: 800, badge: "Premium", searchQuery: "Thorne Rhodiola", ...tint.thorne },
+  ],
+  "lions-mane": [
+    { brand: "Host Defense", productName: "Lion's Mane", size: "120 capsules", approxPrice: 40, rating: 4.7, reviewCount: 2200, badge: "Premium", searchQuery: "Host Defense Lion's Mane", brandBg: "#f0fdf4", brandInk: "#3f6212" },
+    { brand: "Real Mushrooms", productName: "Lion's Mane Extract", size: "120 capsules", approxPrice: 30, rating: 4.8, reviewCount: 1800, badge: "Best Value", searchQuery: "Real Mushrooms Lion's Mane Extract", brandBg: "#fefce8", brandInk: "#854d0e" },
+  ],
+  probiotic: [
+    { brand: "California Gold Nutrition", productName: "LactoBif 30 Billion CFU", size: "60 veg caps", approxPrice: 22, rating: 4.8, reviewCount: 7400, badge: "Best Value", searchQuery: "California Gold Nutrition LactoBif 30", ...tint.cgn },
+    { brand: "Garden of Life", productName: "Dr. Formulated Probiotics 50 Billion", size: "30 caps", approxPrice: 35, rating: 4.7, reviewCount: 4100, badge: "Premium", searchQuery: "Garden of Life Dr Formulated Probiotics 50 Billion", brandBg: "#f0fdf4", brandInk: "#15803d" },
+  ],
+  "mag-citrate": [
+    { brand: "NOW Foods", productName: "Magnesium Citrate", size: "250 veg caps", approxPrice: 16, rating: 4.8, reviewCount: 4900, badge: "Best Value", searchQuery: "NOW Foods Magnesium Citrate caps", ...tint.now },
+    { brand: "Solgar", productName: "Magnesium Citrate", size: "120 tablets", approxPrice: 20, rating: 4.7, reviewCount: 2200, badge: "Premium", searchQuery: "Solgar Magnesium Citrate", ...tint.solgar },
+  ],
+  "mag-threonate": [
+    { brand: "Life Extension", productName: "Neuro-Mag Magnesium L-Threonate", size: "90 veg caps", approxPrice: 32, rating: 4.7, reviewCount: 3300, badge: "Premium", searchQuery: "Life Extension Neuro-Mag Magnesium L-Threonate", brandBg: "#fff1f2", brandInk: "#be123c" },
+    { brand: "Double Wood", productName: "Magnesium L-Threonate", size: "100 capsules", approxPrice: 26, rating: 4.6, reviewCount: 1900, badge: "Best Value", searchQuery: "Double Wood Magnesium L-Threonate", brandBg: "#f5f3ff", brandInk: "#6d28d9" },
+  ],
+  "vit-k2": [
+    { brand: "NOW Foods", productName: "MK-7 Vitamin K-2 100 mcg", size: "60 veg caps", approxPrice: 13, rating: 4.8, reviewCount: 3500, badge: "Best Value", searchQuery: "NOW Foods MK-7 Vitamin K2 100", ...tint.now },
+    { brand: "Life Extension", productName: "Super K", size: "90 softgels", approxPrice: 22, rating: 4.8, reviewCount: 2600, badge: "Premium", searchQuery: "Life Extension Super K", brandBg: "#fff1f2", brandInk: "#be123c" },
+  ],
+  selenium: [
+    { brand: "NOW Foods", productName: "Selenium 200 mcg", size: "180 veg caps", approxPrice: 9, rating: 4.8, reviewCount: 2900, badge: "Best Value", searchQuery: "NOW Foods Selenium 200", ...tint.now },
+    { brand: "Life Extension", productName: "Super Selenium Complex", size: "100 veg caps", approxPrice: 11, rating: 4.8, reviewCount: 1700, badge: "Premium", searchQuery: "Life Extension Super Selenium Complex", brandBg: "#fff1f2", brandInk: "#be123c" },
+  ],
+  melatonin: [
+    { brand: "NOW Foods", productName: "Melatonin 3 mg", size: "180 veg caps", approxPrice: 8, rating: 4.8, reviewCount: 8800, badge: "Best Value", searchQuery: "NOW Foods Melatonin 3", ...tint.now },
+    { brand: "Life Extension", productName: "Melatonin 300 mcg", size: "100 veg caps", approxPrice: 8, rating: 4.7, reviewCount: 2400, badge: "Premium", searchQuery: "Life Extension Melatonin 300 mcg", brandBg: "#fff1f2", brandInk: "#be123c" },
+  ],
+  "5-htp": [
+    { brand: "NOW Foods", productName: "5-HTP 100 mg", size: "120 veg caps", approxPrice: 20, rating: 4.7, reviewCount: 5100, badge: "Best Value", searchQuery: "NOW Foods 5-HTP 100", ...tint.now },
+    { brand: "Doctor's Best", productName: "5-HTP 100 mg", size: "120 veg caps", approxPrice: 18, rating: 4.7, reviewCount: 2800, badge: "Premium", searchQuery: "Doctor's Best 5-HTP 100", ...tint.doctors },
+  ],
+  bacopa: [
+    { brand: "Himalaya", productName: "Bacopa / Brahmi", size: "60 caplets", approxPrice: 13, rating: 4.6, reviewCount: 1600, badge: "Best Value", searchQuery: "Himalaya Bacopa Brahmi", brandBg: "#fef2f2", brandInk: "#b91c1c" },
+    { brand: "NOW Foods", productName: "Bacopa 450 mg", size: "90 veg caps", approxPrice: 14, rating: 4.7, reviewCount: 1200, badge: "Premium", searchQuery: "NOW Foods Bacopa 450", ...tint.now },
+  ],
+  "alpha-gpc": [
+    { brand: "NOW Foods", productName: "Alpha GPC 300 mg", size: "60 veg caps", approxPrice: 20, rating: 4.7, reviewCount: 2300, badge: "Best Value", searchQuery: "NOW Foods Alpha GPC 300", ...tint.now },
+    { brand: "Double Wood", productName: "Alpha GPC 300 mg", size: "120 capsules", approxPrice: 22, rating: 4.6, reviewCount: 1500, badge: "Premium", searchQuery: "Double Wood Alpha GPC 300", brandBg: "#f5f3ff", brandInk: "#6d28d9" },
+  ],
+  "l-glutamine": [
+    { brand: "NOW Foods", productName: "L-Glutamine Powder", size: "454 g", approxPrice: 20, rating: 4.8, reviewCount: 4000, badge: "Best Value", searchQuery: "NOW Foods L-Glutamine powder", ...tint.now },
+    { brand: "Optimum Nutrition", productName: "Glutamine Powder", size: "300 g", approxPrice: 22, rating: 4.8, reviewCount: 5600, badge: "Premium", searchQuery: "Optimum Nutrition Glutamine powder", ...tint.on },
+  ],
+  "l-citrulline": [
+    { brand: "NOW Foods", productName: "L-Citrulline 750 mg", size: "180 veg caps", approxPrice: 24, rating: 4.7, reviewCount: 2100, badge: "Best Value", searchQuery: "NOW Foods L-Citrulline 750", ...tint.now },
+    { brand: "Nutricost", productName: "Citrulline Malate 2:1 Powder", size: "500 g", approxPrice: 20, rating: 4.7, reviewCount: 1800, badge: "Premium", searchQuery: "Nutricost Citrulline Malate powder", ...tint.nutricost },
+  ],
+  "beta-alanine": [
+    { brand: "NOW Foods", productName: "Beta-Alanine Powder", size: "500 g", approxPrice: 22, rating: 4.8, reviewCount: 2600, badge: "Best Value", searchQuery: "NOW Foods Beta-Alanine powder", ...tint.now },
+    { brand: "Optimum Nutrition", productName: "Beta-Alanine Powder", size: "263 g", approxPrice: 20, rating: 4.7, reviewCount: 2900, badge: "Premium", searchQuery: "Optimum Nutrition Beta-Alanine powder", ...tint.on },
+  ],
+  "green-tea": [
+    { brand: "NOW Foods", productName: "EGCg Green Tea Extract 400 mg", size: "180 veg caps", approxPrice: 18, rating: 4.7, reviewCount: 2400, badge: "Best Value", searchQuery: "NOW Foods EGCg Green Tea Extract 400", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "Green Tea 500 mg", size: "100 veg caps", approxPrice: 14, rating: 4.7, reviewCount: 1300, badge: "Premium", searchQuery: "Jarrow Green Tea 500", ...tint.jarrow },
+  ],
+  nmn: [
+    { brand: "Double Wood", productName: "NMN 500 mg", size: "60 capsules", approxPrice: 40, rating: 4.6, reviewCount: 2100, badge: "Best Value", searchQuery: "Double Wood NMN 500", brandBg: "#f5f3ff", brandInk: "#6d28d9" },
+    { brand: "Life Extension", productName: "NAD+ Cell Regenerator NMN", size: "30 veg caps", approxPrice: 44, rating: 4.7, reviewCount: 1400, badge: "Premium", searchQuery: "Life Extension NAD+ Cell Regenerator NMN", brandBg: "#fff1f2", brandInk: "#be123c" },
+  ],
+  quercetin: [
+    { brand: "NOW Foods", productName: "Quercetin with Bromelain", size: "240 veg caps", approxPrice: 26, rating: 4.8, reviewCount: 3200, badge: "Best Value", searchQuery: "NOW Foods Quercetin with Bromelain", ...tint.now },
+    { brand: "Thorne", productName: "Quercetin Phytosome", size: "60 capsules", approxPrice: 30, rating: 4.7, reviewCount: 900, badge: "Premium", searchQuery: "Thorne Quercetin Phytosome", ...tint.thorne },
+  ],
+  resveratrol: [
+    { brand: "NOW Foods", productName: "Natural Resveratrol 200 mg", size: "120 veg caps", approxPrice: 20, rating: 4.7, reviewCount: 2000, badge: "Best Value", searchQuery: "NOW Foods Natural Resveratrol 200", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "Resveratrol 100 mg", size: "60 veg caps", approxPrice: 16, rating: 4.7, reviewCount: 1100, badge: "Premium", searchQuery: "Jarrow Resveratrol 100", ...tint.jarrow },
+  ],
+  ala: [
+    { brand: "Doctor's Best", productName: "Alpha-Lipoic Acid 600 mg", size: "180 veg caps", approxPrice: 22, rating: 4.8, reviewCount: 3400, badge: "Best Value", searchQuery: "Doctor's Best Alpha Lipoic Acid 600", ...tint.doctors },
+    { brand: "NOW Foods", productName: "Alpha Lipoic Acid 600 mg", size: "120 veg caps", approxPrice: 24, rating: 4.7, reviewCount: 2100, badge: "Premium", searchQuery: "NOW Foods Alpha Lipoic Acid 600", ...tint.now },
+  ],
+  "acetyl-l-carnitine": [
+    { brand: "NOW Foods", productName: "Acetyl-L-Carnitine 500 mg", size: "200 veg caps", approxPrice: 28, rating: 4.8, reviewCount: 2600, badge: "Best Value", searchQuery: "NOW Foods Acetyl-L-Carnitine 500", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "Acetyl L-Carnitine 500 mg", size: "120 veg caps", approxPrice: 22, rating: 4.7, reviewCount: 1500, badge: "Premium", searchQuery: "Jarrow Acetyl L-Carnitine 500", ...tint.jarrow },
+  ],
+  "l-carnitine": [
+    { brand: "NOW Foods", productName: "L-Carnitine 500 mg", size: "180 veg caps", approxPrice: 24, rating: 4.7, reviewCount: 2300, badge: "Best Value", searchQuery: "NOW Foods L-Carnitine 500", ...tint.now },
+    { brand: "Doctor's Best", productName: "L-Carnitine Fumarate 855 mg", size: "60 veg caps", approxPrice: 18, rating: 4.7, reviewCount: 900, badge: "Premium", searchQuery: "Doctor's Best L-Carnitine Fumarate 855", ...tint.doctors },
+  ],
+  ginkgo: [
+    { brand: "NOW Foods", productName: "Ginkgo Biloba 120 mg", size: "100 veg caps", approxPrice: 14, rating: 4.7, reviewCount: 2100, badge: "Best Value", searchQuery: "NOW Foods Ginkgo Biloba 120", ...tint.now },
+    { brand: "Doctor's Best", productName: "Extra Strength Ginkgo 120 mg", size: "120 veg caps", approxPrice: 16, rating: 4.7, reviewCount: 1400, badge: "Premium", searchQuery: "Doctor's Best Extra Strength Ginkgo 120", ...tint.doctors },
+  ],
+  msm: [
+    { brand: "Doctor's Best", productName: "MSM with OptiMSM", size: "180 veg caps", approxPrice: 16, rating: 4.8, reviewCount: 3100, badge: "Best Value", searchQuery: "Doctor's Best MSM OptiMSM", ...tint.doctors },
+    { brand: "NOW Foods", productName: "MSM 1000 mg", size: "240 veg caps", approxPrice: 18, rating: 4.8, reviewCount: 2200, badge: "Premium", searchQuery: "NOW Foods MSM 1000", ...tint.now },
+  ],
+  boswellia: [
+    { brand: "NOW Foods", productName: "Boswellia Extract", size: "120 veg caps", approxPrice: 15, rating: 4.7, reviewCount: 1300, badge: "Best Value", searchQuery: "NOW Foods Boswellia Extract", ...tint.now },
+    { brand: "Doctor's Best", productName: "Boswellia 500 mg", size: "180 veg caps", approxPrice: 20, rating: 4.7, reviewCount: 1100, badge: "Premium", searchQuery: "Doctor's Best Boswellia 500", ...tint.doctors },
+  ],
+  beetroot: [
+    { brand: "NOW Foods", productName: "Beet Root Powder", size: "340 g", approxPrice: 14, rating: 4.7, reviewCount: 1800, badge: "Best Value", searchQuery: "NOW Foods Beet Root powder", ...tint.now },
+    { brand: "Nutricost", productName: "Beet Root Powder", size: "500 g", approxPrice: 18, rating: 4.7, reviewCount: 1500, badge: "Premium", searchQuery: "Nutricost Beet Root powder", ...tint.nutricost },
+  ],
+  "milk-thistle": [
+    { brand: "NOW Foods", productName: "Silymarin Milk Thistle 150 mg", size: "120 veg caps", approxPrice: 16, rating: 4.8, reviewCount: 2900, badge: "Best Value", searchQuery: "NOW Foods Silymarin Milk Thistle 150", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "Milk Thistle 150 mg", size: "200 veg caps", approxPrice: 20, rating: 4.8, reviewCount: 2400, badge: "Premium", searchQuery: "Jarrow Milk Thistle 150", ...tint.jarrow },
+  ],
+  ginger: [
+    { brand: "NOW Foods", productName: "Ginger Root 550 mg", size: "100 veg caps", approxPrice: 9, rating: 4.7, reviewCount: 1600, badge: "Best Value", searchQuery: "NOW Foods Ginger Root 550", ...tint.now },
+    { brand: "Nature's Way", productName: "Ginger Root 550 mg", size: "180 veg caps", approxPrice: 14, rating: 4.7, reviewCount: 1200, badge: "Premium", searchQuery: "Nature's Way Ginger Root 550", brandBg: "#ecfdf5", brandInk: "#047857" },
+  ],
+  saffron: [
+    { brand: "California Gold Nutrition", productName: "Saffron Extract (Affron)", size: "30 veggie caps", approxPrice: 18, rating: 4.6, reviewCount: 1100, badge: "Best Value", searchQuery: "California Gold Nutrition Saffron Affron", ...tint.cgn },
+    { brand: "Life Extension", productName: "Optimized Saffron", size: "60 veg caps", approxPrice: 22, rating: 4.6, reviewCount: 700, badge: "Premium", searchQuery: "Life Extension Optimized Saffron", brandBg: "#fff1f2", brandInk: "#be123c" },
+  ],
+  "panax-ginseng": [
+    { brand: "NOW Foods", productName: "Korean Panax Ginseng 500 mg", size: "100 veg caps", approxPrice: 14, rating: 4.6, reviewCount: 1200, badge: "Best Value", searchQuery: "NOW Foods Korean Panax Ginseng 500", ...tint.now },
+    { brand: "Auragin", productName: "Korean Red Ginseng", size: "60 tablets", approxPrice: 30, rating: 4.7, reviewCount: 2600, badge: "Premium", searchQuery: "Auragin Korean Red Ginseng", brandBg: "#fef2f2", brandInk: "#b91c1c" },
+  ],
+  maca: [
+    { brand: "NOW Foods", productName: "Maca 750 mg", size: "90 veg caps", approxPrice: 12, rating: 4.6, reviewCount: 1500, badge: "Best Value", searchQuery: "NOW Foods Maca 750", ...tint.now },
+    { brand: "California Gold Nutrition", productName: "Organic Maca Powder", size: "240 g", approxPrice: 14, rating: 4.6, reviewCount: 1100, badge: "Premium", searchQuery: "California Gold Nutrition Maca powder", ...tint.cgn },
+  ],
+  glutathione: [
+    { brand: "NOW Foods", productName: "Glutathione 500 mg", size: "60 veg caps", approxPrice: 30, rating: 4.7, reviewCount: 1700, badge: "Best Value", searchQuery: "NOW Foods Glutathione 500", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "Reduced Glutathione 500 mg", size: "60 veg caps", approxPrice: 28, rating: 4.7, reviewCount: 2200, badge: "Premium", searchQuery: "Jarrow Reduced Glutathione 500", ...tint.jarrow },
+  ],
 };
 
 /**
