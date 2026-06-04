@@ -23,7 +23,7 @@
   --hero-h1: 88px;
   --hero-h1-line: 0.96;
   --section-h2: 60px;
-  --section-pad-y: 84px;
+  --section-pad-y: 60px;
   --section-pad-x: 40px;
   --hero-pad-y: 96px;
   --hero-pad-x: 40px;
@@ -34,7 +34,7 @@
   --grid-2-gap: 48px;
   --product-cols: minmax(0, 1fr) minmax(0, 1fr);
   --ingredient-hero-cols: minmax(0, 1fr) 320px;
-  --footer-cols: 2fr 1fr 1fr 1fr;
+  --footer-cols: 1.6fr 1fr 1fr 1fr 1fr;
   --nav-pad-x: 40px;
   --nav-gap: 28px;
   --nav-show: flex;
@@ -105,7 +105,7 @@ textarea:focus-visible,
   :root {
     --hero-h1: 62px;
     --section-h2: 44px;
-    --section-pad-y: 60px;
+    --section-pad-y: 48px;
     --section-pad-x: 28px;
     --hero-pad-y: 72px;
     --hero-pad-x: 28px;
@@ -114,7 +114,7 @@ textarea:focus-visible,
     --grid-2-cols: 1fr;
     --product-cols: 1fr;
     --ingredient-hero-cols: 1fr;
-    --footer-cols: 1fr 1fr;
+    --footer-cols: 1.5fr 1fr 1fr;
     --nav-pad-x: 22px;
     --nav-show: none;
     --burger-show: flex;
@@ -127,7 +127,7 @@ textarea:focus-visible,
     --hero-h1: 44px;
     --hero-h1-line: 1.02;
     --section-h2: 34px;
-    --section-pad-y: 48px;
+    --section-pad-y: 40px;
     --section-pad-x: 18px;
     --hero-pad-y: 56px;
     --hero-pad-x: 18px;

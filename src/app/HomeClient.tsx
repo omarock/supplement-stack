@@ -327,7 +327,7 @@ function How() {
     <section id="how-it-works" style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Reveal>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <div style={{ textAlign: "center", marginBottom: 40 }}>
             <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 14 }}>
               How it works
             </div>
@@ -637,7 +637,7 @@ function Testimonials() {
     <section style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Reveal>
-          <div style={{ textAlign: "center", marginBottom: 48, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 36, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 12 }}>
               What makes us different
             </div>

@@ -49,7 +49,7 @@ export default function SiteFooter() {
     }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div style={{
-          display: "grid", gridTemplateColumns: "var(--footer-cols)", gap: 40,
+          display: "grid", gridTemplateColumns: "var(--footer-cols)", gap: 28,
           marginBottom: 40,
         }}>
           <div>
