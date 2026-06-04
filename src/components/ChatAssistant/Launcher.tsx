@@ -14,7 +14,7 @@ export default function Launcher({ onClick, open }: Props) {
     <button
       type="button"
       onClick={onClick}
-      aria-label={open ? "Close supplement coach" : "Open supplement coach"}
+      aria-label={open ? "Close supplement coach" : "Ask suppdoc, the supplement coach"}
       aria-expanded={open}
       style={{
         position: "fixed", zIndex: 90,

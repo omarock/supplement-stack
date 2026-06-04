@@ -145,7 +145,7 @@ function Hero() {
                 <span style={iconWrap(`${TH.sage}1f`, TH.sageDeep)}>
                   <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke={TH.sageDeep} strokeWidth="1.4" strokeLinejoin="round" /></svg>
                 </span>
-                <span style={chipStyle(TH.sage, "#fff")}>★ 01 · Recommended</span>
+                <span style={chipStyle(TH.sageDeep, "#fff")}>★ 01 · Recommended</span>
               </div>
               <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Take the quiz</div>
               <div style={{ ...SI, color: TH.sageDeep, fontSize: 14.5, marginTop: 2 }}>The fastest way in.</div>
@@ -167,7 +167,7 @@ function Hero() {
                 <span style={chipStyle(`${TH.coral}26`, "#c2410c")}>03 · New</span>
               </div>
               <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Audit my stack</div>
-              <div style={{ ...SI, color: TH.coral, fontSize: 14.5, marginTop: 2 }}>Already taking supplements?</div>
+              <div style={{ ...SI, color: "#c2410c", fontSize: 14.5, marginTop: 2 }}>Already taking supplements?</div>
               <p style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Paste what you take today (and your bloodwork) and we score interactions, doses, and gaps, then suggest fixes.</p>
               {cardSpacer}
               <div style={buylineStyle}>→ a cleaner stack → buy the upgrades</div>
@@ -328,7 +328,7 @@ function How() {
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Reveal>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <div style={{ fontSize: 14, color: TH.sage, fontWeight: 600, marginBottom: 14 }}>
+            <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 14 }}>
               How it works
             </div>
             <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.02, color: TH.ink, margin: "0 auto", maxWidth: 820 }}>
@@ -348,7 +348,7 @@ function How() {
                 minHeight: 360, display: "flex", flexDirection: "column", gap: 18,
               }}>
                 <HowVisual which={s.illust} color={s.color} />
-                <div style={{ fontSize: 13, color: s.color, fontWeight: 600 }}>{s.tag}</div>
+                <div style={{ fontSize: 13, color: TH.inkSoft, fontWeight: 600 }}>{s.tag}</div>
                 <h3 style={{ ...D, fontSize: 26, letterSpacing: "-0.02em", color: TH.ink, margin: 0 }}>
                   {s.title}
                 </h3>
@@ -415,7 +415,7 @@ function Ingredients() {
             marginBottom: 48, flexWrap: "wrap", gap: 18,
           }}>
             <div style={{ maxWidth: 700 }}>
-              <div style={{ fontSize: 14, color: TH.sage, fontWeight: 600, marginBottom: 12 }}>
+              <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 12 }}>
                 Inside the engine
               </div>
               <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.02, color: TH.ink, margin: 0 }}>
@@ -538,7 +538,7 @@ function Sample() {
                     <span style={{ fontWeight: 500, fontSize: 13.5 }}>{l}</span>
                     <span style={{ display: "inline-flex", alignItems: "baseline", gap: 1 }}>
                       <span style={{ ...D, color: c as string, fontSize: 16, letterSpacing: "-0.02em" }}>{v}</span>
-                      <span style={{ ...MM, color: TH.mutedDim, fontSize: 10 }}>/100</span>
+                      <span style={{ ...MM, color: TH.muted, fontSize: 10 }}>/100</span>
                     </span>
                   </div>
                   <div style={{ height: 8, background: `${c}1f`, borderRadius: 999, overflow: "hidden" }}>
@@ -638,7 +638,7 @@ function Testimonials() {
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Reveal>
           <div style={{ textAlign: "center", marginBottom: 48, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
-            <div style={{ fontSize: 14, color: TH.sage, fontWeight: 600, marginBottom: 12 }}>
+            <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 12 }}>
               What makes us different
             </div>
             <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.02, color: TH.ink, margin: 0 }}>
@@ -693,7 +693,7 @@ function FAQ() {
       <div style={{ maxWidth: 880, margin: "0 auto" }}>
         <Reveal>
           <div style={{ textAlign: "center", marginBottom: 44 }}>
-            <div style={{ fontSize: 14, color: TH.sage, fontWeight: 600, marginBottom: 12 }}>Common questions</div>
+            <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 12 }}>Common questions</div>
             <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1, color: TH.ink, margin: 0 }}>
               Got <span style={{ ...SI, color: TH.sageDeep }}>questions</span>?
             </h2>
