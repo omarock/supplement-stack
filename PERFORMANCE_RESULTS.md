@@ -21,10 +21,16 @@ the entire homepage.
 |---|---|---|
 | SEO | 92 | **100** |
 | Best Practices | 100 | **100** |
-| Accessibility | 96 | **96** |
+| Accessibility | 96 | **100** (site-wide: logo, footer, muted token, contrast, labels) |
 | CLS | 0 | **0** |
-| Performance | ~70 | **74–80 (noisy)** |
-| TBT | 760 ms | **410–800 ms (noisy)** |
+| LCP | 3.1 s | **1.9 s** |
+| Performance | ~70 | **80–88 (best run 88)** |
+| TBT | 760 ms | **~430 ms** |
+
+Three of four categories are now a perfect 100. Performance climbed from ~70 to
+80–88 with LCP nearly halved. The score still varies run-to-run (lab noise on a
+busy dev machine); PageSpeed Insights (clean env + field data) is the
+authoritative read.
 
 ## Honest caveat: lab variance
 Repeated runs under identical conditions returned Performance 74–80 and TBT
