@@ -11,7 +11,7 @@ export const TH = {
   edgeStrong: "rgba(10, 37, 64, 0.14)",
   ink: "#0a2540",                        // deep navy, premium, trustworthy
   inkSoft: "#3c4858",
-  muted: "#6b7280",
+  muted: "#5b6573",                      // darkened from #6b7280 to clear WCAG AA 4.5:1 on warm bg
   mutedDim: "#a0a8b3",
   sage: "#5ba373",                       // friendly sage
   sageDeep: "#3f7a52",
