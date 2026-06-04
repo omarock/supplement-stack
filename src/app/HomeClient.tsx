@@ -7,7 +7,7 @@ import { HOME_FAQ } from "@/lib/home-faq";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import HeroSpotlight from "@/components/HeroSpotlight";
+import HeroSpotlight from "@/components/home/HeroSpotlightLazy";
 import StackBox from "@/components/home/StackBox";
 import AuthCodeCatcher from "@/components/home/AuthCodeCatcher";
 import { TH, FONTS, D, SI, MM } from "@/lib/theme";
