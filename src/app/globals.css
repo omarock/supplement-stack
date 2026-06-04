@@ -173,6 +173,31 @@ img, svg { max-width: 100%; }
 @keyframes sd-drift-b  { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(-50px,30px) scale(1.15) } }
 @keyframes sd-drift-c  { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(30px,-40px) scale(1.08) } }
 
+/* Scroll-driven reveal. Replaces the old JS IntersectionObserver Reveal, so it
+   ships zero JavaScript and adds zero hydration. Content is visible by default
+   (no-JS, reduced-motion, and unsupported browsers all show everything). Where
+   scroll-driven animations are supported, elements fade up as they enter; an
+   element already in view at load (the hero) is past its entry range, so it
+   renders at the final state, fully visible, with no LCP delay. */
+@keyframes sd-reveal-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.sd-reveal { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .sd-reveal {
+      opacity: 0;
+      animation: sd-reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+/* Native <details> FAQ (zero JS). Hide the default disclosure marker and rotate
+   the "+" into an "x" with a sage fill when open. */
+.sd-faq-summary { list-style: none; }
+.sd-faq-summary::-webkit-details-marker { display: none; }
+.sd-faq[open] .sd-faq-plus { transform: rotate(45deg); background: #5ba373; color: #fff; }
+
 /* Legacy phyla animation names kept as aliases so existing pages still animate */
 @keyframes phyla-rise    { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes phyla-fade-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }

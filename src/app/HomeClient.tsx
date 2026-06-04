@@ -1,13 +1,15 @@
-"use client";
-
-import { useEffect, useState, useRef, type CSSProperties } from "react";
+// Server component. The homepage is rendered on the server with zero
+// page-level hydration; the only client islands are SiteHeader, HeroSpotlight,
+// StackBox (the build box), and AuthCodeCatcher. Scroll reveals are pure CSS
+// (.sd-reveal in globals.css). See PERFORMANCE_AUDIT.md.
+import { type CSSProperties } from "react";
 import { HOME_FAQ } from "@/lib/home-faq";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { track } from "@/lib/analytics";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import HeroSpotlight from "@/components/HeroSpotlight";
+import StackBox from "@/components/home/StackBox";
+import AuthCodeCatcher from "@/components/home/AuthCodeCatcher";
 import { TH, FONTS, D, SI, MM } from "@/lib/theme";
 import { STACKS } from "@/lib/stacks";
 
@@ -15,45 +17,13 @@ import { STACKS } from "@/lib/stacks";
 // Motion primitives
 // ════════════════════════════════════════════════════════════════════════════
 
-function useInView(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  // Default VISIBLE: SSR and first paint render content opacity 1, so the hero
-  // (the LCP element) is never hidden behind a fade, and no-JS clients see
-  // everything. On the client we only hide + scroll-reveal elements that start
-  // BELOW the fold, so the entrance animation is preserved where it is actually
-  // seen, without an observer per above-the-fold node (cuts hydration / TBT).
-  const [seen, setSeen] = useState(true);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return; // honour reduced motion: stay visible, no animation
-    const belowFold = el.getBoundingClientRect().top > window.innerHeight * 0.9;
-    if (!belowFold) return; // above/in the fold: stay visible, no animation, no observer
-    setSeen(false); // below the fold: hide (off-screen, no visible flash), then reveal on scroll
-    const io = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } }),
-      { threshold, rootMargin: "0px 0px -10% 0px" }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [threshold]);
-  return { ref, seen };
-}
-
-function Reveal({ children, delay = 0, y = 24, style }: {
+// Pure-CSS scroll reveal (see .sd-reveal in globals.css). No JavaScript, no
+// IntersectionObserver, no hydration. `delay`/`y` are accepted for call-site
+// compatibility but are no-ops now (the CSS handles the motion).
+function Reveal({ children, style }: {
   children: React.ReactNode; delay?: number; y?: number; style?: CSSProperties;
 }) {
-  const { ref, seen } = useInView();
-  return (
-    <div ref={ref} style={{
-      ...style,
-      transform: seen ? "none" : `translateY(${y}px)`,
-      opacity: seen ? 1 : 0,
-      transition: `opacity .9s cubic-bezier(.2,.7,.2,1) ${delay}s, transform .9s cubic-bezier(.2,.7,.2,1) ${delay}s`,
-      willChange: "transform, opacity",
-    }}>{children}</div>
-  );
+  return <div className="sd-reveal" style={style}>{children}</div>;
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -70,31 +40,6 @@ const FACTS: { value: number | null; display?: string; suffix?: string; label: s
   { value: null, display: "$0", label: "to get started" },
 ];
 
-/** Animated count-up that ALWAYS lands on the real value. Triggers on mount and
- *  has a non-rAF fallback so the number is correct even if rAF is throttled
- *  (background tab) or motion is reduced. It must never get stuck showing 0. */
-function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
-  const [n, setN] = useState(to);
-  useEffect(() => {
-    const reduce = typeof window !== "undefined" &&
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) { setN(to); return; }
-    let raf = 0;
-    const dur = 1100;
-    const start = performance.now();
-    setN(0);
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / dur);
-      setN(Math.round(to * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    const fallback = setTimeout(() => setN(to), dur + 200); // guarantees final value
-    return () => { cancelAnimationFrame(raf); clearTimeout(fallback); };
-  }, [to]);
-  return <>{n.toLocaleString()}{suffix}</>;
-}
-
 /** Premium proof counters: high-contrast numbers on white cells with hairline dividers. */
 function StatStrip() {
   return (
@@ -110,7 +55,7 @@ function StatStrip() {
           display: "flex", alignItems: "baseline", justifyContent: "center", gap: 6, flexWrap: "wrap",
         }}>
           <span style={{ ...D, fontSize: 17, color: TH.ink, letterSpacing: "-0.01em" }}>
-            {f.display ?? <Counter to={f.value!} suffix={f.suffix} />}
+            {f.display ?? `${f.value!.toLocaleString()}${f.suffix ?? ""}`}
           </span>
           <span style={{ ...MM, fontSize: 8.5, color: TH.muted, letterSpacing: "0.02em", textTransform: "uppercase" }}>
             {f.label}
@@ -122,42 +67,6 @@ function StatStrip() {
 }
 
 function Hero() {
-  const router = useRouter();
-  const [goal, setGoal] = useState("");
-  const [picked, setPicked] = useState<string[]>([]);
-  const [needsGoal, setNeedsGoal] = useState(false);
-  const goalRef = useRef<HTMLTextAreaElement | null>(null);
-
-  function toggleChip(chip: string) {
-    setNeedsGoal(false);
-    setPicked(prev => {
-      const next = prev.includes(chip) ? prev.filter(c => c !== chip) : [...prev, chip];
-      // Mirror chips into the input unless the user typed something custom
-      if (goal === "" || goal === prev.join(", ")) setGoal(next.join(", "));
-      return next;
-    });
-  }
-
-  // Primary action = the Build Stack flow, deliberately INDEPENDENT from the
-  // quiz. It requires real input: with nothing entered we never navigate to
-  // /build (which would otherwise show a stale/pre-filled stack); instead we
-  // ask the user to pick a goal. With input, /build composes fresh from it.
-  function generateStack() {
-    const finalGoal = (goal.trim() || picked.join(", ")).trim();
-    if (!finalGoal) {
-      setNeedsGoal(true);
-      goalRef.current?.focus();
-      return;
-    }
-    setNeedsGoal(false);
-    track("home_goal_build", { hasGoal: true, chips: picked.length });
-    router.push(`/build?goal=${encodeURIComponent(finalGoal)}`);
-  }
-
-  // Build-box CTA label, named when a single goal is chosen.
-  const primaryGoal = picked.length === 1 ? picked[0].toLowerCase() : null;
-  const ctaLabel = primaryGoal ? `Build my ${primaryGoal} stack` : "Build my stack";
-
   // ── Shared triptych styles (3 equal service cards) ──────────────────────
   const triCard = (variant: "rec" | "center" | "plain"): CSSProperties => ({
     display: "flex", flexDirection: "column", textDecoration: "none", color: "inherit",
@@ -246,46 +155,8 @@ function Hero() {
               <span style={triBtn}>Start the quiz →</span>
             </Link>
 
-            {/* Build box, center */}
-            <div style={triCard("center")}>
-              <span style={chipStyle(`${TH.amber}26`, TH.amberDeep)}>02 · Build it yourself</span>
-              <div style={{ marginTop: 12, background: TH.bg, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: 14 }}>
-                <div style={{ ...MM, fontSize: 10, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.mutedDim, marginBottom: 8 }}>What do you want to improve?</div>
-                <textarea
-                  ref={goalRef}
-                  value={goal}
-                  onChange={e => { setGoal(e.target.value); if (needsGoal) setNeedsGoal(false); }}
-                  rows={1}
-                  aria-invalid={needsGoal}
-                  placeholder="better sleep and steadier energy…"
-                  onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); generateStack(); } }}
-                  style={{ width: "100%", boxSizing: "border-box", border: "none", outline: "none", resize: "none", fontFamily: FONTS.body, fontSize: 15, lineHeight: 1.4, color: TH.ink, background: "transparent", minHeight: 24 }}
-                />
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 11 }}>
-                  {GOAL_CHIPS.slice(0, 5).map(chip => {
-                    const on = picked.includes(chip);
-                    return (
-                      <button key={chip} type="button" onClick={() => toggleChip(chip)} style={{
-                        height: 28, padding: "0 12px", borderRadius: 999, cursor: "pointer",
-                        border: `1px solid ${on ? TH.sage : TH.edgeStrong}`, background: on ? TH.accentGlow : "transparent",
-                        color: on ? TH.sageDeep : TH.inkSoft, fontFamily: FONTS.body, fontSize: 12, fontWeight: on ? 600 : 500, transition: "all .15s",
-                      }}>{chip}</button>
-                    );
-                  })}
-                </div>
-              </div>
-              {needsGoal && (
-                <div role="alert" style={{ marginTop: 10, padding: "8px 11px", borderRadius: 10, background: "#fff7ed", border: "1px solid #f5d3a8", fontSize: 12, color: TH.amberDeep, textAlign: "center", lineHeight: 1.4 }}>
-                  Pick a goal or describe what you want, then we&apos;ll build it.
-                </div>
-              )}
-              {cardSpacer}
-              <div style={{ ...buylineStyle, textAlign: "center" }}>describe it or pick a goal → generate → buy</div>
-              <button type="button" onClick={generateStack} style={triBtn}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
-                {ctaLabel}
-              </button>
-            </div>
+            {/* Build box, center (the one interactive island) */}
+            <StackBox />
 
             {/* Audit */}
             <Link href="/audit" style={triCard("plain")}>
@@ -815,8 +686,8 @@ function Testimonials() {
 // ════════════════════════════════════════════════════════════════════════════
 
 function FAQ() {
-  const [open, setOpen] = useState(0);
-  const faqs = HOME_FAQ;
+  // Native <details>: open/close with zero JavaScript. The plus rotates and the
+  // panel reveals via CSS (see .sd-faq in globals.css).
   return (
     <section id="faq" style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
       <div style={{ maxWidth: 880, margin: "0 auto" }}>
@@ -830,35 +701,24 @@ function FAQ() {
         </Reveal>
 
         <div>
-          {faqs.map(([q, a], i) => (
-            <Reveal key={q} delay={i * 0.04}>
-              <div onClick={() => setOpen(open === i ? -1 : i)} style={{
-                background: TH.surface,
-                border: `1px solid ${TH.edge}`,
+          {HOME_FAQ.map(([q, a]) => (
+            <Reveal key={q}>
+              <details className="sd-faq" style={{
+                background: TH.surface, border: `1px solid ${TH.edge}`,
                 borderRadius: 16, marginBottom: 10, padding: "20px 24px",
-                cursor: "pointer", transition: "box-shadow .25s",
-                boxShadow: open === i ? `0 8px 24px ${TH.ink}10` : `0 2px 6px ${TH.ink}04`,
+                boxShadow: `0 2px 6px ${TH.ink}04`,
               }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16 }}>
-                  <span style={{
-                    ...D, fontSize: 18, color: TH.ink, letterSpacing: "-0.015em",
-                  }}>{q}</span>
-                  <span style={{
+                <summary className="sd-faq-summary" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, cursor: "pointer", listStyle: "none" }}>
+                  <span style={{ ...D, fontSize: 18, color: TH.ink, letterSpacing: "-0.015em" }}>{q}</span>
+                  <span className="sd-faq-plus" style={{
                     width: 28, height: 28, borderRadius: 999,
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 18, flexShrink: 0, transition: "transform .3s, background .25s",
-                    transform: open === i ? "rotate(45deg)" : "none",
-                    background: open === i ? TH.sage : TH.bg,
-                    color: open === i ? "white" : TH.ink,
+                    fontSize: 18, flexShrink: 0, background: TH.bg, color: TH.ink,
+                    transition: "transform .3s, background .25s, color .25s",
                   }}>+</span>
-                </div>
-                <div style={{
-                  maxHeight: open === i ? 200 : 0, overflow: "hidden",
-                  transition: "max-height .4s cubic-bezier(.2,.7,.2,1), margin .3s, opacity .3s",
-                  opacity: open === i ? 1 : 0, marginTop: open === i ? 12 : 0,
-                  color: TH.inkSoft, fontSize: 15, lineHeight: 1.6,
-                }}>{a}</div>
-              </div>
+                </summary>
+                <div style={{ marginTop: 12, color: TH.inkSoft, fontSize: 15, lineHeight: 1.6 }}>{a}</div>
+              </details>
             </Reveal>
           ))}
         </div>
@@ -932,18 +792,9 @@ function CTA() {
 // ════════════════════════════════════════════════════════════════════════════
 
 export default function HomePage() {
-  // Safety net: if Supabase auth routes back to "/?code=..." forward to /auth/callback
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    if (code) {
-      window.location.replace(`/auth/callback?code=${encodeURIComponent(code)}`);
-    }
-  }, []);
-
   return (
     <>
+      <AuthCodeCatcher />
       <SiteHeader />
       <HeroSpotlight />
       <main id="main-content">
