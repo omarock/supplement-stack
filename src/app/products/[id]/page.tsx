@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SUPPLEMENT_DB, Supplement } from "@/lib/supplements";
-import { PRODUCTS, ProductOption, productImage } from "@/lib/products";
+import { PRODUCTS, getProducts, ProductOption, productImage } from "@/lib/products";
 import { iherbProductLink, iherbLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import SiteHeader from "@/components/SiteHeader";
@@ -48,8 +48,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const supp = SUPPLEMENT_DB.find(s => s.id === id);
   if (!supp) notFound();
 
-  // Get curated products for this supplement; fall back to a synthetic single-product entry
-  const products = PRODUCTS[id] ?? [];
+  // Curated bestsellers + extra options (merged); fall back to a synthetic single-product entry
+  const products = getProducts(id);
   const bestseller: ProductOption = products[0] ?? {
     brand: supp.brand,
     productName: supp.name,

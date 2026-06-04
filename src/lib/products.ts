@@ -2747,11 +2747,98 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
 };
 
 /**
- * Get the products for a given supplement ID.
- * Returns an empty array if no products are defined for this supplement.
+ * Additional, real iHerb-available product options, added in batches to give the
+ * most popular ingredients 4+ buy paths (more affiliate links = more conversion).
+ * These use a scoped `searchQuery` (a working affiliate search link) rather than a
+ * hand-verified productPath/imageUrl, so they render with the branded
+ * BottleMockup fallback and never 404. getProducts() merges + dedupes them after
+ * the curated bestsellers, so the primary recommendation is unchanged.
+ */
+const tint = { now: { brandBg: "#fdebe1", brandInk: "#c2410c" }, thorne: { brandBg: "#eef2ff", brandInk: "#4338ca" }, doctors: { brandBg: "#dbeafe", brandInk: "#1e40af" }, jarrow: { brandBg: "#fef9c3", brandInk: "#854d0e" }, cgn: { brandBg: "#fff7ed", brandInk: "#c2410c" }, sr: { brandBg: "#fef3c7", brandInk: "#92400e" }, nordic: { brandBg: "#e0f2fe", brandInk: "#0369a1" }, solgar: { brandBg: "#fef3c7", brandInk: "#92400e" }, on: { brandBg: "#fee2e2", brandInk: "#b91c1c" }, nutricost: { brandBg: "#ecfccb", brandInk: "#3f6212" } } as const;
+
+export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
+  d3k2: [
+    { brand: "Thorne", productName: "Vitamin D + K2 (liquid)", size: "1 fl oz", approxPrice: 22, rating: 4.8, reviewCount: 2600, badge: "Premium", searchQuery: "Thorne Vitamin D K2 liquid", ...tint.thorne },
+    { brand: "California Gold Nutrition", productName: "Vitamin D3 + K2", size: "90 softgels", approxPrice: 10, rating: 4.8, reviewCount: 3200, badge: "Best Value", searchQuery: "California Gold Nutrition Vitamin D3 K2", ...tint.cgn },
+  ],
+  omega3: [
+    { brand: "Nordic Naturals", productName: "Ultimate Omega", size: "120 softgels", approxPrice: 40, rating: 4.8, reviewCount: 9000, badge: "Premium", searchQuery: "Nordic Naturals Ultimate Omega", ...tint.nordic },
+    { brand: "California Gold Nutrition", productName: "Omega-3 Premium Fish Oil", size: "100 softgels", approxPrice: 13, rating: 4.7, reviewCount: 5400, badge: "Best Value", searchQuery: "California Gold Nutrition Omega-3 fish oil", ...tint.cgn },
+  ],
+  "mag-glycinate": [
+    { brand: "Doctor's Best", productName: "High Absorption Magnesium Glycinate", size: "240 tablets", approxPrice: 17, rating: 4.7, reviewCount: 12000, badge: "Best Value", searchQuery: "Doctor's Best Magnesium Glycinate Lysinate", ...tint.doctors },
+    { brand: "Thorne", productName: "Magnesium Bisglycinate (powder)", size: "187 g", approxPrice: 42, rating: 4.7, reviewCount: 1500, badge: "Premium", searchQuery: "Thorne Magnesium Bisglycinate powder", ...tint.thorne },
+  ],
+  ashwagandha: [
+    { brand: "Nutricost", productName: "Ashwagandha KSM-66", size: "240 capsules", approxPrice: 19, rating: 4.7, reviewCount: 6000, badge: "Best Value", searchQuery: "Nutricost Ashwagandha KSM-66", ...tint.nutricost },
+    { brand: "Jarrow Formulas", productName: "Ashwagandha (Sensoril)", size: "120 veggie caps", approxPrice: 18, rating: 4.6, reviewCount: 2400, badge: "Premium", searchQuery: "Jarrow Ashwagandha Sensoril", ...tint.jarrow },
+  ],
+  "l-theanine": [
+    { brand: "NOW Foods", productName: "L-Theanine 200 mg", size: "120 veg capsules", approxPrice: 18, rating: 4.8, reviewCount: 8000, badge: "Best Value", searchQuery: "NOW Foods L-Theanine 200", ...tint.now },
+    { brand: "Sports Research", productName: "L-Theanine (Suntheanine) 200 mg", size: "60 softgels", approxPrice: 17, rating: 4.7, reviewCount: 1900, badge: "Premium", searchQuery: "Sports Research L-Theanine Suntheanine", ...tint.sr },
+  ],
+  glycine: [
+    { brand: "NOW Foods", productName: "Glycine Powder", size: "454 g", approxPrice: 14, rating: 4.8, reviewCount: 3300, badge: "Best Value", searchQuery: "NOW Foods Glycine powder", ...tint.now },
+    { brand: "Thorne", productName: "Glycine", size: "250 g", approxPrice: 19, rating: 4.7, reviewCount: 700, badge: "Premium", searchQuery: "Thorne Glycine powder", ...tint.thorne },
+  ],
+  creatine: [
+    { brand: "Optimum Nutrition", productName: "Micronized Creatine Monohydrate", size: "300 g", approxPrice: 25, rating: 4.8, reviewCount: 15000, badge: "Best Value", searchQuery: "Optimum Nutrition Micronized Creatine", ...tint.on },
+    { brand: "California Gold Nutrition", productName: "Creatine Monohydrate (Creapure)", size: "454 g", approxPrice: 22, rating: 4.8, reviewCount: 2800, badge: "Premium", searchQuery: "California Gold Nutrition Creatine Creapure", ...tint.cgn },
+  ],
+  zinc: [
+    { brand: "Thorne", productName: "Zinc Picolinate 30 mg", size: "60 capsules", approxPrice: 12, rating: 4.8, reviewCount: 3400, badge: "Premium", searchQuery: "Thorne Zinc Picolinate 30", ...tint.thorne },
+    { brand: "NOW Foods", productName: "Zinc Picolinate 50 mg", size: "120 veg capsules", approxPrice: 9, rating: 4.8, reviewCount: 6200, badge: "Best Value", searchQuery: "NOW Foods Zinc Picolinate 50", ...tint.now },
+  ],
+  "vit-c": [
+    { brand: "California Gold Nutrition", productName: "Gold C Vitamin C 1000 mg", size: "240 veggie caps", approxPrice: 13, rating: 4.8, reviewCount: 9500, badge: "Best Value", searchQuery: "California Gold Nutrition Gold C 1000", ...tint.cgn },
+    { brand: "Solgar", productName: "Ester-C Plus 1000 mg", size: "100 tablets", approxPrice: 25, rating: 4.8, reviewCount: 2100, badge: "Premium", searchQuery: "Solgar Ester-C Plus 1000", ...tint.solgar },
+  ],
+  b12: [
+    { brand: "Jarrow Formulas", productName: "Methyl B-12 1000 mcg", size: "100 lozenges", approxPrice: 9, rating: 4.8, reviewCount: 11000, badge: "Best Value", searchQuery: "Jarrow Methyl B-12 1000", ...tint.jarrow },
+    { brand: "Thorne", productName: "Methylcobalamin (B12)", size: "60 capsules", approxPrice: 17, rating: 4.7, reviewCount: 900, badge: "Premium", searchQuery: "Thorne Methylcobalamin", ...tint.thorne },
+  ],
+  curcumin: [
+    { brand: "Thorne", productName: "Curcumin Phytosome (Meriva)", size: "60 capsules", approxPrice: 43, rating: 4.7, reviewCount: 1300, badge: "Premium", searchQuery: "Thorne Curcumin Phytosome Meriva", ...tint.thorne },
+    { brand: "Doctor's Best", productName: "Curcumin C3 Complex + BioPerine", size: "120 veg caps", approxPrice: 21, rating: 4.7, reviewCount: 4800, badge: "Best Value", searchQuery: "Doctor's Best Curcumin C3 BioPerine", ...tint.doctors },
+  ],
+  coq10: [
+    { brand: "Doctor's Best", productName: "High Absorption CoQ10 100 mg", size: "120 veg caps", approxPrice: 19, rating: 4.8, reviewCount: 9800, badge: "Best Value", searchQuery: "Doctor's Best CoQ10 100 BioPerine", ...tint.doctors },
+    { brand: "Jarrow Formulas", productName: "Co-Q10 100 mg", size: "100 capsules", approxPrice: 22, rating: 4.7, reviewCount: 3100, badge: "Premium", searchQuery: "Jarrow Formulas CoQ10 100", ...tint.jarrow },
+  ],
+  "l-tyrosine": [
+    { brand: "NOW Foods", productName: "L-Tyrosine 500 mg", size: "120 veg capsules", approxPrice: 12, rating: 4.7, reviewCount: 4200, badge: "Best Value", searchQuery: "NOW Foods L-Tyrosine 500", ...tint.now },
+    { brand: "Thorne", productName: "L-Tyrosine", size: "90 capsules", approxPrice: 19, rating: 4.7, reviewCount: 600, badge: "Premium", searchQuery: "Thorne L-Tyrosine", ...tint.thorne },
+  ],
+  berberine: [
+    { brand: "Thorne", productName: "Berberine 1000 mg", size: "60 capsules", approxPrice: 30, rating: 4.7, reviewCount: 1700, badge: "Premium", searchQuery: "Thorne Berberine 1000", ...tint.thorne },
+    { brand: "NOW Foods", productName: "Berberine Glucose Support", size: "90 veg softgels", approxPrice: 24, rating: 4.7, reviewCount: 2900, badge: "Best Value", searchQuery: "NOW Foods Berberine Glucose Support", ...tint.now },
+  ],
+  nac: [
+    { brand: "NOW Foods", productName: "NAC 600 mg", size: "250 veg capsules", approxPrice: 22, rating: 4.8, reviewCount: 7800, badge: "Best Value", searchQuery: "NOW Foods NAC 600", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "NAC Sustain 600 mg", size: "100 tablets", approxPrice: 18, rating: 4.7, reviewCount: 3400, badge: "Premium", searchQuery: "Jarrow NAC Sustain 600", ...tint.jarrow },
+  ],
+  taurine: [
+    { brand: "NOW Foods", productName: "Taurine 1000 mg", size: "100 veg capsules", approxPrice: 9, rating: 4.8, reviewCount: 3600, badge: "Best Value", searchQuery: "NOW Foods Taurine 1000", ...tint.now },
+    { brand: "Thorne", productName: "Taurine", size: "90 capsules", approxPrice: 16, rating: 4.7, reviewCount: 500, badge: "Premium", searchQuery: "Thorne Taurine", ...tint.thorne },
+  ],
+};
+
+/**
+ * Get the products for a given supplement ID: the curated bestsellers first,
+ * then any EXTRA_PRODUCTS options (deduped by brand + product name). Returns an
+ * empty array if nothing is defined.
  */
 export function getProducts(supplementId: string): ProductOption[] {
-  return PRODUCTS[supplementId] ?? [];
+  const base = PRODUCTS[supplementId] ?? [];
+  const extra = EXTRA_PRODUCTS[supplementId] ?? [];
+  if (!extra.length) return base;
+  const seen = new Set(base.map(p => `${p.brand}|${p.productName}`.toLowerCase()));
+  const out = [...base];
+  for (const p of extra) {
+    const key = `${p.brand}|${p.productName}`.toLowerCase();
+    if (!seen.has(key)) { seen.add(key); out.push(p); }
+  }
+  return out;
 }
 
 /**

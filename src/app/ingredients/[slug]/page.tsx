@@ -5,7 +5,7 @@ import { SUPPLEMENT_DB, Supplement } from "@/lib/supplements";
 import { STACKS } from "@/lib/stacks";
 import { iherbLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
-import { PRODUCTS, productImage, type ProductOption } from "@/lib/products";
+import { getProducts, productImage, type ProductOption } from "@/lib/products";
 import { iherbProductLink } from "@/lib/iherb";
 import { GOALS } from "@/lib/goals";
 import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
@@ -101,7 +101,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
     .slice(0, 4);
 
   // Product options for this supplement
-  const products = PRODUCTS[supp.id] ?? [];
+  const products = getProducts(supp.id);
 
   // ── Internal-linking web: connect this ingredient to the hub pages ──────────
   const nameOf = (id: string) => SUPPLEMENT_DB.find(s => s.id === id)?.name.split(" (")[0] ?? id;
