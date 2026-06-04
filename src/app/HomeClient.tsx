@@ -13,6 +13,7 @@ import AuthCodeCatcher from "@/components/home/AuthCodeCatcher";
 import { TH, FONTS, D, SI, MM } from "@/lib/theme";
 import { STACKS } from "@/lib/stacks";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
+import { getPrimaryProduct } from "@/lib/products";
 
 // ════════════════════════════════════════════════════════════════════════════
 // Motion primitives
@@ -792,56 +793,72 @@ function CTA() {
 // Strongest evidence, real graded ingredients (proof, not promises)
 // ════════════════════════════════════════════════════════════════════════════
 
+const EVIDENCE_FILL: Record<string, number> = { "very strong": 4, strong: 3, moderate: 2 };
+
 function StrongestEvidence() {
-  const top = SUPPLEMENT_DB.filter(s => s.evidence === "very strong").slice(0, 8);
-  if (top.length === 0) return null;
+  // Foundational, high-evidence picks, presented as premium shoppable cards.
+  const picks = SUPPLEMENT_DB
+    .filter(s => (s.priority ?? 0) >= 8 && (s.evidence === "very strong" || s.evidence === "strong"))
+    .sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0))
+    .slice(0, 6);
+  if (picks.length === 0) return null;
   return (
-    <section style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
+    <section style={{ padding: "var(--section-pad-y) var(--section-pad-x)", background: `linear-gradient(180deg, ${TH.bg}, ${TH.surface})` }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Reveal>
           <div style={{ textAlign: "center", marginBottom: 36, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
-            <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 12 }}>The strongest evidence</div>
+            <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 12 }}>Evidence-backed essentials</div>
             <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.02, color: TH.ink, margin: 0 }}>
-              Start with what <span style={{ ...SI, color: TH.sageDeep }}>actually works.</span>
+              The foundation, <span style={{ ...SI, color: TH.sageDeep }}>done right.</span>
             </h2>
             <p style={{ fontSize: 17, color: TH.inkSoft, lineHeight: 1.6, margin: "14px auto 0" }}>
-              The ingredients with the deepest research behind them. Every one is evidence-graded and cited, no house brand, no hype.
+              A few proven ingredients cover most people. Each is graded on the research and matched to top, third-party-tested brands. We don&apos;t sell our own, so the picks stay honest.
             </p>
           </div>
         </Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 14 }}>
-          {top.map(s => (
-            <Reveal key={s.id}>
-              <Link href={`/ingredients/${s.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                <div style={{
-                  background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: 20,
-                  height: "100%", display: "flex", flexDirection: "column", gap: 8,
-                  boxShadow: `0 4px 12px ${TH.ink}05`,
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6 }} aria-hidden>
-                    {[0, 1, 2, 3].map(i => (
-                      <span key={i} style={{ width: 22, height: 6, borderRadius: 3, background: TH.sageDeep }} />
-                    ))}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 16 }}>
+          {picks.map(s => {
+            const p = getPrimaryProduct(s.id);
+            const fill = EVIDENCE_FILL[s.evidence] ?? 2;
+            return (
+              <Reveal key={s.id}>
+                <Link href={`/ingredients/${s.id}`} style={{ textDecoration: "none", color: "inherit", display: "block", height: "100%" }}>
+                  <div className="ess-card" style={{
+                    background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 20, padding: 22,
+                    height: "100%", display: "flex", flexDirection: "column", gap: 14,
+                    boxShadow: `0 14px 34px -20px ${TH.ink}40`,
+                  }}>
+                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }}>
+                      <div aria-hidden style={{ width: 46, height: 66, borderRadius: 23, background: `linear-gradient(135deg, ${s.hue}, ${s.hue}cc)`, boxShadow: `0 12px 26px -8px ${s.hue}77`, position: "relative", overflow: "hidden", flexShrink: 0 }}>
+                        <div style={{ position: "absolute", top: 6, left: 7, right: 7, height: "32%", background: "linear-gradient(180deg, rgba(255,255,255,0.55), transparent)", borderRadius: 23 }} />
+                      </div>
+                      <div style={{ display: "flex", gap: 3, marginTop: 5 }} aria-hidden>
+                        {[0, 1, 2, 3].map(i => <span key={i} style={{ width: 16, height: 6, borderRadius: 3, background: i < fill ? TH.sageDeep : "rgba(10,37,64,0.10)" }} />)}
+                      </div>
+                    </div>
+                    <div>
+                      <div style={{ ...D, fontSize: 18, color: TH.ink, letterSpacing: "-0.01em", lineHeight: 1.2 }}>{s.name.split(" (")[0]}</div>
+                      <div style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.45, marginTop: 4 }}>{s.purpose}</div>
+                    </div>
+                    <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, paddingTop: 12, borderTop: `1px solid ${TH.edge}` }}>
+                      <span style={{ ...MM, fontSize: 12.5, color: TH.ink, fontWeight: 600 }}>
+                        {p ? `★ ${p.rating.toFixed(1)} · ` : ""}from ${s.monthlyCost}/mo
+                      </span>
+                      <span style={{ ...MM, fontSize: 12.5, color: TH.sageDeep, fontWeight: 600 }}>Shop &rarr;</span>
+                    </div>
                   </div>
-                  <div style={{ ...MM, fontSize: 10, color: TH.sageDeep, letterSpacing: "0.06em" }}>VERY STRONG EVIDENCE</div>
-                  <div style={{ ...D, fontSize: 17, color: TH.ink, letterSpacing: "-0.01em", lineHeight: 1.25, marginTop: 2 }}>
-                    {s.name.split(" (")[0]}
-                  </div>
-                  <div style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.45 }}>{s.purpose}</div>
-                  <div style={{ ...MM, fontSize: 12, color: TH.sageDeep, fontWeight: 600, marginTop: "auto", paddingTop: 8 }}>
-                    See the evidence &rarr;
-                  </div>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
+                </Link>
+              </Reveal>
+            );
+          })}
         </div>
-        <div style={{ textAlign: "center", marginTop: 26 }}>
-          <Link href="/ingredients" style={{
-            display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 999,
-            border: `1px solid ${TH.edgeStrong}`, color: TH.ink, textDecoration: "none", fontWeight: 600, fontSize: 14.5,
+        <div style={{ textAlign: "center", marginTop: 28 }}>
+          <Link href="/quiz" style={{
+            display: "inline-flex", alignItems: "center", gap: 8, padding: "15px 30px", borderRadius: 999,
+            background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none",
+            ...D, fontSize: 15, boxShadow: `0 12px 26px -8px ${TH.sage}88`,
           }}>
-            Browse all {SUPPLEMENT_DB.length} evidence-graded ingredients &rarr;
+            Build my full stack &rarr;
           </Link>
         </div>
       </div>

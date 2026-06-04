@@ -269,70 +269,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
         </div>
       </section>
 
-      {/* Description + Quick facts */}
-      <section style={{ padding: "0 var(--section-pad-x) 48px" }}>
-        <div style={{
-          maxWidth: 960, margin: "0 auto",
-          display: "grid", gridTemplateColumns: "var(--ingredient-hero-cols, minmax(0, 1fr) 320px)", gap: "var(--grid-2-gap, 40px)",
-        }}>
-          {/* Description */}
-          <div>
-            <h2 style={{ ...S, fontSize: 32, margin: "0 0 16px", letterSpacing: "-0.02em" }}>
-              What is {supp.name.split(" (")[0]}?
-            </h2>
-            <p style={{ color: th.inkSoft, fontSize: 17, lineHeight: 1.7, margin: 0 }}>
-              {supp.description ?? supp.why}
-            </p>
-
-            {/* Why this matters (the short why) */}
-            <div style={{
-              marginTop: 32, padding: 22,
-              background: th.sageGlow, borderRadius: 16, borderLeft: `3px solid ${th.sage}`,
-            }}>
-              <div style={{ fontSize: 11, ...MM, color: th.sageDeep, letterSpacing: "0.08em", marginBottom: 8 }}>
-                WHY IT MATTERS
-              </div>
-              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: th.ink }}>
-                {supp.why}
-              </p>
-            </div>
-          </div>
-
-          {/* Quick facts card */}
-          <aside style={{
-            background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16,
-            padding: 24, height: "fit-content",
-          }}>
-            <h3 style={{ ...D, fontSize: 14, ...MM, fontWeight: 600, color: th.sage, letterSpacing: "0.1em", margin: "0 0 18px" }}>
-              QUICK FACTS
-            </h3>
-            <FactRow label="Standard dose" value={supp.dose} />
-            <FactRow label="When to take" value={timingLabel(supp.timing)} />
-            <FactRow label="Approx. monthly cost" value={`$${supp.monthlyCost}`} />
-            <FactRow label="Common form" value={`${supp.brand}, ${supp.name}`} />
-            {TIMING[supp.id] && (
-              <Link href={`/timing/${supp.id}`} style={{
-                display: "block", marginTop: 16, paddingTop: 16, borderTop: `1px solid ${th.line}`,
-                fontSize: 13.5, color: th.sage, fontWeight: 600, textDecoration: "none",
-              }}>
-                Best time to take {shortName} →
-              </Link>
-            )}
-            {supp.warnings && supp.warnings.length > 0 && (
-              <div style={{ marginTop: 18, paddingTop: 18, borderTop: `1px solid ${th.line}` }}>
-                <div style={{ fontSize: 11, ...MM, color: "#b91c1c", letterSpacing: "0.08em", marginBottom: 6 }}>
-                  AVOID IF
-                </div>
-                <p style={{ margin: 0, fontSize: 13, color: th.inkSoft, lineHeight: 1.5 }}>
-                  {supp.warnings.map(w => warningLabel(w)).join(" · ")}
-                </p>
-              </div>
-            )}
-          </aside>
-        </div>
-      </section>
-
-      {/* Buy buttons, moved up so the purchase path sits right after the intro */}
+      {/* Buy buttons, placed right after the quick answer so the purchase path is first */}
       <section style={{ padding: "0 var(--section-pad-x) 64px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
           <h2 style={{ ...S, fontSize: 32, margin: "0 0 20px", letterSpacing: "-0.02em" }}>
@@ -495,6 +432,69 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
           </div>
         </section>
       )}
+
+      {/* Description + Quick facts (the deeper 'what is it', after the buy path) */}
+      <section style={{ padding: "0 var(--section-pad-x) 48px" }}>
+        <div style={{
+          maxWidth: 960, margin: "0 auto",
+          display: "grid", gridTemplateColumns: "var(--ingredient-hero-cols, minmax(0, 1fr) 320px)", gap: "var(--grid-2-gap, 40px)",
+        }}>
+          {/* Description */}
+          <div>
+            <h2 style={{ ...S, fontSize: 32, margin: "0 0 16px", letterSpacing: "-0.02em" }}>
+              What is {supp.name.split(" (")[0]}?
+            </h2>
+            <p style={{ color: th.inkSoft, fontSize: 17, lineHeight: 1.7, margin: 0 }}>
+              {supp.description ?? supp.why}
+            </p>
+
+            {/* Why this matters (the short why) */}
+            <div style={{
+              marginTop: 32, padding: 22,
+              background: th.sageGlow, borderRadius: 16, borderLeft: `3px solid ${th.sage}`,
+            }}>
+              <div style={{ fontSize: 11, ...MM, color: th.sageDeep, letterSpacing: "0.08em", marginBottom: 8 }}>
+                WHY IT MATTERS
+              </div>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: th.ink }}>
+                {supp.why}
+              </p>
+            </div>
+          </div>
+
+          {/* Quick facts card */}
+          <aside style={{
+            background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16,
+            padding: 24, height: "fit-content",
+          }}>
+            <h3 style={{ ...D, fontSize: 14, ...MM, fontWeight: 600, color: th.sage, letterSpacing: "0.1em", margin: "0 0 18px" }}>
+              QUICK FACTS
+            </h3>
+            <FactRow label="Standard dose" value={supp.dose} />
+            <FactRow label="When to take" value={timingLabel(supp.timing)} />
+            <FactRow label="Approx. monthly cost" value={`$${supp.monthlyCost}`} />
+            <FactRow label="Common form" value={`${supp.brand}, ${supp.name}`} />
+            {TIMING[supp.id] && (
+              <Link href={`/timing/${supp.id}`} style={{
+                display: "block", marginTop: 16, paddingTop: 16, borderTop: `1px solid ${th.line}`,
+                fontSize: 13.5, color: th.sage, fontWeight: 600, textDecoration: "none",
+              }}>
+                Best time to take {shortName} →
+              </Link>
+            )}
+            {supp.warnings && supp.warnings.length > 0 && (
+              <div style={{ marginTop: 18, paddingTop: 18, borderTop: `1px solid ${th.line}` }}>
+                <div style={{ fontSize: 11, ...MM, color: "#b91c1c", letterSpacing: "0.08em", marginBottom: 6 }}>
+                  AVOID IF
+                </div>
+                <p style={{ margin: 0, fontSize: 13, color: th.inkSoft, lineHeight: 1.5 }}>
+                  {supp.warnings.map(w => warningLabel(w)).join(" · ")}
+                </p>
+              </div>
+            )}
+          </aside>
+        </div>
+      </section>
 
       {/* Natural food sources, only rendered when curated (no fabrication) */}
       {supp.foodSources && supp.foodSources.length > 0 && (
