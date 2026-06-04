@@ -59,7 +59,7 @@ export function SDMark({ size = 28, monoColor }: { size?: number; monoColor?: st
  * Wordmark: "suppdoc.io" with .io in accent color
  */
 export function SDWordmark({
-  size = 22, color = TH.ink, accent = TH.sage, weight = 600,
+  size = 22, color = TH.ink, accent = TH.sageDeep, weight = 600,
 }: {
   size?: number; color?: string; accent?: string; weight?: number;
 }) {
