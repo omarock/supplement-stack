@@ -12,6 +12,7 @@ import StackBox from "@/components/home/StackBox";
 import AuthCodeCatcher from "@/components/home/AuthCodeCatcher";
 import { TH, FONTS, D, SI, MM } from "@/lib/theme";
 import { STACKS } from "@/lib/stacks";
+import { SUPPLEMENT_DB } from "@/lib/supplements";
 
 // ════════════════════════════════════════════════════════════════════════════
 // Motion primitives
@@ -788,6 +789,67 @@ function CTA() {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
+// Strongest evidence, real graded ingredients (proof, not promises)
+// ════════════════════════════════════════════════════════════════════════════
+
+function StrongestEvidence() {
+  const top = SUPPLEMENT_DB.filter(s => s.evidence === "very strong").slice(0, 8);
+  if (top.length === 0) return null;
+  return (
+    <section style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <Reveal>
+          <div style={{ textAlign: "center", marginBottom: 36, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
+            <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 12 }}>The strongest evidence</div>
+            <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.02, color: TH.ink, margin: 0 }}>
+              Start with what <span style={{ ...SI, color: TH.sageDeep }}>actually works.</span>
+            </h2>
+            <p style={{ fontSize: 17, color: TH.inkSoft, lineHeight: 1.6, margin: "14px auto 0" }}>
+              The ingredients with the deepest research behind them. Every one is evidence-graded and cited, no house brand, no hype.
+            </p>
+          </div>
+        </Reveal>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 14 }}>
+          {top.map(s => (
+            <Reveal key={s.id}>
+              <Link href={`/ingredients/${s.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                <div style={{
+                  background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: 20,
+                  height: "100%", display: "flex", flexDirection: "column", gap: 8,
+                  boxShadow: `0 4px 12px ${TH.ink}05`,
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }} aria-hidden>
+                    {[0, 1, 2, 3].map(i => (
+                      <span key={i} style={{ width: 22, height: 6, borderRadius: 3, background: TH.sageDeep }} />
+                    ))}
+                  </div>
+                  <div style={{ ...MM, fontSize: 10, color: TH.sageDeep, letterSpacing: "0.06em" }}>VERY STRONG EVIDENCE</div>
+                  <div style={{ ...D, fontSize: 17, color: TH.ink, letterSpacing: "-0.01em", lineHeight: 1.25, marginTop: 2 }}>
+                    {s.name.split(" (")[0]}
+                  </div>
+                  <div style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.45 }}>{s.purpose}</div>
+                  <div style={{ ...MM, fontSize: 12, color: TH.sageDeep, fontWeight: 600, marginTop: "auto", paddingTop: 8 }}>
+                    See the evidence &rarr;
+                  </div>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+        <div style={{ textAlign: "center", marginTop: 26 }}>
+          <Link href="/ingredients" style={{
+            display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 999,
+            border: `1px solid ${TH.edgeStrong}`, color: TH.ink, textDecoration: "none", fontWeight: 600, fontSize: 14.5,
+          }}>
+            Browse all {SUPPLEMENT_DB.length} evidence-graded ingredients &rarr;
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ════════════════════════════════════════════════════════════════════════════
 // Root
 // ════════════════════════════════════════════════════════════════════════════
 
@@ -800,6 +862,8 @@ export default function HomePage() {
       <main id="main-content">
         <Hero />
         <Trust />
+        {/* Real graded ingredients early = proof, not promises (drives to /ingredients -> buy). */}
+        <StrongestEvidence />
         {/* Show the actual output early (reduces uncertainty), then the trust
             reasons, before the deeper how/ingredient detail. */}
         <Sample />
