@@ -149,7 +149,7 @@ function Hero() {
               </div>
               <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Take the quiz</div>
               <div style={{ ...SI, color: TH.sageDeep, fontSize: 14.5, marginTop: 2 }}>The fastest way in.</div>
-              <p style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Answer a few questions about how you sleep, eat, and feel. We match you to evidence-backed ingredients.</p>
+              <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Answer a few questions about how you sleep, eat, and feel. We match you to evidence-backed ingredients.</p>
               {cardSpacer}
               <div style={buylineStyle}>→ generate a stack → buy on iHerb / Amazon</div>
               <span style={triBtn}>Start the quiz →</span>
@@ -168,7 +168,7 @@ function Hero() {
               </div>
               <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Audit my stack</div>
               <div style={{ ...SI, color: "#c2410c", fontSize: 14.5, marginTop: 2 }}>Already taking supplements?</div>
-              <p style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Paste what you take today (and your bloodwork) and we score interactions, doses, and gaps, then suggest fixes.</p>
+              <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Paste what you take today (and your bloodwork) and we score interactions, doses, and gaps, then suggest fixes.</p>
               {cardSpacer}
               <div style={buylineStyle}>→ a cleaner stack → buy the upgrades</div>
               <span style={triBtn}>Audit my stack →</span>
@@ -184,11 +184,11 @@ function Hero() {
       </div>
 
       <style>{`
-        :root { --hh-pad-y: 18px; --hh-pad-b: 46px; --hh-h1: 46px; --hh-sub: 16px; --facts-cols: repeat(4, 1fr); --tri-cols: 1fr 1.18fr 1fr; }
+        :root { --hh-pad-y: 18px; --hh-pad-b: 46px; --hh-h1: 46px; --hh-sub: 17.5px; --facts-cols: repeat(4, 1fr); --tri-cols: 1fr 1.18fr 1fr; }
         .sd-hero-intro { text-align: center; }
         @media (max-width: 1024px) { :root { --hh-pad-y: 12px; --hh-pad-b: 40px; --hh-h1: 40px; --tri-cols: 1fr 1.1fr 1fr; } }
         @media (max-width: 860px)  { :root { --tri-cols: 1fr; } }
-        @media (max-width: 640px)  { :root { --hh-pad-y: 6px; --hh-pad-b: 34px; --hh-h1: 32px; --hh-sub: 14.5px; --facts-cols: repeat(2, 1fr); } }
+        @media (max-width: 640px)  { :root { --hh-pad-y: 6px; --hh-pad-b: 34px; --hh-h1: 32px; --hh-sub: 16px; --facts-cols: repeat(2, 1fr); } }
       `}</style>
     </section>
   );
@@ -218,7 +218,7 @@ function Trust() {
             ].map(n => (
               <div key={n} style={{
                 display: "flex", alignItems: "center", gap: 8,
-                fontSize: 15, color: TH.inkSoft, fontWeight: 500,
+                fontSize: 16, color: TH.inkSoft, fontWeight: 500,
               }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.5">
                   <path d="M5 12l5 5 9-11" />
@@ -352,7 +352,7 @@ function How() {
                 <h3 style={{ ...D, fontSize: 26, letterSpacing: "-0.02em", color: TH.ink, margin: 0 }}>
                   {s.title}
                 </h3>
-                <p style={{ color: TH.inkSoft, fontSize: 15, lineHeight: 1.55, margin: 0 }}>{s.body}</p>
+                <p style={{ color: TH.inkSoft, fontSize: 16, lineHeight: 1.6, margin: 0 }}>{s.body}</p>
               </div>
             </Reveal>
           ))}
@@ -458,7 +458,7 @@ function Ingredients() {
                     {it.name}
                   </h3>
                   <div style={{ fontSize: 13, color: it.c2, fontWeight: 500, marginBottom: 12 }}>{it.tag}</div>
-                  <p style={{ color: TH.inkSoft, fontSize: 15, lineHeight: 1.55, margin: 0 }}>
+                  <p style={{ color: TH.inkSoft, fontSize: 16, lineHeight: 1.6, margin: 0 }}>
                     {it.pitch}
                   </p>
                 </div>
@@ -670,7 +670,7 @@ function Testimonials() {
                   {it.title}
                 </h3>
                 <p style={{
-                  fontSize: 16, color: TH.inkSoft, lineHeight: 1.5, margin: 0,
+                  fontSize: 17, color: TH.inkSoft, lineHeight: 1.6, margin: 0,
                 }}>{it.body}</p>
               </div>
             </Reveal>
