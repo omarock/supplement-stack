@@ -32,7 +32,24 @@ Three of four categories are now a perfect 100. Performance climbed from ~70 to
 busy dev machine); PageSpeed Insights (clean env + field data) is the
 authoritative read.
 
-## Honest caveat: lab variance
+## Authoritative result (PageSpeed Insights, mobile, Google's environment)
+Confirmed 2026-06-04 on pagespeed.web.dev (the clean reference, not the busy dev machine):
+
+| Category | Score |
+|---|---|
+| Performance | **95** |
+| Accessibility | **100** |
+| Best Practices | **100** |
+| SEO | **100** |
+
+Metrics (mobile): FCP 1.0s, **TBT 20 ms**, CLS 0, Speed Index 2.3s, LCP 2.9s (the
+only non-green metric). The local Lighthouse TBT of 400-800 ms was purely CPU
+contention on the dev machine; the real TBT is 20 ms. Target met.
+
+Remaining (optional, do not affect the 95 much): render-blocking ~90ms, legacy
+JS ~14 KiB, unused JS ~117 KiB (framework + SiteHeader), LCP 2.9s -> <2.5s.
+
+## Honest caveat: lab variance (local runs only)
 Repeated runs under identical conditions returned Performance 74–80 and TBT
 410–800 ms. That spread is Lighthouse lab noise, amplified by the audit running
 on a developer machine that was simultaneously busy (CPU contention inflates
