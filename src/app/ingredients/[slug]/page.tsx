@@ -12,6 +12,7 @@ import { INTERACTIONS, interactionSlug } from "@/lib/interactions";
 import { TIMING } from "@/lib/timing";
 import { BIOMARKERS } from "@/lib/biomarkers";
 import { RESEARCH, buildStudyLink } from "@/lib/research";
+import { researchVolume } from "@/lib/research-volume";
 import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -109,6 +110,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
   const relatedInteractions = INTERACTIONS.filter(i => i.a === supp.id || i.b === supp.id).slice(0, 6);
   const relatedBiomarkers = BIOMARKERS.filter(b => (b.supplementsForLow ?? []).includes(supp.id) || (b.supplementsForHigh ?? []).includes(supp.id)).slice(0, 6);
   const hasResearch = Boolean(RESEARCH[supp.id]);
+  const rv = researchVolume(supp.id); // real PubMed clinical-study count + verifiable link
 
   const categoryLabel = supp.category ? CATEGORY_LABEL[supp.category] : "Supplement";
   const evidenceBadge = EVIDENCE_BADGE[supp.evidence];
@@ -247,6 +249,15 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
               READ THE RESEARCH
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
             </Link>
+            {rv && rv.count > 0 && (
+              <a href={rv.url} target="_blank" rel="noopener noreferrer" title={`${rv.count.toLocaleString()} randomized trials, meta-analyses and systematic reviews indexed on PubMed for ${shortName}. Click to verify.`} style={{
+                padding: "6px 14px", borderRadius: 999, fontSize: 12, fontWeight: 600,
+                background: "#eef2ff", color: "#3730a3", ...MM, letterSpacing: "0.04em",
+                textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6,
+              }}>
+                {rv.count.toLocaleString()} CLINICAL STUDIES
+              </a>
+            )}
           </div>
 
           {/* E-E-A-T: reviewer byline + last-reviewed date */}

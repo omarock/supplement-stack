@@ -15,7 +15,7 @@ import { STACKS } from "@/lib/stacks";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { getPrimaryProduct, productImage } from "@/lib/products";
 import { INTERACTIONS } from "@/lib/interactions";
-import { RESEARCH } from "@/lib/research";
+import { RESEARCH_STUDY_TOTAL, RESEARCH_VOLUME_AS_OF } from "@/lib/research-volume";
 
 // ════════════════════════════════════════════════════════════════════════════
 // Motion primitives
@@ -40,17 +40,22 @@ const GOAL_CHIPS = ["Sleep", "Energy", "Focus", "Stress", "Muscle Growth", "Long
 // Computed live from the actual datasets so the strip can never drift stale.
 const INGREDIENT_COUNT = SUPPLEMENT_DB.length;
 const INTERACTION_COUNT = INTERACTIONS.length;
-const STUDY_COUNT = Object.values(RESEARCH).reduce((n, e) => n + e.studies.length, 0);
 const FACTS: { value: number | null; display?: string; suffix?: string; label: string }[] = [
   { value: INGREDIENT_COUNT, suffix: "", label: "researched ingredients" },
-  { value: STUDY_COUNT, suffix: "+", label: "studies cited" },
+  { value: RESEARCH_STUDY_TOTAL, suffix: "+", label: "peer-reviewed studies" },
   { value: INTERACTION_COUNT, suffix: "+", label: "interactions mapped" },
   { value: null, display: "$0", label: "to get started" },
 ];
 
+// Honest provenance for the study figure: it is the live sum of randomized trials,
+// meta-analyses and systematic reviews indexed on PubMed for each ingredient. Each
+// ingredient page links to its exact source search so the number is verifiable.
+const STUDY_SOURCE_NOTE = `Peer-reviewed studies = randomized trials, meta-analyses and systematic reviews indexed on PubMed across our ${INGREDIENT_COUNT} ingredients (as of ${new Date(RESEARCH_VOLUME_AS_OF).toLocaleDateString("en-US", { month: "long", year: "numeric" })}). Each ingredient links to its source search.`;
+
 /** Premium proof counters: high-contrast numbers on white cells with hairline dividers. */
 function StatStrip() {
   return (
+    <>
     <div role="list" aria-label="Platform facts" style={{
       display: "grid", gridTemplateColumns: "var(--facts-cols)",
       background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 13, overflow: "hidden",
@@ -71,6 +76,10 @@ function StatStrip() {
         </div>
       ))}
     </div>
+    <p style={{ maxWidth: 720, margin: "8px auto 0", fontSize: 10.5, lineHeight: 1.5, color: TH.muted, textAlign: "center" }}>
+      {STUDY_SOURCE_NOTE}
+    </p>
+    </>
   );
 }
 
