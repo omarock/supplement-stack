@@ -3201,6 +3201,66 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "Doctor's Best", productName: "Glucosamine Chondroitin MSM", size: "120 veg caps", approxPrice: 20, rating: 4.7, reviewCount: 5400, badge: "Premium", searchQuery: "Doctor's Best Glucosamine Chondroitin MSM", ...tint.doctors },
     { brand: "Jarrow Formulas", productName: "Glucosamine + Chondroitin + MSM", size: "120 capsules", approxPrice: 22, rating: 4.6, reviewCount: 900, badge: "Premium", searchQuery: "Jarrow Glucosamine Chondroitin MSM", ...tint.jarrow },
   ],
+  lycopene: [
+    { brand: "Jarrow Formulas", productName: "Lycopene", size: "60 softgels", approxPrice: 14, rating: 4.6, reviewCount: 700, badge: "Bestseller", searchQuery: "Jarrow Lycopene", ...tint.jarrow },
+    { brand: "NOW Foods", productName: "Lycopene 20 mg", size: "50 softgels", approxPrice: 13, rating: 4.6, reviewCount: 600, badge: "Best Value", searchQuery: "NOW Foods Lycopene 20 mg", ...tint.now },
+    { brand: "Doctor's Best", productName: "Lycopene", size: "60 softgels", approxPrice: 15, rating: 4.6, reviewCount: 400, badge: "Premium", searchQuery: "Doctor's Best Lycopene", ...tint.doctors },
+    { brand: "Solgar", productName: "Lycopene", size: "30 softgels", approxPrice: 16, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solgar Lycopene", ...tint.solgar },
+  ],
+  feverfew: [
+    { brand: "NOW Foods", productName: "Feverfew", size: "100 veg caps", approxPrice: 11, rating: 4.6, reviewCount: 800, badge: "Bestseller", searchQuery: "NOW Foods Feverfew", ...tint.now },
+    { brand: "Nature's Way", productName: "Feverfew", size: "180 capsules", approxPrice: 12, rating: 4.6, reviewCount: 600, badge: "Best Value", searchQuery: "Nature's Way Feverfew", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Solaray", productName: "Feverfew", size: "100 veg caps", approxPrice: 13, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solaray Feverfew", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Swanson", productName: "Feverfew", size: "120 capsules", approxPrice: 9, rating: 4.5, reviewCount: 400, badge: "Premium", searchQuery: "Swanson Feverfew", brandBg: "#fef9c3", brandInk: "#854d0e" },
+  ],
+  "horse-chestnut": [
+    { brand: "NOW Foods", productName: "Horse Chestnut", size: "90 veg caps", approxPrice: 13, rating: 4.6, reviewCount: 700, badge: "Bestseller", searchQuery: "NOW Foods Horse Chestnut", ...tint.now },
+    { brand: "Nature's Way", productName: "Horse Chestnut", size: "90 capsules", approxPrice: 14, rating: 4.6, reviewCount: 500, badge: "Best Value", searchQuery: "Nature's Way Horse Chestnut", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Solaray", productName: "Horse Chestnut", size: "60 capsules", approxPrice: 15, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solaray Horse Chestnut", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Swanson", productName: "Horse Chestnut", size: "120 capsules", approxPrice: 11, rating: 4.5, reviewCount: 400, badge: "Premium", searchQuery: "Swanson Horse Chestnut", brandBg: "#fef9c3", brandInk: "#854d0e" },
+  ],
+  "aloe-vera": [
+    { brand: "NOW Foods", productName: "Aloe Vera Gels", size: "100 softgels", approxPrice: 11, rating: 4.7, reviewCount: 1200, badge: "Bestseller", searchQuery: "NOW Foods Aloe Vera Gels", ...tint.now },
+    { brand: "Lily of the Desert", productName: "Aloe Vera Juice", size: "32 fl oz", approxPrice: 12, rating: 4.7, reviewCount: 2400, badge: "Best Value", searchQuery: "Lily of the Desert Aloe Vera Juice", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Nature's Way", productName: "Aloe Vera", size: "100 capsules", approxPrice: 10, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Nature's Way Aloe Vera", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Solaray", productName: "Aloe Vera", size: "100 veg caps", approxPrice: 12, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solaray Aloe Vera", brandBg: "#fff7ed", brandInk: "#9a3412" },
+  ],
+  "slippery-elm": [
+    { brand: "NOW Foods", productName: "Slippery Elm", size: "100 veg caps", approxPrice: 10, rating: 4.7, reviewCount: 900, badge: "Bestseller", searchQuery: "NOW Foods Slippery Elm", ...tint.now },
+    { brand: "Nature's Way", productName: "Slippery Elm", size: "100 capsules", approxPrice: 11, rating: 4.6, reviewCount: 600, badge: "Best Value", searchQuery: "Nature's Way Slippery Elm", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Thayers", productName: "Slippery Elm Lozenges", size: "150 lozenges", approxPrice: 9, rating: 4.7, reviewCount: 1800, badge: "Premium", searchQuery: "Thayers Slippery Elm Lozenges", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Solaray", productName: "Slippery Elm", size: "100 veg caps", approxPrice: 12, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solaray Slippery Elm", brandBg: "#fff7ed", brandInk: "#9a3412" },
+  ],
+  lavender: [
+    { brand: "Nature's Way", productName: "CalmAid (Standardized Lavender)", size: "30 softgels", approxPrice: 18, rating: 4.5, reviewCount: 1600, badge: "Bestseller", searchQuery: "Nature's Way CalmAid lavender", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Nature's Way", productName: "Lavela WS 1265", size: "60 softgels", approxPrice: 30, rating: 4.6, reviewCount: 1200, badge: "Best Value", searchQuery: "Nature's Way Lavela WS 1265", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Herb Pharm", productName: "Lavender Extract", size: "1 fl oz", approxPrice: 13, rating: 4.5, reviewCount: 400, badge: "Premium", searchQuery: "Herb Pharm Lavender", brandBg: "#f0fdf4", brandInk: "#15803d" },
+    { brand: "Pure Encapsulations", productName: "Lavender Oil", size: "30 softgels", approxPrice: 28, rating: 4.6, reviewCount: 300, badge: "Premium", searchQuery: "Pure Encapsulations Lavender", brandBg: "#eef2ff", brandInk: "#4338ca" },
+  ],
+  "cats-claw": [
+    { brand: "NOW Foods", productName: "Cat's Claw", size: "100 veg caps", approxPrice: 11, rating: 4.7, reviewCount: 1000, badge: "Bestseller", searchQuery: "NOW Foods Cat's Claw", ...tint.now },
+    { brand: "Nature's Way", productName: "Cat's Claw", size: "100 capsules", approxPrice: 12, rating: 4.6, reviewCount: 600, badge: "Best Value", searchQuery: "Nature's Way Cat's Claw", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Solaray", productName: "Cat's Claw", size: "100 veg caps", approxPrice: 13, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solaray Cat's Claw", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Source Naturals", productName: "Cat's Claw", size: "120 tablets", approxPrice: 15, rating: 4.5, reviewCount: 250, badge: "Premium", searchQuery: "Source Naturals Cat's Claw", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+  ],
+  pomegranate: [
+    { brand: "Jarrow Formulas", productName: "Pomegranate", size: "60 softgels", approxPrice: 14, rating: 4.6, reviewCount: 500, badge: "Bestseller", searchQuery: "Jarrow Pomegranate", ...tint.jarrow },
+    { brand: "NOW Foods", productName: "Pomegranate Extract", size: "60 veg caps", approxPrice: 13, rating: 4.6, reviewCount: 600, badge: "Best Value", searchQuery: "NOW Foods Pomegranate Extract", ...tint.now },
+    { brand: "Solgar", productName: "Pomegranate", size: "60 veg caps", approxPrice: 16, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solgar Pomegranate", ...tint.solgar },
+    { brand: "Nutricost", productName: "Pomegranate Extract", size: "120 capsules", approxPrice: 16, rating: 4.5, reviewCount: 350, badge: "Premium", searchQuery: "Nutricost Pomegranate Extract", ...tint.nutricost },
+  ],
+  "bitter-melon": [
+    { brand: "Nutricost", productName: "Bitter Melon", size: "120 capsules", approxPrice: 16, rating: 4.5, reviewCount: 500, badge: "Bestseller", searchQuery: "Nutricost Bitter Melon", ...tint.nutricost },
+    { brand: "Himalaya", productName: "Bitter Melon (Karela)", size: "60 caplets", approxPrice: 13, rating: 4.5, reviewCount: 400, badge: "Best Value", searchQuery: "Himalaya Bitter Melon Karela", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Solaray", productName: "Bitter Melon", size: "100 veg caps", approxPrice: 14, rating: 4.4, reviewCount: 250, badge: "Premium", searchQuery: "Solaray Bitter Melon", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Swanson", productName: "Bitter Melon", size: "60 capsules", approxPrice: 9, rating: 4.4, reviewCount: 300, badge: "Premium", searchQuery: "Swanson Bitter Melon", brandBg: "#fef9c3", brandInk: "#854d0e" },
+  ],
+  "dong-quai": [
+    { brand: "Nature's Way", productName: "Dong Quai", size: "100 capsules", approxPrice: 11, rating: 4.6, reviewCount: 700, badge: "Bestseller", searchQuery: "Nature's Way Dong Quai", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "NOW Foods", productName: "Dong Quai", size: "100 veg caps", approxPrice: 10, rating: 4.6, reviewCount: 600, badge: "Best Value", searchQuery: "NOW Foods Dong Quai", ...tint.now },
+    { brand: "Solaray", productName: "Dong Quai", size: "180 veg caps", approxPrice: 14, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solaray Dong Quai", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Nature's Answer", productName: "Dong Quai Extract", size: "1 fl oz", approxPrice: 12, rating: 4.5, reviewCount: 200, badge: "Premium", searchQuery: "Nature's Answer Dong Quai", brandBg: "#ecfeff", brandInk: "#0e7490" },
+  ],
 };
 
 /**
