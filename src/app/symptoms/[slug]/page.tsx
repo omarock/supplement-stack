@@ -8,6 +8,7 @@ import { BIOMARKERS } from "@/lib/biomarkers";
 import { SYMPTOMS, SYMPTOM_SLUGS, symptomFor, symptomIndexable, CATEGORY_META } from "@/lib/symptoms";
 import ReviewedBy from "@/components/ReviewedBy";
 import RelatedContent from "@/components/RelatedContent";
+import ShopCTA from "@/components/ShopCTA";
 import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import { TH, FONTS } from "@/lib/theme";
 
@@ -50,6 +51,7 @@ export default async function SymptomPage({ params }: { params: Promise<{ slug: 
   if (!s) notFound();
 
   const m = CATEGORY_META[s.category];
+  const shopId = s.nutrients.find(id => SUPPLEMENT_DB.some(x => x.id === id));
   const related = SYMPTOM_SLUGS
     .filter(k => k !== slug && SYMPTOMS[k].category === s.category)
     .slice(0, 6)
@@ -130,6 +132,13 @@ export default async function SymptomPage({ params }: { params: Promise<{ slug: 
               </Link>
             ))}
           </div>
+
+          {/* Direct purchase path for the top related nutrient */}
+          {shopId && (
+            <div style={{ marginBottom: 26 }}>
+              <ShopCTA supplementId={shopId} heading={`Shop the top pick for ${s.label.toLowerCase()}`} />
+            </div>
+          )}
 
           {/* Biomarkers to check */}
           {s.biomarkers.length > 0 && (

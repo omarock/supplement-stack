@@ -9,6 +9,7 @@ import { BIOMARKER_DIRECTION } from "@/lib/biomarker-directions";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import ReviewedBy from "@/components/ReviewedBy";
 import RelatedContent from "@/components/RelatedContent";
+import ShopCTA from "@/components/ShopCTA";
 import { goalsForBiomarker, stacksForBiomarker, otherBiomarkers } from "@/lib/related";
 import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import { TH, FONTS } from "@/lib/theme";
@@ -183,6 +184,11 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
               </h2>
               <p style={{ fontSize: 13, color: TH.muted, margin: "0 0 14px" }}>Evidence-led, and only a piece of the picture, diet, lifestyle, and your clinician matter most.</p>
               {detail?.mechanism && <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.6, margin: "0 0 14px" }}>{detail.mechanism}</p>}
+              {actionSupps[0] && (
+                <div style={{ marginBottom: 14 }}>
+                  <ShopCTA supplementId={actionSupps[0]!.id} heading={`Shop the top pick for ${b.label.toLowerCase()}`} />
+                </div>
+              )}
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {actionSupps.map(s => (
                   <Link key={s!.id} href={`/ingredients/${s!.id}`} style={{
