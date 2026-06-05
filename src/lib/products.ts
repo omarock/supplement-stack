@@ -3117,6 +3117,90 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "Sovereign Laboratories", productName: "Colostrum-LD", size: "120 capsules", approxPrice: 45, rating: 4.7, reviewCount: 700, badge: "Premium", searchQuery: "Sovereign Laboratories Colostrum-LD", brandBg: "#fefce8", brandInk: "#854d0e" },
     { brand: "ARMRA", productName: "Colostrum", size: "30 sticks", approxPrice: 50, rating: 4.5, reviewCount: 1200, badge: "Premium", searchQuery: "ARMRA Colostrum", brandBg: "#f3f4f6", brandInk: "#374151" },
   ],
+  dhea: [
+    { brand: "NOW Foods", productName: "DHEA 25 mg", size: "250 veg caps", approxPrice: 11, rating: 4.7, reviewCount: 2400, badge: "Bestseller", searchQuery: "NOW Foods DHEA 25 mg", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "DHEA 25 mg", size: "90 capsules", approxPrice: 9, rating: 4.7, reviewCount: 900, badge: "Best Value", searchQuery: "Jarrow DHEA 25 mg", ...tint.jarrow },
+    { brand: "Natrol", productName: "DHEA 25 mg", size: "300 tablets", approxPrice: 14, rating: 4.6, reviewCount: 1500, badge: "Premium", searchQuery: "Natrol DHEA 25 mg", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Life Extension", productName: "DHEA 25 mg", size: "100 capsules", approxPrice: 12, rating: 4.7, reviewCount: 700, badge: "Premium", searchQuery: "Life Extension DHEA 25 mg", brandBg: "#fef2f2", brandInk: "#b91c1c" },
+  ],
+  "d-mannose": [
+    { brand: "NOW Foods", productName: "D-Mannose Powder", size: "170 g", approxPrice: 16, rating: 4.7, reviewCount: 3000, badge: "Bestseller", searchQuery: "NOW Foods D-Mannose powder", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "D-Mannose", size: "120 veg caps", approxPrice: 18, rating: 4.7, reviewCount: 1400, badge: "Best Value", searchQuery: "Jarrow D-Mannose", ...tint.jarrow },
+    { brand: "Solaray", productName: "D-Mannose", size: "60 veg caps", approxPrice: 15, rating: 4.6, reviewCount: 600, badge: "Premium", searchQuery: "Solaray D-Mannose", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Nature's Way", productName: "D-Mannose", size: "60 capsules", approxPrice: 17, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Nature's Way D-Mannose", brandBg: "#ecfdf5", brandInk: "#047857" },
+  ],
+  bromelain: [
+    { brand: "Doctor's Best", productName: "Bromelain 3000 GDU", size: "90 veg caps", approxPrice: 14, rating: 4.7, reviewCount: 1600, badge: "Bestseller", searchQuery: "Doctor's Best Bromelain 3000", ...tint.doctors },
+    { brand: "NOW Foods", productName: "Bromelain", size: "120 veg caps", approxPrice: 16, rating: 4.7, reviewCount: 1200, badge: "Best Value", searchQuery: "NOW Foods Bromelain", ...tint.now },
+    { brand: "Source Naturals", productName: "Bromelain", size: "120 tablets", approxPrice: 18, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Source Naturals Bromelain", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+    { brand: "Solaray", productName: "Bromelain", size: "100 veg caps", approxPrice: 13, rating: 4.6, reviewCount: 400, badge: "Premium", searchQuery: "Solaray Bromelain", brandBg: "#fff7ed", brandInk: "#9a3412" },
+  ],
+  serrapeptase: [
+    { brand: "Doctor's Best", productName: "Serrapeptase 40,000 SPU", size: "90 veg caps", approxPrice: 17, rating: 4.6, reviewCount: 1300, badge: "Bestseller", searchQuery: "Doctor's Best Serrapeptase 40000", ...tint.doctors },
+    { brand: "NOW Foods", productName: "Serrapeptase", size: "60 veg caps", approxPrice: 14, rating: 4.6, reviewCount: 900, badge: "Best Value", searchQuery: "NOW Foods Serrapeptase", ...tint.now },
+    { brand: "Arthur Andrew", productName: "Serretia (Serrapeptase)", size: "90 capsules", approxPrice: 40, rating: 4.7, reviewCount: 700, badge: "Premium", searchQuery: "Arthur Andrew Serretia", brandBg: "#ecfeff", brandInk: "#0e7490" },
+    { brand: "Source Naturals", productName: "Serrapeptase", size: "60 tablets", approxPrice: 16, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Source Naturals Serrapeptase", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+  ],
+  "l-lysine": [
+    { brand: "NOW Foods", productName: "L-Lysine 1000 mg", size: "100 tablets", approxPrice: 9, rating: 4.8, reviewCount: 3000, badge: "Bestseller", searchQuery: "NOW Foods L-Lysine 1000", ...tint.now },
+    { brand: "Doctor's Best", productName: "L-Lysine", size: "180 veg caps", approxPrice: 13, rating: 4.7, reviewCount: 600, badge: "Best Value", searchQuery: "Doctor's Best L-Lysine", ...tint.doctors },
+    { brand: "Solgar", productName: "L-Lysine 1000 mg", size: "100 tablets", approxPrice: 14, rating: 4.7, reviewCount: 800, badge: "Premium", searchQuery: "Solgar L-Lysine 1000", ...tint.solgar },
+    { brand: "Nature's Way", productName: "L-Lysine", size: "100 capsules", approxPrice: 10, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Nature's Way L-Lysine", brandBg: "#ecfdf5", brandInk: "#047857" },
+  ],
+  "black-seed-oil": [
+    { brand: "Amazing Herbs", productName: "Black Seed Oil", size: "8 fl oz", approxPrice: 20, rating: 4.6, reviewCount: 2200, badge: "Bestseller", searchQuery: "Amazing Herbs Black Seed Oil", brandBg: "#f5f5f4", brandInk: "#44403c" },
+    { brand: "Sports Research", productName: "Black Seed Oil", size: "90 softgels", approxPrice: 19, rating: 4.6, reviewCount: 1500, badge: "Best Value", searchQuery: "Sports Research Black Seed Oil", ...tint.sr },
+    { brand: "NOW Foods", productName: "Black Cumin Seed Oil", size: "100 softgels", approxPrice: 16, rating: 4.6, reviewCount: 900, badge: "Premium", searchQuery: "NOW Foods Black Cumin Seed Oil", ...tint.now },
+    { brand: "Zhou Nutrition", productName: "Black Seed Oil", size: "60 softgels", approxPrice: 17, rating: 4.5, reviewCount: 800, badge: "Premium", searchQuery: "Zhou Black Seed Oil", brandBg: "#eef2ff", brandInk: "#4338ca" },
+  ],
+  "sea-moss": [
+    { brand: "Sports Research", productName: "Sea Moss", size: "90 softgels", approxPrice: 20, rating: 4.5, reviewCount: 1400, badge: "Bestseller", searchQuery: "Sports Research Sea Moss", ...tint.sr },
+    { brand: "Nutricost", productName: "Sea Moss", size: "240 capsules", approxPrice: 22, rating: 4.5, reviewCount: 900, badge: "Best Value", searchQuery: "Nutricost Sea Moss", ...tint.nutricost },
+    { brand: "Double Wood", productName: "Sea Moss", size: "120 capsules", approxPrice: 19, rating: 4.5, reviewCount: 600, badge: "Premium", searchQuery: "Double Wood Sea Moss", brandBg: "#f5f3ff", brandInk: "#6d28d9" },
+    { brand: "MaryRuth's", productName: "Sea Moss Capsules", size: "60 capsules", approxPrice: 25, rating: 4.4, reviewCount: 400, badge: "Premium", searchQuery: "MaryRuth's Sea Moss", brandBg: "#fdf4ff", brandInk: "#a21caf" },
+  ],
+  "beta-sitosterol": [
+    { brand: "NOW Foods", productName: "Beta-Sitosterol Plant Sterols", size: "90 softgels", approxPrice: 14, rating: 4.7, reviewCount: 1100, badge: "Bestseller", searchQuery: "NOW Foods Beta-Sitosterol", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "Plant Sterols", size: "60 veg caps", approxPrice: 16, rating: 4.6, reviewCount: 500, badge: "Best Value", searchQuery: "Jarrow Plant Sterols", ...tint.jarrow },
+    { brand: "Source Naturals", productName: "Phytosterol Complex", size: "90 tablets", approxPrice: 18, rating: 4.6, reviewCount: 400, badge: "Premium", searchQuery: "Source Naturals Phytosterol Complex", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+    { brand: "Solaray", productName: "Beta-Sitosterol", size: "60 veg caps", approxPrice: 15, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solaray Beta-Sitosterol", brandBg: "#fff7ed", brandInk: "#9a3412" },
+  ],
+  pygeum: [
+    { brand: "NOW Foods", productName: "Pygeum Extract", size: "60 veg caps", approxPrice: 15, rating: 4.6, reviewCount: 900, badge: "Bestseller", searchQuery: "NOW Foods Pygeum", ...tint.now },
+    { brand: "Swanson", productName: "Pygeum", size: "100 capsules", approxPrice: 14, rating: 4.5, reviewCount: 600, badge: "Best Value", searchQuery: "Swanson Pygeum", brandBg: "#fef9c3", brandInk: "#854d0e" },
+    { brand: "Solaray", productName: "Pygeum", size: "60 capsules", approxPrice: 16, rating: 4.5, reviewCount: 400, badge: "Premium", searchQuery: "Solaray Pygeum", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Source Naturals", productName: "Pygeum Extract", size: "50 tablets", approxPrice: 17, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Source Naturals Pygeum", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+  ],
+  "calcium-d-glucarate": [
+    { brand: "NOW Foods", productName: "Calcium D-Glucarate", size: "90 veg caps", approxPrice: 20, rating: 4.7, reviewCount: 800, badge: "Bestseller", searchQuery: "NOW Foods Calcium D-Glucarate", ...tint.now },
+    { brand: "Source Naturals", productName: "Calcium D-Glucarate", size: "120 tablets", approxPrice: 22, rating: 4.6, reviewCount: 400, badge: "Best Value", searchQuery: "Source Naturals Calcium D-Glucarate", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+    { brand: "Thorne", productName: "Calcium D-Glucarate", size: "90 capsules", approxPrice: 30, rating: 4.7, reviewCount: 600, badge: "Premium", searchQuery: "Thorne Calcium D-Glucarate", ...tint.thorne },
+    { brand: "Jarrow Formulas", productName: "Calcium D-Glucarate", size: "90 capsules", approxPrice: 24, rating: 4.6, reviewCount: 300, badge: "Premium", searchQuery: "Jarrow Calcium D-Glucarate", ...tint.jarrow },
+  ],
+  "horny-goat-weed": [
+    { brand: "NOW Foods", productName: "Horny Goat Weed Extract", size: "90 veg caps", approxPrice: 13, rating: 4.5, reviewCount: 1200, badge: "Bestseller", searchQuery: "NOW Foods Horny Goat Weed", ...tint.now },
+    { brand: "Horbaach", productName: "Horny Goat Weed", size: "200 capsules", approxPrice: 16, rating: 4.5, reviewCount: 900, badge: "Best Value", searchQuery: "Horbaach Horny Goat Weed", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Nature's Way", productName: "Horny Goat Weed", size: "60 capsules", approxPrice: 12, rating: 4.4, reviewCount: 500, badge: "Premium", searchQuery: "Nature's Way Horny Goat Weed", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Solaray", productName: "Horny Goat Weed", size: "60 veg caps", approxPrice: 14, rating: 4.4, reviewCount: 300, badge: "Premium", searchQuery: "Solaray Horny Goat Weed", brandBg: "#fff7ed", brandInk: "#9a3412" },
+  ],
+  propolis: [
+    { brand: "NOW Foods", productName: "Propolis", size: "100 veg caps", approxPrice: 13, rating: 4.7, reviewCount: 1100, badge: "Bestseller", searchQuery: "NOW Foods Propolis", ...tint.now },
+    { brand: "Y.S. Eco Bee Farms", productName: "Propolis", size: "2 fl oz", approxPrice: 11, rating: 4.7, reviewCount: 800, badge: "Best Value", searchQuery: "Y.S. Eco Bee Farms Propolis", brandBg: "#fef9c3", brandInk: "#854d0e" },
+    { brand: "Comvita", productName: "Propolis", size: "60 capsules", approxPrice: 20, rating: 4.7, reviewCount: 600, badge: "Premium", searchQuery: "Comvita Propolis", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Beekeeper's Naturals", productName: "Propolis Throat Spray", size: "30 ml", approxPrice: 17, rating: 4.6, reviewCount: 1400, badge: "Premium", searchQuery: "Beekeeper's Naturals Propolis Spray", brandBg: "#fffbeb", brandInk: "#b45309" },
+  ],
+  "devils-claw": [
+    { brand: "NOW Foods", productName: "Devil's Claw", size: "100 veg caps", approxPrice: 12, rating: 4.6, reviewCount: 800, badge: "Bestseller", searchQuery: "NOW Foods Devil's Claw", ...tint.now },
+    { brand: "Nature's Way", productName: "Devil's Claw", size: "100 capsules", approxPrice: 13, rating: 4.6, reviewCount: 500, badge: "Best Value", searchQuery: "Nature's Way Devil's Claw", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Solaray", productName: "Devil's Claw", size: "100 veg caps", approxPrice: 13, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solaray Devil's Claw", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "Oregon's Wild Harvest", productName: "Devil's Claw", size: "90 capsules", approxPrice: 18, rating: 4.6, reviewCount: 200, badge: "Premium", searchQuery: "Oregon's Wild Harvest Devil's Claw", brandBg: "#f0fdf4", brandInk: "#15803d" },
+  ],
+  chondroitin: [
+    { brand: "NOW Foods", productName: "Chondroitin Sulfate", size: "120 capsules", approxPrice: 20, rating: 4.6, reviewCount: 700, badge: "Bestseller", searchQuery: "NOW Foods Chondroitin Sulfate", ...tint.now },
+    { brand: "21st Century", productName: "Chondroitin", size: "60 tablets", approxPrice: 14, rating: 4.5, reviewCount: 400, badge: "Best Value", searchQuery: "21st Century Chondroitin", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+    { brand: "Doctor's Best", productName: "Glucosamine Chondroitin MSM", size: "120 veg caps", approxPrice: 20, rating: 4.7, reviewCount: 5400, badge: "Premium", searchQuery: "Doctor's Best Glucosamine Chondroitin MSM", ...tint.doctors },
+    { brand: "Jarrow Formulas", productName: "Glucosamine + Chondroitin + MSM", size: "120 capsules", approxPrice: 22, rating: 4.6, reviewCount: 900, badge: "Premium", searchQuery: "Jarrow Glucosamine Chondroitin MSM", ...tint.jarrow },
+  ],
 };
 
 /**

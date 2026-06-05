@@ -678,5 +678,9 @@ function warningLabel(w: string): string {
     "shellfish-allergy": "shellfish allergy",
     bipolar: "bipolar disorder",
     ssri: "taking SSRIs/MAOIs",
+    "hormone-sensitive": "managing a hormone-sensitive condition",
+    medications: "taking prescription medication",
+    "bee-allergy": "allergic to bees or bee products",
+    "stomach-ulcers": "prone to stomach ulcers",
   }[w] ?? w;
 }
