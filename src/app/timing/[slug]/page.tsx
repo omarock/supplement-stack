@@ -7,6 +7,7 @@ import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { TIMING, TIMING_IDS, timingFor, timingIndexable, WINDOW_META } from "@/lib/timing";
 import ReviewedBy from "@/components/ReviewedBy";
 import RelatedContent from "@/components/RelatedContent";
+import ShopCTA from "@/components/ShopCTA";
 import { goalsForIngredient, biomarkersForIngredient, interactionsForIngredient } from "@/lib/related";
 import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
 import { TH, FONTS } from "@/lib/theme";
@@ -145,15 +146,10 @@ export default async function TimingPage({ params }: { params: Promise<{ slug: s
             </div>
           )}
 
-          {/* Ingredient link */}
-          <Link href={`/ingredients/${slug}`} style={{
-            display: "block", background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 14,
-            padding: "16px 18px", textDecoration: "none", color: "inherit", marginBottom: 28,
-          }}>
-            <div style={{ ...MM, fontSize: 10, color: TH.mutedDim, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 4 }}>Full guide</div>
-            <div style={{ ...D, fontSize: 16, color: TH.ink }}>{name}: benefits, dose &amp; evidence</div>
-            <span style={{ fontSize: 12.5, color: TH.sageDeep, fontWeight: 600 }}>Read the ingredient guide →</span>
-          </Link>
+          {/* Shop the recommended product (direct buy path) + full guide link */}
+          <div style={{ marginBottom: 28 }}>
+            <ShopCTA supplementId={slug} heading={`Shop ${name}`} />
+          </div>
 
           {/* FAQ (visible + matches JSON-LD) */}
           <section style={{ marginBottom: 28 }}>
