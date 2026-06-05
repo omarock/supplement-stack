@@ -3057,6 +3057,66 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "Nutricost", productName: "Shilajit Extract", size: "180 capsules", approxPrice: 25, rating: 4.5, reviewCount: 600, badge: "Best Value", searchQuery: "Nutricost Shilajit Extract", ...tint.nutricost },
     { brand: "Double Wood", productName: "Shilajit", size: "120 capsules", approxPrice: 26, rating: 4.5, reviewCount: 500, badge: "Premium", searchQuery: "Double Wood Shilajit", brandBg: "#f5f3ff", brandInk: "#6d28d9" },
   ],
+  caffeine: [
+    { brand: "NOW Foods", productName: "Caffeine + L-Theanine", size: "90 veg caps", approxPrice: 9, rating: 4.7, reviewCount: 2200, badge: "Bestseller", searchQuery: "NOW Foods Caffeine L-Theanine", ...tint.now },
+    { brand: "Nutricost", productName: "Caffeine 200 mg", size: "250 capsules", approxPrice: 14, rating: 4.7, reviewCount: 1600, badge: "Best Value", searchQuery: "Nutricost Caffeine 200", ...tint.nutricost },
+    { brand: "Sports Research", productName: "Caffeine + L-Theanine", size: "60 capsules", approxPrice: 16, rating: 4.6, reviewCount: 900, badge: "Premium", searchQuery: "Sports Research Caffeine L-Theanine", ...tint.sr },
+    { brand: "ProLab", productName: "Caffeine 200 mg", size: "100 tablets", approxPrice: 9, rating: 4.7, reviewCount: 1100, badge: "Premium", searchQuery: "ProLab Caffeine 200", brandBg: "#fee2e2", brandInk: "#b91c1c" },
+  ],
+  "sam-e": [
+    { brand: "Jarrow Formulas", productName: "SAM-e 400 mg", size: "60 tablets", approxPrice: 40, rating: 4.6, reviewCount: 2400, badge: "Bestseller", searchQuery: "Jarrow SAM-e 400", ...tint.jarrow },
+    { brand: "Doctor's Best", productName: "SAM-e 400 mg", size: "60 veg caps", approxPrice: 35, rating: 4.6, reviewCount: 1500, badge: "Best Value", searchQuery: "Doctor's Best SAM-e 400", ...tint.doctors },
+    { brand: "NOW Foods", productName: "SAM-e 400 mg", size: "60 tablets", approxPrice: 42, rating: 4.6, reviewCount: 1100, badge: "Premium", searchQuery: "NOW Foods SAM-e 400", ...tint.now },
+    { brand: "Nature Made", productName: "SAM-e 400 mg", size: "36 tablets", approxPrice: 30, rating: 4.5, reviewCount: 800, badge: "Premium", searchQuery: "Nature Made SAM-e 400", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+  ],
+  "st-johns-wort": [
+    { brand: "Nature's Way", productName: "St. John's Wort", size: "180 veg caps", approxPrice: 14, rating: 4.6, reviewCount: 1900, badge: "Bestseller", searchQuery: "Nature's Way St. John's Wort", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "NOW Foods", productName: "St. John's Wort", size: "250 veg caps", approxPrice: 13, rating: 4.6, reviewCount: 1200, badge: "Best Value", searchQuery: "NOW Foods St. John's Wort", ...tint.now },
+    { brand: "Gaia Herbs", productName: "St. John's Wort", size: "60 capsules", approxPrice: 20, rating: 4.6, reviewCount: 600, badge: "Premium", searchQuery: "Gaia Herbs St. John's Wort", brandBg: "#f0fdf4", brandInk: "#15803d" },
+    { brand: "Nature's Bounty", productName: "St. John's Wort", size: "150 capsules", approxPrice: 12, rating: 4.5, reviewCount: 800, badge: "Premium", searchQuery: "Nature's Bounty St. John's Wort", brandBg: "#fff7ed", brandInk: "#9a3412" },
+  ],
+  chamomile: [
+    { brand: "NOW Foods", productName: "Chamomile", size: "90 veg caps", approxPrice: 11, rating: 4.7, reviewCount: 1300, badge: "Bestseller", searchQuery: "NOW Foods Chamomile", ...tint.now },
+    { brand: "Nature's Way", productName: "Chamomile", size: "100 veg caps", approxPrice: 10, rating: 4.6, reviewCount: 900, badge: "Best Value", searchQuery: "Nature's Way Chamomile", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Gaia Herbs", productName: "Chamomile", size: "60 capsules", approxPrice: 16, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Gaia Herbs Chamomile", brandBg: "#f0fdf4", brandInk: "#15803d" },
+    { brand: "Traditional Medicinals", productName: "Chamomile Tea", size: "16 tea bags", approxPrice: 5, rating: 4.8, reviewCount: 4200, badge: "Premium", searchQuery: "Traditional Medicinals Chamomile tea", brandBg: "#fef9c3", brandInk: "#854d0e" },
+  ],
+  "grape-seed": [
+    { brand: "NOW Foods", productName: "Grape Seed Extract", size: "90 veg caps", approxPrice: 13, rating: 4.7, reviewCount: 1600, badge: "Bestseller", searchQuery: "NOW Foods Grape Seed Extract", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "Grape Seed Extract", size: "100 veg caps", approxPrice: 16, rating: 4.7, reviewCount: 900, badge: "Premium", searchQuery: "Jarrow Grape Seed Extract", ...tint.jarrow },
+    { brand: "Nutricost", productName: "Grape Seed Extract", size: "240 capsules", approxPrice: 20, rating: 4.6, reviewCount: 600, badge: "Best Value", searchQuery: "Nutricost Grape Seed Extract", ...tint.nutricost },
+    { brand: "Solgar", productName: "Grape Seed Extract", size: "60 veg caps", approxPrice: 14, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Solgar Grape Seed Extract", ...tint.solgar },
+  ],
+  "green-coffee-bean": [
+    { brand: "NOW Foods", productName: "Green Coffee Extract", size: "90 veg caps", approxPrice: 14, rating: 4.6, reviewCount: 1100, badge: "Bestseller", searchQuery: "NOW Foods Green Coffee Extract", ...tint.now },
+    { brand: "Nutricost", productName: "Green Coffee Bean Extract", size: "120 capsules", approxPrice: 16, rating: 4.6, reviewCount: 700, badge: "Best Value", searchQuery: "Nutricost Green Coffee Bean", ...tint.nutricost },
+    { brand: "Source Naturals", productName: "Green Coffee Extract", size: "60 tablets", approxPrice: 15, rating: 4.5, reviewCount: 500, badge: "Premium", searchQuery: "Source Naturals Green Coffee Extract", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+    { brand: "Sports Research", productName: "Green Coffee Bean", size: "90 softgels", approxPrice: 19, rating: 4.5, reviewCount: 400, badge: "Premium", searchQuery: "Sports Research Green Coffee Bean", ...tint.sr },
+  ],
+  glucomannan: [
+    { brand: "NOW Foods", productName: "Glucomannan", size: "180 veg caps", approxPrice: 12, rating: 4.6, reviewCount: 1400, badge: "Bestseller", searchQuery: "NOW Foods Glucomannan", ...tint.now },
+    { brand: "Nutricost", productName: "Glucomannan", size: "240 capsules", approxPrice: 16, rating: 4.6, reviewCount: 800, badge: "Best Value", searchQuery: "Nutricost Glucomannan", ...tint.nutricost },
+    { brand: "Double Wood", productName: "Glucomannan", size: "180 capsules", approxPrice: 18, rating: 4.5, reviewCount: 500, badge: "Premium", searchQuery: "Double Wood Glucomannan", brandBg: "#f5f3ff", brandInk: "#6d28d9" },
+    { brand: "Source Naturals", productName: "Glucomannan", size: "120 tablets", approxPrice: 14, rating: 4.5, reviewCount: 400, badge: "Premium", searchQuery: "Source Naturals Glucomannan", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+  ],
+  "apple-cider-vinegar": [
+    { brand: "NOW Foods", productName: "Apple Cider Vinegar", size: "180 veg caps", approxPrice: 10, rating: 4.7, reviewCount: 2100, badge: "Bestseller", searchQuery: "NOW Foods Apple Cider Vinegar", ...tint.now },
+    { brand: "Bragg", productName: "Organic Apple Cider Vinegar", size: "16 fl oz", approxPrice: 6, rating: 4.8, reviewCount: 8800, badge: "Best Value", searchQuery: "Bragg Apple Cider Vinegar", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Nutricost", productName: "Apple Cider Vinegar", size: "240 capsules", approxPrice: 14, rating: 4.6, reviewCount: 600, badge: "Premium", searchQuery: "Nutricost Apple Cider Vinegar", ...tint.nutricost },
+    { brand: "Goli", productName: "Apple Cider Vinegar Gummies", size: "60 gummies", approxPrice: 19, rating: 4.6, reviewCount: 5400, badge: "Premium", searchQuery: "Goli Apple Cider Vinegar Gummies", brandBg: "#fef9c3", brandInk: "#854d0e" },
+  ],
+  "betaine-hcl": [
+    { brand: "NOW Foods", productName: "Betaine HCl", size: "120 veg caps", approxPrice: 14, rating: 4.7, reviewCount: 2600, badge: "Bestseller", searchQuery: "NOW Foods Betaine HCl", ...tint.now },
+    { brand: "Thorne", productName: "Betaine HCl & Pepsin", size: "225 capsules", approxPrice: 25, rating: 4.7, reviewCount: 1100, badge: "Premium", searchQuery: "Thorne Betaine HCl Pepsin", ...tint.thorne },
+    { brand: "Doctor's Best", productName: "Betaine HCl Pepsin & Gentian", size: "120 caps", approxPrice: 16, rating: 4.6, reviewCount: 800, badge: "Best Value", searchQuery: "Doctor's Best Betaine HCl Pepsin", ...tint.doctors },
+    { brand: "Solaray", productName: "HCl with Pepsin", size: "100 veg caps", approxPrice: 13, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Solaray Betaine HCl Pepsin", brandBg: "#fff7ed", brandInk: "#9a3412" },
+  ],
+  colostrum: [
+    { brand: "California Gold Nutrition", productName: "Colostrum", size: "60 veg caps", approxPrice: 20, rating: 4.6, reviewCount: 1300, badge: "Bestseller", searchQuery: "California Gold Nutrition Colostrum", ...tint.cgn },
+    { brand: "NOW Foods", productName: "Colostrum", size: "120 veg caps", approxPrice: 24, rating: 4.6, reviewCount: 900, badge: "Best Value", searchQuery: "NOW Foods Colostrum", ...tint.now },
+    { brand: "Sovereign Laboratories", productName: "Colostrum-LD", size: "120 capsules", approxPrice: 45, rating: 4.7, reviewCount: 700, badge: "Premium", searchQuery: "Sovereign Laboratories Colostrum-LD", brandBg: "#fefce8", brandInk: "#854d0e" },
+    { brand: "ARMRA", productName: "Colostrum", size: "30 sticks", approxPrice: 50, rating: 4.5, reviewCount: 1200, badge: "Premium", searchQuery: "ARMRA Colostrum", brandBg: "#f3f4f6", brandInk: "#374151" },
+  ],
 };
 
 /**
