@@ -9,6 +9,7 @@ import Link from "next/link";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { getPrimaryProduct, productImage, type ProductOption } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
+import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import { TH, FONTS } from "@/lib/theme";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -25,6 +26,7 @@ export default function ShopCTA({ supplementId, heading }: { supplementId: strin
   };
   const img = productImage(p);
   const href = p.productPath ? iherbProductLink(p.productPath) : iherbLink(p.searchQuery ?? supp.iherbSearch);
+  const amazonHref = p.amazonAsin ? amazonProductLink(p.amazonAsin) : amazonLink(p.searchQuery ?? `${p.brand} ${p.productName}`);
 
   return (
     <div>
@@ -51,6 +53,13 @@ export default function ShopCTA({ supplementId, heading }: { supplementId: strin
             padding: "12px 20px", borderRadius: 12, background: TH.ink, color: "#fff", textDecoration: "none",
             ...D, fontSize: 14, boxShadow: `0 8px 20px -6px ${TH.ink}55`,
           }}>Buy on iHerb &rarr;</a>
+          {amazonEnabled() && (
+            <a href={amazonHref} target="_blank" rel="noopener noreferrer sponsored" style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+              padding: "11px 20px", borderRadius: 12, background: "#fff", color: TH.ink,
+              border: `1px solid ${TH.edge}`, textDecoration: "none", ...D, fontSize: 14,
+            }}>Buy on Amazon &rarr;</a>
+          )}
           <Link href={`/ingredients/${supp.id}`} style={{ textAlign: "center", fontSize: 13, color: TH.sageDeep, fontWeight: 600, textDecoration: "none" }}>
             See the full {name} guide &rarr;
           </Link>

@@ -30,7 +30,7 @@ const NAV: NavGroup[] = [
     label: "Start",
     items: [
       { label: "Personalised quiz", href: "/quiz", desc: "Personalised recommendation" },
-      { label: "Build a stack", href: "/build", desc: "From 151 researched ingredients" },
+      { label: "Build a stack", href: "/build", desc: "From 200+ researched ingredients" },
       { label: "Audit my stack", href: "/audit", desc: "Score what you already take" },
       { label: "Bloodwork", href: "/bloodwork", desc: "Read your labs into a plan" },
     ],
@@ -40,7 +40,7 @@ const NAV: NavGroup[] = [
     items: [
       { label: "Best for your goal", href: "/best", desc: "Best supplements for sleep, energy…" },
       { label: "Supplements for symptoms", href: "/symptoms", desc: "Tired, foggy, cramping? What to check" },
-      { label: "Ingredients", href: "/ingredients", desc: "151 evidence-graded guides" },
+      { label: "Ingredients", href: "/ingredients", desc: "200+ evidence-graded guides" },
       { label: "Interactions", href: "/interactions", desc: "What works together & what to separate" },
       { label: "Supplement timing", href: "/timing", desc: "Best time to take each supplement" },
       { label: "Biomarkers", href: "/biomarkers", desc: "What your blood test means" },

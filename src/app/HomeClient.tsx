@@ -14,6 +14,8 @@ import { TH, FONTS, D, SI, MM } from "@/lib/theme";
 import { STACKS } from "@/lib/stacks";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { getPrimaryProduct, productImage } from "@/lib/products";
+import { INTERACTIONS } from "@/lib/interactions";
+import { RESEARCH } from "@/lib/research";
 
 // ════════════════════════════════════════════════════════════════════════════
 // Motion primitives
@@ -35,10 +37,14 @@ function Reveal({ children, style }: {
 const GOAL_CHIPS = ["Sleep", "Energy", "Focus", "Stress", "Muscle Growth", "Longevity"];
 
 // Real, verifiable platform numbers (no fabrication) for the proof strip.
+// Computed live from the actual datasets so the strip can never drift stale.
+const INGREDIENT_COUNT = SUPPLEMENT_DB.length;
+const INTERACTION_COUNT = INTERACTIONS.length;
+const STUDY_COUNT = Object.values(RESEARCH).reduce((n, e) => n + e.studies.length, 0);
 const FACTS: { value: number | null; display?: string; suffix?: string; label: string }[] = [
-  { value: 151, suffix: "", label: "researched ingredients" },
-  { value: 107, suffix: "+", label: "studies cited" },
-  { value: 148, suffix: "+", label: "interactions mapped" },
+  { value: INGREDIENT_COUNT, suffix: "", label: "researched ingredients" },
+  { value: STUDY_COUNT, suffix: "+", label: "studies cited" },
+  { value: INTERACTION_COUNT, suffix: "+", label: "interactions mapped" },
   { value: null, display: "$0", label: "to get started" },
 ];
 
