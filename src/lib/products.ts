@@ -2961,6 +2961,42 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "NOW Foods", productName: "Glutathione 500 mg", size: "60 veg caps", approxPrice: 30, rating: 4.7, reviewCount: 1700, badge: "Best Value", searchQuery: "NOW Foods Glutathione 500", ...tint.now },
     { brand: "Jarrow Formulas", productName: "Reduced Glutathione 500 mg", size: "60 veg caps", approxPrice: 28, rating: 4.7, reviewCount: 2200, badge: "Premium", searchQuery: "Jarrow Reduced Glutathione 500", ...tint.jarrow },
   ],
+  "turkey-tail": [
+    { brand: "Real Mushrooms", productName: "Turkey Tail Extract", size: "120 capsules", approxPrice: 30, rating: 4.8, reviewCount: 2400, badge: "Bestseller", searchQuery: "Real Mushrooms Turkey Tail", brandBg: "#fefce8", brandInk: "#854d0e" },
+    { brand: "Host Defense", productName: "Turkey Tail", size: "120 capsules", approxPrice: 40, rating: 4.7, reviewCount: 1600, badge: "Premium", searchQuery: "Host Defense Turkey Tail", brandBg: "#f0fdf4", brandInk: "#3f6212" },
+    { brand: "NOW Foods", productName: "Turkey Tail", size: "90 veg caps", approxPrice: 20, rating: 4.7, reviewCount: 900, badge: "Best Value", searchQuery: "NOW Foods Turkey Tail", ...tint.now },
+    { brand: "Nutricost", productName: "Turkey Tail Mushroom", size: "180 capsules", approxPrice: 22, rating: 4.6, reviewCount: 700, badge: "Premium", searchQuery: "Nutricost Turkey Tail", ...tint.nutricost },
+  ],
+  tremella: [
+    { brand: "Real Mushrooms", productName: "Tremella Extract", size: "120 capsules", approxPrice: 30, rating: 4.7, reviewCount: 1200, badge: "Bestseller", searchQuery: "Real Mushrooms Tremella", brandBg: "#fefce8", brandInk: "#854d0e" },
+    { brand: "Nutricost", productName: "Tremella Mushroom", size: "180 capsules", approxPrice: 20, rating: 4.6, reviewCount: 600, badge: "Best Value", searchQuery: "Nutricost Tremella", ...tint.nutricost },
+    { brand: "Double Wood", productName: "Tremella Mushroom", size: "90 capsules", approxPrice: 24, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Double Wood Tremella", brandBg: "#f5f3ff", brandInk: "#6d28d9" },
+    { brand: "Teelixir", productName: "Tremella Powder", size: "100 g", approxPrice: 35, rating: 4.7, reviewCount: 400, badge: "Premium", searchQuery: "Teelixir Tremella", brandBg: "#fdf2f8", brandInk: "#9d174d" },
+  ],
+  "oregano-oil": [
+    { brand: "NOW Foods", productName: "Oregano Oil softgels", size: "90 softgels", approxPrice: 14, rating: 4.7, reviewCount: 5200, badge: "Bestseller", searchQuery: "NOW Foods Oregano Oil softgels", ...tint.now },
+    { brand: "North American Herb & Spice", productName: "Oreganol P73", size: "1 fl oz", approxPrice: 30, rating: 4.8, reviewCount: 2100, badge: "Premium", searchQuery: "Oreganol P73 oil of oregano", brandBg: "#fff7ed", brandInk: "#9a3412" },
+    { brand: "California Gold Nutrition", productName: "Oregano Oil", size: "90 softgels", approxPrice: 10, rating: 4.6, reviewCount: 1400, badge: "Best Value", searchQuery: "California Gold Nutrition Oregano Oil", ...tint.cgn },
+    { brand: "Gaia Herbs", productName: "Oil of Oregano", size: "60 capsules", approxPrice: 25, rating: 4.7, reviewCount: 1100, badge: "Premium", searchQuery: "Gaia Herbs Oil of Oregano", brandBg: "#f0fdf4", brandInk: "#15803d" },
+  ],
+  "olive-leaf": [
+    { brand: "NOW Foods", productName: "Olive Leaf Extract", size: "120 veg caps", approxPrice: 13, rating: 4.7, reviewCount: 3100, badge: "Bestseller", searchQuery: "NOW Foods Olive Leaf Extract", ...tint.now },
+    { brand: "Solgar", productName: "Olive Leaf Extract", size: "60 veg caps", approxPrice: 16, rating: 4.7, reviewCount: 1200, badge: "Premium", searchQuery: "Solgar Olive Leaf Extract", ...tint.solgar },
+    { brand: "Gaia Herbs", productName: "Olive Leaf", size: "60 capsules", approxPrice: 22, rating: 4.7, reviewCount: 900, badge: "Premium", searchQuery: "Gaia Herbs Olive Leaf", brandBg: "#f0fdf4", brandInk: "#15803d" },
+    { brand: "Nature's Way", productName: "Olive Leaf 20% Oleuropein", size: "60 veg caps", approxPrice: 12, rating: 4.6, reviewCount: 1500, badge: "Best Value", searchQuery: "Nature's Way Olive Leaf Oleuropein", brandBg: "#ecfdf5", brandInk: "#047857" },
+  ],
+  sulforaphane: [
+    { brand: "Jarrow Formulas", productName: "BroccoMax (Sulforaphane)", size: "60 veg caps", approxPrice: 20, rating: 4.6, reviewCount: 2600, badge: "Bestseller", searchQuery: "Jarrow BroccoMax", ...tint.jarrow },
+    { brand: "Avmacol", productName: "Sulforaphane", size: "60 tablets", approxPrice: 42, rating: 4.7, reviewCount: 1300, badge: "Premium", searchQuery: "Avmacol Sulforaphane", brandBg: "#eef2ff", brandInk: "#3730a3" },
+    { brand: "NOW Foods", productName: "Broccoli Sprouts Extract", size: "60 veg caps", approxPrice: 16, rating: 4.6, reviewCount: 800, badge: "Best Value", searchQuery: "NOW Foods Broccoli Sprouts Extract", ...tint.now },
+    { brand: "Sports Research", productName: "Sulforaphane", size: "30 capsules", approxPrice: 25, rating: 4.6, reviewCount: 600, badge: "Premium", searchQuery: "Sports Research Sulforaphane", ...tint.sr },
+  ],
+  "gotu-kola": [
+    { brand: "Gaia Herbs", productName: "Gotu Kola", size: "60 capsules", approxPrice: 15, rating: 4.7, reviewCount: 1100, badge: "Bestseller", searchQuery: "Gaia Herbs Gotu Kola", brandBg: "#f0fdf4", brandInk: "#15803d" },
+    { brand: "NOW Foods", productName: "Gotu Kola 450 mg", size: "100 veg caps", approxPrice: 9, rating: 4.7, reviewCount: 1400, badge: "Best Value", searchQuery: "NOW Foods Gotu Kola 450", ...tint.now },
+    { brand: "Nature's Way", productName: "Gotu Kola", size: "180 veg caps", approxPrice: 14, rating: 4.6, reviewCount: 700, badge: "Premium", searchQuery: "Nature's Way Gotu Kola", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Himalaya", productName: "Gotu Kola / Brahmi", size: "60 caplets", approxPrice: 13, rating: 4.6, reviewCount: 600, badge: "Premium", searchQuery: "Himalaya Gotu Kola Brahmi", brandBg: "#fef2f2", brandInk: "#b91c1c" },
+  ],
 };
 
 /**
