@@ -198,6 +198,10 @@ img, svg { max-width: 100%; }
 .sd-faq-summary::-webkit-details-marker { display: none; }
 .sd-faq[open] .sd-faq-plus { transform: rotate(45deg); background: #5ba373; color: #fff; }
 
+/* Premium hover-lift on the homepage 'essentials' product cards. */
+.ess-card { transition: transform .18s cubic-bezier(.2,.7,.2,1), box-shadow .18s; }
+.ess-card:hover { transform: translateY(-4px); box-shadow: 0 28px 52px -24px rgba(10,37,64,0.52); }
+
 /* Legacy phyla animation names kept as aliases so existing pages still animate */
 @keyframes phyla-rise    { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes phyla-fade-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }

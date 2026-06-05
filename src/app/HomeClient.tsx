@@ -13,7 +13,7 @@ import AuthCodeCatcher from "@/components/home/AuthCodeCatcher";
 import { TH, FONTS, D, SI, MM } from "@/lib/theme";
 import { STACKS } from "@/lib/stacks";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
-import { getPrimaryProduct } from "@/lib/products";
+import { getPrimaryProduct, productImage } from "@/lib/products";
 
 // ════════════════════════════════════════════════════════════════════════════
 // Motion primitives
@@ -819,32 +819,40 @@ function StrongestEvidence() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 16 }}>
           {picks.map(s => {
             const p = getPrimaryProduct(s.id);
+            const img = p ? productImage(p) : undefined;
             const fill = EVIDENCE_FILL[s.evidence] ?? 2;
             return (
               <Reveal key={s.id}>
                 <Link href={`/ingredients/${s.id}`} style={{ textDecoration: "none", color: "inherit", display: "block", height: "100%" }}>
                   <div className="ess-card" style={{
-                    background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 20, padding: 22,
-                    height: "100%", display: "flex", flexDirection: "column", gap: 14,
-                    boxShadow: `0 14px 34px -20px ${TH.ink}40`,
+                    background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, overflow: "hidden",
+                    height: "100%", display: "flex", flexDirection: "column",
+                    boxShadow: `0 18px 40px -22px ${TH.ink}45`,
                   }}>
-                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }}>
-                      <div aria-hidden style={{ width: 46, height: 66, borderRadius: 23, background: `linear-gradient(135deg, ${s.hue}, ${s.hue}cc)`, boxShadow: `0 12px 26px -8px ${s.hue}77`, position: "relative", overflow: "hidden", flexShrink: 0 }}>
-                        <div style={{ position: "absolute", top: 6, left: 7, right: 7, height: "32%", background: "linear-gradient(180deg, rgba(255,255,255,0.55), transparent)", borderRadius: 23 }} />
-                      </div>
-                      <div style={{ display: "flex", gap: 3, marginTop: 5 }} aria-hidden>
-                        {[0, 1, 2, 3].map(i => <span key={i} style={{ width: 16, height: 6, borderRadius: 3, background: i < fill ? TH.sageDeep : "rgba(10,37,64,0.10)" }} />)}
-                      </div>
-                    </div>
-                    <div>
-                      <div style={{ ...D, fontSize: 18, color: TH.ink, letterSpacing: "-0.01em", lineHeight: 1.2 }}>{s.name.split(" (")[0]}</div>
-                      <div style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.45, marginTop: 4 }}>{s.purpose}</div>
-                    </div>
-                    <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, paddingTop: 12, borderTop: `1px solid ${TH.edge}` }}>
-                      <span style={{ ...MM, fontSize: 12.5, color: TH.ink, fontWeight: 600 }}>
-                        {p ? `★ ${p.rating.toFixed(1)} · ` : ""}from ${s.monthlyCost}/mo
+                    {/* Real product photo (iHerb CDN where curated) on a clean white canvas */}
+                    <div style={{ position: "relative", height: 172, background: "#fff", borderBottom: `1px solid ${TH.edge}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      {img ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={img} alt={`${p?.brand ?? ""} ${s.name.split(" (")[0]}`} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 18 }} />
+                      ) : (
+                        <div aria-hidden style={{ width: 64, height: 96, borderRadius: 32, background: `linear-gradient(135deg, ${s.hue}, ${s.hue}cc)`, boxShadow: `0 16px 32px -10px ${s.hue}77`, position: "relative", overflow: "hidden" }}>
+                          <div style={{ position: "absolute", top: 8, left: 10, right: 10, height: "30%", background: "linear-gradient(180deg, rgba(255,255,255,0.55), transparent)", borderRadius: 32 }} />
+                        </div>
+                      )}
+                      <span style={{ position: "absolute", top: 12, left: 12, display: "flex", gap: 3 }} aria-hidden>
+                        {[0, 1, 2, 3].map(i => <span key={i} style={{ width: 14, height: 5, borderRadius: 3, background: i < fill ? TH.sageDeep : "rgba(10,37,64,0.12)" }} />)}
                       </span>
-                      <span style={{ ...MM, fontSize: 12.5, color: TH.sageDeep, fontWeight: 600 }}>Shop &rarr;</span>
+                    </div>
+                    {/* Content */}
+                    <div style={{ padding: 18, display: "flex", flexDirection: "column", gap: 7, flex: 1 }}>
+                      <div style={{ ...D, fontSize: 18, color: TH.ink, letterSpacing: "-0.01em", lineHeight: 1.2 }}>{s.name.split(" (")[0]}</div>
+                      <div style={{ fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.45 }}>{s.purpose}</div>
+                      <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, paddingTop: 12, borderTop: `1px solid ${TH.edge}` }}>
+                        <span style={{ ...MM, fontSize: 12.5, color: TH.ink, fontWeight: 600 }}>
+                          {p ? `★ ${p.rating.toFixed(1)} · ` : ""}from ${s.monthlyCost}/mo
+                        </span>
+                        <span style={{ ...MM, fontSize: 12.5, color: TH.sageDeep, fontWeight: 600 }}>Shop &rarr;</span>
+                      </div>
                     </div>
                   </div>
                 </Link>
