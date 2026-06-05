@@ -2997,6 +2997,66 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "Nature's Way", productName: "Gotu Kola", size: "180 veg caps", approxPrice: 14, rating: 4.6, reviewCount: 700, badge: "Premium", searchQuery: "Nature's Way Gotu Kola", brandBg: "#ecfdf5", brandInk: "#047857" },
     { brand: "Himalaya", productName: "Gotu Kola / Brahmi", size: "60 caplets", approxPrice: 13, rating: 4.6, reviewCount: 600, badge: "Premium", searchQuery: "Himalaya Gotu Kola Brahmi", brandBg: "#fef2f2", brandInk: "#b91c1c" },
   ],
+  maitake: [
+    { brand: "Real Mushrooms", productName: "Maitake Extract", size: "120 capsules", approxPrice: 30, rating: 4.7, reviewCount: 1100, badge: "Bestseller", searchQuery: "Real Mushrooms Maitake", brandBg: "#fefce8", brandInk: "#854d0e" },
+    { brand: "Host Defense", productName: "Maitake", size: "120 capsules", approxPrice: 40, rating: 4.7, reviewCount: 700, badge: "Premium", searchQuery: "Host Defense Maitake", brandBg: "#f0fdf4", brandInk: "#3f6212" },
+    { brand: "NOW Foods", productName: "Maitake", size: "60 veg caps", approxPrice: 18, rating: 4.6, reviewCount: 500, badge: "Best Value", searchQuery: "NOW Foods Maitake", ...tint.now },
+    { brand: "Nutricost", productName: "Maitake Mushroom", size: "180 capsules", approxPrice: 22, rating: 4.6, reviewCount: 400, badge: "Premium", searchQuery: "Nutricost Maitake", ...tint.nutricost },
+  ],
+  agmatine: [
+    { brand: "NOW Foods", productName: "Sports Agmatine 500 mg", size: "90 veg caps", approxPrice: 22, rating: 4.6, reviewCount: 1100, badge: "Bestseller", searchQuery: "NOW Foods Agmatine 500", ...tint.now },
+    { brand: "Nutricost", productName: "Agmatine Sulfate", size: "100 capsules", approxPrice: 18, rating: 4.6, reviewCount: 800, badge: "Best Value", searchQuery: "Nutricost Agmatine Sulfate", ...tint.nutricost },
+    { brand: "Double Wood", productName: "Agmatine Sulfate", size: "100 capsules", approxPrice: 20, rating: 4.6, reviewCount: 600, badge: "Premium", searchQuery: "Double Wood Agmatine Sulfate", brandBg: "#f5f3ff", brandInk: "#6d28d9" },
+    { brand: "BulkSupplements", productName: "Agmatine Sulfate Powder", size: "100 g", approxPrice: 20, rating: 4.5, reviewCount: 500, badge: "Premium", searchQuery: "BulkSupplements Agmatine Sulfate", brandBg: "#eff6ff", brandInk: "#1e40af" },
+  ],
+  carnosine: [
+    { brand: "NOW Foods", productName: "L-Carnosine 500 mg", size: "100 veg caps", approxPrice: 24, rating: 4.7, reviewCount: 1600, badge: "Bestseller", searchQuery: "NOW Foods L-Carnosine 500", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "L-Carnosine 500 mg", size: "90 caps", approxPrice: 26, rating: 4.7, reviewCount: 900, badge: "Premium", searchQuery: "Jarrow L-Carnosine 500", ...tint.jarrow },
+    { brand: "Doctor's Best", productName: "Carnosine 500 mg", size: "60 veg caps", approxPrice: 20, rating: 4.6, reviewCount: 700, badge: "Best Value", searchQuery: "Doctor's Best Carnosine 500", ...tint.doctors },
+    { brand: "Source Naturals", productName: "L-Carnosine", size: "60 tablets", approxPrice: 22, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Source Naturals L-Carnosine", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
+  ],
+  "l-ornithine": [
+    { brand: "NOW Foods", productName: "L-Ornithine 500 mg", size: "120 veg caps", approxPrice: 16, rating: 4.7, reviewCount: 1300, badge: "Bestseller", searchQuery: "NOW Foods L-Ornithine 500", ...tint.now },
+    { brand: "Jarrow Formulas", productName: "L-Ornithine", size: "100 capsules", approxPrice: 14, rating: 4.6, reviewCount: 600, badge: "Best Value", searchQuery: "Jarrow L-Ornithine", ...tint.jarrow },
+    { brand: "Solgar", productName: "L-Ornithine 500 mg", size: "50 veg caps", approxPrice: 13, rating: 4.6, reviewCount: 400, badge: "Premium", searchQuery: "Solgar L-Ornithine 500", ...tint.solgar },
+    { brand: "Nutricost", productName: "L-Ornithine", size: "180 capsules", approxPrice: 18, rating: 4.6, reviewCount: 300, badge: "Premium", searchQuery: "Nutricost L-Ornithine", ...tint.nutricost },
+  ],
+  gymnema: [
+    { brand: "NOW Foods", productName: "Gymnema Sylvestre", size: "90 veg caps", approxPrice: 14, rating: 4.7, reviewCount: 1500, badge: "Bestseller", searchQuery: "NOW Foods Gymnema Sylvestre", ...tint.now },
+    { brand: "Nature's Way", productName: "Gymnema", size: "100 veg caps", approxPrice: 12, rating: 4.6, reviewCount: 800, badge: "Best Value", searchQuery: "Nature's Way Gymnema", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Himalaya", productName: "Meshashringi (Gymnema)", size: "60 caplets", approxPrice: 13, rating: 4.6, reviewCount: 600, badge: "Premium", searchQuery: "Himalaya Gymnema Meshashringi", brandBg: "#fef2f2", brandInk: "#b91c1c" },
+    { brand: "Paradise Herbs", productName: "Gymnema Sylvestre", size: "60 veg caps", approxPrice: 16, rating: 4.6, reviewCount: 400, badge: "Premium", searchQuery: "Paradise Herbs Gymnema", brandBg: "#f0fdf4", brandInk: "#15803d" },
+  ],
+  cinnamon: [
+    { brand: "NOW Foods", productName: "Ceylon Cinnamon", size: "120 veg caps", approxPrice: 11, rating: 4.8, reviewCount: 2600, badge: "Bestseller", searchQuery: "NOW Foods Ceylon Cinnamon", ...tint.now },
+    { brand: "Nutricost", productName: "Ceylon Cinnamon", size: "240 capsules", approxPrice: 16, rating: 4.7, reviewCount: 1100, badge: "Best Value", searchQuery: "Nutricost Ceylon Cinnamon", ...tint.nutricost },
+    { brand: "Double Wood", productName: "Ceylon Cinnamon", size: "240 capsules", approxPrice: 18, rating: 4.6, reviewCount: 700, badge: "Premium", searchQuery: "Double Wood Ceylon Cinnamon", brandBg: "#f5f3ff", brandInk: "#6d28d9" },
+    { brand: "Nature's Way", productName: "Cinnamon Bark", size: "100 veg caps", approxPrice: 12, rating: 4.6, reviewCount: 900, badge: "Premium", searchQuery: "Nature's Way Cinnamon Bark", brandBg: "#ecfdf5", brandInk: "#047857" },
+  ],
+  shatavari: [
+    { brand: "Organic India", productName: "Shatavari", size: "90 veg caps", approxPrice: 16, rating: 4.6, reviewCount: 900, badge: "Bestseller", searchQuery: "Organic India Shatavari", brandBg: "#fff7ed", brandInk: "#c2410c" },
+    { brand: "Himalaya", productName: "Shatavari", size: "60 caplets", approxPrice: 13, rating: 4.6, reviewCount: 700, badge: "Best Value", searchQuery: "Himalaya Shatavari", brandBg: "#fef2f2", brandInk: "#b91c1c" },
+    { brand: "Banyan Botanicals", productName: "Shatavari", size: "90 tablets", approxPrice: 20, rating: 4.7, reviewCount: 500, badge: "Premium", searchQuery: "Banyan Botanicals Shatavari", brandBg: "#fefce8", brandInk: "#854d0e" },
+    { brand: "Paradise Herbs", productName: "Shatavari", size: "60 veg caps", approxPrice: 18, rating: 4.6, reviewCount: 300, badge: "Premium", searchQuery: "Paradise Herbs Shatavari", brandBg: "#f0fdf4", brandInk: "#15803d" },
+  ],
+  echinacea: [
+    { brand: "Gaia Herbs", productName: "Echinacea Supreme", size: "60 capsules", approxPrice: 20, rating: 4.7, reviewCount: 1400, badge: "Bestseller", searchQuery: "Gaia Herbs Echinacea Supreme", brandBg: "#f0fdf4", brandInk: "#15803d" },
+    { brand: "NOW Foods", productName: "Echinacea", size: "100 veg caps", approxPrice: 10, rating: 4.6, reviewCount: 1200, badge: "Best Value", searchQuery: "NOW Foods Echinacea", ...tint.now },
+    { brand: "Nature's Way", productName: "Echinacea", size: "180 veg caps", approxPrice: 14, rating: 4.6, reviewCount: 1500, badge: "Premium", searchQuery: "Nature's Way Echinacea", brandBg: "#ecfdf5", brandInk: "#047857" },
+    { brand: "Solaray", productName: "Echinacea", size: "100 veg caps", approxPrice: 12, rating: 4.6, reviewCount: 600, badge: "Premium", searchQuery: "Solaray Echinacea", brandBg: "#fff7ed", brandInk: "#9a3412" },
+  ],
+  andrographis: [
+    { brand: "Paradise Herbs", productName: "Andrographis", size: "60 veg caps", approxPrice: 16, rating: 4.6, reviewCount: 600, badge: "Bestseller", searchQuery: "Paradise Herbs Andrographis", brandBg: "#f0fdf4", brandInk: "#15803d" },
+    { brand: "Nutricost", productName: "Andrographis", size: "120 capsules", approxPrice: 18, rating: 4.5, reviewCount: 400, badge: "Best Value", searchQuery: "Nutricost Andrographis", ...tint.nutricost },
+    { brand: "Swanson", productName: "Andrographis", size: "60 capsules", approxPrice: 12, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Swanson Andrographis", brandBg: "#fef9c3", brandInk: "#854d0e" },
+    { brand: "Planetary Herbals", productName: "Full Spectrum Andrographis", size: "60 tablets", approxPrice: 15, rating: 4.6, reviewCount: 300, badge: "Premium", searchQuery: "Planetary Herbals Andrographis", brandBg: "#ecfdf5", brandInk: "#047857" },
+  ],
+  shilajit: [
+    { brand: "Purblack", productName: "Live Resin Shilajit", size: "30 g", approxPrice: 50, rating: 4.6, reviewCount: 1200, badge: "Premium", searchQuery: "Purblack Shilajit resin", brandBg: "#f3f4f6", brandInk: "#374151" },
+    { brand: "Lost Empire Herbs", productName: "Shilajit Resin", size: "25 g", approxPrice: 40, rating: 4.6, reviewCount: 800, badge: "Premium", searchQuery: "Lost Empire Herbs Shilajit", brandBg: "#fef2f2", brandInk: "#7f1d1d" },
+    { brand: "Nutricost", productName: "Shilajit Extract", size: "180 capsules", approxPrice: 25, rating: 4.5, reviewCount: 600, badge: "Best Value", searchQuery: "Nutricost Shilajit Extract", ...tint.nutricost },
+    { brand: "Double Wood", productName: "Shilajit", size: "120 capsules", approxPrice: 26, rating: 4.5, reviewCount: 500, badge: "Premium", searchQuery: "Double Wood Shilajit", brandBg: "#f5f3ff", brandInk: "#6d28d9" },
+  ],
 };
 
 /**
