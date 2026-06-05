@@ -796,9 +796,13 @@ function CTA() {
 const EVIDENCE_FILL: Record<string, number> = { "very strong": 4, strong: 3, moderate: 2 };
 
 function StrongestEvidence() {
-  // Foundational, high-evidence picks, presented as premium shoppable cards.
+  // Foundational, high-evidence picks that have a real curated product photo,
+  // so every card shows a premium product image (not a fallback).
   const picks = SUPPLEMENT_DB
-    .filter(s => (s.priority ?? 0) >= 8 && (s.evidence === "very strong" || s.evidence === "strong"))
+    .filter(s => {
+      const pp = getPrimaryProduct(s.id);
+      return Boolean(pp && productImage(pp)) && (s.evidence === "very strong" || s.evidence === "strong");
+    })
     .sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0))
     .slice(0, 6);
   if (picks.length === 0) return null;
