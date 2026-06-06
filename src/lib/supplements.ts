@@ -1972,20 +1972,6 @@ export const SUPPLEMENT_DB: Supplement[] = [
     category: "heart",
     description: "Red yeast rice (RYR) is rice fermented with the Monascus purpureus mold, traditionally used in Chinese cuisine and medicine. The fermentation produces monacolin K, chemically identical to the prescription statin lovastatin, at concentrations of roughly 5-10 mg per gram of extract. Clinical trials demonstrate significant LDL-cholesterol reductions of 15-25%. Because RYR is essentially a low-dose statin, it carries the same precautions: avoid in pregnancy, alongside prescription statins, or with grapefruit juice. Consider co-supplementing with CoQ10 for muscle support. Always pair with regular liver enzyme monitoring.",
   },
-  {
-    id: "garlic-aged-evening", name: "Olive Leaf Extract (Oleuropein)", brand: "Now Foods",
-    dose: "500 mg", timing: "morning",
-    purpose: "Blood pressure · immune · cardiovascular",
-    evidence: "strong", monthlyCost: 18, priority: 4,
-    why: "Standardized to oleuropein, the polyphenol behind olive's cardiovascular benefits. Lowers blood pressure modestly but reliably.",
-    hue: "#688a6b",
-    tags: ["heart", "immune", "longevity", "general"],
-    vegan: true,
-    iherbSearch: "NOW Foods Olive Leaf Extract Oleuropein",
-    foodSources: ["Olives", "Extra-virgin olive oil", "Olive leaf tea"],
-    category: "heart",
-    description: "Olive leaf extract concentrates the cardioprotective polyphenols of the Mediterranean diet, particularly oleuropein and its breakdown product, hydroxytyrosol, into a single supplement. Clinical trials demonstrate modest but consistent reductions in systolic and diastolic blood pressure, improved LDL oxidation resistance, and supportive effects on immune function. The standardized extract is more potent than olive oil itself for these markers. Standard dose is 500-1000 mg of extract standardized to 15-20% oleuropein, taken with a meal.",
-  },
 
   // ── Vision ────────────────────────────────────────────────────────────────
   {

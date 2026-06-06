@@ -140,7 +140,6 @@ export const RESEARCH_VOLUME: Record<string, ResearchVolume> = {
   "gaba": { term: "GABA supplementation", count: 65 },
   "bergamot": { term: "Citrus Bergamot", count: 20 },
   "red-yeast-rice": { term: "Red Yeast Rice", count: 104 },
-  "garlic-aged-evening": { term: "Olive leaf", count: 43 },
   "bilberry": { term: "Bilberry", count: 51 },
   "dandelion": { term: "Dandelion", count: 13 },
   "artichoke": { term: "Artichoke", count: 73 },

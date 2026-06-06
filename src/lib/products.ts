@@ -2530,18 +2530,6 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     certifications: ["Non-GMO", "Gluten Free", "Vegan"],
     imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nap/nap07361/l/42.jpg",
   }],
-  "garlic-aged-evening": [{
-    brand: "NOW Foods", productName: "Olive Leaf Extract 500mg", size: "120 veg caps",
-    productPath: "/pr/now-foods-olive-leaf-extract-500-mg-120-veg-capsules/744",
-    approxPrice: 18, rating: 4.7, reviewCount: 2700, badge: "Bestseller",
-    amazonAsin: "B0019LPMDY",
-    searchQuery: "NOW Foods Olive Leaf Extract 500mg",
-    brandBg: "#fdebe1", brandInk: "#c2410c",
-    imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04722/l/63.jpg",
-    form: "Veg Capsules", ingredientForm: "Olive Leaf Extract (18% Oleuropein)",
-    servingSize: "1 capsule", servingsPerContainer: 120, mgPerServing: "500 mg",
-    certifications: ["Non-GMO", "Vegan", "Kosher"],
-  }],
 
   // ── Vision ───────────────────────────────────────────────────────────────
   bilberry: [{
@@ -3534,12 +3522,6 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "Thorne", productName: "PharmaGABA", size: "60 capsules", approxPrice: 28, rating: 4.6, reviewCount: 700, badge: "Premium", searchQuery: "Thorne PharmaGABA", ...tint.thorne },
     { brand: "Source Naturals", productName: "GABA", size: "120 tablets", approxPrice: 15, rating: 4.5, reviewCount: 500, badge: "Best Value", searchQuery: "Source Naturals GABA", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
     { brand: "Nutricost", productName: "GABA", size: "120 capsules", approxPrice: 14, rating: 4.5, reviewCount: 400, badge: "Premium", searchQuery: "Nutricost GABA", ...tint.nutricost },
-  ],
-  "garlic-aged-evening": [
-    { brand: "NOW Foods", productName: "Olive Leaf Extract", size: "120 veg caps", approxPrice: 13, rating: 4.6, reviewCount: 700, badge: "Bestseller", searchQuery: "NOW Foods Olive Leaf Extract", ...tint.now },
-    { brand: "Gaia Herbs", productName: "Olive Leaf", size: "60 capsules", approxPrice: 20, rating: 4.6, reviewCount: 400, badge: "Best Value", searchQuery: "Gaia Herbs Olive Leaf", brandBg: "#f0fdf4", brandInk: "#15803d" },
-    { brand: "Nature's Way", productName: "Olive Leaf", size: "100 capsules", approxPrice: 14, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Nature's Way Olive Leaf", brandBg: "#ecfdf5", brandInk: "#047857" },
-    { brand: "Solaray", productName: "Olive Leaf Extract", size: "60 veg caps", approxPrice: 13, rating: 4.5, reviewCount: 250, badge: "Premium", searchQuery: "Solaray Olive Leaf Extract", brandBg: "#fff7ed", brandInk: "#9a3412" },
   ],
   hawthorn: [
     { brand: "NOW Foods", productName: "Hawthorn Extract", size: "90 veg caps", approxPrice: 12, rating: 4.6, reviewCount: 500, badge: "Bestseller", searchQuery: "NOW Foods Hawthorn Extract", ...tint.now },
