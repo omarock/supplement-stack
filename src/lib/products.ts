@@ -3194,7 +3194,7 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "Source Naturals", productName: "Serrapeptase", size: "60 tablets", approxPrice: 16, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Source Naturals Serrapeptase", brandBg: "#eff6ff", brandInk: "#1d4ed8" },
   ],
   "l-lysine": [
-    { brand: "NOW Foods", productName: "L-Lysine 1000 mg", size: "100 tablets", approxPrice: 9, rating: 4.8, reviewCount: 3000, badge: "Bestseller", searchQuery: "NOW Foods L-Lysine 1000", ...tint.now },
+    { brand: "NOW Foods", productName: "L-Lysine 1000 mg", size: "100 tablets", approxPrice: 9, rating: 4.8, reviewCount: 3000, badge: "Bestseller", searchQuery: "NOW Foods L-Lysine 1000", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now00113/u/63.jpg", ...tint.now },
     { brand: "Doctor's Best", productName: "L-Lysine", size: "180 veg caps", approxPrice: 13, rating: 4.7, reviewCount: 600, badge: "Best Value", searchQuery: "Doctor's Best L-Lysine", ...tint.doctors },
     { brand: "Solgar", productName: "L-Lysine 1000 mg", size: "100 tablets", approxPrice: 14, rating: 4.7, reviewCount: 800, badge: "Premium", searchQuery: "Solgar L-Lysine 1000", ...tint.solgar },
     { brand: "Nature's Way", productName: "L-Lysine", size: "100 capsules", approxPrice: 10, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Nature's Way L-Lysine", brandBg: "#ecfdf5", brandInk: "#047857" },
@@ -3374,7 +3374,7 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "Solaray", productName: "Black Cohosh", size: "60 capsules", approxPrice: 12, rating: 4.5, reviewCount: 250, badge: "Premium", searchQuery: "Solaray Black Cohosh", brandBg: "#fff7ed", brandInk: "#9a3412" },
   ],
   boron: [
-    { brand: "NOW Foods", productName: "Boron 3 mg", size: "100 capsules", approxPrice: 7, rating: 4.7, reviewCount: 1500, badge: "Bestseller", searchQuery: "NOW Foods Boron 3 mg", ...tint.now },
+    { brand: "NOW Foods", productName: "Boron 3 mg", size: "100 capsules", approxPrice: 7, rating: 4.7, reviewCount: 1500, badge: "Bestseller", searchQuery: "NOW Foods Boron 3 mg", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01410/u/47.jpg", ...tint.now },
     { brand: "Doctor's Best", productName: "Boron", size: "120 veg caps", approxPrice: 9, rating: 4.6, reviewCount: 500, badge: "Best Value", searchQuery: "Doctor's Best Boron", ...tint.doctors },
     { brand: "Solgar", productName: "Boron", size: "100 capsules", approxPrice: 10, rating: 4.6, reviewCount: 400, badge: "Premium", searchQuery: "Solgar Boron", ...tint.solgar },
     { brand: "Swanson", productName: "Boron", size: "250 capsules", approxPrice: 8, rating: 4.6, reviewCount: 600, badge: "Premium", searchQuery: "Swanson Boron", brandBg: "#fef9c3", brandInk: "#854d0e" },
@@ -3440,7 +3440,7 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "Nutricost", productName: "Cordyceps", size: "180 capsules", approxPrice: 20, rating: 4.5, reviewCount: 350, badge: "Premium", searchQuery: "Nutricost Cordyceps", ...tint.nutricost },
   ],
   cranberry: [
-    { brand: "NOW Foods", productName: "Cranberry Concentrate", size: "90 softgels", approxPrice: 14, rating: 4.7, reviewCount: 1200, badge: "Bestseller", searchQuery: "NOW Foods Cranberry Concentrate", ...tint.now },
+    { brand: "NOW Foods", productName: "Cranberry Concentrate", size: "90 softgels", approxPrice: 14, rating: 4.7, reviewCount: 1200, badge: "Bestseller", searchQuery: "NOW Foods Cranberry Concentrate", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now03230/u/74.jpg", ...tint.now },
     { brand: "AZO", productName: "Cranberry", size: "100 caplets", approxPrice: 13, rating: 4.6, reviewCount: 2000, badge: "Best Value", searchQuery: "AZO Cranberry caplets", brandBg: "#fef2f2", brandInk: "#b91c1c" },
     { brand: "Nature's Way", productName: "Cranberry", size: "60 softgels", approxPrice: 13, rating: 4.6, reviewCount: 500, badge: "Premium", searchQuery: "Nature's Way Cranberry", brandBg: "#ecfdf5", brandInk: "#047857" },
     { brand: "Solaray", productName: "Cranberry", size: "60 veg caps", approxPrice: 12, rating: 4.5, reviewCount: 300, badge: "Premium", searchQuery: "Solaray Cranberry", brandBg: "#fff7ed", brandInk: "#9a3412" },
@@ -3740,7 +3740,7 @@ export const EXTRA_PRODUCTS: Record<string, ProductOption[]> = {
     { brand: "Pure Encapsulations", productName: "Saccharomyces Boulardii", size: "120 capsules", approxPrice: 40, rating: 4.7, reviewCount: 350, badge: "Premium", searchQuery: "Pure Encapsulations Saccharomyces Boulardii", brandBg: "#eef2ff", brandInk: "#4338ca" },
   ],
   "saw-palmetto": [
-    { brand: "NOW Foods", productName: "Saw Palmetto Extract", size: "90 softgels", approxPrice: 14, rating: 4.6, reviewCount: 1300, badge: "Bestseller", searchQuery: "NOW Foods Saw Palmetto Extract", ...tint.now },
+    { brand: "NOW Foods", productName: "Saw Palmetto Extract", size: "90 softgels", approxPrice: 14, rating: 4.6, reviewCount: 1300, badge: "Bestseller", searchQuery: "NOW Foods Saw Palmetto Extract", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04756/u/55.jpg", ...tint.now },
     { brand: "Nature's Way", productName: "Saw Palmetto", size: "180 capsules", approxPrice: 16, rating: 4.6, reviewCount: 700, badge: "Best Value", searchQuery: "Nature's Way Saw Palmetto", brandBg: "#ecfdf5", brandInk: "#047857" },
     { brand: "Solaray", productName: "Saw Palmetto", size: "100 veg caps", approxPrice: 13, rating: 4.5, reviewCount: 350, badge: "Premium", searchQuery: "Solaray Saw Palmetto", brandBg: "#fff7ed", brandInk: "#9a3412" },
     { brand: "Swanson", productName: "Saw Palmetto", size: "250 capsules", approxPrice: 15, rating: 4.5, reviewCount: 500, badge: "Premium", searchQuery: "Swanson Saw Palmetto", brandBg: "#fef9c3", brandInk: "#854d0e" },
