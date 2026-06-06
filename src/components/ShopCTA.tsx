@@ -10,6 +10,7 @@ import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { getPrimaryProduct, productImage, type ProductOption } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
+import BottleMockup from "@/components/BottleMockup";
 import { TH, FONTS } from "@/lib/theme";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -39,7 +40,7 @@ export default function ShopCTA({ supplementId, heading }: { supplementId: strin
             // eslint-disable-next-line @next/next/no-img-element
             <img src={img} alt={`${p.brand} ${p.productName}`} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 8 }} />
           ) : (
-            <div aria-hidden style={{ width: 38, height: 58, borderRadius: 19, background: `linear-gradient(135deg, ${supp.hue}, ${supp.hue}cc)`, boxShadow: `0 10px 22px -8px ${supp.hue}66` }} />
+            <BottleMockup option={p} height={84} showBackgroundScene={false} />
           )}
         </div>
         <div style={{ flex: 1, minWidth: 190 }}>
