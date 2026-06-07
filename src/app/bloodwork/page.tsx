@@ -5,6 +5,7 @@ import { createServerClient } from "@supabase/ssr";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BloodworkClient from "./BloodworkClient";
+import { getSubscription, isPremium as checkPremium } from "@/lib/premium";
 
 export const metadata: Metadata = {
   title: "Bloodwork Supplement Analysis (free), upload your labs | suppdoc.io",
@@ -26,18 +27,20 @@ const BLOODWORK_FAQ = [
   { q: "Is this a diagnosis?", a: "No. It's educational and evidence-led, not medical advice or diagnosis. Reference ranges vary by lab, age, sex, and medication, always review results with a qualified clinician." },
 ];
 
-async function isSignedIn(): Promise<boolean> {
+async function getViewer(): Promise<{ signedIn: boolean; premium: boolean }> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return false;
+  if (!url || !key) return { signedIn: false, premium: false };
   const cookieStore = await cookies();
   const supa = createServerClient(url, key, { cookies: { getAll() { return cookieStore.getAll(); }, setAll() {} } });
   const { data: { user } } = await supa.auth.getUser();
-  return Boolean(user);
+  if (!user) return { signedIn: false, premium: false };
+  const premium = user.email ? checkPremium(await getSubscription(user.email)) : false;
+  return { signedIn: true, premium };
 }
 
 export default async function BloodworkPage() {
-  const signedIn = await isSignedIn();
+  const { signedIn, premium } = await getViewer();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -47,7 +50,7 @@ export default async function BloodworkPage() {
     <div style={{ minHeight: "100vh", background: "#f6f5f1", color: "#0a2540", fontFamily: '"Inter", system-ui, sans-serif' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
-      <BloodworkClient signedIn={signedIn} />
+      <BloodworkClient signedIn={signedIn} isPremium={premium} />
       <section style={{ maxWidth: 760, margin: "0 auto", padding: "0 var(--section-pad-x) 72px" }}>
         <h2 style={{ fontFamily: '"Bricolage Grotesque", sans-serif', fontWeight: 600, fontSize: 24, color: "#0a2540", margin: "0 0 16px", letterSpacing: "-0.02em" }}>
           Bloodwork analysis, FAQ

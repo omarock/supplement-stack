@@ -4,6 +4,7 @@ import { useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { TH, FONTS } from "@/lib/theme";
 import ThinkingMessages from "@/components/ThinkingMessages";
+import UpgradeCTA from "@/components/UpgradeCTA";
 import { STATUS_META, rangeBarModel, type BloodworkAnalysis, type ExtractedBiomarker, type BiomarkerStatus } from "@/lib/biomarkers";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import ConfidenceCard from "@/components/ConfidenceCard";
@@ -120,7 +121,7 @@ const SAMPLE_ANALYSIS: BloodworkAnalysis = {
   ],
 };
 
-export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
+export default function BloodworkClient({ signedIn, isPremium = false }: { signedIn: boolean; isPremium?: boolean }) {
   const [stage, setStage] = useState<Stage>("idle");
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<BloodworkAnalysis | null>(null);
@@ -299,7 +300,7 @@ export default function BloodworkClient({ signedIn }: { signedIn: boolean }) {
         {/* Result */}
         {stage === "done" && result && (
           <section id="bw-result" style={{ animation: "sd-fade-in .4s ease-out" }}>
-            <AnalysisReport data={result} sourceKind={sourceKind} signedIn={signedIn} onReset={reset} isSample={isSample} />
+            <AnalysisReport data={result} sourceKind={sourceKind} signedIn={signedIn} isPremium={isPremium} onReset={reset} isSample={isSample} />
             <div style={{ maxWidth: 760, margin: "24px auto 0" }}>
               <EmailCapture source="bloodwork" headline="Get the weekly evidence brief" sub="A short weekly brief on supplements and biomarkers, evidence-led. We never email your lab data. Unsubscribe anytime." />
             </div>
@@ -397,7 +398,7 @@ function HowItWorks() {
 }
 
 // ─── Analysis report ──────────────────────────────────────────────────────────
-function AnalysisReport({ data, sourceKind, signedIn, onReset, isSample = false }: { data: BloodworkAnalysis; sourceKind: "pdf" | "image" | "text"; signedIn: boolean; onReset: () => void; isSample?: boolean }) {
+function AnalysisReport({ data, sourceKind, signedIn, isPremium = false, onReset, isSample = false }: { data: BloodworkAnalysis; sourceKind: "pdf" | "image" | "text"; signedIn: boolean; isPremium?: boolean; onReset: () => void; isSample?: boolean }) {
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveErr, setSaveErr] = useState<string | null>(null);
@@ -560,6 +561,20 @@ function AnalysisReport({ data, sourceKind, signedIn, onReset, isSample = false 
           Track progress over time →
         </Link>
       </div>
+
+      {!isSample && !isPremium && (
+        <UpgradeCTA
+          variant="card"
+          title="Keep this lab, and see what changes next time"
+          body="Your analysis is read once and not stored unless you're Premium. Premium saves every lab to your private history and shows exactly what moved between tests."
+          perks={[
+            "Unlimited bloodwork analyses, all saved",
+            "Side-by-side re-test comparison (ferritin 18 → 47)",
+            "A coach that remembers your results",
+          ]}
+          cta="Save my bloodwork history"
+        />
+      )}
 
       {saveErr && (
         <p role="alert" style={{ fontSize: 13, color: "#b91c1c", textAlign: "center", margin: "2px 0 0" }}>{saveErr}</p>

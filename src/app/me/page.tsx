@@ -76,7 +76,7 @@ export default async function ProfilePage() {
   const email = user.email ?? "";
   const userId = user.id;
 
-  const [quizRes, clicksRes] = await Promise.all([
+  const [quizRes, clicksRes, bwRes, trkRes] = await Promise.all([
     admin
       .from("quiz_submissions")
       .select("id, created_at, goals, supplement_count, total_monthly_cost, budget")
@@ -89,10 +89,18 @@ export default async function ProfilePage() {
       .or(`user_id.eq.${userId},email.eq.${email}`)
       .order("created_at", { ascending: false })
       .limit(30),
+    admin.from("bloodwork_reports").select("id", { count: "exact", head: true }).eq("user_email", email),
+    admin.from("tracker_enrollments").select("user_email", { count: "exact", head: true }).eq("user_email", email),
   ]);
 
   const quizzes = quizRes.data ?? [];
   const clicks = clicksRes.data ?? [];
+  const activation = {
+    quiz: quizzes.length > 0,
+    bloodwork: (bwRes.count ?? 0) > 0,
+    tracking: (trkRes.count ?? 0) > 0,
+  };
+  const activationDone = Object.values(activation).filter(Boolean).length;
 
   const lastQuiz = quizzes[0];
   const lastClick = clicks[0];
@@ -173,6 +181,11 @@ export default async function ProfilePage() {
             </div>
           )}
         </section>
+
+        {/* Activation checklist — guides free users to the aha moments, then to Premium */}
+        {!premium && activationDone < 3 && (
+          <ActivationChecklist activation={activation} done={activationDone} />
+        )}
 
         {/* Stats grid */}
         <section style={{
@@ -345,6 +358,44 @@ const secondaryBtn: React.CSSProperties = {
   background: "transparent", color: "#0a2540", textDecoration: "none",
   border: "1px solid rgba(10,37,64,0.12)",
 };
+
+function ActivationChecklist({ activation, done }: { activation: { quiz: boolean; bloodwork: boolean; tracking: boolean }; done: number }) {
+  const steps = [
+    { ok: activation.quiz, label: "Take the personalized quiz", desc: "Get a stack matched to your goals", href: "/quiz", icon: "🎯" },
+    { ok: activation.bloodwork, label: "Analyze your bloodwork", desc: "Turn a lab report into targeted picks", href: "/bloodwork", icon: "🩸" },
+    { ok: activation.tracking, label: "Start daily tracking", desc: "Log a 60-second check-in", href: "/track", icon: "🔥" },
+  ];
+  const next = steps.find(s => !s.ok);
+  const pct = Math.round((done / steps.length) * 100);
+  return (
+    <section style={{ marginBottom: 36, background: th.paper, border: `1px solid ${th.line}`, borderRadius: 18, padding: "22px 24px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8, marginBottom: 14 }}>
+        <div>
+          <div style={{ ...MM, fontSize: 10.5, color: th.sageDeep, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Get the most from suppdoc</div>
+          <div style={{ ...D, fontWeight: 600, fontSize: 19, color: th.ink }}>{done} of {steps.length} done{next ? ` · next: ${next.label.toLowerCase()}` : ""}</div>
+        </div>
+        <span style={{ ...MM, fontSize: 12, color: th.inkMute }}>{pct}%</span>
+      </div>
+      <div style={{ height: 7, borderRadius: 999, background: th.line, overflow: "hidden", marginBottom: 18 }}>
+        <div style={{ width: `${Math.max(4, pct)}%`, height: "100%", borderRadius: 999, background: `linear-gradient(90deg, ${th.sage}, ${th.sageDeep})` }} />
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {steps.map((s, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", background: s.ok ? th.sageGlow : th.bg, borderRadius: 12 }}>
+            <span style={{ width: 26, height: 26, borderRadius: 999, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: s.ok ? th.sage : "#fff", border: s.ok ? "none" : `1px solid ${th.line}`, fontSize: 13 }} aria-hidden>
+              {s.ok ? <span style={{ color: "#fff" }}>✓</span> : s.icon}
+            </span>
+            <span style={{ flex: 1 }}>
+              <span style={{ display: "block", ...D, fontWeight: 600, fontSize: 14.5, color: th.ink, textDecoration: s.ok ? "line-through" : "none", opacity: s.ok ? 0.6 : 1 }}>{s.label}</span>
+              {!s.ok && <span style={{ display: "block", fontSize: 12.5, color: th.inkMute, marginTop: 1 }}>{s.desc}</span>}
+            </span>
+            {!s.ok && <Link href={s.href} style={{ ...MM, fontSize: 12.5, color: th.sageDeep, fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>Do it →</Link>}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
