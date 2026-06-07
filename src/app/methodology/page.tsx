@@ -50,7 +50,7 @@ export default function MethodologyPage() {
             marginTop: 30,
           }}>
             {[
-              { n: "151", l: "ingredients evidence-graded", c: TH.sageDeep },
+              { n: "200+", l: "ingredients evidence-graded", c: TH.sageDeep },
               { n: "4", l: "transparent evidence tiers", c: TH.amberDeep },
               { n: "100%", l: "of claims linked to studies", c: "#4338ca" },
               { n: "0", l: "own-brand pills we sell", c: TH.ink },
@@ -104,7 +104,7 @@ export default function MethodologyPage() {
         }}>
           {/* Evidence tiers */}
           <Section number="01" title="The four evidence tiers">
-            <P>Every supplement in our 151-ingredient catalog is rated with one of four evidence labels. These are <strong>conservative</strong>, we'd rather under-claim and earn trust than over-claim and lose it.</P>
+            <P>Every supplement in our 200+ ingredient catalog is rated with one of four evidence labels. These are <strong>conservative</strong>, we'd rather under-claim and earn trust than over-claim and lose it.</P>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, margin: "16px 0 20px" }}>
               <TierCard
                 tier="Very strong" strength={4} delay={0}
@@ -230,7 +230,7 @@ export default function MethodologyPage() {
             <P>We use the word AI honestly. Specifically, two things qualify:</P>
             <Ul items={[
               "Our recommendation engine is an algorithmic tag-matching + scoring system. It runs on every quiz, build, and audit. This is the same kind of system that powers a recommendation engine on a streaming service, it's not a language model.",
-              "Our chat assistant, audit explainer, and plain-English stack builder use Claude Sonnet 4.6 (Anthropic) at request time, grounded in our 151-ingredient knowledge base. When you click a citation chip, it links to a real internal page.",
+              "Our chat assistant, audit explainer, and plain-English stack builder use Claude Sonnet 4.6 (Anthropic) at request time, grounded in our 200+ ingredient knowledge base. When you click a citation chip, it links to a real internal page.",
             ]} />
             <P>What we don&apos;t do: claim our AI has read 1,243 studies, claim it's been "trained on medical data", or claim it&apos;s smarter than a clinician. It&apos;s a tool. A good one. Not a replacement for human judgement on your own health.</P>
           </Section>

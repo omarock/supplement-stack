@@ -72,7 +72,7 @@ export default function ThinkingMessages({ phrases, interval = 800, size = "md",
 export const PHRASES = {
   audit: [
     "Reading your stack…",
-    "Cross-referencing 151 ingredients…",
+    "Cross-referencing 200+ ingredients…",
     "Checking for interactions…",
     "Detecting redundancies…",
     "Composing recommendations…",

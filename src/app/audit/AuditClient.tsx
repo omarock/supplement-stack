@@ -394,7 +394,7 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
           borderRadius: 14, padding: "16px 18px",
         }}>
           <div style={{ fontSize: 13, color: TH.muted, marginBottom: 6 }}>
-            We couldn&apos;t recognize these, likely brand-specific or outside our 151-ingredient library:
+            We couldn&apos;t recognize these, likely brand-specific or outside our 200+ ingredient library:
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {unmatched.map((u, i) => (

@@ -21,7 +21,7 @@ function callbackUrl(): string {
 // Trust signals shown on the brand panel (no "AI" wording, premium framing).
 const TRUST: string[] = [
   "Evidence graded, never brand sponsored",
-  "151 research backed ingredients",
+  "200+ research backed ingredients",
   "We never sell our own supplements",
   "Your bloodwork and data stay private",
 ];

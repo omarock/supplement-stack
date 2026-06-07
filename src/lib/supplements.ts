@@ -40,7 +40,7 @@ export interface Recommendation {
   notes: string[];          // safety notes / advisories
 }
 
-// ─── Supplement Database (151 ingredients, sourced from trusted retailers) ───
+// ─── Supplement Database (200+ ingredients, sourced from trusted retailers) ───
 export const SUPPLEMENT_DB: Supplement[] = [
   // ── Foundational ─────────────────────────────────────────────────────────
   {

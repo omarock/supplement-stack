@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import Link from "next/link";
+import UpgradeCTA from "@/components/UpgradeCTA";
 import { TH, FONTS } from "@/lib/theme";
 import {
   type Checkin,
@@ -130,22 +131,22 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
           <SummaryCard checkinCount={checkins.length} />
         )}
 
-        {/* Premium nudge, full history + trend analytics */}
+        {/* Premium upgrade experience, full history + trend analytics */}
         {!isPremium && checkins.length >= 5 && (
-          <Link href="/pricing" style={{
-            display: "flex", alignItems: "center", gap: 14, textDecoration: "none", color: "inherit",
-            background: `linear-gradient(135deg, ${TH.surface} 0%, ${TH.bg} 100%)`,
-            border: `1px solid ${TH.sage}33`, borderRadius: 16, padding: "16px 20px", marginBottom: 22,
-          }}>
-            <span style={{ width: 38, height: 38, borderRadius: 11, background: TH.accentGlow, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }} aria-hidden>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={TH.sageDeep} strokeWidth="2"><path d="M3 17l6-6 4 4 8-8" /><path d="M17 7h4v4" /></svg>
-            </span>
-            <span style={{ flex: 1 }}>
-              <span style={{ display: "block", ...D, fontSize: 15, color: TH.ink }}>See your full history & trends</span>
-              <span style={{ display: "block", fontSize: 12.5, color: TH.muted, marginTop: 1 }}>Premium unlocks long-term analytics, coach memory & reminders, $9/mo.</span>
-            </span>
-            <span style={{ color: TH.sageDeep, fontWeight: 600, fontSize: 13, whiteSpace: "nowrap" }}>Upgrade →</span>
-          </Link>
+          <div style={{ marginBottom: 22 }}>
+            <UpgradeCTA
+              variant="card"
+              title="You're building a real streak. Don't lose the trend."
+              body="Free tracking keeps your last 14 days. Premium saves everything and turns it into the long-term picture that actually shows whether your stack is working."
+              perks={[
+                "Unlimited tracking history + trend analytics",
+                "A coach that remembers your stack, labs and goals",
+                "Daily reminders + a weekly progress report",
+              ]}
+              context={`You've logged ${checkins.length} check-ins`}
+              cta="Keep my full history"
+            />
+          </div>
         )}
 
         {/* Settings / footnote */}

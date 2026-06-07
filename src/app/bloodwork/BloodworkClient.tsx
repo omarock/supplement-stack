@@ -19,7 +19,7 @@ const PHRASES = [
   "Reading your report…",
   "Extracting biomarkers…",
   "Checking reference ranges…",
-  "Cross-referencing 151 ingredients…",
+  "Cross-referencing 200+ ingredients…",
   "Writing your analysis…",
 ];
 

@@ -63,7 +63,7 @@ export default async function BloodworkPage() {
         <div style={{ marginTop: 28, display: "flex", flexWrap: "wrap", gap: 10 }}>
           {[
             ["What your biomarkers mean", "/biomarkers"],
-            ["All 151 ingredients", "/ingredients"],
+            ["All 200+ ingredients", "/ingredients"],
             ["Best time to take each supplement", "/timing"],
             ["Interaction checker", "/interactions"],
           ].map(([label, href]) => (

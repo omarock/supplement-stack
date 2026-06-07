@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 const QUIZ_FAQ = [
   { q: "Is the supplement quiz free?", a: "Yes. Both the 2-minute Express and the 5-minute Complete quiz are free with no signup. You answer a few questions about your goals, sleep, energy, and stress, and get a personalised 4 to 7 supplement stack instantly, each pick with its dose, timing, and the evidence behind it." },
-  { q: "How does the quiz decide what supplements I need?", a: "It matches your goals and answers against an evidence-graded database of 151 ingredients, then ranks the best fits and checks them for interactions and redundancies, so the stack you get is coherent rather than a random list." },
+  { q: "How does the quiz decide what supplements I need?", a: "It matches your goals and answers against an evidence-graded database of 200+ ingredients, then ranks the best fits and checks them for interactions and redundancies, so the stack you get is coherent rather than a random list." },
   { q: "Which quiz should I take, Express or Complete?", a: "Take Express. It gives about 90% of the accuracy in 30% of the time. Choose Complete if you want to factor in current supplements, medications, health conditions, or upload bloodwork for a deeper match." },
   { q: "Do you sell the supplements?", a: "No. suppdoc does not sell its own supplements. We recommend evidence-led options and link to trusted retailers, so the advice is not biased toward a house brand." },
 ];
@@ -130,7 +130,7 @@ export default function QuizChooser() {
             }}>
               <Link href="/build" style={otherServiceStyle()}>
                 <div style={{ ...D, fontSize: 16, color: TH.ink, marginBottom: 4 }}>Build your own →</div>
-                <div style={{ fontSize: 13, color: TH.muted, lineHeight: 1.5 }}>Describe your goals in plain English, or pick from 151 ingredients manually.</div>
+                <div style={{ fontSize: 13, color: TH.muted, lineHeight: 1.5 }}>Describe your goals in plain English, or pick from 200+ ingredients manually.</div>
               </Link>
               <Link href="/audit" style={otherServiceStyle()}>
                 <div style={{ ...D, fontSize: 16, color: TH.ink, marginBottom: 4 }}>Audit my current stack →</div>
@@ -147,7 +147,7 @@ export default function QuizChooser() {
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center" }}>
               {[
                 ["Best for your goal", "/best"],
-                ["All 151 ingredients", "/ingredients"],
+                ["All 200+ ingredients", "/ingredients"],
                 ["Interaction checker", "/interactions"],
                 ["Best time to take each supplement", "/timing"],
                 ["What your bloodwork means", "/biomarkers"],

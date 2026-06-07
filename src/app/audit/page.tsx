@@ -49,7 +49,7 @@ export default function AuditPage() {
           {[
             ["Interaction checker", "/interactions"],
             ["Best time to take each supplement", "/timing"],
-            ["All 151 ingredients", "/ingredients"],
+            ["All 200+ ingredients", "/ingredients"],
             ["What your bloodwork means", "/biomarkers"],
           ].map(([label, href]) => (
             <Link key={href} href={href} style={{
