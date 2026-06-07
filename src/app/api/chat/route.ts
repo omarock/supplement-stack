@@ -50,6 +50,20 @@ function getClientIp(req: NextRequest): string {
   return "unknown";
 }
 
+// ─── Free-coach "taste" tracker ─────────────────────────────────────────────
+// One free taste per IP, then the upgrade gate. In-memory + best-effort (per warm
+// instance), like the rate limiter above. Free-coach replies are static (zero API
+// cost); this only stops a trivial browser history-reset from farming more tastes.
+const TASTE_TTL_MS = 24 * 60 * 60 * 1000;
+const freeTasteUsedAt = new Map<string, number>(); // ip -> expiry (ms)
+function takeFreeTaste(ip: string): boolean {
+  const now = Date.now();
+  const exp = freeTasteUsedAt.get(ip);
+  if (exp && exp > now) return false; // already used within the TTL window
+  freeTasteUsedAt.set(ip, now + TASTE_TTL_MS);
+  return true;
+}
+
 // ─── Validation ────────────────────────────────────────────────────────────
 function validateBody(body: unknown): { ok: true; messages: IncomingMessage[]; context: ChatContext } | { ok: false; error: string } {
   if (!body || typeof body !== "object") return { ok: false, error: "invalid body" };
@@ -129,6 +143,10 @@ function premiumGateReply(): string {
   return `🔒 You've used your free coach question.\n\nThe **Premium coach** gives unlimited, personalized answers, it remembers your stack, your bloodwork and your goals and reasons across them. It's part of Premium (founding offer: lifetime for a one-time $79).\n\n[Unlock the Premium coach →](/pricing)`;
 }
 
+function lockedGreetingReply(): string {
+  return `Hi 👋 I'm suppdoc.io's supplement coach. Ask me one question about a supplement, an interaction, a dose or timing, and I'll give you a quick answer.\n\nThe full **Premium coach** answers unlimited questions and remembers your stack, labs and goals. [See Premium →](/pricing)`;
+}
+
 // ─── Handler ───────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   // Rate limit
@@ -196,8 +214,18 @@ export async function POST(req: NextRequest) {
         const locked = anthropicEnabled() && !premium;
         let text: string;
         if (locked) {
-          const userTurns = v.messages.filter(m => m.role === "user" && !m.content.includes(GREETING_MARKER)).length;
-          text = userTurns <= 1 ? freeTasteReply(v.messages) : premiumGateReply();
+          // Count the user's REAL questions (the greeting marker doesn't count).
+          const realQuestions = v.messages.filter(m => m.role === "user" && !m.content.includes(GREETING_MARKER)).length;
+          if (realQuestions === 0) {
+            // Greeting / no question yet: a gentle intro that does NOT spend the free taste.
+            text = lockedGreetingReply();
+          } else if (realQuestions === 1 && takeFreeTaste(ip)) {
+            // First real question, and this IP still has its one free taste.
+            text = freeTasteReply(v.messages);
+          } else {
+            // Second question, or the taste was already used (even after a history reset).
+            text = premiumGateReply();
+          }
         } else {
           text = fallbackReply(v.messages);
         }

@@ -17,6 +17,7 @@ import {
   metricSeries,
   lastNDateKeys,
   scoreTier,
+  trackingWindow,
 } from "@/lib/tracker";
 import { track } from "@/lib/analytics";
 
@@ -48,10 +49,11 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
   const [enrollment, setEnrollment] = useState<TrackerEnrollment | null>(initialEnrollment);
   const [celebrate, setCelebrate] = useState<number | null>(null);
   const today = useMemo(() => localDateKey(), []);
+  const windowDays = trackingWindow(isPremium);
 
   const todayCheckin = checkins.find(c => c.date === today) ?? null;
-  const stats = useMemo(() => computeStats(checkins, enrollment, today), [checkins, enrollment, today]);
-  const trends = useMemo(() => allTrends(checkins, 14, today), [checkins, today]);
+  const stats = useMemo(() => computeStats(checkins, enrollment, today, windowDays), [checkins, enrollment, today, windowDays]);
+  const trends = useMemo(() => allTrends(checkins, windowDays, today), [checkins, today, windowDays]);
 
   const enrolled = enrollment !== null || checkins.length > 0;
 
@@ -99,7 +101,7 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
 
         {/* Streak + stats row */}
         {(enrolled || todayCheckin) && (
-          <StatsRow stats={stats} />
+          <StatsRow stats={stats} windowDays={windowDays} />
         )}
 
         {/* Today's check-in */}
@@ -123,7 +125,7 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
 
         {/* Wellness chart */}
         {checkins.length >= 1 && (
-          <WellnessSection checkins={checkins} today={today} trends={trends} />
+          <WellnessSection checkins={checkins} today={today} trends={trends} windowDays={windowDays} />
         )}
 
         {/* AI weekly summary */}
@@ -137,9 +139,9 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
             <UpgradeCTA
               variant="card"
               title="You're building a real streak. Don't lose the trend."
-              body="Free tracking keeps your last 14 days. Premium saves everything and turns it into the long-term picture that actually shows whether your stack is working."
+              body="Free tracking shows only your last 7 days. Premium keeps your full history and the long-term trends that show whether your stack is really working."
               perks={[
-                "Unlimited tracking history + trend analytics",
+                "Full history + 30-day trend view",
                 "A coach that remembers your stack, labs and goals",
                 "Daily reminders + a weekly progress report",
               ]}
@@ -275,7 +277,7 @@ function EnrollIntro({ onEnrolled }: { onEnrolled: (e: TrackerEnrollment) => voi
       <div style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
         {[
           ["①", "Check in", "60 seconds a day"],
-          ["②", "See trends", "14-day wellness graph"],
+          ["②", "See trends", "Wellness trend graph"],
           ["③", "Get insights", "Weekly summary"],
         ].map(([n, t, d]) => (
           <div key={t} style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -299,7 +301,7 @@ function EnrollIntro({ onEnrolled }: { onEnrolled: (e: TrackerEnrollment) => voi
 }
 
 // ─── Stats row (streak + adherence + consistency rings) ───────────────────────
-function StatsRow({ stats }: { stats: ReturnType<typeof computeStats> }) {
+function StatsRow({ stats, windowDays }: { stats: ReturnType<typeof computeStats>; windowDays: number }) {
   return (
     <section style={{
       display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
@@ -307,7 +309,7 @@ function StatsRow({ stats }: { stats: ReturnType<typeof computeStats> }) {
     }}>
       <StreakTile streak={stats.currentStreak} longest={stats.longestStreak} />
       <RingTile label="Adherence" value={stats.adherence} sub={`${stats.totalCheckins} day${stats.totalCheckins === 1 ? "" : "s"} logged`} />
-      <RingTile label="Consistency" value={stats.consistency} sub="last 14 days" />
+      <RingTile label="Consistency" value={stats.consistency} sub={`last ${windowDays} days`} />
     </section>
   );
 }
@@ -576,7 +578,7 @@ function SliderRow({ metric, value, onChange }: { metric: WellnessMetric; value:
 }
 
 // ─── Wellness chart section ───────────────────────────────────────────────────
-function WellnessSection({ checkins, today, trends }: { checkins: Checkin[]; today: string; trends: ReturnType<typeof allTrends> }) {
+function WellnessSection({ checkins, today, trends, windowDays }: { checkins: Checkin[]; today: string; trends: ReturnType<typeof allTrends>; windowDays: number }) {
   const [active, setActive] = useState<Set<WellnessMetric>>(new Set(["energy", "sleep", "mood"]));
   const toggle = (m: WellnessMetric) => setActive(prev => {
     const next = new Set(prev);
@@ -590,7 +592,7 @@ function WellnessSection({ checkins, today, trends }: { checkins: Checkin[]; tod
       animation: "sd-fade-in .5s ease-out",
     }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6, flexWrap: "wrap", gap: 8 }}>
-        <h2 style={{ ...D, fontSize: 22, color: TH.ink, margin: 0, letterSpacing: "-0.02em" }}>Your last 14 days</h2>
+        <h2 style={{ ...D, fontSize: 22, color: TH.ink, margin: 0, letterSpacing: "-0.02em" }}>Your last {windowDays} days</h2>
         <span style={{ ...MM, fontSize: 11, color: TH.muted }}>{checkins.length} check-in{checkins.length === 1 ? "" : "s"}</span>
       </div>
 
@@ -611,7 +613,7 @@ function WellnessSection({ checkins, today, trends }: { checkins: Checkin[]; tod
         })}
       </div>
 
-      <LineChart checkins={checkins} today={today} active={active} />
+      <LineChart checkins={checkins} today={today} active={active} windowDays={windowDays} />
 
       {/* Trend chips */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10, marginTop: 18 }}>
@@ -635,9 +637,9 @@ function WellnessSection({ checkins, today, trends }: { checkins: Checkin[]; tod
   );
 }
 
-function LineChart({ checkins, today, active }: { checkins: Checkin[]; today: string; active: Set<WellnessMetric> }) {
+function LineChart({ checkins, today, active, windowDays }: { checkins: Checkin[]; today: string; active: Set<WellnessMetric>; windowDays: number }) {
   const W = 680, H = 220, padL = 28, padR = 12, padT = 14, padB = 26;
-  const days = lastNDateKeys(14, today);
+  const days = lastNDateKeys(windowDays, today);
   const innerW = W - padL - padR;
   const innerH = H - padT - padB;
   const x = (i: number) => padL + (days.length === 1 ? innerW / 2 : (i / (days.length - 1)) * innerW);
@@ -645,7 +647,7 @@ function LineChart({ checkins, today, active }: { checkins: Checkin[]; today: st
 
   return (
     <div style={{ width: "100%", overflow: "hidden" }}>
-      <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block" }} role="img" aria-label="14-day wellness trend chart">
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block" }} role="img" aria-label={`${windowDays}-day wellness trend chart`}>
         {/* gridlines */}
         {[0, 2.5, 5, 7.5, 10].map(g => (
           <g key={g}>
@@ -655,7 +657,7 @@ function LineChart({ checkins, today, active }: { checkins: Checkin[]; today: st
         ))}
         {/* lines per active metric */}
         {[...active].map(m => {
-          const series = metricSeries(checkins, m, 14, today);
+          const series = metricSeries(checkins, m, windowDays, today);
           // Build path segments, breaking on nulls
           const segs: string[] = [];
           let cur = "";

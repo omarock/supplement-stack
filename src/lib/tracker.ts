@@ -41,6 +41,15 @@ export const METRIC_META: Record<WellnessMetric, { label: string; hue: string; h
   stress: { label: "Stress", hue: "#6b7280", higherIsBetter: false },
 };
 
+// ─── Tracking window (free vs premium) ──────────────────────────────────────
+// Free members see the most recent week; Premium unlocks a longer window. The raw
+// check-ins are always kept in the database, so upgrading reveals the full history.
+export const FREE_TRACKING_DAYS = 7;
+export const PREMIUM_TRACKING_DAYS = 30;
+export function trackingWindow(isPremium: boolean): number {
+  return isPremium ? PREMIUM_TRACKING_DAYS : FREE_TRACKING_DAYS;
+}
+
 // ─── Date helpers ─────────────────────────────────────────────────────────────
 
 /** Local calendar date as YYYY-MM-DD (NOT UTC, uses the runtime's local day). */
@@ -126,7 +135,7 @@ export function computeStreak(checkins: Checkin[], today: string = localDateKey(
   return { current, longest };
 }
 
-export function computeStats(checkins: Checkin[], enrollment: TrackerEnrollment | null, today: string = localDateKey()): TrackerStats {
+export function computeStats(checkins: Checkin[], enrollment: TrackerEnrollment | null, today: string = localDateKey(), window: number = 14): TrackerStats {
   const { current, longest } = computeStreak(checkins, today);
   const total = checkins.length;
   const tookCount = checkins.filter(c => c.took_stack).length;
@@ -134,7 +143,7 @@ export function computeStats(checkins: Checkin[], enrollment: TrackerEnrollment 
 
   const startKey = enrollment?.started_at ? localDateKey(new Date(enrollment.started_at)) : (checkins[0]?.date ?? today);
   const daysSinceStart = Math.max(1, daysBetweenKeys(startKey, today) + 1);
-  const windowDays = Math.min(daysSinceStart, 14);
+  const windowDays = Math.min(daysSinceStart, window);
   const recentKeys = new Set(lastNDateKeys(windowDays, today));
   const trackedInWindow = checkins.filter(c => recentKeys.has(c.date)).length;
   const consistency = Math.round((trackedInWindow / windowDays) * 100);

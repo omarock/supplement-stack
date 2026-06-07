@@ -51,14 +51,14 @@ const MATRIX: { label: string; free: Cell; premium: Cell }[] = [
   { label: "Bloodwork analysis", free: "1 analysis", premium: "Unlimited" },
   { label: "Saved bloodwork history", free: false, premium: true },
   { label: "Re-test comparison (ferritin 18 → 47)", free: false, premium: true },
-  { label: "Daily tracking", free: "14 days", premium: "Unlimited + trends" },
+  { label: "Daily tracking", free: "7 days", premium: "Unlimited + trends" },
   { label: "Coach that remembers your data", free: false, premium: true },
   { label: "Daily reminders + weekly reports", free: false, premium: true },
   { label: "Priority support", free: false, premium: true },
 ];
 
 const FAQS: { q: string; a: string }[] = [
-  { q: "What do I actually get for free?", a: "A lot, forever: every evidence-graded ingredient guide, the personalized quiz, stack builder, stack audit, the interaction and timing checkers, one bloodwork analysis, and 14 days of tracking. No card needed." },
+  { q: "What do I actually get for free?", a: "A lot, forever: every evidence-graded ingredient guide, the personalized quiz, stack builder, stack audit, the interaction and timing checkers, one bloodwork analysis, and 7 days of tracking. No card needed." },
   { q: "What does Premium add?", a: "The features that compound with your data: unlimited bloodwork with saved history, re-test comparison over time, full tracking trends, a coach that remembers your stack and labs, and reminders plus weekly reports." },
   { q: "How does the founding offer work?", a: "During our founding phase, Premium is a one-time $79 for lifetime access (no subscription, ever). You enter your email, we send a secure payment link, and we switch on your lifetime access within 24 hours. Limited to the first 50 members." },
   { q: "Can I get a refund?", a: "Yes. If Premium isn't for you, email hello@suppdoc.io within 14 days and we refund you in full, no questions asked." },
@@ -270,7 +270,7 @@ export default function PricingClient({
             <div style={{ ...D, fontSize: 20, color: TH.ink }}>Free</div>
             <div style={{ ...D, fontSize: 42, color: TH.ink, letterSpacing: "-0.03em", margin: "8px 0 2px" }}>$0</div>
             <div style={{ fontSize: 13, color: TH.muted, marginBottom: 20 }}>forever · no card</div>
-            <Bullets items={["Everything to plan a great stack", "200+ evidence-graded guides", "Quiz, builder, audit & checkers", "1 bloodwork analysis", "14 days of tracking"]} />
+            <Bullets items={["Everything to plan a great stack", "200+ evidence-graded guides", "Quiz, builder, audit & checkers", "1 bloodwork analysis", "7 days of tracking"]} />
             <a href="/quiz" style={{
               marginTop: 22, display: "block", textAlign: "center", padding: "13px 20px", borderRadius: 999,
               border: `1.5px solid ${TH.edgeStrong}`, color: TH.ink, textDecoration: "none", ...D, fontWeight: 600, fontSize: 14.5,

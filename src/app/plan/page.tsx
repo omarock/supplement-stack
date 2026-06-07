@@ -54,7 +54,7 @@ export default async function PlanPage() {
       <SiteHeader />
       <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          {raw.length === 0 ? <EmptyState /> : <Plan raw={raw} quiz={quiz!} premium={premium} />}
+          {raw.length === 0 ? <EmptyState /> : <Plan raw={raw} quiz={quiz!} premium={premium} email={user.email} />}
         </div>
       </main>
       <SiteFooter />
@@ -79,7 +79,8 @@ function EmptyState() {
   );
 }
 
-function Plan({ raw, quiz, premium }: { raw: RawItem[]; quiz: { total_monthly_cost?: number; goals?: string[]; created_at?: string }; premium: boolean }) {
+function Plan({ raw, quiz, premium, email }: { raw: RawItem[]; quiz: { total_monthly_cost?: number; goals?: string[]; created_at?: string }; premium: boolean; email: string }) {
+  const generatedOn = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
   // Enrich from the live catalog (dose/why/product), falling back to stored values.
   const items: PlanItem[] = raw.map(r => {
     const db = SUPPLEMENT_DB.find(s => s.id === r.id);
@@ -101,7 +102,36 @@ function Plan({ raw, quiz, premium }: { raw: RawItem[]; quiz: { total_monthly_co
 
   return (
     <>
-      <style>{`@media print { header, footer, .no-print { display: none !important; } .plan-blur { filter: none !important; } }`}</style>
+      <style>{`
+        .print-only { display: none; }
+        @media print {
+          @page { margin: 14mm; }
+          header, footer, .no-print { display: none !important; }
+          .print-only { display: block !important; }
+          ${premium ? ".plan-blur { filter: none !important; pointer-events: auto !important; user-select: auto !important; }" : ""}
+          section { break-inside: avoid; }
+          .plan-item { break-inside: avoid; }
+          a { text-decoration: none !important; color: inherit !important; }
+          * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+      `}</style>
+
+      {/* Branded header, print / PDF only */}
+      <div className="print-only" style={{ marginBottom: 18 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: `1px solid ${TH.edge}`, paddingBottom: 10 }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <svg width="22" height="22" viewBox="0 0 40 40" aria-hidden>
+              <path d="M 20 36 Q 20 24 20 12" stroke={TH.sageDeep} strokeWidth="2" strokeLinecap="round" fill="none" />
+              <path d="M 20 23 Q 12 22 8 15 Q 14 14.5 20 23 Z" fill={TH.sageDeep} />
+              <path d="M 20 19 Q 28 18 32 11 Q 26 10.5 20 19 Z" fill={TH.sageDeep} />
+              <circle cx="20" cy="10" r="3.5" fill={TH.sageDeep} />
+            </svg>
+            <span style={{ ...D, fontSize: 18, color: TH.ink, letterSpacing: "-0.02em" }}>suppdoc<span style={{ color: TH.sageDeep }}>.io</span></span>
+          </span>
+          <span style={{ ...MM, fontSize: 11, color: TH.muted }}>Generated {generatedOn}</span>
+        </div>
+        <div style={{ ...MM, fontSize: 11, color: TH.muted, marginTop: 6 }}>Prepared for {email}</div>
+      </div>
 
       {/* Header */}
       <header style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 14, marginBottom: 22 }}>
@@ -200,7 +230,7 @@ function ItemCard({ it }: { it: PlanItem }) {
   const amazon = p?.amazonAsin ? amazonProductLink(p.amazonAsin) : amazonLink(p ? `${p.brand} ${p.productName}` : it.name);
   const img = p ? productImage(p) : null;
   return (
-    <div style={{ display: "flex", gap: 14, alignItems: "center", background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: 14 }}>
+    <div className="plan-item" style={{ display: "flex", gap: 14, alignItems: "center", background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: 14 }}>
       <div style={{ width: 52, height: 52, flexShrink: 0, borderRadius: 10, background: "#fff", border: `1px solid ${TH.edge}`, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
         {img
           // eslint-disable-next-line @next/next/no-img-element
@@ -211,6 +241,7 @@ function ItemCard({ it }: { it: PlanItem }) {
         <Link href={`/ingredients/${it.id}`} style={{ ...D, fontSize: 15.5, color: TH.ink, textDecoration: "none" }}>{it.name}</Link>
         {it.dose && <span style={{ ...MM, fontSize: 12, color: TH.sageDeep, marginLeft: 8 }}>{it.dose}</span>}
         {it.why && <div style={{ fontSize: 13, color: TH.inkSoft, lineHeight: 1.45, marginTop: 3 }}>{it.why}</div>}
+        {p && <div className="print-only" style={{ ...MM, fontSize: 11, color: TH.sageDeep, marginTop: 5 }}>Suggested: {p.brand} {p.productName}</div>}
       </div>
       <div className="no-print" style={{ display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }}>
         <a href={iherb} target="_blank" rel="noopener noreferrer sponsored" style={{ ...MM, fontSize: 11.5, fontWeight: 600, color: "#fff", background: TH.ink, padding: "7px 12px", borderRadius: 8, textDecoration: "none", textAlign: "center" }}>iHerb</a>
