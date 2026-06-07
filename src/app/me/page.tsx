@@ -224,6 +224,17 @@ export default async function ProfilePage() {
               Upload a lab report, we flag deficiencies and match targeted supplements. <span style={{ color: th.sage, fontWeight: 600 }}>Analyze →</span>
             </div>
           </Link>
+          <Link href="/plan" style={{
+            display: "block", textDecoration: "none", color: "inherit",
+            background: "linear-gradient(135deg, #eef2ff 0%, #ffffff 100%)",
+            border: "1px solid #c7d2fe", borderRadius: 16, padding: "20px 22px",
+          }}>
+            <div style={{ fontSize: 24, marginBottom: 8 }} aria-hidden>🗂️</div>
+            <div style={{ ...D, fontWeight: 600, fontSize: 18, color: th.ink, marginBottom: 4 }}>My Plan</div>
+            <div style={{ fontSize: 13.5, color: th.inkMute, lineHeight: 1.5 }}>
+              Your personalized protocol: schedule, doses, what to avoid, where to buy. <span style={{ color: th.sage, fontWeight: 600 }}>{premium ? "Open →" : "Preview →"}</span>
+            </div>
+          </Link>
         </section>
 
         {/* Quick actions */}

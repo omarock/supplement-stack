@@ -47,6 +47,7 @@ const MATRIX: { label: string; free: Cell; premium: Cell }[] = [
   { label: "Evidence-graded guides for 200+ ingredients", free: true, premium: true },
   { label: "Personalized quiz, stack builder & audit", free: true, premium: true },
   { label: "Interaction & timing checker", free: true, premium: true },
+  { label: "My Plan — saved & downloadable protocol", free: "preview", premium: true },
   { label: "Bloodwork analysis", free: "1 analysis", premium: "Unlimited" },
   { label: "Saved bloodwork history", free: false, premium: true },
   { label: "Re-test comparison (ferritin 18 → 47)", free: false, premium: true },
@@ -294,7 +295,7 @@ export default function PricingClient({
             <div style={{ fontSize: 13, color: foundingMode ? TH.sageDeep : TH.muted, marginBottom: 20, fontWeight: foundingMode ? 600 : 400 }}>
               {foundingMode ? "lifetime access · founding offer" : plan === "annual" ? "≈ $6.58/mo · 2 months free" : "billed monthly · cancel anytime"}
             </div>
-            <Bullets highlight items={["Everything in Free, plus:", "Unlimited bloodwork + saved history", "Re-test comparison over time", "Full tracking trends", "Coach that remembers your data", "Reminders + weekly reports"]} />
+            <Bullets highlight items={["Everything in Free, plus:", "My Plan: saved & downloadable protocol", "Unlimited bloodwork + saved history", "Re-test comparison over time", "Full tracking trends", "Coach that remembers your data", "Reminders + weekly reports"]} />
             <button onClick={foundingMode ? scrollToFounding : upgrade} disabled={busy || isPremium} style={{
               marginTop: 22, width: "100%", padding: "14px 20px", borderRadius: 999, border: "none",
               background: isPremium ? TH.bg : `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`,
