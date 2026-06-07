@@ -10,6 +10,7 @@ import {
 } from "@/lib/chat-context";
 import { detectSupplementsInText, lookupSupplement } from "@/lib/knowledge-base";
 import { getSessionUser } from "@/lib/auth-server";
+import { emailIsPremium } from "@/lib/premium";
 import { buildMemoryBlock } from "@/lib/chat-memory";
 
 export const dynamic = "force-dynamic";
@@ -110,6 +111,23 @@ function fallbackReply(messages: IncomingMessage[]): string {
   return `Our coach is being set up. While that's connecting, you can:\n\n- [Take the quiz](/quiz) to get a personalised stack in 2 minutes\n- [Audit your current stack](/audit) for interactions and gaps\n- [Build a stack from scratch](/build) using our 200+ ingredient library`;
 }
 
+// ─── Premium nudge: free users get a useful rules-based answer + an upgrade pull ──
+function premiumNudgeReply(messages: IncomingMessage[]): string {
+  const lastUser = [...messages].reverse().find(m => m.role === "user");
+  let head = "";
+  if (lastUser) {
+    const detected = detectSupplementsInText(lastUser.content);
+    if (detected.length > 0) {
+      const supps = detected.slice(0, 3).map(id => {
+        const s = lookupSupplement(id);
+        return s ? `- **${s.name}**, ${s.purpose}. [Read more](${s.url})` : null;
+      }).filter(Boolean).join("\n");
+      if (supps) head = `Quick take on what you mentioned:\n\n${supps}\n\n`;
+    }
+  }
+  return `${head}The full coach, the one that remembers your stack, labs and goals and reasons across them over time, is part of **Premium**. [See Premium →](/pricing)\n\nThe free tools can still help right now: [take the quiz](/quiz), [audit your stack](/audit), or [browse 200+ ingredients](/ingredients).`;
+}
+
 // ─── Handler ───────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   // Rate limit
@@ -131,19 +149,23 @@ export async function POST(req: NextRequest) {
   if (prepared.length === 0) return new Response(JSON.stringify({ ok: false, error: "no user message" }), { status: 400 });
   const greeting = isGreetingTurn(v.messages);
 
-  // H6, persistent health memory: for signed-in users, inject a server-sourced
-  // snapshot of their tracked stack, check-in trends, recent bloodwork, and goals
-  // so the coach reasons longitudinally. Best-effort; never blocks the reply.
-  if (anthropicEnabled()) {
+  // Premium gate: the live coach (Claude + a memory of your stack, labs, trends and
+  // goals) is a Premium feature. This makes it a paid differentiator AND bounds API
+  // cost to paying users — so the API can be switched on safely.
+  const user = await getSessionUser().catch(() => null);
+  const premium = user?.email ? await emailIsPremium(user.email).catch(() => false) : false;
+  const canCoach = anthropicEnabled() && premium;
+
+  // Persistent health memory, premium only: inject a server-sourced snapshot of the
+  // user's tracked stack, check-in trends, recent bloodwork and goals so the coach
+  // reasons longitudinally. Best-effort; never blocks the reply.
+  if (canCoach && user?.email) {
     try {
-      const user = await getSessionUser();
-      if (user) {
-        const memory = await buildMemoryBlock(user.email);
-        if (memory) {
-          const last = prepared[prepared.length - 1];
-          if (last.role === "user") {
-            prepared = [...prepared.slice(0, -1), { role: "user", content: last.content + memory }];
-          }
+      const memory = await buildMemoryBlock(user.email);
+      if (memory) {
+        const last = prepared[prepared.length - 1];
+        if (last.role === "user") {
+          prepared = [...prepared.slice(0, -1), { role: "user", content: last.content + memory }];
         }
       }
     } catch { /* memory is best-effort; degrade to stateless chat */ }
@@ -167,9 +189,11 @@ export async function POST(req: NextRequest) {
         } catch { /* aborted */ }
       };
 
-      if (!anthropicEnabled()) {
-        // Stream the fallback in small chunks so the UI still feels live
-        const text = fallbackReply(v.messages);
+      if (!canCoach) {
+        // Free/signed-out users (or no API key). Free users who could otherwise use
+        // the coach get a helpful rules-based answer + a premium nudge — zero API cost.
+        const locked = anthropicEnabled() && !premium;
+        const text = locked ? premiumNudgeReply(v.messages) : fallbackReply(v.messages);
         const tokens = text.match(/[\s\S]{1,8}/g) ?? [text];
         for (const t of tokens) {
           sendDelta(t);
