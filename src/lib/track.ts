@@ -66,12 +66,27 @@ export async function trackClick(
 }
 
 /**
- * Capture an email signup (e.g. from the quiz email-capture step).
+ * Capture an email signup (quiz email-capture, founding member, etc.).
+ *
+ * Goes through the server route /api/lead, which (1) stores the lead with the
+ * service-role client so it is never blocked by RLS, and (2) emails the founder
+ * as a backstop. Returns an honest { ok } so callers can show real success/error
+ * states instead of faking success. Never throws.
  */
-export async function trackEmailSignup(email: string, source: string) {
-  const supa = getSupabase();
-  if (!supa) return;
-
-  await supa.from("email_signups")
-    .upsert({ email, source }, { onConflict: "email", ignoreDuplicates: true });
+export async function trackEmailSignup(
+  email: string,
+  source: string,
+  note?: string,
+): Promise<{ ok: boolean }> {
+  try {
+    const res = await fetch("/api/lead", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email, source, note }),
+    });
+    const body = await res.json().catch(() => ({ ok: false }));
+    return { ok: Boolean(body?.ok) };
+  } catch {
+    return { ok: false };
+  }
 }

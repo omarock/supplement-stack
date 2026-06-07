@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics";
 import { TH, FONTS } from "@/lib/theme";
@@ -10,15 +10,15 @@ import type { PaddleClientConfig } from "@/lib/paddle";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
 const MM = { fontFamily: FONTS.mono } as const;
+const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic" as const, fontWeight: 400 };
 
-// ─── Paddle.js loader (loaded once, on demand) ──────────────────────────────
+// ─── Paddle.js loader (loaded once, on demand; used only when billing is live) ──
 type PaddleGlobal = {
   Environment: { set: (env: "sandbox" | "production") => void };
   Initialize: (opts: { token: string }) => void;
   Checkout: { open: (opts: Record<string, unknown>) => void };
 };
 declare global { interface Window { Paddle?: PaddleGlobal } }
-
 let paddlePromise: Promise<PaddleGlobal> | null = null;
 function loadPaddle(cfg: PaddleClientConfig): Promise<PaddleGlobal> {
   if (typeof window === "undefined") return Promise.reject(new Error("no window"));
@@ -41,31 +41,41 @@ function loadPaddle(cfg: PaddleClientConfig): Promise<PaddleGlobal> {
   return paddlePromise;
 }
 
-const FREE = [
-  "All guides, studies, stacks & journal",
-  "Personalised quiz + stack builder + audit",
-  "1 bloodwork analysis",
-  "14 days of tracking",
-];
-const PREMIUM = [
-  "Everything in Free",
-  "Unlimited bloodwork + saved history",
-  "Re-test comparison (ferritin 18 → 47)",
-  "Full tracking history + trend analytics",
-  "Coach with memory of your data",
-  "Daily reminders + weekly reports",
+// ─── Feature comparison matrix ───────────────────────────────────────────────
+type Cell = boolean | string;
+const MATRIX: { label: string; free: Cell; premium: Cell }[] = [
+  { label: "Evidence-graded guides for 200+ ingredients", free: true, premium: true },
+  { label: "Personalized quiz, stack builder & audit", free: true, premium: true },
+  { label: "Interaction & timing checker", free: true, premium: true },
+  { label: "Bloodwork analysis", free: "1 analysis", premium: "Unlimited" },
+  { label: "Saved bloodwork history", free: false, premium: true },
+  { label: "Re-test comparison (ferritin 18 → 47)", free: false, premium: true },
+  { label: "Daily tracking", free: "14 days", premium: "Unlimited + trends" },
+  { label: "Coach that remembers your data", free: false, premium: true },
+  { label: "Daily reminders + weekly reports", free: false, premium: true },
+  { label: "Priority support", free: false, premium: true },
 ];
 
-export default function PricingClient({ signedIn, email, isPremium, billingEnabled, paddle, foundingMode }: {
-  signedIn: boolean; email: string | null; isPremium: boolean; billingEnabled: boolean; paddle: PaddleClientConfig | null; foundingMode: boolean;
+const FAQS: { q: string; a: string }[] = [
+  { q: "What do I actually get for free?", a: "A lot, forever: every evidence-graded ingredient guide, the personalized quiz, stack builder, stack audit, the interaction and timing checkers, one bloodwork analysis, and 14 days of tracking. No card needed." },
+  { q: "What does Premium add?", a: "The features that compound with your data: unlimited bloodwork with saved history, re-test comparison over time, full tracking trends, a coach that remembers your stack and labs, and reminders plus weekly reports." },
+  { q: "How does the founding offer work?", a: "During our founding phase, Premium is a one-time $79 for lifetime access (no subscription, ever). You enter your email, we send a secure payment link, and we switch on your lifetime access within 24 hours. Limited to the first 50 members." },
+  { q: "Can I get a refund?", a: "Yes. If Premium isn't for you, email hello@suppdoc.io within 14 days and we refund you in full, no questions asked." },
+  { q: "Do you sell your own supplements?", a: "No, and we never will. We have no house brand, so our recommendations have no built-in bias. Premium pays for the tools, not for pushing pills." },
+  { q: "Is this medical advice?", a: "No. SuppDoc is educational and evidence-graded, not a substitute for a clinician. Premium adds tools and history; it never changes the honesty of the recommendations." },
+  { q: "Is my data private?", a: "Yes. Your bloodwork and tracking data are private to your account and never sold. You can export or delete them at any time." },
+];
+
+export default function PricingClient({
+  signedIn, email, isPremium, billingEnabled, paddle, foundingMode, spotsLeft, foundingTotal,
+}: {
+  signedIn: boolean; email: string | null; isPremium: boolean; billingEnabled: boolean;
+  paddle: PaddleClientConfig | null; foundingMode: boolean; spotsLeft: number; foundingTotal: number;
 }) {
   const router = useRouter();
-  const [plan, setPlan] = useState<"monthly" | "annual">("monthly");
+  const [plan, setPlan] = useState<"monthly" | "annual">("annual");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // Resolve the user's email client-side (reliable source of truth) so Paddle's
-  // checkout always gets a valid email + the customData needed to map the
-  // subscription back to this account. Falls back to the server-provided email.
   const [authEmail, setAuthEmail] = useState<string | null>(email);
   useEffect(() => {
     const supa = getSupabase();
@@ -75,7 +85,7 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
     });
   }, []);
 
-  // ── Founding-member capture (manual Payoneer validation phase) ──
+  // ── Founding-member capture (manual validation phase) ──
   const [foundingEmail, setFoundingEmail] = useState(email ?? "");
   const [foundingBusy, setFoundingBusy] = useState(false);
   const [foundingDone, setFoundingDone] = useState(false);
@@ -88,13 +98,16 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
 
   const submitFounding = useCallback(async () => {
     const e = foundingEmail.trim().toLowerCase();
-    if (!e.includes("@")) { setFoundingErr("Please enter a valid email."); return; }
+    if (!e.includes("@") || !e.includes(".")) { setFoundingErr("Please enter a valid email address."); return; }
     setFoundingBusy(true); setFoundingErr(null);
-    try {
-      await trackEmailSignup(e, "founding-member");
-      track("founding_interest", { signedIn });
-    } catch { /* storage hiccup shouldn't block the user; we still mark done */ }
-    finally { setFoundingBusy(false); setFoundingDone(true); }
+    const r = await trackEmailSignup(e, "founding-member");
+    setFoundingBusy(false);
+    if (!r.ok) {
+      setFoundingErr("Something went wrong on our side. Please try again, or email hello@suppdoc.io and we'll sort it out.");
+      return;
+    }
+    track("founding_interest", { signedIn });
+    setFoundingDone(true);
   }, [foundingEmail, signedIn]);
 
   const upgrade = useCallback(async () => {
@@ -102,37 +115,20 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
     if (!signedIn) { router.push("/signin?redirect=/pricing"); return; }
     if (!billingEnabled) { setError("Checkout isn't switched on yet, check back shortly."); return; }
     setBusy(true); setError(null);
-
-    // ── Paddle overlay checkout (preferred when configured) ──
     if (paddle) {
       try {
         const P = await loadPaddle(paddle);
         const priceId = plan === "annual" ? paddle.priceAnnual : paddle.priceMonthly;
         const userEmail = (authEmail || email || "").trim();
-        // NOTE: we deliberately do NOT pass `customer: { email }`. Paddle.js 400s
-        // ("transaction-checkout") when that email already exists as a customer
-        // (which happens after any earlier checkout attempt). `customData` is what
-        // maps the subscription back to this account, so that's all we need; the
-        // overlay collects/loads the email itself.
         P.Checkout.open({
           items: [{ priceId, quantity: 1 }],
           ...(userEmail ? { customData: { user_email: userEmail } } : {}),
-          settings: {
-            displayMode: "overlay",
-            theme: "light",
-            successUrl: `${window.location.origin}/me?upgraded=1`,
-          },
+          settings: { displayMode: "overlay", theme: "light", successUrl: `${window.location.origin}/me?upgraded=1` },
         });
-      } catch (e) {
-        console.error("Paddle checkout failed to open:", e);
-        setError("Couldn't open checkout. Please try again.");
-      } finally {
-        setBusy(false);
-      }
+      } catch { setError("Couldn't open checkout. Please try again."); }
+      finally { setBusy(false); }
       return;
     }
-
-    // ── Stripe redirect checkout (fallback) ──
     try {
       const res = await fetch("/api/stripe/checkout", {
         method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ plan }),
@@ -144,164 +140,327 @@ export default function PricingClient({ signedIn, email, isPremium, billingEnabl
     finally { setBusy(false); }
   }, [signedIn, email, authEmail, billingEnabled, plan, paddle, router]);
 
+  const claimed = Math.max(0, foundingTotal - spotsLeft);
+  const claimedPct = foundingTotal > 0 ? Math.min(100, Math.round((claimed / foundingTotal) * 100)) : 0;
+  const left = Math.max(1, spotsLeft); // never show "0 left" while the offer is live
   const price = plan === "annual" ? "$79" : "$9";
   const per = plan === "annual" ? "/year" : "/month";
-  const sub = plan === "annual" ? "≈ $6.58/mo · 2 months free" : "billed monthly · cancel anytime";
-  // Founding phase: Premium is sold as a one-time lifetime membership.
-  const dispPrice = foundingMode ? "$79" : price;
-  const dispPer = foundingMode ? " once" : per;
-  const dispSub = foundingMode ? "lifetime access · founding offer" : sub;
 
   return (
-    <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
-      <div style={{ maxWidth: 940, margin: "0 auto" }}>
-        <header style={{ textAlign: "center", marginBottom: 28 }}>
-          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Pricing</div>
-          <h1 style={{ ...D, fontSize: "clamp(32px, 5.5vw, 50px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 12px" }}>
-            Free to start. <span style={{ fontFamily: FONTS.serifItalic, fontStyle: "italic", fontWeight: 400, color: TH.sageDeep }}>Premium when it matters.</span>
+    <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 96px" }}>
+      <div style={{ maxWidth: 960, margin: "0 auto" }}>
+
+        {/* ===== Hero ===== */}
+        <header style={{ textAlign: "center", marginBottom: 30 }}>
+          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>Pricing</div>
+          <h1 style={{ ...D, fontSize: "clamp(32px, 5.5vw, 52px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 14px" }}>
+            Free forever. <span style={{ ...SI, color: TH.sageDeep }}>Premium when your data compounds.</span>
           </h1>
-          <p style={{ fontSize: 17, color: TH.inkSoft, maxWidth: 540, margin: "0 auto", lineHeight: 1.5 }}>
-            We don&apos;t sell supplements, so premium isn&apos;t a markup on pills, it&apos;s the tools that turn your stack into measurable progress.
+          <p style={{ fontSize: 17.5, color: TH.inkSoft, maxWidth: 560, margin: "0 auto", lineHeight: 1.55 }}>
+            We don&apos;t sell supplements, so Premium isn&apos;t a markup on pills. It&apos;s the tools that turn your stack and labs into measurable progress over time.
           </p>
+          <div style={{ display: "flex", gap: 18, justifyContent: "center", flexWrap: "wrap", marginTop: 18, ...MM, fontSize: 11.5, color: TH.muted, letterSpacing: "0.03em" }}>
+            <TrustChip>No house brand</TrustChip>
+            <TrustChip>Evidence-graded</TrustChip>
+            <TrustChip>14-day money-back</TrustChip>
+            <TrustChip>Cancel anytime</TrustChip>
+          </div>
         </header>
 
-        {/* Founding-member offer (validation phase): one-time lifetime membership */}
+        {/* ===== Founding offer (premium hero card) ===== */}
         {foundingMode && (
           <section id="founding-offer" style={{
-            background: TH.ink, color: "#fff", borderRadius: 22, padding: "30px 30px",
-            marginBottom: 28, boxShadow: "0 20px 50px -22px rgba(10,37,64,0.55)",
+            position: "relative", overflow: "hidden",
+            background: `linear-gradient(165deg, #0d2c4d 0%, #071a30 100%)`, color: "#fff",
+            borderRadius: 24, padding: "clamp(24px, 4vw, 38px)", marginBottom: 34,
+            boxShadow: "0 30px 70px -30px rgba(10,37,64,0.65)",
           }}>
-            <div style={{ ...MM, fontSize: 11, color: TH.amber, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-              Founding offer · only 50 spots
-            </div>
-            <h2 style={{ ...D, fontSize: "clamp(24px, 4vw, 34px)", lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 10px" }}>
-              Get Premium <span style={{ fontFamily: FONTS.serifItalic, fontStyle: "italic", fontWeight: 400 }}>for life</span>, $79 once.
-            </h2>
-            <p style={{ fontSize: 15.5, opacity: 0.85, lineHeight: 1.6, margin: "0 0 20px", maxWidth: 580 }}>
-              Be one of our first 50 founding members. A single $79 payment, lifetime access to everything in Premium, no subscription ever. Lock it in before monthly billing switches on.
-            </p>
-            {foundingDone ? (
-              <div style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.18)", borderRadius: 14, padding: "18px 20px", maxWidth: 580 }}>
-                <div style={{ ...D, fontSize: 16, marginBottom: 4 }}>You&apos;re on the list 🎉</div>
-                <div style={{ fontSize: 14, opacity: 0.85, lineHeight: 1.55 }}>
-                  We&apos;ll email you a secure payment link and switch on your lifetime access within 24 hours.
+            <div aria-hidden style={{ position: "absolute", top: -120, right: -100, width: 380, height: 380, borderRadius: 999, background: `radial-gradient(circle, ${TH.sage}38 0%, ${TH.sage}00 70%)`, pointerEvents: "none" }} />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
+                <span style={{ ...MM, fontSize: 10.5, color: "#0a1f38", background: TH.amber, padding: "4px 11px", borderRadius: 999, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>
+                  Founding offer
+                </span>
+                <span style={{ ...MM, fontSize: 11.5, color: TH.amber, letterSpacing: "0.06em" }}>
+                  {left} of {foundingTotal} spots left
+                </span>
+              </div>
+
+              <h2 style={{ ...D, fontSize: "clamp(26px, 4.4vw, 40px)", lineHeight: 1.06, letterSpacing: "-0.02em", margin: "0 0 12px", maxWidth: 640 }}>
+                Get Premium <span style={SI}>for life</span> — one payment of $79.
+              </h2>
+              <p style={{ fontSize: 16, opacity: 0.86, lineHeight: 1.6, margin: "0 0 18px", maxWidth: 600 }}>
+                Premium will be <strong style={{ opacity: 1 }}>$9/month</strong> when billing switches on. The first {foundingTotal} members lock <strong style={{ opacity: 1 }}>lifetime access for a single $79</strong> — no subscription, ever. That&apos;s the cost of nine months, for life.
+              </p>
+
+              {/* Scarcity bar */}
+              <div style={{ maxWidth: 600, marginBottom: 22 }}>
+                <div style={{ height: 8, borderRadius: 999, background: "rgba(255,255,255,0.14)", overflow: "hidden" }}>
+                  <div style={{ width: `${Math.max(6, claimedPct)}%`, height: "100%", borderRadius: 999, background: `linear-gradient(90deg, ${TH.sage}, ${TH.amber})`, transition: "width .4s" }} />
+                </div>
+                <div style={{ ...MM, fontSize: 10.5, opacity: 0.62, marginTop: 7 }}>
+                  {claimed > 0 ? `${claimed} claimed · ${left} remaining at $79 lifetime` : `Be the first — ${left} lifetime spots at $79`}
                 </div>
               </div>
-            ) : (
-              <>
-                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", maxWidth: 580 }}>
-                  <input
-                    id="founding-email-input" type="email" inputMode="email" value={foundingEmail}
-                    onChange={e => setFoundingEmail(e.target.value)}
-                    onKeyDown={e => { if (e.key === "Enter") submitFounding(); }}
-                    placeholder="you@email.com"
-                    style={{
-                      flex: "1 1 240px", minWidth: 200, padding: "14px 16px", borderRadius: 12, border: "none",
-                      fontSize: 16, fontFamily: FONTS.body, color: TH.ink,
-                    }}
-                  />
-                  <button onClick={submitFounding} disabled={foundingBusy} style={{
-                    padding: "14px 24px", borderRadius: 12, border: "none", cursor: foundingBusy ? "wait" : "pointer",
-                    background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", ...D, fontWeight: 600, fontSize: 15,
-                  }}>
-                    {foundingBusy ? "…" : "Claim my spot"}
-                  </button>
+
+              {foundingDone ? (
+                <div style={{ background: "rgba(255,255,255,0.09)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 16, padding: "20px 22px", maxWidth: 600 }}>
+                  <div style={{ ...D, fontSize: 17, marginBottom: 6 }}>You&apos;re on the list 🎉</div>
+                  <div style={{ fontSize: 14.5, opacity: 0.86, lineHeight: 1.55 }}>
+                    Check your inbox: we&apos;ll send a secure payment link and switch on your lifetime access within 24 hours. Questions? <a href="mailto:hello@suppdoc.io" style={{ color: TH.amber }}>hello@suppdoc.io</a>
+                  </div>
                 </div>
-                {foundingErr && <div role="alert" style={{ marginTop: 10, fontSize: 13, color: TH.amber }}>{foundingErr}</div>}
-                <div style={{ ...MM, fontSize: 10.5, opacity: 0.6, marginTop: 12 }}>
-                  One-time $79 · lifetime access · secure invoice · we don&apos;t sell supplements
-                </div>
-              </>
-            )}
+              ) : isPremium ? (
+                <div style={{ ...D, fontSize: 16, color: TH.sage }}>✓ You already have Premium — thank you.</div>
+              ) : (
+                <>
+                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap", maxWidth: 600 }}>
+                    <input
+                      id="founding-email-input" type="email" inputMode="email" autoComplete="email" value={foundingEmail}
+                      onChange={e => setFoundingEmail(e.target.value)}
+                      onKeyDown={e => { if (e.key === "Enter") submitFounding(); }}
+                      placeholder="you@email.com"
+                      aria-label="Your email"
+                      style={{
+                        flex: "1 1 240px", minWidth: 200, padding: "15px 16px", borderRadius: 13, border: "none",
+                        fontSize: 16, fontFamily: FONTS.body, color: "#0a2540", background: "#fff",
+                        outline: "none", boxShadow: "0 2px 10px rgba(0,0,0,0.12)",
+                      }}
+                    />
+                    <button onClick={submitFounding} disabled={foundingBusy} style={{
+                      padding: "15px 26px", borderRadius: 13, border: "none", cursor: foundingBusy ? "wait" : "pointer",
+                      background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", ...D, fontWeight: 600, fontSize: 15.5,
+                      boxShadow: `0 10px 24px -8px ${TH.sage}`,
+                    }}>
+                      {foundingBusy ? "Securing…" : "Claim my lifetime spot →"}
+                    </button>
+                  </div>
+                  {foundingErr && <div role="alert" style={{ marginTop: 10, fontSize: 13.5, color: TH.amber }}>{foundingErr}</div>}
+                  <div style={{ ...MM, fontSize: 10.5, opacity: 0.6, marginTop: 13 }}>
+                    One-time $79 · lifetime access · 14-day money-back · secure invoice · no card stored
+                  </div>
+                </>
+              )}
+            </div>
           </section>
         )}
 
-        {/* Billing toggle */}
+        {/* ===== Plan cards ===== */}
         {!foundingMode && (
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
-          <div style={{ display: "inline-flex", background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 999, padding: 4 }}>
-            {(["monthly", "annual"] as const).map(p => (
-              <button key={p} onClick={() => setPlan(p)} style={{
-                padding: "8px 18px", borderRadius: 999, border: "none", cursor: "pointer",
-                fontFamily: FONTS.body, fontSize: 13.5, fontWeight: 600,
-                background: plan === p ? TH.ink : "transparent", color: plan === p ? "#fff" : TH.inkSoft,
-                transition: "all .15s",
-              }}>
-                {p === "monthly" ? "Monthly" : "Annual"}
-                {p === "annual" && <span style={{ ...MM, fontSize: 9.5, color: plan === p ? TH.sage : TH.sageDeep, marginLeft: 6 }}>SAVE 27%</span>}
-              </button>
-            ))}
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 22 }}>
+            <div style={{ display: "inline-flex", background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 999, padding: 4 }}>
+              {(["annual", "monthly"] as const).map(p => (
+                <button key={p} onClick={() => setPlan(p)} style={{
+                  padding: "9px 20px", borderRadius: 999, border: "none", cursor: "pointer",
+                  fontFamily: FONTS.body, fontSize: 13.5, fontWeight: 600,
+                  background: plan === p ? TH.ink : "transparent", color: plan === p ? "#fff" : TH.inkSoft, transition: "all .15s",
+                }}>
+                  {p === "annual" ? "Annual" : "Monthly"}
+                  {p === "annual" && <span style={{ ...MM, fontSize: 9.5, color: plan === p ? TH.sage : TH.sageDeep, marginLeft: 6 }}>SAVE 27%</span>}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
         )}
 
-        {/* Plans */}
-        <div style={{ display: "grid", gridTemplateColumns: "var(--pricing-cols)", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "var(--pricing-cols)", gap: 16, alignItems: "start" }}>
           {/* Free */}
-          <div style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, padding: "26px 26px" }}>
+          <div style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, padding: "28px 26px" }}>
             <div style={{ ...D, fontSize: 20, color: TH.ink }}>Free</div>
-            <div style={{ ...D, fontSize: 40, color: TH.ink, letterSpacing: "-0.03em", margin: "8px 0 2px" }}>$0</div>
-            <div style={{ fontSize: 13, color: TH.muted, marginBottom: 18 }}>forever · no card</div>
-            <Bullets items={FREE} />
+            <div style={{ ...D, fontSize: 42, color: TH.ink, letterSpacing: "-0.03em", margin: "8px 0 2px" }}>$0</div>
+            <div style={{ fontSize: 13, color: TH.muted, marginBottom: 20 }}>forever · no card</div>
+            <Bullets items={["Everything to plan a great stack", "200+ evidence-graded guides", "Quiz, builder, audit & checkers", "1 bloodwork analysis", "14 days of tracking"]} />
+            <a href="/quiz" style={{
+              marginTop: 22, display: "block", textAlign: "center", padding: "13px 20px", borderRadius: 999,
+              border: `1.5px solid ${TH.edgeStrong}`, color: TH.ink, textDecoration: "none", ...D, fontWeight: 600, fontSize: 14.5,
+            }}>Start free →</a>
           </div>
 
           {/* Premium */}
           <div style={{
-            background: TH.surface, border: `2px solid ${TH.sage}`, borderRadius: 22, padding: "26px 26px", position: "relative",
-            boxShadow: `0 14px 40px -16px ${TH.sage}55`,
+            background: TH.surface, border: `2px solid ${TH.sage}`, borderRadius: 22, padding: "28px 26px", position: "relative",
+            boxShadow: `0 18px 48px -18px ${TH.sage}66`,
           }}>
             <span style={{
-              position: "absolute", top: -11, left: 24, ...MM, fontSize: 10, fontWeight: 600, color: "#fff",
-              background: TH.sage, padding: "3px 10px", borderRadius: 999, letterSpacing: "0.06em", textTransform: "uppercase",
+              position: "absolute", top: -11, left: 24, ...MM, fontSize: 10, fontWeight: 700, color: "#fff",
+              background: TH.sage, padding: "4px 11px", borderRadius: 999, letterSpacing: "0.06em", textTransform: "uppercase",
             }}>Most popular</span>
             <div style={{ ...D, fontSize: 20, color: TH.ink }}>Premium</div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 6, margin: "8px 0 2px" }}>
-              <span style={{ ...D, fontSize: 40, color: TH.ink, letterSpacing: "-0.03em" }}>{dispPrice}</span>
-              <span style={{ fontSize: 15, color: TH.muted }}>{dispPer}</span>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 8, margin: "8px 0 2px", flexWrap: "wrap" }}>
+              <span style={{ ...D, fontSize: 42, color: TH.ink, letterSpacing: "-0.03em" }}>{foundingMode ? "$79" : price}</span>
+              <span style={{ fontSize: 15, color: TH.muted }}>{foundingMode ? "once" : per}</span>
+              {foundingMode && <span style={{ ...MM, fontSize: 12, color: TH.muted, textDecoration: "line-through" }}>$9/mo</span>}
             </div>
-            <div style={{ fontSize: 13, color: TH.muted, marginBottom: 18 }}>{dispSub}</div>
-            <Bullets items={PREMIUM} highlight />
+            <div style={{ fontSize: 13, color: foundingMode ? TH.sageDeep : TH.muted, marginBottom: 20, fontWeight: foundingMode ? 600 : 400 }}>
+              {foundingMode ? "lifetime access · founding offer" : plan === "annual" ? "≈ $6.58/mo · 2 months free" : "billed monthly · cancel anytime"}
+            </div>
+            <Bullets highlight items={["Everything in Free, plus:", "Unlimited bloodwork + saved history", "Re-test comparison over time", "Full tracking trends", "Coach that remembers your data", "Reminders + weekly reports"]} />
             <button onClick={foundingMode ? scrollToFounding : upgrade} disabled={busy || isPremium} style={{
-              marginTop: 20, width: "100%", padding: "14px 20px", borderRadius: 999, border: "none",
+              marginTop: 22, width: "100%", padding: "14px 20px", borderRadius: 999, border: "none",
               background: isPremium ? TH.bg : `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`,
               color: isPremium ? TH.sageDeep : "#fff", ...D, fontWeight: 600, fontSize: 15,
               cursor: isPremium ? "default" : busy ? "wait" : "pointer",
-              boxShadow: isPremium ? "none" : `0 8px 20px -6px ${TH.sage}80`,
+              boxShadow: isPremium ? "none" : `0 10px 24px -8px ${TH.sage}`,
             }}>
               {isPremium ? "✓ You're on Premium"
-                : foundingMode ? "Claim my founding spot →"
+                : foundingMode ? "Claim my lifetime spot →"
                 : busy ? "Starting checkout…"
-                : signedIn ? `Upgrade, ${price}${per}` : "Sign in to upgrade"}
+                : signedIn ? `Upgrade ${price}${per}` : "Sign in to upgrade"}
             </button>
             {error && !foundingMode && <div role="alert" style={{ marginTop: 10, fontSize: 12.5, color: "#b91c1c", textAlign: "center" }}>{error}</div>}
-            <div style={{ marginTop: 10, ...MM, fontSize: 10, color: TH.mutedDim, textAlign: "center", letterSpacing: "0.03em" }}>
-              {foundingMode ? "One-time $79 · lifetime access · secure invoice" : <>Cancel anytime · secure checkout by {paddle ? "Paddle" : "Stripe"}</>}
+            <div style={{ marginTop: 11, ...MM, fontSize: 10, color: TH.mutedDim, textAlign: "center", letterSpacing: "0.03em" }}>
+              {foundingMode ? "14-day money-back · secure invoice" : <>Cancel anytime · secure checkout by {paddle ? "Paddle" : "Stripe"}</>}
             </div>
           </div>
         </div>
 
-        <p style={{ fontSize: 12.5, color: TH.muted, textAlign: "center", marginTop: 28, lineHeight: 1.6 }}>
+        {/* ===== Comparison table ===== */}
+        <section style={{ marginTop: 44 }}>
+          <h2 style={{ ...D, fontSize: 24, textAlign: "center", letterSpacing: "-0.02em", margin: "0 0 20px" }}>Compare in detail</h2>
+          <div style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, overflow: "hidden" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr" }}>
+              <Cellh></Cellh>
+              <Cellh center>Free</Cellh>
+              <Cellh center highlight>Premium</Cellh>
+              {MATRIX.map((row, i) => (
+                <Row key={i} row={row} last={i === MATRIX.length - 1} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ===== Value / why it pays for itself ===== */}
+        <section style={{ marginTop: 44, display: "grid", gridTemplateColumns: "var(--value-cols)", gap: 16 }}>
+          <ValueCard icon="📉" title="Stop wasting money on pills that don't move your numbers" body="The average stack has redundant or under-dosed products. Premium tracks your labs over time so you keep what works and cut what doesn't, usually saving more than $79 in the first months." />
+          <ValueCard icon="🧬" title="Turn a one-off lab into a trend you can act on" body="A single ferritin reading is a guess. Premium saves your history and shows the re-test arc (18 → 47), so you see whether your plan is actually working." />
+          <ValueCard icon="🧠" title="A coach that remembers everything" body="No re-explaining your stack, your labs, your goals. Premium's coach has your full context, so the guidance gets sharper the longer you use it." />
+        </section>
+
+        {/* ===== Scientific credibility / trust ===== */}
+        <section style={{ marginTop: 44, background: TH.ink, color: "#fff", borderRadius: 20, padding: "clamp(24px,4vw,34px)", textAlign: "center" }}>
+          <div style={{ ...MM, fontSize: 11, color: TH.amber, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Why you can trust the recommendations</div>
+          <div style={{ display: "grid", gridTemplateColumns: "var(--trust-cols)", gap: 20, maxWidth: 720, margin: "0 auto" }}>
+            <Stat n="70,000+" l="peer-reviewed studies behind our ratings" />
+            <Stat n="200+" l="ingredients, each evidence-graded" />
+            <Stat n="$0" l="we make from selling supplements" />
+          </div>
+          <p style={{ fontSize: 14.5, opacity: 0.8, lineHeight: 1.6, maxWidth: 600, margin: "22px auto 0" }}>
+            We have no house brand and take no money from supplement makers. Premium pays for the tools, never for changing the answer. Every ingredient links to its source research so you can verify it yourself.
+          </p>
+        </section>
+
+        {/* ===== FAQ ===== */}
+        <section style={{ marginTop: 44 }}>
+          <h2 style={{ ...D, fontSize: 24, textAlign: "center", letterSpacing: "-0.02em", margin: "0 0 20px" }}>Questions, answered</h2>
+          <div style={{ maxWidth: 720, margin: "0 auto", display: "flex", flexDirection: "column", gap: 10 }}>
+            {FAQS.map((f, i) => (
+              <details key={i} style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: "4px 18px" }}>
+                <summary style={{ ...D, fontSize: 15.5, color: TH.ink, cursor: "pointer", listStyle: "none", padding: "14px 0", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+                  {f.q}
+                  <span style={{ color: TH.sageDeep, fontSize: 20, fontWeight: 400, flexShrink: 0 }}>+</span>
+                </summary>
+                <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.6, margin: "0 0 16px" }}>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        {/* ===== Final CTA ===== */}
+        {foundingMode && !isPremium && !foundingDone && (
+          <section style={{ marginTop: 40, textAlign: "center" }}>
+            <button onClick={scrollToFounding} style={{
+              display: "inline-flex", alignItems: "center", gap: 10, padding: "15px 30px", borderRadius: 999, border: "none", cursor: "pointer",
+              background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", ...D, fontWeight: 600, fontSize: 15.5,
+              boxShadow: `0 12px 28px -8px ${TH.sage}`,
+            }}>
+              Claim one of the last {left} lifetime spots →
+            </button>
+          </section>
+        )}
+
+        <p style={{ fontSize: 12.5, color: TH.muted, textAlign: "center", marginTop: 34, lineHeight: 1.6, maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
           Educational use only, not medical advice. Premium adds tools and history; it never changes the honesty of the recommendations.
         </p>
       </div>
 
       <style>{`
-        :root { --pricing-cols: 1fr 1fr; }
-        @media (max-width: 720px) { :root { --pricing-cols: 1fr; } }
+        :root { --pricing-cols: 1fr 1fr; --value-cols: 1fr 1fr 1fr; --trust-cols: 1fr 1fr 1fr; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] > summary > span:last-child { transform: rotate(45deg); }
+        @media (max-width: 860px) { :root { --value-cols: 1fr; } }
+        @media (max-width: 720px) { :root { --pricing-cols: 1fr; --trust-cols: 1fr; } }
       `}</style>
     </main>
   );
 }
 
+function TrustChip({ children }: { children: ReactNode }) {
+  return (
+    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="3.2"><path d="M5 12l5 5 9-11" /></svg>
+      {children}
+    </span>
+  );
+}
+
 function Bullets({ items, highlight }: { items: string[]; highlight?: boolean }) {
   return (
-    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 11 }}>
       {items.map((b, i) => (
-        <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14, color: TH.inkSoft, lineHeight: 1.4 }}>
+        <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14, color: i === 0 && highlight ? TH.ink : TH.inkSoft, fontWeight: i === 0 && highlight ? 600 : 400, lineHeight: 1.4 }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={highlight ? TH.sage : TH.muted} strokeWidth="3" style={{ flexShrink: 0, marginTop: 2 }}><path d="M5 12l5 5 9-11" /></svg>
           {b}
         </li>
       ))}
     </ul>
+  );
+}
+
+function Cellh({ children, center, highlight }: { children?: ReactNode; center?: boolean; highlight?: boolean }) {
+  return (
+    <div style={{
+      padding: "16px 18px", ...D, fontSize: 14, color: TH.ink, textAlign: center ? "center" : "left",
+      background: highlight ? `${TH.sage}12` : "transparent", borderBottom: `1px solid ${TH.edge}`,
+    }}>{children}</div>
+  );
+}
+
+function Row({ row, last }: { row: { label: string; free: Cell; premium: Cell }; last: boolean }) {
+  const border = last ? "none" : `1px solid ${TH.edge}`;
+  return (
+    <>
+      <div style={{ padding: "14px 18px", fontSize: 14, color: TH.inkSoft, borderBottom: border, lineHeight: 1.4 }}>{row.label}</div>
+      <CellVal v={row.free} border={border} />
+      <CellVal v={row.premium} border={border} highlight />
+    </>
+  );
+}
+
+function CellVal({ v, border, highlight }: { v: Cell; border: string; highlight?: boolean }) {
+  return (
+    <div style={{ padding: "14px 12px", textAlign: "center", borderBottom: border, background: highlight ? `${TH.sage}0c` : "transparent", fontSize: 13.5, color: TH.inkSoft }}>
+      {v === true ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="3" style={{ display: "inline" }}><path d="M5 12l5 5 9-11" /></svg>
+        : v === false ? <span style={{ color: TH.mutedDim, fontSize: 18 }}>–</span>
+        : <span style={{ ...MM, fontSize: 12, color: highlight ? TH.sageDeep : TH.inkSoft, fontWeight: 600 }}>{v}</span>}
+    </div>
+  );
+}
+
+function ValueCard({ icon, title, body }: { icon: string; title: string; body: string }) {
+  return (
+    <div style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: "22px 22px" }}>
+      <div style={{ fontSize: 26, marginBottom: 12 }} aria-hidden>{icon}</div>
+      <div style={{ ...D, fontSize: 16, color: TH.ink, lineHeight: 1.3, marginBottom: 8 }}>{title}</div>
+      <div style={{ fontSize: 14, color: TH.inkSoft, lineHeight: 1.55 }}>{body}</div>
+    </div>
+  );
+}
+
+function Stat({ n, l }: { n: string; l: string }) {
+  return (
+    <div>
+      <div style={{ ...D, fontSize: "clamp(26px,4vw,34px)", color: "#fff", letterSpacing: "-0.02em" }}>{n}</div>
+      <div style={{ fontSize: 13, opacity: 0.72, lineHeight: 1.45, marginTop: 4 }}>{l}</div>
+    </div>
   );
 }

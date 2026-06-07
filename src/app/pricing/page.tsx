@@ -6,6 +6,7 @@ import { getSessionUser } from "@/lib/auth-server";
 import { getSubscription, isPremium } from "@/lib/premium";
 import { stripeEnabled } from "@/lib/stripe";
 import { paddleConfigured, paddleClientConfig } from "@/lib/paddle";
+import { foundingStats } from "@/lib/agents/store";
 
 export const metadata: Metadata = {
   title: "Pricing, suppdoc.io",
@@ -27,6 +28,8 @@ export default async function PricingPage() {
   const user = await getSessionUser();
   const sub = user ? await getSubscription(user.email) : null;
   const paddleOn = paddleConfigured();
+  // Live founding-member scarcity (claimed lifetime memberships vs total spots).
+  const stats = FOUNDING_MODE ? await foundingStats().catch(() => null) : null;
 
   return (
     <div style={{ minHeight: "100vh", background: "#f6f5f1", color: "#0a2540", fontFamily: '"Inter", system-ui, sans-serif' }}>
@@ -38,6 +41,8 @@ export default async function PricingPage() {
         foundingMode={FOUNDING_MODE}
         billingEnabled={!FOUNDING_MODE && (paddleOn || stripeEnabled())}
         paddle={FOUNDING_MODE ? null : paddleOn ? paddleClientConfig() : null}
+        spotsLeft={stats?.spotsLeft ?? 50}
+        foundingTotal={stats?.total ?? 50}
       />
       <SiteFooter />
     </div>
