@@ -111,21 +111,22 @@ function fallbackReply(messages: IncomingMessage[]): string {
   return `Our coach is being set up. While that's connecting, you can:\n\n- [Take the quiz](/quiz) to get a personalised stack in 2 minutes\n- [Audit your current stack](/audit) for interactions and gaps\n- [Build a stack from scratch](/build) using our 200+ ingredient library`;
 }
 
-// ─── Premium nudge: free users get a useful rules-based answer + an upgrade pull ──
-function premiumNudgeReply(messages: IncomingMessage[]): string {
+// ─── Free coach: ONE short taste, then a hard upgrade gate (zero API cost) ──
+function freeTasteReply(messages: IncomingMessage[]): string {
   const lastUser = [...messages].reverse().find(m => m.role === "user");
   let head = "";
   if (lastUser) {
     const detected = detectSupplementsInText(lastUser.content);
     if (detected.length > 0) {
-      const supps = detected.slice(0, 3).map(id => {
-        const s = lookupSupplement(id);
-        return s ? `- **${s.name}**, ${s.purpose}. [Read more](${s.url})` : null;
-      }).filter(Boolean).join("\n");
-      if (supps) head = `Quick take on what you mentioned:\n\n${supps}\n\n`;
+      const s = lookupSupplement(detected[0]);
+      if (s) head = `Quick answer: **${s.name}**, ${s.purpose}. [Full guide →](${s.url})\n\n`;
     }
   }
-  return `${head}The full coach, the one that remembers your stack, labs and goals and reasons across them over time, is part of **Premium**. [See Premium →](/pricing)\n\nThe free tools can still help right now: [take the quiz](/quiz), [audit your stack](/audit), or [browse 200+ ingredients](/ingredients).`;
+  return `${head}That was a free taste. The **Premium coach** answers unlimited questions and actually remembers your stack, labs and goals, so the advice gets sharper over time. [Unlock the coach →](/pricing)`;
+}
+
+function premiumGateReply(): string {
+  return `🔒 You've used your free coach question.\n\nThe **Premium coach** gives unlimited, personalized answers, it remembers your stack, your bloodwork and your goals and reasons across them. It's part of Premium (founding offer: lifetime for a one-time $79).\n\n[Unlock the Premium coach →](/pricing)`;
 }
 
 // ─── Handler ───────────────────────────────────────────────────────────────
@@ -190,10 +191,16 @@ export async function POST(req: NextRequest) {
       };
 
       if (!canCoach) {
-        // Free/signed-out users (or no API key). Free users who could otherwise use
-        // the coach get a helpful rules-based answer + a premium nudge — zero API cost.
+        // Free/signed-out users (or no API key). The live coach is Premium. Free users
+        // get ONE short taste, then a hard upgrade gate — zero API cost throughout.
         const locked = anthropicEnabled() && !premium;
-        const text = locked ? premiumNudgeReply(v.messages) : fallbackReply(v.messages);
+        let text: string;
+        if (locked) {
+          const userTurns = v.messages.filter(m => m.role === "user" && !m.content.includes(GREETING_MARKER)).length;
+          text = userTurns <= 1 ? freeTasteReply(v.messages) : premiumGateReply();
+        } else {
+          text = fallbackReply(v.messages);
+        }
         const tokens = text.match(/[\s\S]{1,8}/g) ?? [text];
         for (const t of tokens) {
           sendDelta(t);
