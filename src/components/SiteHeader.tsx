@@ -11,11 +11,11 @@ import { getSupabase } from "@/lib/supabase";
 import { TH, FONTS } from "@/lib/theme";
 
 // Account dropdown items shown when the user is signed in.
-const ACCOUNT_LINKS: { label: string; href: string }[] = [
-  { label: "My profile", href: "/me" },
-  { label: "Daily tracker", href: "/track" },
-  { label: "Bloodwork history", href: "/bloodwork/history" },
-  { label: "Manage subscription", href: "/me/subscription" },
+const ACCOUNT_LINKS: { labelKey: string; href: string }[] = [
+  { labelKey: "menu.meLabel", href: "/me" },
+  { labelKey: "menu.trackLabel", href: "/track" },
+  { labelKey: "menu.bwHistoryLabel", href: "/bloodwork/history" },
+  { labelKey: "menu.acctSubscription", href: "/me/subscription" },
 ];
 
 function initials(email: string): string {
@@ -25,39 +25,39 @@ function initials(email: string): string {
   return name.slice(0, 2).toUpperCase();
 }
 
-type NavItem = { label: string; href: string; desc: string };
+type NavItem = { labelKey: string; href: string; descKey: string };
 type NavGroup = { label: string; items: NavItem[] };
 
 const NAV: NavGroup[] = [
   {
     label: "Start",
     items: [
-      { label: "Personalised quiz", href: "/quiz", desc: "Personalised recommendation" },
-      { label: "Build a stack", href: "/build", desc: "From 200+ researched ingredients" },
-      { label: "Audit my stack", href: "/audit", desc: "Score what you already take" },
-      { label: "Bloodwork", href: "/bloodwork", desc: "Read your labs into a plan" },
+      { labelKey: "menu.quizLabel", href: "/quiz", descKey: "menu.quizDesc" },
+      { labelKey: "menu.buildLabel", href: "/build", descKey: "menu.buildDesc" },
+      { labelKey: "menu.auditLabel", href: "/audit", descKey: "menu.auditDesc" },
+      { labelKey: "menu.bloodworkLabel", href: "/bloodwork", descKey: "menu.bloodworkDesc" },
     ],
   },
   {
     label: "Learn",
     items: [
-      { label: "Best for your goal", href: "/best", desc: "Best supplements for sleep, energy…" },
-      { label: "Supplements for symptoms", href: "/symptoms", desc: "Tired, foggy, cramping? What to check" },
-      { label: "Ingredients", href: "/ingredients", desc: "200+ evidence-graded guides" },
-      { label: "Interactions", href: "/interactions", desc: "What works together & what to separate" },
-      { label: "Supplement timing", href: "/timing", desc: "Best time to take each supplement" },
-      { label: "Biomarkers", href: "/biomarkers", desc: "What your blood test means" },
-      { label: "Stacks", href: "/stacks", desc: "15 ready-made protocols" },
-      { label: "Journal", href: "/journal", desc: "Evidence-led articles" },
+      { labelKey: "menu.bestLabel", href: "/best", descKey: "menu.bestDesc" },
+      { labelKey: "menu.symptomsLabel", href: "/symptoms", descKey: "menu.symptomsDesc" },
+      { labelKey: "menu.ingredientsLabel", href: "/ingredients", descKey: "menu.ingredientsDesc" },
+      { labelKey: "menu.interactionsLabel", href: "/interactions", descKey: "menu.interactionsDesc" },
+      { labelKey: "menu.timingLabel", href: "/timing", descKey: "menu.timingDesc" },
+      { labelKey: "menu.biomarkersLabel", href: "/biomarkers", descKey: "menu.biomarkersDesc" },
+      { labelKey: "menu.stacksLabel", href: "/stacks", descKey: "menu.stacksDesc" },
+      { labelKey: "menu.journalLabel", href: "/journal", descKey: "menu.journalDesc" },
     ],
   },
   {
     label: "My plan",
     items: [
-      { label: "Daily tracker", href: "/track", desc: "Check in & see your trends" },
-      { label: "Bloodwork history", href: "/bloodwork/history", desc: "Saved labs & re-test comparison" },
-      { label: "My profile", href: "/me", desc: "Your stacks & history" },
-      { label: "Pricing", href: "/pricing", desc: "Free vs Premium" },
+      { labelKey: "menu.trackLabel", href: "/track", descKey: "menu.trackDesc" },
+      { labelKey: "menu.bwHistoryLabel", href: "/bloodwork/history", descKey: "menu.bwHistoryDesc" },
+      { labelKey: "menu.meLabel", href: "/me", descKey: "menu.meDesc" },
+      { labelKey: "menu.pricingLabel", href: "/pricing", descKey: "menu.pricingDesc" },
     ],
   },
 ];
@@ -128,7 +128,7 @@ export default function SiteHeader() {
   return (
     <>
       <a className="skip-link" href="#main-content" onClick={skipToContent}>
-        Skip to main content
+        {t("menu.skip")}
       </a>
       <nav aria-label="Primary" style={{
         position: "sticky", top: 0, zIndex: 60,
@@ -177,15 +177,15 @@ export default function SiteHeader() {
                       animation: "sd-fade-in .18s ease-out",
                     }}>
                       {group.items.map(item => (
-                        <Link key={item.href} href={item.href} onClick={() => setOpenGroup(null)} style={{
+                        <Link key={item.href} href={lh(item.href)} onClick={() => setOpenGroup(null)} style={{
                           display: "block", padding: "10px 12px", borderRadius: 11,
                           textDecoration: "none", color: "inherit", transition: "background .15s",
                         }}
                           onMouseEnter={e => { e.currentTarget.style.background = TH.bg; }}
                           onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
                         >
-                          <div style={{ fontSize: 14, fontWeight: 600, color: TH.ink, letterSpacing: "-0.01em" }}>{item.label}</div>
-                          <div style={{ fontSize: 12, color: TH.muted, marginTop: 1 }}>{item.desc}</div>
+                          <div style={{ fontSize: 14, fontWeight: 600, color: TH.ink, letterSpacing: "-0.01em" }}>{t(item.labelKey)}</div>
+                          <div style={{ fontSize: 12, color: TH.muted, marginTop: 1 }}>{t(item.descKey)}</div>
                         </Link>
                       ))}
                     </div>
@@ -222,7 +222,7 @@ export default function SiteHeader() {
             <div ref={accountRef} style={{ position: "relative" }}>
               <button
                 onClick={() => setAccountOpen(o => !o)}
-                aria-expanded={accountOpen} aria-haspopup="menu" aria-label="Account menu"
+                aria-expanded={accountOpen} aria-haspopup="menu" aria-label={t("menu.accountMenu")}
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 7, cursor: "pointer",
                   background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 999,
@@ -248,24 +248,24 @@ export default function SiteHeader() {
                   animation: "sd-fade-in .16s ease-out",
                 }}>
                   <div style={{ padding: "8px 12px 10px", borderBottom: `1px solid ${TH.edge}`, marginBottom: 6 }}>
-                    <div style={{ fontSize: 11, color: TH.muted, fontFamily: FONTS.mono, letterSpacing: "0.06em" }}>SIGNED IN AS</div>
+                    <div style={{ fontSize: 11, color: TH.muted, fontFamily: FONTS.mono, letterSpacing: "0.06em" }}>{t("menu.signedInAs")}</div>
                     <div style={{ fontSize: 13.5, color: TH.ink, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user.email}</div>
                   </div>
                   {ACCOUNT_LINKS.map(item => (
-                    <Link key={item.href} href={item.href} role="menuitem" onClick={() => setAccountOpen(false)} style={{
+                    <Link key={item.href} href={lh(item.href)} role="menuitem" onClick={() => setAccountOpen(false)} style={{
                       display: "block", padding: "9px 12px", borderRadius: 10, fontSize: 14, fontWeight: 500,
                       color: TH.ink, textDecoration: "none",
                     }}
                       onMouseEnter={e => { e.currentTarget.style.background = TH.bg; }}
                       onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
-                    >{item.label}</Link>
+                    >{t(item.labelKey)}</Link>
                   ))}
                   <button onClick={logout} role="menuitem" style={{
                     display: "block", width: "100%", textAlign: "left", padding: "9px 12px", marginTop: 4,
                     borderTop: `1px solid ${TH.edge}`, paddingTop: 11,
                     background: "transparent", border: "none", cursor: "pointer",
                     fontFamily: FONTS.body, fontSize: 14, fontWeight: 500, color: "var(--c-destructive)",
-                  }}>Sign out</button>
+                  }}>{t("menu.signOut")}</button>
                 </div>
               )}
             </div>
@@ -275,7 +275,7 @@ export default function SiteHeader() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setOpenMobile(o => !o)}
-          aria-label={openMobile ? "Close menu" : "Open menu"}
+          aria-label={openMobile ? t("menu.closeMenu") : t("menu.openMenu")}
           aria-expanded={openMobile}
           aria-controls="mobile-menu"
           style={{
@@ -307,12 +307,12 @@ export default function SiteHeader() {
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 {group.items.map(item => (
-                  <Link key={item.href} href={item.href} onClick={() => setOpenMobile(false)} style={{
+                  <Link key={item.href} href={lh(item.href)} onClick={() => setOpenMobile(false)} style={{
                     display: "flex", flexDirection: "column", gap: 1, padding: "12px 0",
                     borderBottom: `1px solid ${TH.edge}`, textDecoration: "none", color: "inherit",
                   }}>
-                    <span style={{ fontFamily: FONTS.display, fontWeight: 600, fontSize: 20, color: TH.ink, letterSpacing: "-0.01em" }}>{item.label}</span>
-                    <span style={{ fontSize: 12.5, color: TH.muted }}>{item.desc}</span>
+                    <span style={{ fontFamily: FONTS.display, fontWeight: 600, fontSize: 20, color: TH.ink, letterSpacing: "-0.01em" }}>{t(item.labelKey)}</span>
+                    <span style={{ fontSize: 12.5, color: TH.muted }}>{t(item.descKey)}</span>
                   </Link>
                 ))}
               </div>
@@ -323,15 +323,15 @@ export default function SiteHeader() {
           {user && (
             <div>
               <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>
-                My account
+                {t("menu.myAccount")}
               </div>
               <div style={{ fontSize: 13, color: TH.inkSoft, marginBottom: 6 }}>{user.email}</div>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 {ACCOUNT_LINKS.map(item => (
-                  <Link key={item.href} href={item.href} onClick={() => setOpenMobile(false)} style={{
+                  <Link key={item.href} href={lh(item.href)} onClick={() => setOpenMobile(false)} style={{
                     padding: "12px 0", borderBottom: `1px solid ${TH.edge}`, textDecoration: "none",
                     fontFamily: FONTS.display, fontWeight: 600, fontSize: 18, color: TH.ink,
-                  }}>{item.label}</Link>
+                  }}>{t(item.labelKey)}</Link>
                 ))}
               </div>
             </div>
@@ -342,7 +342,7 @@ export default function SiteHeader() {
             <LanguageSwitcher />
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-            <span style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted }}>Theme</span>
+            <span style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted }}>{t("menu.theme")}</span>
             <ThemeToggle />
           </div>
 
@@ -357,7 +357,7 @@ export default function SiteHeader() {
                 padding: "13px 24px", background: "transparent", color: "var(--c-destructive)", cursor: "pointer",
                 borderRadius: 999, fontSize: 14, fontWeight: 500, textAlign: "center",
                 border: `1px solid ${TH.edge}`, fontFamily: FONTS.body,
-              }}>Sign out</button>
+              }}>{t("menu.signOut")}</button>
             ) : (
               <Link href={lh("/signin")} onClick={() => setOpenMobile(false)} style={{
                 padding: "13px 24px", background: "transparent", color: TH.inkSoft, textDecoration: "none",

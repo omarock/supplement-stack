@@ -6,47 +6,50 @@ import CookiePreferencesButton from "@/components/CookiePreferencesButton";
 import { useT } from "@/components/I18nProvider";
 import { TH } from "@/lib/theme";
 
+// Each link is [translation key, href]. Labels resolve through the dictionary;
+// hrefs go through lh() so localized targets (/quiz, /pricing, /about, …) get a
+// /fr|/de|/es prefix while un-localized ones stay on the English route.
 const COLS: [string, [string, string][]][] = [
   ["Product", [
-    ["Take the quiz", "/quiz"],
-    ["Build your own", "/build"],
-    ["Audit my stack", "/audit"],
-    ["Bloodwork analysis", "/bloodwork"],
+    ["footerLink.quiz", "/quiz"],
+    ["footerLink.build", "/build"],
+    ["footerLink.audit", "/audit"],
+    ["footerLink.bloodwork", "/bloodwork"],
   ]],
   ["Explore", [
-    ["Ingredients", "/ingredients"],
-    ["Interactions", "/interactions"],
-    ["Supplement timing", "/timing"],
-    ["Supplements for symptoms", "/symptoms"],
-    ["Biomarkers", "/biomarkers"],
-    ["Best for your goal", "/best"],
-    ["Pre-made stacks", "/stacks"],
-    ["Compare", "/compare"],
-    ["Data report", "/research/state-of-supplement-stacking"],
-    ["Journal", "/journal"],
+    ["footerLink.ingredients", "/ingredients"],
+    ["footerLink.interactions", "/interactions"],
+    ["footerLink.timing", "/timing"],
+    ["footerLink.symptoms", "/symptoms"],
+    ["footerLink.biomarkers", "/biomarkers"],
+    ["footerLink.best", "/best"],
+    ["footerLink.stacks", "/stacks"],
+    ["footerLink.compare", "/compare"],
+    ["footerLink.dataReport", "/research/state-of-supplement-stacking"],
+    ["footerLink.journal", "/journal"],
   ]],
   ["Company", [
-    ["About", "/about"],
-    ["Editorial standards", "/editorial"],
-    ["Our team", "/team"],
-    ["Methodology", "/methodology"],
-    ["Help & FAQ", "/help"],
-    ["Changelog", "/changelog"],
-    ["Contact", "/contact"],
+    ["footerLink.about", "/about"],
+    ["footerLink.editorial", "/editorial"],
+    ["footerLink.team", "/team"],
+    ["footerLink.methodology", "/methodology"],
+    ["footerLink.help", "/help"],
+    ["footerLink.changelog", "/changelog"],
+    ["footerLink.contact", "/contact"],
   ]],
   ["Legal", [
-    ["Terms", "/terms"],
-    ["Privacy", "/privacy"],
-    ["Refunds", "/refunds"],
-    ["Cookies", "/cookies"],
-    ["Medical disclaimer", "/disclaimer"],
+    ["footerLink.terms", "/terms"],
+    ["footerLink.privacy", "/privacy"],
+    ["footerLink.refunds", "/refunds"],
+    ["footerLink.cookies", "/cookies"],
+    ["footerLink.disclaimer", "/disclaimer"],
   ]],
 ];
 
 const HEADING_KEY: Record<string, string> = { Product: "footer.product", Explore: "footer.explore", Company: "footer.company", Legal: "footer.legal" };
 
 export default function SiteFooter() {
-  const { t } = useT();
+  const { t, lh } = useT();
   return (
     <footer style={{
       padding: "56px var(--nav-pad-x) 36px",
@@ -66,7 +69,7 @@ export default function SiteFooter() {
             <p style={{ fontSize: 11, color: TH.muted, marginTop: 18, lineHeight: 1.5 }}>
               © {new Date().getFullYear()} suppdoc.io. {t("footer.rights")}
               <br />
-              suppdoc.io is an affiliate of iHerb, Amazon and other trusted retailers.
+              {t("footer.affiliate")}
             </p>
           </div>
           {COLS.map(([heading, links]) => (
@@ -75,11 +78,11 @@ export default function SiteFooter() {
                 {t(HEADING_KEY[heading] ?? heading)}
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
-                {links.map(([label, href]) => (
-                  <Link key={label} href={href} style={{
+                {links.map(([labelKey, href]) => (
+                  <Link key={labelKey} href={lh(href)} style={{
                     fontSize: 14, color: TH.muted, textDecoration: "none",
                   }}>
-                    {label}
+                    {t(labelKey)}
                   </Link>
                 ))}
                 {heading === "Legal" && <CookiePreferencesButton />}

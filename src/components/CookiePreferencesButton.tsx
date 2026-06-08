@@ -1,10 +1,12 @@
 "use client";
 
 import { TH } from "@/lib/theme";
+import { useT } from "@/components/I18nProvider";
 import { openConsentPreferences } from "@/lib/consent";
 
 /** Footer link that re-opens the cookie consent banner (withdraw/change consent). */
 export default function CookiePreferencesButton() {
+  const { t } = useT();
   return (
     <button
       type="button"
@@ -14,7 +16,7 @@ export default function CookiePreferencesButton() {
         fontSize: 14, color: TH.muted, fontFamily: "inherit", textAlign: "left",
       }}
     >
-      Cookie preferences
+      {t("cookie.preferences")}
     </button>
   );
 }

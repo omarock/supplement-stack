@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useT } from "@/components/I18nProvider";
 import { TH, FONTS } from "@/lib/theme";
 import { CONSENT_KEY as STORAGE_KEY, CONSENT_REOPEN_EVENT, notifyConsentChanged } from "@/lib/consent";
 
@@ -20,6 +21,7 @@ function setConsentCookie(value: string) {
 }
 
 export default function CookieConsent() {
+  const { t, lh } = useT();
   const [open, setOpen] = useState(false);
   const [customizing, setCustomizing] = useState(false);
   const [prefs, setPrefs] = useState<Prefs>({ analytics: true, affiliate: true });
@@ -66,7 +68,7 @@ export default function CookieConsent() {
     <div
       ref={barRef}
       role="dialog"
-      aria-label="Cookie preferences"
+      aria-label={t("cookie.aria")}
       aria-modal="false"
       style={{
         position: "fixed", zIndex: 200, left: 0, right: 0, bottom: 0,
@@ -87,37 +89,37 @@ export default function CookieConsent() {
           <>
             <p style={{ flex: "1 1 320px", fontSize: 13, lineHeight: 1.5, color: TH.inkSoft, margin: 0 }}>
               <span aria-hidden style={{ marginRight: 7 }}>🍪</span>
-              We use essential cookies to run the site, plus optional analytics and affiliate-link cookies.{" "}
-              <Link href="/cookies" style={{ color: TH.sageDeep, textDecoration: "underline" }}>Learn more about our cookie policy</Link>.
+              {t("cookie.banner")}{" "}
+              <Link href={lh("/cookies")} style={{ color: TH.sageDeep, textDecoration: "underline" }}>{t("cookie.learnMore")}</Link>.
             </p>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", flexShrink: 0 }}>
-              <button onClick={() => setCustomizing(true)} style={btnGhost()}>Customize</button>
-              <button onClick={() => persist("reject", { analytics: false, affiliate: false })} style={btnSecondary()}>Reject optional</button>
-              <button onClick={() => persist("accept", { analytics: true, affiliate: true })} style={btnPrimary()}>Accept all</button>
+              <button onClick={() => setCustomizing(true)} style={btnGhost()}>{t("cookie.customize")}</button>
+              <button onClick={() => persist("reject", { analytics: false, affiliate: false })} style={btnSecondary()}>{t("cookie.reject")}</button>
+              <button onClick={() => persist("accept", { analytics: true, affiliate: true })} style={btnPrimary()}>{t("cookie.acceptAll")}</button>
             </div>
           </>
         ) : (
           <div style={{ flex: 1, minWidth: 0 }}>
             <p style={{ fontSize: 13, lineHeight: 1.5, color: TH.inkSoft, margin: "0 0 6px" }}>
-              Choose which optional cookies you allow. Essential cookies are always on, they keep you signed in and remember your stack drafts.
+              {t("cookie.customIntro")}
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "var(--cookie-rows)", gap: "0 28px" }}>
               <ConsentRow
-                title="Analytics"
-                description="Anonymized page views via Vercel Analytics so we can improve the site."
+                title={t("cookie.analyticsTitle")}
+                description={t("cookie.analyticsDesc")}
                 checked={prefs.analytics}
                 onChange={v => setPrefs(p => ({ ...p, analytics: v }))}
               />
               <ConsentRow
-                title="Affiliate attribution"
-                description="Adds our rewards code when you click an iHerb or Amazon link. No personal data is shared."
+                title={t("cookie.affiliateTitle")}
+                description={t("cookie.affiliateDesc")}
                 checked={prefs.affiliate}
                 onChange={v => setPrefs(p => ({ ...p, affiliate: v }))}
               />
             </div>
             <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
-              <button onClick={() => persist("custom", prefs)} style={btnPrimary()}>Save preferences</button>
-              <button onClick={() => setCustomizing(false)} style={btnGhost()}>Back</button>
+              <button onClick={() => persist("custom", prefs)} style={btnPrimary()}>{t("cookie.save")}</button>
+              <button onClick={() => setCustomizing(false)} style={btnGhost()}>{t("cookie.back")}</button>
             </div>
           </div>
         )}

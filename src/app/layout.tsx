@@ -86,7 +86,7 @@ const BRAND_JSONLD = {
 // No-flash theme init: runs before paint, reads the saved preference (or the OS
 // setting for "system") and sets <html data-theme>, which the CSS variables in
 // globals.css react to. Keeps the first render in the correct theme.
-const THEME_INIT = `(function(){try{var p=localStorage.getItem('sd-theme')||'system';var d=p==='dark'||(p==='system'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light';}catch(e){}})();`;
+const THEME_INIT = `(function(){try{var p=localStorage.getItem('sd-theme')||'light';var d=p==='dark'||(p==='system'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light';}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

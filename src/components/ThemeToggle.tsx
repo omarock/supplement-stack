@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useT } from "@/components/I18nProvider";
 import { TH, FONTS } from "@/lib/theme";
 
 /**
@@ -44,25 +45,29 @@ const MOON = (
   </svg>
 );
 
-const OPTIONS: { value: Pref; label: string; icon: React.ReactNode }[] = [
-  { value: "light", label: "Light theme", icon: SUN },
-  { value: "system", label: "System theme", icon: MONITOR },
-  { value: "dark", label: "Dark theme", icon: MOON },
+const OPTIONS: { value: Pref; labelKey: string; icon: React.ReactNode }[] = [
+  { value: "light", labelKey: "theme.light", icon: SUN },
+  { value: "system", labelKey: "theme.system", icon: MONITOR },
+  { value: "dark", labelKey: "theme.dark", icon: MOON },
 ];
 
 export default function ThemeToggle({ size = 28 }: { size?: number }) {
-  const [pref, setPref] = useState<Pref>("system");
+  const { t } = useT();
+  // Default is LIGHT (not "system"): new visitors get the light theme unless they
+  // explicitly opt into System or Dark via this toggle. Those choices still work
+  // and persist in localStorage; only the no-preference default changed.
+  const [pref, setPref] = useState<Pref>("light");
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    let stored: Pref = "system";
-    try { stored = (localStorage.getItem(KEY) as Pref) || "system"; } catch {}
+    let stored: Pref = "light";
+    try { stored = (localStorage.getItem(KEY) as Pref) || "light"; } catch {}
     setPref(stored);
     setReady(true);
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     const onChange = () => {
-      let cur: Pref = "system";
-      try { cur = (localStorage.getItem(KEY) as Pref) || "system"; } catch {}
+      let cur: Pref = "light";
+      try { cur = (localStorage.getItem(KEY) as Pref) || "light"; } catch {}
       if (cur === "system") apply("system");
     };
     mq.addEventListener?.("change", onChange);
@@ -78,7 +83,7 @@ export default function ThemeToggle({ size = 28 }: { size?: number }) {
   return (
     <div
       role="radiogroup"
-      aria-label="Color theme"
+      aria-label={t("theme.label")}
       style={{
         display: "inline-flex", alignItems: "center", gap: 2, padding: 3,
         borderRadius: 999, border: `1px solid ${TH.edge}`, background: TH.surface,
@@ -92,8 +97,8 @@ export default function ThemeToggle({ size = 28 }: { size?: number }) {
             key={o.value}
             role="radio"
             aria-checked={active}
-            aria-label={o.label}
-            title={o.label}
+            aria-label={t(o.labelKey)}
+            title={t(o.labelKey)}
             onClick={() => choose(o.value)}
             style={{
               display: "inline-flex", alignItems: "center", justifyContent: "center",
