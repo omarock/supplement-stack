@@ -117,7 +117,7 @@ export default function QuizChooserView({ locale }: { locale: Locale }) {
               display: "grid", gridTemplateColumns: "var(--quiz-other-cols)", gap: 14,
               maxWidth: 760, margin: "0 auto",
             }}>
-              <Link href="/build" style={otherServiceStyle()}>
+              <Link href={navHref("/build", locale)} style={otherServiceStyle()}>
                 <div style={{ ...D, fontSize: 16, color: TH.ink, marginBottom: 4 }}>{t("quiz.buildTitle")}</div>
                 <div style={{ fontSize: 13, color: TH.muted, lineHeight: 1.5 }}>{t("quiz.buildDesc")}</div>
               </Link>

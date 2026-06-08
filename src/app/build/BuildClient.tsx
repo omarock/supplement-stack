@@ -7,6 +7,7 @@ import { getPrimaryProduct, productImage, type ProductOption } from "@/lib/produ
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
 import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import { TH, FONTS } from "@/lib/theme";
+import { useT } from "@/components/I18nProvider";
 import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
 import EvidenceBadge from "@/components/EvidenceBadge";
 import { track } from "@/lib/analytics";
@@ -47,41 +48,49 @@ const SOFT_CAP = 10;
 
 type Timing = "morning" | "midday" | "pre-train" | "evening";
 const TIMINGS: Timing[] = ["morning", "midday", "pre-train", "evening"];
-const TIMING_META: Record<Timing, { label: string; icon: string; bg: string; ink: string }> = {
-  morning:     { label: "Morning",   icon: "☀",  bg: "#fef3c7", ink: "#92400e" },
-  midday:      { label: "Midday",    icon: "◐",  bg: "#dbeafe", ink: "#1e40af" },
-  "pre-train": { label: "Pre-train", icon: "⚡", bg: "#dcfce7", ink: "#166534" },
-  evening:     { label: "Evening",   icon: "☾",  bg: "#ede9fe", ink: "#5b21b6" },
+// Timing display label is localized via TIMING_LABEL_KEY; the timing KEY itself
+// (morning/midday/…) stays as-is because it's the value the data uses.
+const TIMING_META: Record<Timing, { icon: string; bg: string; ink: string }> = {
+  morning:     { icon: "☀",  bg: "#fef3c7", ink: "#92400e" },
+  midday:      { icon: "◐",  bg: "#dbeafe", ink: "#1e40af" },
+  "pre-train": { icon: "⚡", bg: "#dcfce7", ink: "#166534" },
+  evening:     { icon: "☾",  bg: "#ede9fe", ink: "#5b21b6" },
+};
+const TIMING_LABEL_KEY: Record<Timing, string> = {
+  morning: "build.tMorning", midday: "build.tMidday", "pre-train": "build.tPreTrain", evening: "build.tEvening",
 };
 
+// `id` + `tags` drive filtering (unchanged); only labelKey is localized.
 const QUICK_GOALS = [
-  { id: "all",       label: "Browse all",   tags: [] as string[] },
-  { id: "sleep",     label: "Better sleep", tags: ["sleep", "low-sleep", "sleep-onset", "wake-at-night"] },
-  { id: "energy",    label: "More energy",  tags: ["energy", "low-energy", "afternoon-crash"] },
-  { id: "focus",     label: "Sharper focus", tags: ["focus", "brain-fog", "poor-focus", "memory"] },
-  { id: "stress",    label: "Less stress",  tags: ["stress", "anxiety", "high-stress"] },
-  { id: "recovery",  label: "Recovery",     tags: ["recovery", "active", "joint", "joint-pain"] },
-  { id: "immune",    label: "Immunity",     tags: ["immune", "frequent-illness"] },
-  { id: "longevity", label: "Longevity",    tags: ["longevity", "anti-aging"] },
-  { id: "beauty",    label: "Skin · hair",  tags: ["beauty", "skin", "hair"] },
-  { id: "gut",       label: "Gut health",   tags: ["gut", "digestive-issues", "bloating"] },
+  { id: "all",       labelKey: "build.goalAll",       tags: [] as string[] },
+  { id: "sleep",     labelKey: "build.goalSleep",     tags: ["sleep", "low-sleep", "sleep-onset", "wake-at-night"] },
+  { id: "energy",    labelKey: "build.goalEnergy",    tags: ["energy", "low-energy", "afternoon-crash"] },
+  { id: "focus",     labelKey: "build.goalFocus",     tags: ["focus", "brain-fog", "poor-focus", "memory"] },
+  { id: "stress",    labelKey: "build.goalStress",    tags: ["stress", "anxiety", "high-stress"] },
+  { id: "recovery",  labelKey: "build.goalRecovery",  tags: ["recovery", "active", "joint", "joint-pain"] },
+  { id: "immune",    labelKey: "build.goalImmune",    tags: ["immune", "frequent-illness"] },
+  { id: "longevity", labelKey: "build.goalLongevity", tags: ["longevity", "anti-aging"] },
+  { id: "beauty",    labelKey: "build.goalBeauty",    tags: ["beauty", "skin", "hair"] },
+  { id: "gut",       labelKey: "build.goalGut",       tags: ["gut", "digestive-issues", "bloating"] },
 ];
 
-const QUICK_TEMPLATES: { name: string; description: string; ids: string[] }[] = [
-  { name: "Foundation",  description: "The 3 supplements almost everyone benefits from.", ids: ["d3k2", "omega3", "mag-glycinate"] },
-  { name: "Deep sleep",  description: "Calm the nervous system, deepen restorative sleep.", ids: ["mag-glycinate", "ashwagandha", "glycine", "l-theanine"] },
-  { name: "Energy",      description: "Mitochondrial energy without caffeine.", ids: ["d3k2", "b-complex", "rhodiola", "coq10"] },
-  { name: "Longevity",   description: "Cellular renewal frontier (NAD+ + senolytic).", ids: ["nmn", "urolithin-a", "fisetin", "tmg"] },
-  { name: "Performance", description: "Train harder, recover faster.", ids: ["creatine", "beta-alanine", "hmb", "omega3", "tart-cherry"] },
-  { name: "Gut reset",   description: "Repair the lining, rebalance the microbiome.", ids: ["zinc-carnosine", "s-boulardii", "tributyrin", "probiotic"] },
+// ids drive the stack (unchanged); name/description are localized via keys.
+const QUICK_TEMPLATES: { nameKey: string; descKey: string; ids: string[] }[] = [
+  { nameKey: "build.tplFoundationName",  descKey: "build.tplFoundationDesc",  ids: ["d3k2", "omega3", "mag-glycinate"] },
+  { nameKey: "build.tplSleepName",       descKey: "build.tplSleepDesc",       ids: ["mag-glycinate", "ashwagandha", "glycine", "l-theanine"] },
+  { nameKey: "build.tplEnergyName",      descKey: "build.tplEnergyDesc",      ids: ["d3k2", "b-complex", "rhodiola", "coq10"] },
+  { nameKey: "build.tplLongevityName",   descKey: "build.tplLongevityDesc",   ids: ["nmn", "urolithin-a", "fisetin", "tmg"] },
+  { nameKey: "build.tplPerformanceName", descKey: "build.tplPerformanceDesc", ids: ["creatine", "beta-alanine", "hmb", "omega3", "tart-cherry"] },
+  { nameKey: "build.tplGutName",         descKey: "build.tplGutDesc",         ids: ["zinc-carnosine", "s-boulardii", "tributyrin", "probiotic"] },
 ];
 
-const CATEGORY_LABELS: Record<string, string> = {
-  vitamins: "Vitamins", minerals: "Minerals", "amino-acids": "Amino Acids",
-  "omega-fats": "Omega Fats", adaptogens: "Adaptogens", nootropics: "Nootropics",
-  antioxidants: "Antioxidants", joint: "Joint", gut: "Gut", sleep: "Sleep",
-  hormonal: "Hormonal", heart: "Heart", performance: "Performance", greens: "Greens",
-  specialty: "Specialty",
+// Category KEY (from the data) -> localized label key.
+const CATEGORY_KEY: Record<string, string> = {
+  vitamins: "build.catVitamins", minerals: "build.catMinerals", "amino-acids": "build.catAmino",
+  "omega-fats": "build.catOmega", adaptogens: "build.catAdaptogens", nootropics: "build.catNootropics",
+  antioxidants: "build.catAntioxidants", joint: "build.catJoint", gut: "build.catGut", sleep: "build.catSleep",
+  hormonal: "build.catHormonal", heart: "build.catHeart", performance: "build.catPerformance", greens: "build.catGreens",
+  specialty: "build.catSpecialty",
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
@@ -121,41 +130,45 @@ function wellnessImpact(supps: Supplement[]) {
   ) as typeof scores;
 }
 
-// Detect duplicate-mechanism issues
-function detectIssues(supps: Supplement[]) {
-  const issues: { kind: "info" | "warn"; text: string }[] = [];
+// Detect duplicate-mechanism issues. Returns translation keys (+ vars) so the
+// localized text is resolved at render time; the detection logic is unchanged.
+type Issue = { kind: "info" | "warn"; key: string; vars?: Record<string, number> };
+function detectIssues(supps: Supplement[]): Issue[] {
+  const issues: Issue[] = [];
   const ids = new Set(supps.map(s => s.id));
 
   if (ids.has("omega3") && ids.has("omega3-algae")) {
-    issues.push({ kind: "info", text: "You have both fish-oil and algae omega-3, these overlap. Keep one." });
+    issues.push({ kind: "info", key: "build.issOmega" });
   }
   const magCount = supps.filter(s => s.id.startsWith("mag-")).length;
   if (magCount > 2) {
-    issues.push({ kind: "info", text: `You have ${magCount} magnesium forms, most people only need one (glycinate for sleep, threonate for brain).` });
+    issues.push({ kind: "info", key: "build.issMag", vars: { magCount } });
   }
   if (ids.has("5-htp") && ids.has("tryptophan")) {
-    issues.push({ kind: "warn", text: "5-HTP and L-Tryptophan both raise serotonin, combining is rarely needed and can be excessive." });
+    issues.push({ kind: "warn", key: "build.issSerotonin" });
   }
   if (ids.has("iron") && ids.has("calcium")) {
-    issues.push({ kind: "info", text: "Take iron and calcium at least 2 hours apart, calcium blocks iron absorption." });
+    issues.push({ kind: "info", key: "build.issIronCalcium" });
   }
   if (ids.has("coq10") && ids.has("ubiquinol")) {
-    issues.push({ kind: "info", text: "CoQ10 and Ubiquinol are the same nutrient (oxidized vs reduced), pick one." });
+    issues.push({ kind: "info", key: "build.issCoq10" });
   }
   if (ids.has("ashwagandha") && ids.has("rhodiola") && ids.has("eleuthero") && ids.has("ginseng")) {
-    issues.push({ kind: "info", text: "You're stacking 4+ adaptogens, usually 2 is enough. Consider trimming." });
+    issues.push({ kind: "info", key: "build.issAdaptogens" });
   }
   if (ids.has("nmn") && !ids.has("tmg") && !ids.has("b-complex") && !ids.has("methylfolate")) {
-    issues.push({ kind: "info", text: "NAD+ precursors (NMN/NR) consume methyl groups, consider adding TMG or B-complex." });
+    issues.push({ kind: "info", key: "build.issNad" });
   }
   if (supps.length >= SOFT_CAP) {
-    issues.push({ kind: "info", text: `Your stack has ${supps.length} supplements, most well-designed routines stay under 10. Consider focusing.` });
+    issues.push({ kind: "info", key: "build.issSoftCap", vars: { count: supps.length } });
   }
   return issues;
 }
 
 // ─── BuildClient ──────────────────────────────────────────────────────────
 export default function BuildClient() {
+  const { t } = useT();
+  const DEFAULT_STACK_NAME = t("build.defaultStackName");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [search, setSearch] = useState("");
   const [activeGoal, setActiveGoal] = useState<string>("all");
@@ -163,7 +176,7 @@ export default function BuildClient() {
   const [veganOnly, setVeganOnly] = useState(false);
   const [budgetCap, setBudgetCap] = useState<number>(0); // 0 = no cap
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const [stackName, setStackName] = useState("My Custom Stack");
+  const [stackName, setStackName] = useState(DEFAULT_STACK_NAME);
   const [stackDrawerOpen, setStackDrawerOpen] = useState(false);
   const [justAdded, setJustAdded] = useState<string | null>(null);
   const [savedToast, setSavedToast] = useState<string | null>(null);
@@ -246,7 +259,7 @@ export default function BuildClient() {
     setSelectedIds(prev => {
       if (prev.includes(id)) return prev;
       if (prev.length >= MAX_SUPPS) {
-        toast(`Stack is at the cap of ${MAX_SUPPS}. Remove one first.`);
+        toast(t("build.toastCapRemove", { max: MAX_SUPPS }));
         return prev;
       }
       flashAdded(id);
@@ -257,8 +270,8 @@ export default function BuildClient() {
     setSelectedIds(prev => prev.filter(x => x !== id));
   }, []);
   const toggleSupp = useCallback((id: string) => {
-    setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : (prev.length >= MAX_SUPPS ? (toast(`Stack is at the cap of ${MAX_SUPPS}.`), prev) : (flashAdded(id), [...prev, id])));
-  }, [flashAdded, toast]);
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : (prev.length >= MAX_SUPPS ? (toast(t("build.toastCap", { max: MAX_SUPPS })), prev) : (flashAdded(id), [...prev, id])));
+  }, [flashAdded, toast, t]);
   // Clear EVERYTHING: stack, generated narrative, name, search + all filters,
   // and the mobile drawer. Offers a one-tap undo instead of a blocking confirm.
   const clearAll = useCallback(() => {
@@ -266,7 +279,7 @@ export default function BuildClient() {
     undoRef.current = { ids: selectedIds, name: stackName, gen: generated };
     setSelectedIds([]);
     setGenerated(null);
-    setStackName("My Custom Stack");
+    setStackName(DEFAULT_STACK_NAME);
     setSearch("");
     setActiveGoal("all");
     setEvidenceFilter("all");
@@ -276,7 +289,7 @@ export default function BuildClient() {
     setStackDrawerOpen(false);
     setBuyOpen(false);
     setCanUndo(true);
-    toast("Stack cleared");
+    toast(t("build.toastCleared"));
     if (toastTimer.current) clearTimeout(toastTimer.current);
     toastTimer.current = setTimeout(() => { setSavedToast(null); setCanUndo(false); }, 4000);
   }, [selectedIds, generated, stackName, toast]);
@@ -291,38 +304,39 @@ export default function BuildClient() {
     setSavedToast(null);
   }, []);
 
-  const loadTemplate = useCallback((tpl: { name: string; description: string; ids: string[] }) => {
+  const loadTemplate = useCallback((tpl: { nameKey: string; descKey: string; ids: string[] }) => {
     const valid = tpl.ids.filter(id => SUPPLEMENT_DB.some(s => s.id === id));
+    const name = t(tpl.nameKey);
     setSelectedIds(valid);
-    setStackName(tpl.name);
+    setStackName(name);
     setGenerated({
-      stackName: tpl.name,
-      summary: tpl.description,
+      stackName: name,
+      summary: t(tpl.descKey),
       goals: [],
       reasons: Object.fromEntries(
         valid.map(id => [id, SUPPLEMENT_DB.find(s => s.id === id)?.why ?? ""])
       ),
       poweredBy: "template",
     });
-    toast("Stack loaded, tweak from here.");
-  }, [toast]);
+    toast(t("build.toastLoaded"));
+  }, [toast, t]);
 
   // Share / copy URL, uses /share/[token] for a clean URL with a custom OG preview
   const shareUrl = useCallback(async () => {
     if (typeof window === "undefined") return;
     if (selectedIds.length === 0) {
-      toast("Add some supplements before sharing.");
+      toast(t("build.toastShareEmpty"));
       return;
     }
     const token = encodeShareToken({ ids: selectedIds, name: stackName });
     const link = `${window.location.origin}/share/${token}`;
     try {
       await navigator.clipboard.writeText(link);
-      toast("Share link copied, paste anywhere to preview.");
+      toast(t("build.toastShareCopied"));
     } catch {
-      toast(`Copy this: ${link}`);
+      toast(t("build.toastCopyThis", { link }));
     }
-  }, [selectedIds, stackName, toast]);
+  }, [selectedIds, stackName, toast, t]);
 
   // Open the premium "buy full stack" review modal (per-product links avoid the
   // popup-blocker problem that killed the old open-N-tabs approach).
@@ -358,20 +372,19 @@ export default function BuildClient() {
       {/* Hero */}
       <header style={{ marginBottom: 28, animation: "sd-fade-in .5s ease-out" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-          <span style={{ ...MM, fontSize: 11, letterSpacing: "0.12em", color: TH.sageDeep, textTransform: "uppercase" }}>NEW · Build mode</span>
+          <span style={{ ...MM, fontSize: 11, letterSpacing: "0.12em", color: TH.sageDeep, textTransform: "uppercase" }}>{t("build.eyebrow")}</span>
           <span style={{ height: 1, flex: 1, background: TH.edge }} />
         </div>
         <h1 style={{
           ...D, fontSize: "clamp(38px, 6vw, 64px)", lineHeight: 1.02,
           letterSpacing: "-0.025em", margin: "0 0 14px",
         }}>
-          Design <span style={SI}>your own</span> supplement stack.
+          {t("build.h1pre")} <span style={SI}>{t("build.h1em")}</span> {t("build.h1post")}
         </h1>
         <p style={{
           fontSize: 18, color: TH.inkSoft, maxWidth: 620, lineHeight: 1.55, margin: 0,
         }}>
-          Pick from {SUPPLEMENT_DB.length}{" "}evidence-led ingredients. We&apos;ll show you the daily ritual,
-          flag interactions, and preview the wellness impact in real time.
+          {t("build.intro", { n: SUPPLEMENT_DB.length })}
         </p>
       </header>
 
@@ -381,9 +394,9 @@ export default function BuildClient() {
           onApply={(res: GenerateResponse) => {
             const valid = res.stack.filter(item => SUPPLEMENT_DB.some(s => s.id === item.id));
             setSelectedIds(valid.map(s => s.id));
-            setStackName(res.stackName || "My Custom Stack");
+            setStackName(res.stackName || DEFAULT_STACK_NAME);
             setGenerated({
-              stackName: res.stackName || "My Custom Stack",
+              stackName: res.stackName || DEFAULT_STACK_NAME,
               summary: res.summary || "",
               synergy: res.synergy,
               goals: res.goals ?? [],
@@ -391,7 +404,7 @@ export default function BuildClient() {
               reasons: Object.fromEntries(valid.map(item => [item.id, item.reason])),
               poweredBy: res.poweredBy,
             });
-            toast(`Your ${valid.length}-supplement stack is ready.`);
+            toast(t("build.toastStackReady", { n: valid.length }));
           }}
         />
       )}
@@ -415,11 +428,11 @@ export default function BuildClient() {
           animation: "sd-fade-in .5s ease-out",
         }}>
           <div style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.1em", marginBottom: 12 }}>
-            OR PICK A READY-MADE TEMPLATE
+            {t("build.orTemplate")}
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 230px), 1fr))", gap: 10 }}>
-            {QUICK_TEMPLATES.map(t => (
-              <button key={t.name} onClick={() => loadTemplate(t)}
+            {QUICK_TEMPLATES.map(tpl => (
+              <button key={tpl.nameKey} onClick={() => loadTemplate(tpl)}
                 style={{
                   textAlign: "left", padding: "14px 16px",
                   background: TH.bg, border: `1px solid ${TH.edge}`,
@@ -430,9 +443,9 @@ export default function BuildClient() {
                 onMouseEnter={e => { e.currentTarget.style.borderColor = TH.sage; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 20px rgba(91,163,115,0.15)"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = TH.edge; e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}
               >
-                <span style={{ ...D, fontSize: 15, color: TH.ink }}>{t.name}</span>
-                <span style={{ fontSize: 12, color: TH.muted, lineHeight: 1.4 }}>{t.description}</span>
-                <span style={{ ...MM, fontSize: 10, color: TH.sageDeep, marginTop: 4 }}>{t.ids.length} ingredients →</span>
+                <span style={{ ...D, fontSize: 15, color: TH.ink }}>{t(tpl.nameKey)}</span>
+                <span style={{ fontSize: 12, color: TH.muted, lineHeight: 1.4 }}>{t(tpl.descKey)}</span>
+                <span style={{ ...MM, fontSize: 10, color: TH.sageDeep, marginTop: 4 }}>{t("build.tplIngredients", { n: tpl.ids.length })}</span>
               </button>
             ))}
           </div>
@@ -462,7 +475,7 @@ export default function BuildClient() {
               <input
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                placeholder={`Search ${SUPPLEMENT_DB.length} ingredients, "magnesium", "sleep", "ashwagandha"…`}
+                placeholder={t("build.searchPlaceholder", { n: SUPPLEMENT_DB.length })}
                 style={{
                   width: "100%", padding: "16px 18px 16px 48px",
                   fontSize: 15, fontFamily: FONTS.body, color: TH.ink,
@@ -474,7 +487,7 @@ export default function BuildClient() {
                 onBlur={e => { e.currentTarget.style.borderColor = TH.edge; e.currentTarget.style.boxShadow = "none"; }}
               />
               {search && (
-                <button onClick={() => setSearch("")} aria-label="Clear" style={{
+                <button onClick={() => setSearch("")} aria-label={t("build.clear")} style={{
                   position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)",
                   background: "transparent", border: "none", cursor: "pointer",
                   color: TH.muted, padding: 6, fontSize: 14,
@@ -497,7 +510,7 @@ export default function BuildClient() {
                       whiteSpace: "nowrap", transition: "all .15s",
                     }}
                   >
-                    {g.label}
+                    {t(g.labelKey)}
                   </button>
                 );
               })}
@@ -509,56 +522,56 @@ export default function BuildClient() {
                 cursor: "pointer", fontSize: 12, color: TH.muted, ...MM,
                 letterSpacing: "0.08em", textTransform: "uppercase",
                 padding: "6px 0", userSelect: "none",
-              }}>More filters {(evidenceFilter !== "all" || veganOnly || budgetCap > 0 || categoryFilter !== "all") && "·"}
+              }}>{t("build.moreFilters")} {(evidenceFilter !== "all" || veganOnly || budgetCap > 0 || categoryFilter !== "all") && "·"}
               </summary>
               <div style={{
                 display: "flex", flexWrap: "wrap", gap: 12, marginTop: 10,
                 padding: "14px 16px", background: TH.surface,
                 border: `1px solid ${TH.edge}`, borderRadius: 12,
               }}>
-                <FilterSelect label="Evidence" value={evidenceFilter} onChange={v => setEvidenceFilter(v as "all" | "very strong" | "strong")} options={[
-                  { v: "all", label: "Any" },
-                  { v: "very strong", label: "Very strong" },
-                  { v: "strong", label: "Strong+" },
+                <FilterSelect label={t("build.evidence")} value={evidenceFilter} onChange={v => setEvidenceFilter(v as "all" | "very strong" | "strong")} options={[
+                  { v: "all", label: t("build.evAny") },
+                  { v: "very strong", label: t("build.evVeryStrong") },
+                  { v: "strong", label: t("build.evStrongPlus") },
                 ]} />
-                <FilterSelect label="Category" value={categoryFilter} onChange={setCategoryFilter} options={[
-                  { v: "all", label: "All categories" },
-                  ...Object.entries(CATEGORY_LABELS).map(([v, label]) => ({ v, label })),
+                <FilterSelect label={t("build.category")} value={categoryFilter} onChange={setCategoryFilter} options={[
+                  { v: "all", label: t("build.allCategories") },
+                  ...Object.entries(CATEGORY_KEY).map(([v, labelKey]) => ({ v, label: t(labelKey) })),
                 ]} />
                 <label style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: TH.inkSoft, cursor: "pointer" }}>
                   <input type="checkbox" checked={veganOnly} onChange={e => setVeganOnly(e.target.checked)} style={{ accentColor: TH.sage }} />
-                  Vegan only
+                  {t("build.veganOnly")}
                 </label>
                 <label style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: TH.inkSoft }}>
-                  Max $/mo:
+                  {t("build.maxMo")}
                   <input type="number" min={0} max={100} value={budgetCap || ""} onChange={e => setBudgetCap(parseInt(e.target.value) || 0)}
-                    placeholder="any"
+                    placeholder={t("build.any")}
                     style={{ width: 70, padding: "8px 10px", border: `1px solid ${TH.edge}`, borderRadius: 8, fontSize: 13 }} />
                 </label>
                 {(evidenceFilter !== "all" || veganOnly || budgetCap > 0 || categoryFilter !== "all") && (
                   <button onClick={() => { setEvidenceFilter("all"); setVeganOnly(false); setBudgetCap(0); setCategoryFilter("all"); }}
                     style={{ background: "transparent", border: "none", color: TH.sageDeep, cursor: "pointer", fontSize: 13, fontWeight: 500 }}>
-                    Reset filters
+                    {t("build.resetFilters")}
                   </button>
                 )}
               </div>
             </details>
 
             <div style={{ marginTop: 10, fontSize: 12, color: TH.muted, ...MM }}>
-              {filtered.length} of {SUPPLEMENT_DB.length} ingredients
+              {t("build.countOf", { filtered: filtered.length, total: SUPPLEMENT_DB.length })}
             </div>
           </div>
 
           {/* Grouped list */}
           {grouped.length === 0 ? (
             <div style={{ padding: "60px 20px", textAlign: "center", color: TH.muted, fontSize: 15 }}>
-              No matches. Try a different search or clear filters.
+              {t("build.noMatches")}
             </div>
           ) : (
             grouped.map(([cat, supps]) => (
               <div key={cat} style={{ marginBottom: 22 }}>
                 <div style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.1em", marginBottom: 10, textTransform: "uppercase" }}>
-                  {CATEGORY_LABELS[cat] ?? cat} · {supps.length}
+                  {t(CATEGORY_KEY[cat] ?? cat)} · {supps.length}
                 </div>
                 <div style={{
                   display: "grid",
@@ -600,7 +613,7 @@ export default function BuildClient() {
                 {/* Wellness impact */}
                 <div style={{ marginTop: 22 }}>
                   <div style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", marginBottom: 10, textTransform: "uppercase" }}>
-                    Wellness signal · live
+                    {t("build.wellnessLive")}
                   </div>
                   <WellnessBars scores={scores} />
                 </div>
@@ -609,7 +622,7 @@ export default function BuildClient() {
                 {issues.length > 0 && (
                   <div style={{ marginTop: 22 }}>
                     <div style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", marginBottom: 10, textTransform: "uppercase" }}>
-                      Smart notes
+                      {t("build.smartNotes")}
                     </div>
                     <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
                       {issues.map((iss, i) => (
@@ -621,7 +634,7 @@ export default function BuildClient() {
                           display: "flex", gap: 8,
                         }}>
                           <span aria-hidden style={{ fontSize: 13, flexShrink: 0 }}>{iss.kind === "warn" ? "⚠" : "ℹ"}</span>
-                          <span>{iss.text}</span>
+                          <span>{t(iss.key, iss.vars)}</span>
                         </li>
                       ))}
                     </ul>
@@ -644,12 +657,12 @@ export default function BuildClient() {
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                 boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 13%, transparent)`,
               }}>
-                Buy full stack · ${totalCost}
+                {t("build.buyFull", { total: totalCost })}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
               </button>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                <button onClick={shareUrl} style={secondaryBtn()}>Share link</button>
-                <button onClick={clearAll} style={secondaryBtn("#b91c1c")}>Clear stack</button>
+                <button onClick={shareUrl} style={secondaryBtn()}>{t("build.shareLink")}</button>
+                <button onClick={clearAll} style={secondaryBtn("#b91c1c")}>{t("build.clearStack")}</button>
               </div>
             </div>
           )}
@@ -671,9 +684,9 @@ export default function BuildClient() {
           }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
             <span style={{ background: TH.sage, color: TH.ink, borderRadius: 999, padding: "2px 9px", fontSize: 12, ...MM }}>{selected.length}</span>
-            View your stack
+            {t("build.viewStack")}
           </span>
-          <span style={{ fontSize: 13, opacity: 0.85 }}>${totalCost}/mo</span>
+          <span style={{ fontSize: 13, opacity: 0.85 }}>{t("build.perMo", { total: totalCost })}</span>
         </button>
       )}
 
@@ -693,7 +706,7 @@ export default function BuildClient() {
             <div style={{ overflowY: "auto", padding: "14px 18px", flex: 1 }}>
               <DailyTimeline supps={selected} onRemove={removeSupp} />
               <div style={{ marginTop: 22 }}>
-                <div style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", marginBottom: 10, textTransform: "uppercase" }}>Wellness signal</div>
+                <div style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", marginBottom: 10, textTransform: "uppercase" }}>{t("build.wellnessSignal")}</div>
                 <WellnessBars scores={scores} />
               </div>
               {issues.length > 0 && (
@@ -704,7 +717,7 @@ export default function BuildClient() {
                       background: iss.kind === "warn" ? "#fef3c7" : "#f3f4f6",
                       color: iss.kind === "warn" ? "#92400e" : TH.inkSoft,
                       borderRadius: 10, fontSize: 12.5, lineHeight: 1.45,
-                    }}>{iss.kind === "warn" ? "⚠ " : "ℹ "}{iss.text}</li>
+                    }}>{iss.kind === "warn" ? "⚠ " : "ℹ "}{t(iss.key, iss.vars)}</li>
                   ))}
                 </ul>
               )}
@@ -713,10 +726,10 @@ export default function BuildClient() {
               <button onClick={() => { setStackDrawerOpen(false); openBuy(); }} style={{
                 padding: "15px 16px", background: TH.inkBg, color: "#fff",
                 border: "none", borderRadius: 12, cursor: "pointer", fontSize: 15, fontWeight: 600, minHeight: 50,
-              }}>Buy full stack · ${totalCost}</button>
+              }}>{t("build.buyFull", { total: totalCost })}</button>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                <button onClick={shareUrl} style={secondaryBtn()}>Share</button>
-                <button onClick={clearAll} style={secondaryBtn("#b91c1c")}>Clear</button>
+                <button onClick={shareUrl} style={secondaryBtn()}>{t("build.share")}</button>
+                <button onClick={clearAll} style={secondaryBtn("#b91c1c")}>{t("build.clearShort")}</button>
               </div>
             </div>
           </div>
@@ -751,7 +764,7 @@ export default function BuildClient() {
               background: TH.sage, color: "#fff", border: "none", borderRadius: 999,
               padding: "6px 14px", fontSize: 13, fontWeight: 600, cursor: "pointer",
               fontFamily: FONTS.body,
-            }}>Undo</button>
+            }}>{t("build.undo")}</button>
           )}
         </div>
       )}
@@ -814,7 +827,8 @@ function FilterSelect({ label, value, onChange, options }: {
 function SuppCard({ supp, added, flashed, onAdd }: {
   supp: Supplement; added: boolean; flashed: boolean; onAdd: () => void;
 }) {
-  const t = TIMING_META[supp.timing];
+  const { t } = useT();
+  const tm = TIMING_META[supp.timing];
   return (
     <button onClick={onAdd}
       aria-pressed={added}
@@ -836,10 +850,10 @@ function SuppCard({ supp, added, flashed, onAdd }: {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <span style={{
           ...MM, fontSize: 10, padding: "3px 8px", borderRadius: 999,
-          background: t.bg, color: t.ink, fontWeight: 600,
+          background: tm.bg, color: tm.ink, fontWeight: 600,
           display: "inline-flex", alignItems: "center", gap: 4,
         }}>
-          <span aria-hidden>{t.icon}</span> {t.label}
+          <span aria-hidden>{tm.icon}</span> {t(TIMING_LABEL_KEY[supp.timing])}
         </span>
         <span style={{ ...MM, fontSize: 11, color: TH.muted }}>${supp.monthlyCost}/mo</span>
       </div>
@@ -868,6 +882,7 @@ function StackHeader({ name, onName, count, total, onClose }: {
   name: string; onName: (n: string) => void; count: number; total: number;
   onClose?: () => void;
 }) {
+  const { t } = useT();
   return (
     <div style={{
       padding: "16px 18px", borderBottom: `1px solid ${TH.edge}`,
@@ -875,14 +890,14 @@ function StackHeader({ name, onName, count, total, onClose }: {
     }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
         <div style={{ flex: 1 }}>
-          <div style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", marginBottom: 4 }}>YOUR STACK</div>
+          <div style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", marginBottom: 4 }}>{t("build.yourStack")}</div>
           <input value={name} onChange={e => onName(e.target.value)}
             style={{
               ...D, fontSize: 19, color: TH.ink, width: "100%",
               border: "none", outline: "none", background: "transparent",
               padding: 0, margin: 0, letterSpacing: "-0.01em",
             }}
-            aria-label="Stack name"
+            aria-label={t("build.stackNameAria")}
           />
         </div>
         {onClose && (
@@ -893,15 +908,16 @@ function StackHeader({ name, onName, count, total, onClose }: {
         )}
       </div>
       <div style={{ display: "flex", gap: 14, marginTop: 8, fontSize: 12.5, color: TH.inkSoft }}>
-        <span><strong style={{ color: TH.ink }}>{count}</strong> {count === 1 ? "supplement" : "supplements"}</span>
+        <span><strong style={{ color: TH.ink }}>{count}</strong> {count === 1 ? t("build.supplement") : t("build.supplements")}</span>
         <span>·</span>
-        <span><strong style={{ color: TH.ink }}>${total}</strong>/month</span>
+        <span><strong style={{ color: TH.ink }}>${total}</strong>{t("build.perMonthSuffix")}</span>
       </div>
     </div>
   );
 }
 
 function EmptyStack() {
+  const { t } = useT();
   return (
     <div style={{
       padding: "32px 14px", textAlign: "center", color: TH.muted,
@@ -912,29 +928,30 @@ function EmptyStack() {
         display: "flex", alignItems: "center", justifyContent: "center",
         fontSize: 28, color: TH.muted,
       }} aria-hidden>✦</div>
-      <div style={{ ...D, fontSize: 16, color: TH.ink }}>Start adding ingredients</div>
+      <div style={{ ...D, fontSize: 16, color: TH.ink }}>{t("build.emptyTitle")}</div>
       <div style={{ fontSize: 13, lineHeight: 1.5, maxWidth: 260 }}>
-        Click any ingredient from the library, or load a quick-start template above.
+        {t("build.emptyBody")}
       </div>
     </div>
   );
 }
 
 function DailyTimeline({ supps, onRemove }: { supps: Supplement[]; onRemove: (id: string) => void }) {
+  const { t } = useT();
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      {TIMINGS.map(t => {
-        const list = supps.filter(s => s.timing === t);
-        const meta = TIMING_META[t];
+      {TIMINGS.map(tg => {
+        const list = supps.filter(s => s.timing === tg);
+        const meta = TIMING_META[tg];
         if (list.length === 0) return null;
         return (
-          <div key={t}>
+          <div key={tg}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
               <span style={{
                 ...MM, fontSize: 10, padding: "3px 8px", borderRadius: 999,
                 background: meta.bg, color: meta.ink, fontWeight: 600,
               }}>
-                {meta.icon} {meta.label}
+                {meta.icon} {t(TIMING_LABEL_KEY[tg])}
               </span>
               <span style={{ fontSize: 11, color: TH.muted, ...MM }}>{list.length}</span>
               <span style={{ flex: 1, height: 1, background: TH.edge }} />
@@ -953,7 +970,7 @@ function DailyTimeline({ supps, onRemove }: { supps: Supplement[]; onRemove: (id
                     <div style={{ color: TH.ink, fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.name}</div>
                     <div style={{ fontSize: 11, color: TH.muted }}>{s.dose} · ${s.monthlyCost}/mo</div>
                   </div>
-                  <button onClick={() => onRemove(s.id)} aria-label={`Remove ${s.name}`} style={{
+                  <button onClick={() => onRemove(s.id)} aria-label={t("build.removeAria", { name: s.name })} style={{
                     background: "transparent", border: "none", cursor: "pointer",
                     color: TH.muted, padding: 4, fontSize: 13,
                     transition: "color .15s",
@@ -972,43 +989,39 @@ function DailyTimeline({ supps, onRemove }: { supps: Supplement[]; onRemove: (id
 }
 
 function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void }) {
+  const { t } = useT();
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
 
-  const examples = [
-    "I want more energy, better focus, and improved sleep.",
-    "I'm vegan and want a foundational stack for longevity.",
-    "Help me recover faster from training and reduce joint stiffness.",
-    "I'm 45 and starting to feel burnt out, calmer baseline, deeper sleep.",
-  ];
+  const examples = [t("build.ex1"), t("build.ex2"), t("build.ex3"), t("build.ex4")];
 
   const runWith = useCallback(async (raw: string) => {
-    const t = raw.trim();
-    if (t.length < 5) return;
+    const txt = raw.trim();
+    if (txt.length < 5) return;
     setLoading(true);
     setError(null);
     try {
       const res = await fetch("/api/generate-stack", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text: t, budget: "medium" }),
+        body: JSON.stringify({ text: txt, budget: "medium" }),
       });
       const body = (await res.json()) as GenerateResponse;
       if (!body.ok) {
-        setError(body.error ?? "Couldn't generate a stack.");
+        setError(body.error ?? t("build.genError"));
       } else {
         track("stack_generate", { count: body.stack.length, poweredBy: body.poweredBy });
         onApply(body);
         setText("");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Network error");
+      setError(err instanceof Error ? err.message : t("build.networkError"));
     } finally {
       setLoading(false);
     }
-  }, [onApply]);
+  }, [onApply, t]);
 
   const run = useCallback(() => runWith(text), [runWith, text]);
 
@@ -1038,9 +1051,9 @@ function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void 
           ...MM, fontSize: 10, padding: "3px 8px", borderRadius: 999,
           background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
           color: "#fff", fontWeight: 600, letterSpacing: "0.06em",
-        }}>FOR YOU</span>
+        }}>{t("build.forYou")}</span>
         <h2 style={{ ...D, fontSize: 18, color: TH.ink, margin: 0, letterSpacing: "-0.015em" }}>
-          Describe your goals, we&apos;ll compose the stack
+          {t("build.aiHeading")}
         </h2>
       </div>
 
@@ -1049,7 +1062,7 @@ function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void 
           value={text}
           onChange={e => setText(e.target.value)}
           onFocus={() => setExpanded(true)}
-          placeholder='e.g. "I want more energy, better focus, and improved sleep."'
+          placeholder={t("build.aiPlaceholder")}
           rows={expanded ? 3 : 2}
           style={{
             width: "100%", boxSizing: "border-box",
@@ -1084,7 +1097,7 @@ function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void 
         alignItems: "center", gap: 10, flexWrap: "wrap",
       }}>
         <span style={{ fontSize: 12, color: TH.muted }}>
-          Plain English. We&apos;ll pick {`{4-8}`} ingredients within a medium budget.
+          {t("build.aiHint")}
         </span>
         <button onClick={run} disabled={loading || text.trim().length < 5}
           style={{
@@ -1097,7 +1110,7 @@ function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void 
           }}>
           {loading ? (
             <ThinkingMessages phrases={PHRASES.generateStack} interval={750} size="sm" />
-          ) : "Generate stack →"}
+          ) : t("build.generateStack")}
         </button>
       </div>
       {error && (
@@ -1115,9 +1128,9 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
   meta: GeneratedMeta; supps: Supplement[]; total: number;
   onBuy: () => void; onClear: () => void;
 }) {
+  const { t } = useT();
   const sourceLabel =
-    meta.poweredBy === "claude" ? "Composed for you" :
-    meta.poweredBy === "template" ? "Ready-made stack" : "Composed for you";
+    meta.poweredBy === "template" ? t("build.readyMade") : t("build.composedForYou");
   // The strongest evidence tier present, surfaced as a headline trust signal
   const tierRank = { "very strong": 3, strong: 2, moderate: 1 } as const;
   const topTier = supps.reduce<Supplement["evidence"]>((acc, s) =>
@@ -1141,7 +1154,7 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
             ...MM, fontSize: 10, padding: "3px 9px", borderRadius: 999,
             background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
             color: "#fff", fontWeight: 700, letterSpacing: "0.06em",
-          }}>{meta.poweredBy === "template" ? "STACK" : "FOR YOU"}</span>
+          }}>{meta.poweredBy === "template" ? t("build.badgeStack") : t("build.forYou")}</span>
           <span style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.04em", textTransform: "uppercase" }}>
             {sourceLabel}
           </span>
@@ -1156,9 +1169,9 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
         )}
         {/* Quick stats */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 16 }}>
-          <Stat label="Supplements" value={`${supps.length}`} />
-          <Stat label="Monthly cost" value={`$${total}`} />
-          <Stat label="Evidence" value={topTier === "very strong" ? "Very strong" : topTier === "strong" ? "Strong" : "Moderate"} />
+          <Stat label={t("build.statSupplements")} value={`${supps.length}`} />
+          <Stat label={t("build.statCost")} value={`$${total}`} />
+          <Stat label={t("build.statEvidence")} value={topTier === "very strong" ? t("build.tierVeryStrong") : topTier === "strong" ? t("build.tierStrong") : t("build.tierModerate")} />
         </div>
       </div>
 
@@ -1172,7 +1185,7 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
             <span aria-hidden style={{ fontSize: 16, lineHeight: 1.3 }}>🧬</span>
             <div>
               <div style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>
-                Why this stack works
+                {t("build.whyWorks")}
               </div>
               <p style={{ fontSize: 14, lineHeight: 1.55, color: TH.inkSoft, margin: 0 }}>{meta.synergy}</p>
             </div>
@@ -1182,7 +1195,7 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
         {/* Supplement breakdown */}
         <div style={{ display: "grid", gridTemplateColumns: "var(--gen-cols)", gap: 12 }}>
           {supps.map(s => {
-            const t = TIMING_META[s.timing];
+            const tm = TIMING_META[s.timing];
             const reason = meta.reasons[s.id] || s.why;
             return (
               <div key={s.id} style={{
@@ -1198,9 +1211,9 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
                   </div>
                   <span style={{
                     ...MM, fontSize: 10, padding: "3px 8px", borderRadius: 999,
-                    background: t.bg, color: t.ink, fontWeight: 600, flexShrink: 0,
+                    background: tm.bg, color: tm.ink, fontWeight: 600, flexShrink: 0,
                     display: "inline-flex", alignItems: "center", gap: 4,
-                  }}><span aria-hidden>{t.icon}</span>{t.label}</span>
+                  }}><span aria-hidden>{tm.icon}</span>{t(TIMING_LABEL_KEY[s.timing])}</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                   <span style={{ ...MM, fontSize: 12, color: TH.ink, background: TH.bg, padding: "3px 9px", borderRadius: 8 }}>{s.dose}</span>
@@ -1213,7 +1226,7 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
                     fontSize: 12, color: "var(--c-amber-deep)", background: "color-mix(in srgb, var(--c-amber) 16%, transparent)",
                     borderRadius: 8, padding: "7px 10px", lineHeight: 1.4,
                   }}>
-                    ⚠ Check with a clinician if you have: {s.warnings.join(", ").replace(/-/g, " ")}.
+                    {t("build.warningCheck", { warnings: s.warnings.join(", ").replace(/-/g, " ") })}
                   </div>
                 )}
               </div>
@@ -1241,17 +1254,17 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
             display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
             boxShadow: `0 10px 22px -6px color-mix(in srgb, ${TH.sage} 50%, transparent)`,
           }}>
-            Buy full stack · ${total}
+            {t("build.buyFull", { total })}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </button>
           <button onClick={onClear} style={{
             minHeight: 52, padding: "0 22px", borderRadius: 999,
             background: TH.surface, color: TH.inkSoft, border: `1px solid ${TH.edgeStrong}`,
             fontFamily: FONTS.body, fontWeight: 500, fontSize: 14.5, cursor: "pointer",
-          }}>Start over</button>
+          }}>{t("build.startOver")}</button>
         </div>
         <p style={{ fontSize: 12, color: TH.muted, margin: "12px 0 0", lineHeight: 1.5 }}>
-          Fine-tune it below, add or remove any ingredient, the stack panel updates live.
+          {t("build.fineTune")}
         </p>
       </div>
 
@@ -1277,6 +1290,7 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
   supps: Supplement[]; name: string; total: number;
   onOpenAll: () => void; onOpenAllAmazon: () => void; onClose: () => void;
 }) {
+  const { t } = useT();
   const showAmazon = amazonEnabled();
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -1299,17 +1313,17 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
       }}>
         {/* Header */}
         <div style={{ padding: "22px 24px", borderBottom: `1px solid ${TH.edge}`, background: TH.surface }}>
-          <button onClick={onClose} aria-label="Close" style={{
+          <button onClick={onClose} aria-label={t("build.close")} style={{
             position: "absolute", top: 16, right: 16, width: 34, height: 34, borderRadius: 999,
             background: TH.bg, border: `1px solid ${TH.edge}`, cursor: "pointer",
             display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: TH.ink,
           }}>×</button>
           <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 6 }}>
-            Buy your full stack
+            {t("build.buyModalEyebrow")}
           </div>
           <h2 style={{ ...D, fontSize: 24, color: TH.ink, margin: 0, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{name}</h2>
           <div style={{ fontSize: 13.5, color: TH.inkSoft, marginTop: 6 }}>
-            {supps.length} {supps.length === 1 ? "product" : "products"} · ~${total}/month · third-party-tested brands
+            {supps.length} {supps.length === 1 ? t("build.product") : t("build.products")} · {t("build.buyModalMeta", { total })}
           </div>
         </div>
 
@@ -1322,7 +1336,7 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
               display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
               boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 13%, transparent)`,
             }}>
-              Open all {supps.length} on iHerb
+              {t("build.openAllIherb", { n: supps.length })}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M7 7h10v10"/></svg>
             </button>
             {showAmazon && (
@@ -1332,13 +1346,13 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
                 display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
                 boxShadow: "0 8px 20px rgba(227,172,0,0.25)",
               }}>
-                Open all {supps.length} on Amazon
+                {t("build.openAllAmazon", { n: supps.length })}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M7 7h10v10"/></svg>
               </button>
             )}
           </div>
           <p style={{ fontSize: 11.5, color: TH.muted, textAlign: "center", margin: "9px 0 0", lineHeight: 1.45 }}>
-            Opens one tab per product. If your browser blocks them, allow pop-ups for suppdoc.io, or use the per-product buttons below.
+            {t("build.openAllNote")}
           </p>
         </div>
 
@@ -1346,7 +1360,7 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
         <div style={{ padding: "16px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
           {supps.map(s => {
             const { product, iherb, amazon, image } = buyLinks(s);
-            const t = TIMING_META[s.timing];
+            const tm = TIMING_META[s.timing];
             return (
               <div key={s.id} style={{
                 display: "flex", gap: 12, padding: 12, background: TH.surface,
@@ -1371,7 +1385,7 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
                     {product ? product.productName : s.name}
                   </div>
                   <div style={{ fontSize: 11.5, color: TH.muted, marginTop: 2 }}>
-                    {product ? `${product.brand} · ` : ""}{s.dose} · <span style={{ color: t.ink }}>{t.label}</span>
+                    {product ? `${product.brand} · ` : ""}{s.dose} · <span style={{ color: tm.ink }}>{t(TIMING_LABEL_KEY[s.timing])}</span>
                   </div>
                 </div>
                 {/* Buttons */}
@@ -1394,7 +1408,7 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
         </div>
 
         <p style={{ fontSize: 11, color: TH.muted, textAlign: "center", padding: "0 24px 22px", lineHeight: 1.6, margin: 0 }}>
-          Prices are approximate and may vary. We may earn a commission on qualifying purchases, at no extra cost to you.
+          {t("build.priceDisclaimer")}
         </p>
       </div>
       <style>{`
@@ -1406,13 +1420,14 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
 }
 
 function WellnessBars({ scores }: { scores: { energy: number; sleep: number; recovery: number; focus: number; stress: number; mood: number } }) {
-  const dims: { key: keyof typeof scores; label: string; color: string }[] = [
-    { key: "sleep", label: "Sleep", color: "#7a6d92" },
-    { key: "energy", label: "Energy", color: "#c4944a" },
-    { key: "focus", label: "Focus", color: "#5ba373" },
-    { key: "stress", label: "Stress relief", color: "#a78bfa" },
-    { key: "recovery", label: "Recovery", color: "#688a6b" },
-    { key: "mood", label: "Mood", color: "#ff8b6b" },
+  const { t } = useT();
+  const dims: { key: keyof typeof scores; labelKey: string; color: string }[] = [
+    { key: "sleep", labelKey: "build.wbSleep", color: "#7a6d92" },
+    { key: "energy", labelKey: "build.wbEnergy", color: "#c4944a" },
+    { key: "focus", labelKey: "build.wbFocus", color: "#5ba373" },
+    { key: "stress", labelKey: "build.wbStress", color: "#a78bfa" },
+    { key: "recovery", labelKey: "build.wbRecovery", color: "#688a6b" },
+    { key: "mood", labelKey: "build.wbMood", color: "#ff8b6b" },
   ];
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -1421,7 +1436,7 @@ function WellnessBars({ scores }: { scores: { energy: number; sleep: number; rec
         return (
           <div key={d.key}>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11.5, color: TH.inkSoft, marginBottom: 4 }}>
-              <span>{d.label}</span>
+              <span>{t(d.labelKey)}</span>
               <span style={{ ...MM, color: v >= 60 ? TH.sageDeep : v >= 30 ? TH.amberDeep : TH.muted }}>{v}</span>
             </div>
             <div style={{ height: 6, background: TH.bg, borderRadius: 999, overflow: "hidden" }}>
