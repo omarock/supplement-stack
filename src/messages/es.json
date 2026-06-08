@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "start": "Empezar",
+    "learn": "Aprender",
+    "myPlan": "Mi plan",
+    "signIn": "Iniciar sesión",
+    "buildMyStack": "Crear mi stack",
+    "myStack": "Mi stack"
+  },
+  "switcher": { "label": "Idioma" },
+  "footer": {
+    "product": "Producto",
+    "explore": "Explorar",
+    "company": "Empresa",
+    "legal": "Legal",
+    "tagline": "Stacks de suplementos personalizados, hechos solo para ti. Basados en la evidencia publicada, de minoristas de confianza.",
+    "rights": "Solo para uso informativo, no es consejo médico."
+  },
+  "landing": {
+    "eyebrow": "Basado en la evidencia · cada afirmación citada · sin marca propia",
+    "h1a": "El stack de suplementos",
+    "h1b": "hecho para ti",
+    "sub": "Tres formas de empezar. Cada una termina con un stack claro que puedes comprar en iHerb o Amazon con un clic.",
+    "card1Title": "Hacer el test",
+    "card1Desc": "Responde unas preguntas sobre cómo duermes, comes y te sientes. Te asociamos con ingredientes respaldados por la evidencia.",
+    "card1Cta": "Empezar el test",
+    "card2Title": "Créalo tú mismo",
+    "card2Desc": "Elige entre más de 200 ingredientes estudiados; comprobamos interacciones y dosis.",
+    "card2Cta": "Crear un stack",
+    "card3Title": "Audita tu stack",
+    "card3Desc": "¿Ya tomas suplementos? Pega tu stack y obtén una puntuación de evidencia al instante.",
+    "card3Cta": "Auditar mi stack",
+    "trust1": "Más de 200 ingredientes evaluados por evidencia",
+    "trust2": "71.776 estudios clínicos referenciados",
+    "trust3": "Sin marca propia, sin sesgo",
+    "ctaTitle": "Crea tu stack en minutos",
+    "ctaSub": "Gratis, basado en la evidencia, y no vendemos nuestras propias pastillas.",
+    "ctaBtn": "Obtener mi stack",
+    "englishNote": "Las guías detalladas de ingredientes están actualmente en inglés."
+  }
+}

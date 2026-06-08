@@ -3,6 +3,8 @@ import { Bricolage_Grotesque, Inter, Instrument_Serif, JetBrains_Mono } from "ne
 import ConsentedAnalytics from "@/components/ConsentedAnalytics";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import DeferredWidgets from "@/components/DeferredWidgets";
+import { I18nProvider } from "@/components/I18nProvider";
+import { getDict } from "@/lib/i18n-dicts";
 import "./globals.css";
 
 // Self-hosted at build time via next/font: no render-blocking request to Google,
@@ -92,7 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BRAND_JSONLD) }} />
-        {children}
+        <I18nProvider locale="en" messages={getDict("en")}>{children}</I18nProvider>
         <DeferredWidgets />
         <ConsentedAnalytics />
         <GoogleAnalytics />

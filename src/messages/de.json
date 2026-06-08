@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "start": "Starten",
+    "learn": "Lernen",
+    "myPlan": "Mein Plan",
+    "signIn": "Anmelden",
+    "buildMyStack": "Stack erstellen",
+    "myStack": "Mein Stack"
+  },
+  "switcher": { "label": "Sprache" },
+  "footer": {
+    "product": "Produkt",
+    "explore": "Entdecken",
+    "company": "Unternehmen",
+    "legal": "Rechtliches",
+    "tagline": "Personalisierte Supplement-Stacks, gemacht nur für Sie. Auf veröffentlichter Evidenz basierend, von vertrauenswürdigen Händlern bezogen.",
+    "rights": "Nur zu Informationszwecken, keine medizinische Beratung."
+  },
+  "landing": {
+    "eyebrow": "Evidenzbasiert · jede Aussage belegt · keine Eigenmarke",
+    "h1a": "Der Supplement-Stack",
+    "h1b": "für Sie gemacht",
+    "sub": "Drei Wege hinein. Jeder endet mit einem klaren Stack, den Sie mit einem Klick bei iHerb oder Amazon kaufen können.",
+    "card1Title": "Quiz machen",
+    "card1Desc": "Beantworten Sie ein paar Fragen zu Schlaf, Ernährung und Befinden. Wir ordnen Ihnen evidenzbasierte Inhaltsstoffe zu.",
+    "card1Cta": "Quiz starten",
+    "card2Title": "Selbst zusammenstellen",
+    "card2Desc": "Wählen Sie aus über 200 erforschten Inhaltsstoffen; wir prüfen Wechselwirkungen und Dosierung.",
+    "card2Cta": "Stack erstellen",
+    "card3Title": "Stack prüfen",
+    "card3Desc": "Nehmen Sie bereits Supplements? Fügen Sie Ihren Stack ein und erhalten Sie sofort eine Evidenzbewertung.",
+    "card3Cta": "Meinen Stack prüfen",
+    "trust1": "Über 200 evidenzbewertete Inhaltsstoffe",
+    "trust2": "71.776 klinische Studien referenziert",
+    "trust3": "Keine Eigenmarke, keine Voreingenommenheit",
+    "ctaTitle": "Erstellen Sie Ihren Stack in Minuten",
+    "ctaSub": "Kostenlos, evidenzbasiert, und wir verkaufen keine eigenen Pillen.",
+    "ctaBtn": "Meinen Stack holen",
+    "englishNote": "Ausführliche Inhaltsstoff-Guides sind derzeit auf Englisch."
+  }
+}

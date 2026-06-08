@@ -5,7 +5,10 @@ import { HOME_FAQ } from "@/lib/home-faq";
 // Server wrapper so the client homepage can carry a self-canonical (a client
 // component cannot export metadata). metadataBase is set in layout.tsx.
 export const metadata: Metadata = {
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    languages: { en: "/", fr: "/fr", de: "/de", es: "/es", "x-default": "/" },
+  },
 };
 
 // FAQPage structured data, built from the same source the homepage renders, so

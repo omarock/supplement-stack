@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "start": "Commencer",
+    "learn": "Apprendre",
+    "myPlan": "Mon plan",
+    "signIn": "Se connecter",
+    "buildMyStack": "Composer mon stack",
+    "myStack": "Mon stack"
+  },
+  "switcher": { "label": "Langue" },
+  "footer": {
+    "product": "Produit",
+    "explore": "Explorer",
+    "company": "Entreprise",
+    "legal": "Légal",
+    "tagline": "Des stacks de compléments personnalisés, faits pour vous. Fondés sur les preuves publiées, sourcés chez des revendeurs de confiance.",
+    "rights": "À titre informatif uniquement, pas un avis médical."
+  },
+  "landing": {
+    "eyebrow": "Fondé sur les preuves · chaque affirmation citée · aucune marque maison",
+    "h1a": "Le stack de compléments",
+    "h1b": "fait pour vous",
+    "sub": "Trois façons de commencer. Chacune se termine par un stack clair, achetable sur iHerb ou Amazon en un clic.",
+    "card1Title": "Faire le quiz",
+    "card1Desc": "Répondez à quelques questions sur votre sommeil, votre alimentation et votre forme. On vous associe à des ingrédients fondés sur les preuves.",
+    "card1Cta": "Commencer le quiz",
+    "card2Title": "Composer vous-même",
+    "card2Desc": "Choisissez parmi plus de 200 ingrédients étudiés ; on vérifie les interactions et les dosages.",
+    "card2Cta": "Composer un stack",
+    "card3Title": "Auditer votre stack",
+    "card3Desc": "Vous prenez déjà des compléments ? Collez votre stack et obtenez un score de preuves instantané.",
+    "card3Cta": "Auditer mon stack",
+    "trust1": "Plus de 200 ingrédients évalués par les preuves",
+    "trust2": "71 776 études cliniques référencées",
+    "trust3": "Aucune marque maison, aucun biais intégré",
+    "ctaTitle": "Composez votre stack en quelques minutes",
+    "ctaSub": "Gratuit, fondé sur les preuves, et nous ne vendons pas nos propres pilules.",
+    "ctaBtn": "Obtenir mon stack",
+    "englishNote": "Les guides détaillés des ingrédients sont actuellement en anglais."
+  }
+}

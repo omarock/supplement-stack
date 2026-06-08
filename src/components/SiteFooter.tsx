@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import SuppdocLogo from "@/components/SuppdocLogo";
 import CookiePreferencesButton from "@/components/CookiePreferencesButton";
+import { useT } from "@/components/I18nProvider";
 import { TH } from "@/lib/theme";
 
 const COLS: [string, [string, string][]][] = [
@@ -40,7 +43,10 @@ const COLS: [string, [string, string][]][] = [
   ]],
 ];
 
+const HEADING_KEY: Record<string, string> = { Product: "footer.product", Explore: "footer.explore", Company: "footer.company", Legal: "footer.legal" };
+
 export default function SiteFooter() {
+  const { t } = useT();
   return (
     <footer style={{
       padding: "56px var(--nav-pad-x) 36px",
@@ -55,10 +61,10 @@ export default function SiteFooter() {
           <div>
             <SuppdocLogo size={18} />
             <p style={{ fontSize: 14, color: TH.muted, lineHeight: 1.55, marginTop: 18, maxWidth: 320 }}>
-              Personalised supplement stacks, made for just you. Grounded in the published evidence, sourced from trusted retailers.
+              {t("footer.tagline")}
             </p>
             <p style={{ fontSize: 11, color: TH.muted, marginTop: 18, lineHeight: 1.5 }}>
-              © {new Date().getFullYear()} suppdoc.io. For informational use only, not medical advice.
+              © {new Date().getFullYear()} suppdoc.io. {t("footer.rights")}
               <br />
               suppdoc.io is an affiliate of iHerb, Amazon and other trusted retailers.
             </p>
@@ -66,7 +72,7 @@ export default function SiteFooter() {
           {COLS.map(([heading, links]) => (
             <div key={heading}>
               <div style={{ fontSize: 13, color: TH.ink, fontWeight: 600, marginBottom: 16 }}>
-                {heading}
+                {t(HEADING_KEY[heading] ?? heading)}
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
                 {links.map(([label, href]) => (

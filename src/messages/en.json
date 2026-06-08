@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "start": "Start",
+    "learn": "Learn",
+    "myPlan": "My plan",
+    "signIn": "Sign in",
+    "buildMyStack": "Build my stack",
+    "myStack": "My stack"
+  },
+  "switcher": { "label": "Language" },
+  "footer": {
+    "product": "Product",
+    "explore": "Explore",
+    "company": "Company",
+    "legal": "Legal",
+    "tagline": "Personalised supplement stacks, made for just you. Grounded in the published evidence, sourced from trusted retailers.",
+    "rights": "For informational use only, not medical advice."
+  },
+  "landing": {
+    "eyebrow": "Evidence-graded · every claim cited · no house brand",
+    "h1a": "The supplement stack",
+    "h1b": "built for you",
+    "sub": "Three ways in. Each ends with a clear stack you can buy from iHerb or Amazon in one click.",
+    "card1Title": "Take the quiz",
+    "card1Desc": "Answer a few questions about how you sleep, eat, and feel. We match you to evidence-backed ingredients.",
+    "card1Cta": "Start the quiz",
+    "card2Title": "Build it yourself",
+    "card2Desc": "Pick from 200+ researched ingredients, and we check it for interactions and dosing.",
+    "card2Cta": "Build a stack",
+    "card3Title": "Audit your stack",
+    "card3Desc": "Already taking supplements? Paste your stack and get an instant, evidence-graded score.",
+    "card3Cta": "Audit my stack",
+    "trust1": "200+ evidence-graded ingredients",
+    "trust2": "71,776 clinical studies referenced",
+    "trust3": "No house brand, no built-in bias",
+    "ctaTitle": "Build your stack in minutes",
+    "ctaSub": "Free, evidence-based, and we don't sell our own pills.",
+    "ctaBtn": "Get my stack",
+    "englishNote": "Detailed ingredient guides are currently in English."
+  }
+}

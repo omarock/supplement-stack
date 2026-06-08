@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import SuppdocLogo from "@/components/SuppdocLogo";
 import ThemeToggle from "@/components/ThemeToggle";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useT } from "@/components/I18nProvider";
 import { getSupabase } from "@/lib/supabase";
 import { TH, FONTS } from "@/lib/theme";
 
@@ -60,8 +62,11 @@ const NAV: NavGroup[] = [
   },
 ];
 
+const GROUP_KEY: Record<string, string> = { Start: "nav.start", Learn: "nav.learn", "My plan": "nav.myPlan" };
+
 export default function SiteHeader() {
   const router = useRouter();
+  const { t, lh } = useT();
   const [openMobile, setOpenMobile] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -134,7 +139,7 @@ export default function SiteHeader() {
         borderBottom: scrolled ? `1px solid ${TH.edge}` : "1px solid transparent",
         transition: "all .35s cubic-bezier(.2,.7,.2,1)",
       }}>
-        <SuppdocLogo size={20} />
+        <SuppdocLogo size={20} href={lh("/")} />
 
         {/* Desktop nav, grouped dropdowns */}
         <div
@@ -155,7 +160,7 @@ export default function SiteHeader() {
                     color: open ? TH.ink : TH.inkSoft, padding: "6px 2px", transition: "color .2s",
                   }}
                 >
-                  {group.label}
+                  {t(GROUP_KEY[group.label] ?? group.label)}
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"
                     style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform .2s" }}>
                     <path d="M6 9l6 6 6-6" />
@@ -192,10 +197,11 @@ export default function SiteHeader() {
         </div>
 
         <div style={{ display: "var(--nav-show)", gap: 10, alignItems: "center" }}>
+          <LanguageSwitcher />
           <ThemeToggle />
           {!user && (
             <Link href="/signin" style={{ fontSize: 14, color: TH.inkSoft, textDecoration: "none", padding: "8px 12px", fontWeight: 500 }}>
-              Sign in
+              {t("nav.signIn")}
             </Link>
           )}
           <Link href="/quiz" style={{
@@ -205,7 +211,7 @@ export default function SiteHeader() {
             display: "inline-flex", alignItems: "center", gap: 8,
             boxShadow: `0 4px 14px color-mix(in srgb, ${TH.ink} 10%, transparent)`,
           }}>
-            {user ? "My stack" : "Build my stack"}
+            {user ? t("nav.myStack") : t("nav.buildMyStack")}
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
               <path d="M5 12h14M13 5l7 7-7 7" />
             </svg>
@@ -297,7 +303,7 @@ export default function SiteHeader() {
           {NAV.map(group => (
             <div key={group.label}>
               <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>
-                {group.label}
+                {t(GROUP_KEY[group.label] ?? group.label)}
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 {group.items.map(item => (
@@ -332,6 +338,10 @@ export default function SiteHeader() {
           )}
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, paddingTop: 4 }}>
+            <span style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted }}>{t("switcher.label")}</span>
+            <LanguageSwitcher />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
             <span style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted }}>Theme</span>
             <ThemeToggle />
           </div>
@@ -341,7 +351,7 @@ export default function SiteHeader() {
               padding: "15px 24px", background: TH.inkBg, color: "#fff", textDecoration: "none",
               borderRadius: 999, fontSize: 15, fontWeight: 600, textAlign: "center",
               boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 20%, transparent)`,
-            }}>{user ? "My stack →" : "Build my stack →"}</Link>
+            }}>{user ? `${t("nav.myStack")} →` : `${t("nav.buildMyStack")} →`}</Link>
             {user ? (
               <button onClick={logout} style={{
                 padding: "13px 24px", background: "transparent", color: "var(--c-destructive)", cursor: "pointer",
@@ -352,7 +362,7 @@ export default function SiteHeader() {
               <Link href="/signin" onClick={() => setOpenMobile(false)} style={{
                 padding: "13px 24px", background: "transparent", color: TH.inkSoft, textDecoration: "none",
                 borderRadius: 999, fontSize: 14, fontWeight: 500, textAlign: "center", border: `1px solid ${TH.edge}`,
-              }}>Sign in</Link>
+              }}>{t("nav.signIn")}</Link>
             )}
           </div>
         </div>
