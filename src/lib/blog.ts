@@ -36,7 +36,7 @@ const Table = (rows: string[][]) =>
 const CTA = () =>
   r("p", { style: { background: "rgba(74,106,78,0.08)", border: "1px solid rgba(74,106,78,0.15)", padding: "20px 24px", borderRadius: 14, margin: "32px 0 0" } },
     r("strong", null, "Want a stack matched to you? "),
-    r("a", { href: "/quiz", style: { color: "#7d2e3a" } }, "Take our quiz →")
+    r("a", { href: "/quiz", style: { color: "var(--c-sage-deep)" } }, "Take our quiz →")
   );
 
 // ─── 10 articles ──────────────────────────────────────────────────────────────

@@ -164,7 +164,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                       display: "inline-flex", alignItems: "center", gap: 6,
                       padding: "7px 12px", borderRadius: 8,
                       fontSize: 13, fontWeight: 500,
-                      background: "#f3f4f6", color: "#374151",
+                      background: "#f3f4f6", color: "var(--c-ink-soft)",
                       border: "1px solid #e5e7eb",
                     }}>
                       <span style={{ color: th.sage, fontWeight: 700 }}>✓</span> {c}
@@ -270,13 +270,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           {supp.warnings && supp.warnings.length > 0 && (
             <div style={{
               marginTop: 24, padding: 20,
-              background: "#fef3c7", borderRadius: 16, borderLeft: "3px solid #d97706",
+              background: "color-mix(in srgb, var(--c-amber) 16%, transparent)", borderRadius: 16, borderLeft: "3px solid #d97706",
               maxWidth: 760,
             }}>
-              <div style={{ fontSize: 11, ...MM, color: "#92400e", letterSpacing: "0.08em", marginBottom: 8 }}>
+              <div style={{ fontSize: 11, ...MM, color: "var(--c-amber-deep)", letterSpacing: "0.08em", marginBottom: 8 }}>
                 ⚠️ AVOID IF
               </div>
-              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, color: "#78350f" }}>
+              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, color: "var(--c-amber-deep)" }}>
                 {supp.warnings.map(warningLabel).join(" · ")}. Consult a clinician before use.
               </p>
             </div>

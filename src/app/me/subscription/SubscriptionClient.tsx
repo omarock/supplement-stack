@@ -136,7 +136,7 @@ export default function SubscriptionClient({ initial, billing }: {
         </div>
       )}
       {error && (
-        <div role="alert" style={{ padding: "12px 16px", borderRadius: 12, background: "#fef2f2", border: "1px solid #fecaca", fontSize: 13.5, color: "#b91c1c", lineHeight: 1.5 }}>
+        <div role="alert" style={{ padding: "12px 16px", borderRadius: 12, background: "color-mix(in srgb, var(--c-destructive) 12%, transparent)", border: "1px solid color-mix(in srgb, var(--c-destructive) 35%, transparent)", fontSize: 13.5, color: "var(--c-destructive)", lineHeight: 1.5 }}>
           {error}
         </div>
       )}
@@ -171,7 +171,7 @@ export default function SubscriptionClient({ initial, billing }: {
               disabled={busy !== null}
             />
           ) : confirmingCancel ? (
-            <div style={{ border: "1px solid #fecaca", borderRadius: 14, padding: "16px 18px", background: "#fffbfb" }}>
+            <div style={{ border: "1px solid color-mix(in srgb, var(--c-destructive) 35%, transparent)", borderRadius: 14, padding: "16px 18px", background: "#fffbfb" }}>
               <div style={{ ...D, fontSize: 14.5, color: TH.ink, marginBottom: 4 }}>Cancel Premium?</div>
               <p style={{ fontSize: 13, color: TH.inkSoft, margin: "0 0 14px", lineHeight: 1.5 }}>
                 You&apos;ll keep full access until <strong>{fmtDate(sub.currentPeriodEnd)}</strong>, then drop to the Free plan. You can reactivate anytime before then.
@@ -297,7 +297,7 @@ function neutralBtn(loading: boolean): React.CSSProperties {
   return { ...baseBtn(loading), background: TH.surface, color: TH.ink, border: `1px solid ${TH.edgeStrong}` };
 }
 function dangerBtn(loading: boolean): React.CSSProperties {
-  return { ...baseBtn(loading), background: "#fff", color: "#b91c1c", border: "1px solid #fecaca" };
+  return { ...baseBtn(loading), background: "#fff", color: "var(--c-destructive)", border: "1px solid color-mix(in srgb, var(--c-destructive) 35%, transparent)" };
 }
 function ghostBtn(): React.CSSProperties {
   return { ...baseBtn(false), background: "transparent", color: TH.inkSoft };

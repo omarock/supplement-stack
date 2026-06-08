@@ -159,8 +159,8 @@ export default async function SymptomPage({ params }: { params: Promise<{ slug: 
           )}
 
           {/* Red flags, when to see a doctor */}
-          <div style={{ background: "#fef2f2", border: "1px solid #b91c1c22", borderRadius: 16, padding: "16px 20px", marginBottom: 16 }}>
-            <div style={{ ...MM, fontSize: 10.5, color: "#b91c1c", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>When to see a doctor</div>
+          <div style={{ background: "color-mix(in srgb, var(--c-destructive) 12%, transparent)", border: "1px solid #b91c1c22", borderRadius: 16, padding: "16px 20px", marginBottom: 16 }}>
+            <div style={{ ...MM, fontSize: 10.5, color: "var(--c-destructive)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>When to see a doctor</div>
             <p style={{ fontSize: 15, color: TH.ink, lineHeight: 1.55, margin: 0 }}>{s.redFlags}</p>
           </div>
 

@@ -176,7 +176,7 @@ export default async function DataStudy() {
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 250px), 1fr))", gap: 8 }}>
               {caution.slice(0, 9).map(it => (
-                <Link key={interactionSlug(it.a, it.b)} href={`/interactions/${interactionSlug(it.a, it.b)}`} style={{ display: "block", background: "#fef2f2", border: "1px solid #b91c1c33", borderRadius: 12, padding: "11px 14px", textDecoration: "none", color: "inherit" }}>
+                <Link key={interactionSlug(it.a, it.b)} href={`/interactions/${interactionSlug(it.a, it.b)}`} style={{ display: "block", background: "color-mix(in srgb, var(--c-destructive) 12%, transparent)", border: "1px solid #b91c1c33", borderRadius: 12, padding: "11px 14px", textDecoration: "none", color: "inherit" }}>
                   <span style={{ ...D, fontSize: 14, color: TH.ink }}>{ingName(it.a)} + {ingName(it.b)}</span>
                 </Link>
               ))}

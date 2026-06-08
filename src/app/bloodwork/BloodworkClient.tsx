@@ -285,7 +285,7 @@ export default function BloodworkClient({ signedIn, isPremium = false }: { signe
                 </div>
 
                 {error && stage === "error" && (
-                  <div role="alert" style={{ marginTop: 16, padding: "12px 16px", borderRadius: 12, background: "#fef2f2", color: "#991b1b", fontSize: 14 }}>
+                  <div role="alert" style={{ marginTop: 16, padding: "12px 16px", borderRadius: 12, background: "color-mix(in srgb, var(--c-destructive) 12%, transparent)", color: "var(--c-destructive)", fontSize: 14 }}>
                     {error}
                   </div>
                 )}
@@ -526,9 +526,9 @@ function AnalysisReport({ data, sourceKind, signedIn, isPremium = false, onReset
         <div style={{ background: "#fffbeb", border: "1px solid #f5d3a8", borderRadius: 18, padding: "20px 22px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
             <span style={{ fontSize: 20 }} aria-hidden>⚕️</span>
-            <h2 style={{ ...D, fontSize: 18, color: "#92400e", margin: 0, letterSpacing: "-0.015em" }}>Talk to your doctor about</h2>
+            <h2 style={{ ...D, fontSize: 18, color: "var(--c-amber-deep)", margin: 0, letterSpacing: "-0.015em" }}>Talk to your doctor about</h2>
           </div>
-          <ul style={{ margin: 0, paddingLeft: 18, color: "#7c4a12", fontSize: 14, lineHeight: 1.7 }}>
+          <ul style={{ margin: 0, paddingLeft: 18, color: "var(--c-amber-deep)", fontSize: 14, lineHeight: 1.7 }}>
             {data.seeClinicianFor.map((s, i) => <li key={i} style={{ marginBottom: 4 }}>{s}</li>)}
           </ul>
         </div>
@@ -577,7 +577,7 @@ function AnalysisReport({ data, sourceKind, signedIn, isPremium = false, onReset
       )}
 
       {saveErr && (
-        <p role="alert" style={{ fontSize: 13, color: "#b91c1c", textAlign: "center", margin: "2px 0 0" }}>{saveErr}</p>
+        <p role="alert" style={{ fontSize: 13, color: "var(--c-destructive)", textAlign: "center", margin: "2px 0 0" }}>{saveErr}</p>
       )}
 
       <p style={{ fontSize: 12, color: TH.muted, lineHeight: 1.6, textAlign: "center", marginTop: 4 }}>

@@ -32,7 +32,7 @@ export default async function PricingPage() {
   const stats = FOUNDING_MODE ? await foundingStats().catch(() => null) : null;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f6f5f1", color: "#0a2540", fontFamily: '"Inter", system-ui, sans-serif' }}>
+    <div style={{ minHeight: "100vh", background: "var(--c-bg)", color: "var(--c-ink)", fontFamily: '"Inter", system-ui, sans-serif' }}>
       <SiteHeader />
       <PricingClient
         signedIn={Boolean(user)}

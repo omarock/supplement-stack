@@ -66,7 +66,7 @@ export default function StackBox() {
 
   return (
     <div style={triCardCenter}>
-      <span style={chipStyle(`color-mix(in srgb, ${TH.amber} 20%, transparent)`, "#7a4a10")}>02 · Build it yourself</span>
+      <span style={chipStyle(`color-mix(in srgb, ${TH.amber} 20%, transparent)`, "var(--c-amber-deep)")}>02 · Build it yourself</span>
       <div style={{ marginTop: 12, background: TH.bg, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: 14 }}>
         <div style={{ ...MM, fontSize: 10, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>What do you want to improve?</div>
         <textarea

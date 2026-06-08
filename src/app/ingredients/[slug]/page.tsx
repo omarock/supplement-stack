@@ -235,7 +235,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             {(supp.priority ?? 0) >= 8 && (
               <span style={{
                 padding: "6px 14px", borderRadius: 999, fontSize: 12, fontWeight: 600,
-                background: "#fef3c7", color: "#a16207", ...MM, letterSpacing: "0.04em",
+                background: "color-mix(in srgb, var(--c-amber) 16%, transparent)", color: "#a16207", ...MM, letterSpacing: "0.04em",
               }}>
                 CORE INGREDIENT
               </span>
@@ -495,7 +495,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             )}
             {supp.warnings && supp.warnings.length > 0 && (
               <div style={{ marginTop: 18, paddingTop: 18, borderTop: `1px solid ${th.line}` }}>
-                <div style={{ fontSize: 11, ...MM, color: "#b91c1c", letterSpacing: "0.08em", marginBottom: 6 }}>
+                <div style={{ fontSize: 11, ...MM, color: "var(--c-destructive)", letterSpacing: "0.08em", marginBottom: 6 }}>
                   AVOID IF
                 </div>
                 <p style={{ margin: 0, fontSize: 13, color: th.inkSoft, lineHeight: 1.5 }}>

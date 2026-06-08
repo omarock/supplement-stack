@@ -51,18 +51,18 @@ const OPTIONS: { value: Pref; label: string; icon: React.ReactNode }[] = [
 ];
 
 export default function ThemeToggle({ size = 28 }: { size?: number }) {
-  const [pref, setPref] = useState<Pref>("light");
+  const [pref, setPref] = useState<Pref>("system");
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    let stored: Pref = "light";
-    try { stored = (localStorage.getItem(KEY) as Pref) || "light"; } catch {}
+    let stored: Pref = "system";
+    try { stored = (localStorage.getItem(KEY) as Pref) || "system"; } catch {}
     setPref(stored);
     setReady(true);
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     const onChange = () => {
-      let cur: Pref = "light";
-      try { cur = (localStorage.getItem(KEY) as Pref) || "light"; } catch {}
+      let cur: Pref = "system";
+      try { cur = (localStorage.getItem(KEY) as Pref) || "system"; } catch {}
       if (cur === "system") apply("system");
     };
     mq.addEventListener?.("change", onChange);

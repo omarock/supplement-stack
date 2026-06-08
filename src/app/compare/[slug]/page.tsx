@@ -174,7 +174,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
               background: TH.surface, border: `1px solid ${TH.edge}`,
               borderRadius: 16, padding: "20px 22px",
             }}>
-              <div style={{ ...MM, fontSize: 11, color: "#b91c1c", letterSpacing: "0.12em", marginBottom: 12, textTransform: "uppercase" }}>
+              <div style={{ ...MM, fontSize: 11, color: "var(--c-destructive)", letterSpacing: "0.12em", marginBottom: 12, textTransform: "uppercase" }}>
                 Weaknesses
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>

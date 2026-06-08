@@ -69,8 +69,8 @@ function AssistantBubble({ message }: { message: ChatMessage }) {
             {message.streaming && <Cursor />}
             {message.errored && (
               <div style={{
-                marginTop: 8, padding: "6px 10px", background: "#fef2f2",
-                borderRadius: 8, color: "#991b1b", fontSize: 12.5,
+                marginTop: 8, padding: "6px 10px", background: "color-mix(in srgb, var(--c-destructive) 12%, transparent)",
+                borderRadius: 8, color: "var(--c-destructive)", fontSize: 12.5,
               }}>
                 Something went wrong. Try again in a moment.
               </div>

@@ -283,8 +283,8 @@ function ScoreFlow() {
   const steps = [
     { label: "Your answers", sub: "goals · sleep · diet", color: TH.sage },
     { label: "Tags", sub: "low-sleep, vegan…", color: TH.amber },
-    { label: "Score", sub: "match × 2 + evidence", color: "#4338ca" },
-    { label: "Safety filter", sub: "warnings removed", color: "#b91c1c" },
+    { label: "Score", sub: "match × 2 + evidence", color: "var(--c-lavender)" },
+    { label: "Safety filter", sub: "warnings removed", color: "var(--c-destructive)" },
     { label: "Your stack", sub: "within budget", color: TH.sageDeep },
   ];
   return (

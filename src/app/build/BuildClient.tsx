@@ -1102,8 +1102,8 @@ function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void 
       </div>
       {error && (
         <div role="alert" style={{
-          marginTop: 10, padding: "8px 12px", background: "#fef2f2",
-          borderRadius: 10, color: "#991b1b", fontSize: 12.5,
+          marginTop: 10, padding: "8px 12px", background: "color-mix(in srgb, var(--c-destructive) 12%, transparent)",
+          borderRadius: 10, color: "var(--c-destructive)", fontSize: 12.5,
         }}>{error}</div>
       )}
     </section>
@@ -1210,7 +1210,7 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
                 <p style={{ fontSize: 13.5, lineHeight: 1.5, color: TH.inkSoft, margin: 0 }}>{reason}</p>
                 {s.warnings && s.warnings.length > 0 && (
                   <div style={{
-                    fontSize: 12, color: "#92400e", background: "#fef3c7",
+                    fontSize: 12, color: "var(--c-amber-deep)", background: "color-mix(in srgb, var(--c-amber) 16%, transparent)",
                     borderRadius: 8, padding: "7px 10px", lineHeight: 1.4,
                   }}>
                     ⚠ Check with a clinician if you have: {s.warnings.join(", ").replace(/-/g, " ")}.

@@ -105,7 +105,7 @@ export default async function DirectionPage({ params }: { params: Promise<{ mark
           <ReviewedBy />
 
           {info.medical && (
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 9, padding: "8px 16px", borderRadius: 999, background: "#fef2f2", border: "1px solid #b91c1c33", marginBottom: 18 }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 9, padding: "8px 16px", borderRadius: 999, background: "color-mix(in srgb, var(--c-destructive) 12%, transparent)", border: "1px solid #b91c1c33", marginBottom: 18 }}>
               <span style={{ width: 8, height: 8, borderRadius: 999, background: hue }} />
               <span style={{ ...D, fontSize: 14, color: hue }}>A medical finding, review with a doctor</span>
             </div>
@@ -152,7 +152,7 @@ export default async function DirectionPage({ params }: { params: Promise<{ mark
           </div>
 
           {/* See a doctor */}
-          <div style={{ background: "#fef2f2", border: "1px solid #b91c1c22", borderRadius: 16, padding: "16px 20px", marginBottom: 28 }}>
+          <div style={{ background: "color-mix(in srgb, var(--c-destructive) 12%, transparent)", border: "1px solid #b91c1c22", borderRadius: 16, padding: "16px 20px", marginBottom: 28 }}>
             <div style={{ ...MM, fontSize: 10.5, color: hue, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>When to see a doctor</div>
             <p style={{ fontSize: 15, color: TH.ink, lineHeight: 1.55, margin: 0 }}>{info.seeDoctor}</p>
           </div>

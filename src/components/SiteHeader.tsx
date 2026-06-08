@@ -258,7 +258,7 @@ export default function SiteHeader() {
                     display: "block", width: "100%", textAlign: "left", padding: "9px 12px", marginTop: 4,
                     borderTop: `1px solid ${TH.edge}`, paddingTop: 11,
                     background: "transparent", border: "none", cursor: "pointer",
-                    fontFamily: FONTS.body, fontSize: 14, fontWeight: 500, color: "#b91c1c",
+                    fontFamily: FONTS.body, fontSize: 14, fontWeight: 500, color: "var(--c-destructive)",
                   }}>Sign out</button>
                 </div>
               )}
@@ -344,7 +344,7 @@ export default function SiteHeader() {
             }}>{user ? "My stack →" : "Build my stack →"}</Link>
             {user ? (
               <button onClick={logout} style={{
-                padding: "13px 24px", background: "transparent", color: "#b91c1c", cursor: "pointer",
+                padding: "13px 24px", background: "transparent", color: "var(--c-destructive)", cursor: "pointer",
                 borderRadius: 999, fontSize: 14, fontWeight: 500, textAlign: "center",
                 border: `1px solid ${TH.edge}`, fontFamily: FONTS.body,
               }}>Sign out</button>

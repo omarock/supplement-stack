@@ -59,7 +59,7 @@ export default async function TrackPage() {
   const premium = isPremium(await getSubscription(user.email));
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f6f5f1", color: "#0a2540", fontFamily: '"Inter", system-ui, sans-serif' }}>
+    <div style={{ minHeight: "100vh", background: "var(--c-bg)", color: "var(--c-ink)", fontFamily: '"Inter", system-ui, sans-serif' }}>
       <SiteHeader />
       <TrackerClient
         initialCheckins={checkins}

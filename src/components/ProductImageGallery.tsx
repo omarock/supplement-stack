@@ -79,7 +79,7 @@ export default function ProductImageGallery({ images, alt }: Props) {
             position: "absolute", bottom: 12, right: 12,
             background: "rgba(255,255,255,0.9)",
             border: "1px solid #e5e7eb", borderRadius: 999,
-            padding: "4px 10px", fontSize: 11, color: "#374151",
+            padding: "4px 10px", fontSize: 11, color: "var(--c-ink-soft)",
             fontFamily: '"JetBrains Mono", monospace', letterSpacing: "0.04em",
             pointerEvents: "none",
           }}>

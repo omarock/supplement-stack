@@ -308,7 +308,7 @@ export default function PricingClient({
                 : busy ? "Starting checkout…"
                 : signedIn ? `Upgrade ${price}${per}` : "Sign in to upgrade"}
             </button>
-            {error && !foundingMode && <div role="alert" style={{ marginTop: 10, fontSize: 12.5, color: "#b91c1c", textAlign: "center" }}>{error}</div>}
+            {error && !foundingMode && <div role="alert" style={{ marginTop: 10, fontSize: 12.5, color: "var(--c-destructive)", textAlign: "center" }}>{error}</div>}
             <div style={{ marginTop: 11, ...MM, fontSize: 10, color: TH.mutedDim, textAlign: "center", letterSpacing: "0.03em" }}>
               {foundingMode ? "14-day money-back · secure invoice" : <>Cancel anytime · secure checkout by {paddle ? "Paddle" : "Stripe"}</>}
             </div>

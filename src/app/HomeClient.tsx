@@ -181,10 +181,10 @@ function Hero() {
                 <span style={iconWrap(`color-mix(in srgb, ${TH.coral} 14%, transparent)`, TH.coral)}>
                   <svg width="19" height="19" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke={TH.coral} strokeWidth="1.4" /><path d="M10.5 10.5l3 3" stroke={TH.coral} strokeWidth="1.6" strokeLinecap="round" /></svg>
                 </span>
-                <span style={chipStyle(`color-mix(in srgb, ${TH.coral} 15%, transparent)`, "#c2410c")}>03 · New</span>
+                <span style={chipStyle(`color-mix(in srgb, ${TH.coral} 15%, transparent)`, "var(--c-amber-deep)")}>03 · New</span>
               </div>
               <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Audit my stack</div>
-              <div style={{ ...SI, color: "#c2410c", fontSize: 14.5, marginTop: 2 }}>Already taking supplements?</div>
+              <div style={{ ...SI, color: "var(--c-amber-deep)", fontSize: 14.5, marginTop: 2 }}>Already taking supplements?</div>
               <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Paste what you take today (and your bloodwork) and we score interactions, doses, and gaps, then suggest fixes.</p>
               {cardSpacer}
               <div style={buylineStyle}>→ a cleaner stack → buy the upgrades</div>

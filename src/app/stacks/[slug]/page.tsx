@@ -173,12 +173,12 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
 
             {stack.warnings && stack.warnings.length > 0 && (
               <div style={{ background: "#fff8eb", border: "1px solid rgba(196,148,74,0.30)", borderRadius: 18, padding: 24 }}>
-                <div style={{ fontSize: 11, ...MM, color: "#a87a52", letterSpacing: "0.1em", marginBottom: 12 }}>
+                <div style={{ fontSize: 11, ...MM, color: "var(--c-amber-deep)", letterSpacing: "0.1em", marginBottom: 12 }}>
                   ⚠ IMPORTANT TO KNOW
                 </div>
                 <ul style={{ margin: 0, paddingLeft: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
                   {stack.warnings.map(item => (
-                    <li key={item} style={{ fontSize: 14, color: "#7c5c1f", display: "flex", gap: 10, lineHeight: 1.5 }}>
+                    <li key={item} style={{ fontSize: 14, color: "var(--c-amber-deep)", display: "flex", gap: 10, lineHeight: 1.5 }}>
                       <span>·</span> {item}
                     </li>
                   ))}

@@ -206,7 +206,7 @@ export default function AuditClient() {
           {error && (
             <div role="alert" style={{
               marginTop: 14, padding: "10px 14px", borderRadius: 10,
-              background: "#fef2f2", color: "#991b1b", fontSize: 13.5,
+              background: "color-mix(in srgb, var(--c-destructive) 12%, transparent)", color: "var(--c-destructive)", fontSize: 13.5,
             }}>
               {error}
             </div>

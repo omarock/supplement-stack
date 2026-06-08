@@ -255,7 +255,7 @@ export default function ResultsPage() {
             background: "#fff8eb", border: "1px solid rgba(196,148,74,0.30)",
             borderRadius: 16, padding: 22, marginBottom: 48,
           }}>
-            <p style={{ fontSize: 11, color: "#a87a52", ...MM, letterSpacing: "0.1em", margin: "0 0 10px" }}>
+            <p style={{ fontSize: 11, color: "var(--c-amber-deep)", ...MM, letterSpacing: "0.1em", margin: "0 0 10px" }}>
               ⚠ HEALTH & SAFETY NOTES
             </p>
             <ul style={{ margin: 0, paddingLeft: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>

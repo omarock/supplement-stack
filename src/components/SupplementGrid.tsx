@@ -378,7 +378,7 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
                     <span key={idx} style={{
                       padding: "4px 10px", borderRadius: 6,
                       fontSize: 12, fontWeight: 400,
-                      background: "#f3f4f6", color: "#374151",
+                      background: "#f3f4f6", color: "var(--c-ink-soft)",
                       whiteSpace: "nowrap",
                       border: "1px solid #e5e7eb",
                     }}>{t.label}</span>
