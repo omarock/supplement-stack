@@ -65,6 +65,7 @@ export const LOCALIZED_PATHS = new Set<string>([
   "/pricing",
   "/quiz",
   "/quiz/express",
+  "/quiz/complete",
   "/signin",
   "/signup",
   "/about",

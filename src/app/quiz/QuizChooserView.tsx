@@ -78,7 +78,7 @@ export default function QuizChooserView({ locale }: { locale: Locale }) {
               body={t("quiz.completeBody")}
               points={[t("quiz.completeP1"), t("quiz.completeP2"), t("quiz.completeP3"), t("quiz.completeP4")]}
               cta={t("quiz.completeCta")}
-              href="/quiz/complete"
+              href={navHref("/quiz/complete", locale)}
               recommendedLabel={t("quiz.recommended")}
               freeLabel={t("quiz.freeNoSignup")}
               accent={TH.amber}

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { QuizData } from "@/types/quiz";
 import { trackEmailSignup } from "@/lib/track";
+import { useT } from "@/components/I18nProvider";
 import SuppdocLogo from "@/components/SuppdocLogo";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
@@ -17,6 +18,11 @@ const th = {
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+
+// IMPORTANT: option `v` (value) is the ENGLISH string the recommend() engine
+// matches on; only `l` (label) and `s` (sub) are localized. Never localize a
+// value or the engine stops matching it.
+type Opt = { v: string; l: string; s?: string };
 
 // ─── Initial data ────────────────────────────────────────────────────────────
 const INITIAL: QuizData = {
@@ -55,10 +61,11 @@ function canProceed(step: number, d: QuizData): boolean {
 
 // ─── UI Primitives ───────────────────────────────────────────────────────────
 function Heading({ step, title, subtitle }: { step: number; title: string; subtitle: string }) {
+  const { t } = useT();
   return (
     <div style={{ marginBottom: 28 }}>
       <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 14 }}>
-        STEP {step} OF {TOTAL_STEPS}
+        {t("qc.stepOf", { step, total: TOTAL_STEPS })}
       </div>
       <h1 style={{ ...S, fontSize: 52, color: th.ink, margin: "0 0 8px", letterSpacing: "-0.03em", lineHeight: 1 }}>
         {title}
@@ -69,10 +76,11 @@ function Heading({ step, title, subtitle }: { step: number; title: string; subti
 }
 
 function QLabel({ text, optional = false }: { text: string; optional?: boolean }) {
+  const { t } = useT();
   return (
     <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 10 }}>
       <p style={{ fontSize: 15, fontWeight: 600, color: th.ink, margin: 0 }}>{text}</p>
-      {optional && <span style={{ fontSize: 11, color: th.inkMute, ...MM }}>OPTIONAL</span>}
+      {optional && <span style={{ fontSize: 11, color: th.inkMute, ...MM }}>{t("qc.optional")}</span>}
     </div>
   );
 }
@@ -166,14 +174,14 @@ function NumInput({ value, onChange, placeholder, suffix }: {
 }
 
 function MultiSelect({ label, options, selected, onToggle, optional = false }: {
-  label: string; options: string[]; selected: string[]; onToggle: (v: string) => void; optional?: boolean;
+  label: string; options: Opt[]; selected: string[]; onToggle: (v: string) => void; optional?: boolean;
 }) {
   return (
     <div>
       <QLabel text={label} optional={optional} />
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {options.map(opt => (
-          <Card key={opt} label={opt} selected={selected.includes(opt)} onClick={() => onToggle(opt)} compact />
+          <Card key={opt.v} label={opt.l} selected={selected.includes(opt.v)} onClick={() => onToggle(opt.v)} compact />
         ))}
       </div>
     </div>
@@ -183,35 +191,37 @@ function MultiSelect({ label, options, selected, onToggle, optional = false }: {
 // ─── STEP COMPONENTS ─────────────────────────────────────────────────────────
 
 function Step1({ d, u }: { d: QuizData; u: Updater }) {
+  const { t } = useT();
+  const GENDERS: Opt[] = [
+    { v: "Male", l: t("qc.genderMale"), s: t("qc.genderMaleSub") },
+    { v: "Female", l: t("qc.genderFemale"), s: t("qc.genderFemaleSub") },
+    { v: "Non-binary / Other", l: t("qc.genderNonbinary"), s: t("qc.genderNonbinarySub") },
+    { v: "Prefer not to say", l: t("qc.genderPrefer"), s: "" },
+  ];
   return (
     <>
-      <Heading step={1} title="About you." subtitle="A quick profile so we can tailor doses and choices to your biology." />
+      <Heading step={1} title={t("qc.s1title")} subtitle={t("qc.s1sub")} />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
           <div>
-            <QLabel text="Age" />
-            <NumInput value={d.age} onChange={v => u({ age: v })} placeholder="28" suffix="years" />
+            <QLabel text={t("qc.age")} />
+            <NumInput value={d.age} onChange={v => u({ age: v })} placeholder="28" suffix={t("qc.ageSuffix")} />
           </div>
           <div>
-            <QLabel text="Height" optional />
+            <QLabel text={t("qc.height")} optional />
             <NumInput value={d.height} onChange={v => u({ height: v })} placeholder="175" suffix="cm" />
           </div>
         </div>
         <div>
-          <QLabel text="Weight" optional />
+          <QLabel text={t("qc.weight")} optional />
           <NumInput value={d.weight} onChange={v => u({ weight: v })} placeholder="70" suffix="kg" />
         </div>
         <div>
-          <QLabel text="Biological sex" />
+          <QLabel text={t("qc.bioSex")} />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-            {[
-              ["Male", "Testosterone-dominant"],
-              ["Female", "Oestrogen-dominant"],
-              ["Non-binary / Other", "We tailor based on your goals"],
-              ["Prefer not to say", ""],
-            ].map(([label, sub]) => (
-              <Card key={label} label={label} sub={sub || undefined}
-                selected={d.gender === label} onClick={() => u({ gender: label })} compact />
+            {GENDERS.map(g => (
+              <Card key={g.v} label={g.l} sub={g.s || undefined}
+                selected={d.gender === g.v} onClick={() => u({ gender: g.v })} compact />
             ))}
           </div>
         </div>
@@ -221,27 +231,33 @@ function Step1({ d, u }: { d: QuizData; u: Updater }) {
 }
 
 function Step2({ d, u }: { d: QuizData; u: Updater }) {
-  const goals: [string, string][] = [
-    ["More energy", "☀"], ["Better sleep", "☾"],
-    ["Sharper focus", "✦"], ["Stress relief", "♡"],
-    ["Muscle & recovery", "↺"], ["Immune support", "⊕"],
-    ["Better mood", "✿"], ["Healthy aging", "○"],
-    ["Skin, hair & nails", "✧"], ["General wellness", "◎"],
+  const { t } = useT();
+  const goals: { v: string; l: string; glyph: string }[] = [
+    { v: "More energy", l: t("qc.goalEnergy"), glyph: "☀" },
+    { v: "Better sleep", l: t("qc.goalSleep"), glyph: "☾" },
+    { v: "Sharper focus", l: t("qc.goalFocus"), glyph: "✦" },
+    { v: "Stress relief", l: t("qc.goalStress"), glyph: "♡" },
+    { v: "Muscle & recovery", l: t("qc.goalMuscle"), glyph: "↺" },
+    { v: "Immune support", l: t("qc.goalImmune"), glyph: "⊕" },
+    { v: "Better mood", l: t("qc.goalMood"), glyph: "✿" },
+    { v: "Healthy aging", l: t("qc.goalAging"), glyph: "○" },
+    { v: "Skin, hair & nails", l: t("qc.goalSkin"), glyph: "✧" },
+    { v: "General wellness", l: t("qc.goalWellness"), glyph: "◎" },
   ];
   const toggle = (g: string) =>
     u({ goals: d.goals.includes(g) ? d.goals.filter(x => x !== g) : [...d.goals, g] });
   return (
     <>
-      <Heading step={2} title="What you want." subtitle="Pick all that apply, we'll prioritise accordingly." />
+      <Heading step={2} title={t("qc.s2title")} subtitle={t("qc.s2sub")} />
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-        {goals.map(([label, glyph]) => (
-          <GoalCard key={label} label={label} glyph={glyph}
-            selected={d.goals.includes(label)} onClick={() => toggle(label)} />
+        {goals.map(g => (
+          <GoalCard key={g.v} label={g.l} glyph={g.glyph}
+            selected={d.goals.includes(g.v)} onClick={() => toggle(g.v)} />
         ))}
       </div>
       {d.goals.length > 0 && (
         <p style={{ fontSize: 12, color: th.sage, ...MM, marginTop: 14 }}>
-          ✓ {d.goals.length} selected
+          ✓ {t("qc.selectedN", { n: d.goals.length })}
         </p>
       )}
     </>
@@ -249,33 +265,43 @@ function Step2({ d, u }: { d: QuizData; u: Updater }) {
 }
 
 function Step3({ d, u }: { d: QuizData; u: Updater }) {
+  const { t } = useT();
+  const HOURS: Opt[] = [
+    { v: "Less than 5", l: t("qc.hoursLt5") },
+    { v: "5-6", l: "5-6" },
+    { v: "6-7", l: "6-7" },
+    { v: "7-8", l: "7-8" },
+    { v: "8+", l: "8+" },
+    { v: "Varies", l: t("qc.hoursVaries") },
+  ];
+  const ISSUES: Opt[] = [
+    { v: "Trouble falling asleep", l: t("qc.issueFalling") },
+    { v: "Wake up at night", l: t("qc.issueNight") },
+    { v: "Wake up too early", l: t("qc.issueEarly") },
+    { v: "Don't feel rested after waking", l: t("qc.issueRested") },
+    { v: "None of these", l: t("qc.noneOfThese") },
+  ];
   const toggleIssue = (i: string) =>
     u({ sleepIssues: d.sleepIssues.includes(i) ? d.sleepIssues.filter(x => x !== i) : [...d.sleepIssues, i] });
   return (
     <>
-      <Heading step={3} title="Your sleep." subtitle="Sleep underpins almost every wellness outcome. Let's go deeper." />
+      <Heading step={3} title={t("qc.s3title")} subtitle={t("qc.s3sub")} />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        <ScaleRow title="How do you rate your sleep quality?" value={d.sleep} onChange={v => u({ sleep: v })}
-          labels={["Terrible", "Poor", "Okay", "Good", "Excellent"]} />
+        <ScaleRow title={t("qc.sleepQ")} value={d.sleep} onChange={v => u({ sleep: v })}
+          labels={[t("qc.sleep1"), t("qc.sleep2"), t("qc.sleep3"), t("qc.sleep4"), t("qc.sleep5")]} />
 
         <div>
-          <QLabel text="Hours per night, on average?" />
+          <QLabel text={t("qc.hoursQ")} />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
-            {["Less than 5", "5-6", "6-7", "7-8", "8+", "Varies"].map(h => (
-              <Card key={h} label={h} selected={d.sleepHours === h} onClick={() => u({ sleepHours: h })} compact />
+            {HOURS.map(h => (
+              <Card key={h.v} label={h.l} selected={d.sleepHours === h.v} onClick={() => u({ sleepHours: h.v })} compact />
             ))}
           </div>
         </div>
 
         <MultiSelect
-          label="Anything specific going on?" optional
-          options={[
-            "Trouble falling asleep",
-            "Wake up at night",
-            "Wake up too early",
-            "Don't feel rested after waking",
-            "None of these",
-          ]}
+          label={t("qc.sleepIssuesQ")} optional
+          options={ISSUES}
           selected={d.sleepIssues}
           onToggle={toggleIssue}
         />
@@ -285,26 +311,28 @@ function Step3({ d, u }: { d: QuizData; u: Updater }) {
 }
 
 function Step4({ d, u }: { d: QuizData; u: Updater }) {
+  const { t } = useT();
+  const CONCERNS: Opt[] = [
+    { v: "Brain fog", l: t("qc.mindFog") },
+    { v: "Anxiety", l: t("qc.mindAnxiety") },
+    { v: "Poor focus", l: t("qc.mindFocus") },
+    { v: "Memory issues", l: t("qc.mindMemory") },
+    { v: "Low motivation", l: t("qc.mindMotivation") },
+    { v: "None of these", l: t("qc.noneOfThese") },
+  ];
   const toggleConcern = (c: string) =>
     u({ mindConcerns: d.mindConcerns.includes(c) ? d.mindConcerns.filter(x => x !== c) : [...d.mindConcerns, c] });
   return (
     <>
-      <Heading step={4} title="Mind & emotions." subtitle="How's your head feeling these days?" />
+      <Heading step={4} title={t("qc.s4title")} subtitle={t("qc.s4sub")} />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        <ScaleRow title="Stress level lately?" value={d.stress} onChange={v => u({ stress: v })}
-          labels={["None", "Mild", "Moderate", "High", "Overwhelming"]} />
-        <ScaleRow title="Baseline mood?" value={d.mood} onChange={v => u({ mood: v })}
-          labels={["Very low", "Low", "Okay", "Good", "Great"]} />
+        <ScaleRow title={t("qc.stressQ")} value={d.stress} onChange={v => u({ stress: v })}
+          labels={[t("qc.stress1"), t("qc.stress2"), t("qc.stress3"), t("qc.stress4"), t("qc.stress5")]} />
+        <ScaleRow title={t("qc.moodQ")} value={d.mood} onChange={v => u({ mood: v })}
+          labels={[t("qc.mood1"), t("qc.mood2"), t("qc.mood3"), t("qc.mood4"), t("qc.mood5")]} />
         <MultiSelect
-          label="Any of these resonate?" optional
-          options={[
-            "Brain fog",
-            "Anxiety",
-            "Poor focus",
-            "Memory issues",
-            "Low motivation",
-            "None of these",
-          ]}
+          label={t("qc.mindQ")} optional
+          options={CONCERNS}
           selected={d.mindConcerns}
           onToggle={toggleConcern}
         />
@@ -314,17 +342,23 @@ function Step4({ d, u }: { d: QuizData; u: Updater }) {
 }
 
 function Step5({ d, u }: { d: QuizData; u: Updater }) {
+  const { t } = useT();
+  const CRASH: Opt[] = [
+    { v: "Yes", l: t("qc.crashYes") },
+    { v: "Sometimes", l: t("qc.crashSometimes") },
+    { v: "No", l: t("qc.crashNo") },
+  ];
   return (
     <>
-      <Heading step={5} title="Energy & vitality." subtitle="When you're awake, how alive do you feel?" />
+      <Heading step={5} title={t("qc.s5title")} subtitle={t("qc.s5sub")} />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        <ScaleRow title="Daytime energy level?" value={d.energy} onChange={v => u({ energy: v })}
-          labels={["Exhausted", "Low", "Moderate", "Good", "Vibrant"]} />
+        <ScaleRow title={t("qc.energyQ")} value={d.energy} onChange={v => u({ energy: v })}
+          labels={[t("qc.energy1"), t("qc.energy2"), t("qc.energy3"), t("qc.energy4"), t("qc.energy5")]} />
         <div>
-          <QLabel text="Do you crash in the afternoon?" />
+          <QLabel text={t("qc.crashQ")} />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
-            {["Yes", "Sometimes", "No"].map(v => (
-              <Card key={v} label={v} selected={d.afternoonCrash === v} onClick={() => u({ afternoonCrash: v })} compact />
+            {CRASH.map(c => (
+              <Card key={c.v} label={c.l} selected={d.afternoonCrash === c.v} onClick={() => u({ afternoonCrash: c.v })} compact />
             ))}
           </div>
         </div>
@@ -334,29 +368,37 @@ function Step5({ d, u }: { d: QuizData; u: Updater }) {
 }
 
 function Step6({ d, u }: { d: QuizData; u: Updater }) {
+  const { t } = useT();
+  const FREQ: Opt[] = [
+    { v: "Never or rarely", l: t("qc.freqNever"), s: t("qc.freqNeverSub") },
+    { v: "1-2× per week", l: t("qc.freq12"), s: t("qc.freq12Sub") },
+    { v: "3-4× per week", l: t("qc.freq34"), s: t("qc.freq34Sub") },
+    { v: "5+ per week", l: t("qc.freq5"), s: t("qc.freq5Sub") },
+  ];
+  const TYPES: Opt[] = [
+    { v: "Strength training", l: t("qc.typeStrength") },
+    { v: "Cardio / endurance", l: t("qc.typeCardio") },
+    { v: "Mixed / functional", l: t("qc.typeMixed") },
+    { v: "Yoga / mobility", l: t("qc.typeYoga") },
+  ];
   return (
     <>
-      <Heading step={6} title="Movement." subtitle="Any movement counts, gym, yoga, walks, sports, all of it." />
+      <Heading step={6} title={t("qc.s6title")} subtitle={t("qc.s6sub")} />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         <div>
-          <QLabel text="How often do you train?" />
+          <QLabel text={t("qc.trainQ")} />
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {[
-              ["Never or rarely", "Less than once a week"],
-              ["1-2× per week", "Light to moderate movement"],
-              ["3-4× per week", "Regular structured training"],
-              ["5+ per week", "High intensity or daily athlete"],
-            ].map(([label, sub]) => (
-              <Card key={label} label={label} sub={sub}
-                selected={d.workoutFreq === label} onClick={() => u({ workoutFreq: label })} compact />
+            {FREQ.map(f => (
+              <Card key={f.v} label={f.l} sub={f.s}
+                selected={d.workoutFreq === f.v} onClick={() => u({ workoutFreq: f.v })} compact />
             ))}
           </div>
         </div>
         <div>
-          <QLabel text="Main type of training?" optional />
+          <QLabel text={t("qc.trainTypeQ")} optional />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-            {["Strength training", "Cardio / endurance", "Mixed / functional", "Yoga / mobility"].map(t => (
-              <Card key={t} label={t} selected={d.workoutType === t} onClick={() => u({ workoutType: t })} compact />
+            {TYPES.map(ty => (
+              <Card key={ty.v} label={ty.l} selected={d.workoutType === ty.v} onClick={() => u({ workoutType: ty.v })} compact />
             ))}
           </div>
         </div>
@@ -366,39 +408,53 @@ function Step6({ d, u }: { d: QuizData; u: Updater }) {
 }
 
 function Step7({ d, u }: { d: QuizData; u: Updater }) {
+  const { t } = useT();
+  const DIETS: Opt[] = [
+    { v: "Omnivore", l: t("qc.dietOmnivore"), s: t("qc.dietOmnivoreSub") },
+    { v: "Vegetarian", l: t("qc.dietVegetarian"), s: t("qc.dietVegetarianSub") },
+    { v: "Vegan", l: t("qc.dietVegan"), s: t("qc.dietVeganSub") },
+    { v: "Pescatarian", l: t("qc.dietPescatarian"), s: t("qc.dietPescatarianSub") },
+    { v: "Keto / Low-carb", l: t("qc.dietKeto"), s: t("qc.dietKetoSub") },
+    { v: "Other / Flexible", l: t("qc.dietOther"), s: t("qc.dietOtherSub") },
+  ];
+  const CAFFEINE: Opt[] = [
+    { v: "None", l: t("qc.caffNone") },
+    { v: "1 cup", l: t("qc.caff1") },
+    { v: "2-3 cups", l: t("qc.caff23") },
+    { v: "4+ cups", l: t("qc.caff4") },
+  ];
+  const ALCOHOL: Opt[] = [
+    { v: "None", l: t("qc.alcNone") },
+    { v: "Rarely", l: t("qc.alcRarely") },
+    { v: "1-3 / week", l: t("qc.alc13") },
+    { v: "4+ / week", l: t("qc.alc4") },
+  ];
   return (
     <>
-      <Heading step={7} title="Diet & habits." subtitle="What you eat (and drink) shapes which nutrients matter most." />
+      <Heading step={7} title={t("qc.s7title")} subtitle={t("qc.s7sub")} />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         <div>
-          <QLabel text="How do you eat?" />
+          <QLabel text={t("qc.dietQ")} />
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {[
-              ["Omnivore", "Meat, fish, dairy, eggs, the full range"],
-              ["Vegetarian", "No meat or fish; dairy and eggs are fine"],
-              ["Vegan", "Fully plant-based"],
-              ["Pescatarian", "Fish and seafood, no other meat"],
-              ["Keto / Low-carb", "High fat, very low carbohydrate"],
-              ["Other / Flexible", "Mixed, changes week to week"],
-            ].map(([label, sub]) => (
-              <Card key={label} label={label} sub={sub}
-                selected={d.diet === label} onClick={() => u({ diet: label })} compact />
+            {DIETS.map(di => (
+              <Card key={di.v} label={di.l} sub={di.s}
+                selected={d.diet === di.v} onClick={() => u({ diet: di.v })} compact />
             ))}
           </div>
         </div>
         <div>
-          <QLabel text="Caffeine per day?" />
+          <QLabel text={t("qc.caffeineQ")} />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-            {["None", "1 cup", "2-3 cups", "4+ cups"].map(c => (
-              <Card key={c} label={c} selected={d.caffeine === c} onClick={() => u({ caffeine: c })} compact />
+            {CAFFEINE.map(c => (
+              <Card key={c.v} label={c.l} selected={d.caffeine === c.v} onClick={() => u({ caffeine: c.v })} compact />
             ))}
           </div>
         </div>
         <div>
-          <QLabel text="Alcohol?" />
+          <QLabel text={t("qc.alcoholQ")} />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-            {["None", "Rarely", "1-3 / week", "4+ / week"].map(a => (
-              <Card key={a} label={a} selected={d.alcohol === a} onClick={() => u({ alcohol: a })} compact />
+            {ALCOHOL.map(a => (
+              <Card key={a.v} label={a.l} selected={d.alcohol === a.v} onClick={() => u({ alcohol: a.v })} compact />
             ))}
           </div>
         </div>
@@ -408,24 +464,26 @@ function Step7({ d, u }: { d: QuizData; u: Updater }) {
 }
 
 function Step8({ d, u }: { d: QuizData; u: Updater }) {
+  const { t } = useT();
+  const CONCERNS: Opt[] = [
+    { v: "Joint pain or stiffness", l: t("qc.bodyJoint") },
+    { v: "Digestive issues", l: t("qc.bodyDigestive") },
+    { v: "Bloating", l: t("qc.bodyBloating") },
+    { v: "Skin concerns", l: t("qc.bodySkin") },
+    { v: "Hair thinning or loss", l: t("qc.bodyHair") },
+    { v: "Frequent illness", l: t("qc.bodyIllness") },
+    { v: "Inflammation", l: t("qc.bodyInflammation") },
+    { v: "Heart / blood pressure concerns", l: t("qc.bodyHeart") },
+    { v: "None of these", l: t("qc.noneOfThese") },
+  ];
   const toggle = (c: string) =>
     u({ bodyConcerns: d.bodyConcerns.includes(c) ? d.bodyConcerns.filter(x => x !== c) : [...d.bodyConcerns, c] });
   return (
     <>
-      <Heading step={8} title="Body signals." subtitle="Anything your body's been flagging lately?" />
+      <Heading step={8} title={t("qc.s8title")} subtitle={t("qc.s8sub")} />
       <MultiSelect
-        label="Pick all that apply" optional
-        options={[
-          "Joint pain or stiffness",
-          "Digestive issues",
-          "Bloating",
-          "Skin concerns",
-          "Hair thinning or loss",
-          "Frequent illness",
-          "Inflammation",
-          "Heart / blood pressure concerns",
-          "None of these",
-        ]}
+        label={t("qc.bodyQ")} optional
+        options={CONCERNS}
         selected={d.bodyConcerns}
         onToggle={toggle}
       />
@@ -434,46 +492,60 @@ function Step8({ d, u }: { d: QuizData; u: Updater }) {
 }
 
 function Step9({ d, u }: { d: QuizData; u: Updater }) {
+  const { t } = useT();
+  const PREGNANT: Opt[] = [
+    { v: "Yes", l: t("qc.pregYes") },
+    { v: "No", l: t("qc.pregNo") },
+    { v: "Not applicable", l: t("qc.pregNA") },
+  ];
+  const ALLERGIES: Opt[] = [
+    { v: "Fish", l: t("qc.allFish") },
+    { v: "Shellfish", l: t("qc.allShellfish") },
+    { v: "Soy", l: t("qc.allSoy") },
+    { v: "Dairy", l: t("qc.allDairy") },
+    { v: "Gluten", l: t("qc.allGluten") },
+    { v: "Nuts", l: t("qc.allNuts") },
+    { v: "None of these", l: t("qc.noneOfThese") },
+  ];
+  const CONDITIONS: Opt[] = [
+    { v: "On blood thinners", l: t("qc.condThinners") },
+    { v: "Autoimmune condition", l: t("qc.condAutoimmune") },
+    { v: "Thyroid condition", l: t("qc.condThyroid") },
+    { v: "Diabetes", l: t("qc.condDiabetes") },
+    { v: "High blood pressure", l: t("qc.condBP") },
+    { v: "Bipolar", l: t("qc.condBipolar") },
+    { v: "None of these", l: t("qc.noneOfThese") },
+  ];
   const toggleAllergy = (a: string) =>
     u({ allergies: d.allergies.includes(a) ? d.allergies.filter(x => x !== a) : [...d.allergies, a] });
   const toggleCondition = (c: string) =>
     u({ conditions: d.conditions.includes(c) ? d.conditions.filter(x => x !== c) : [...d.conditions, c] });
   return (
     <>
-      <Heading step={9} title="Health & safety." subtitle="So we can flag any supplements that aren't right for you. Honest answers = a safer stack." />
+      <Heading step={9} title={t("qc.s9title")} subtitle={t("qc.s9sub")} />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
 
         {d.gender === "Female" && (
           <div>
-            <QLabel text="Are you pregnant or nursing?" />
+            <QLabel text={t("qc.pregnantQ")} />
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
-              {["Yes", "No", "Not applicable"].map(v => (
-                <Card key={v} label={v} selected={d.pregnant === v} onClick={() => u({ pregnant: v })} compact />
+              {PREGNANT.map(p => (
+                <Card key={p.v} label={p.l} selected={d.pregnant === p.v} onClick={() => u({ pregnant: p.v })} compact />
               ))}
             </div>
           </div>
         )}
 
         <MultiSelect
-          label="Any allergies?"
-          options={[
-            "Fish", "Shellfish", "Soy", "Dairy", "Gluten", "Nuts", "None of these",
-          ]}
+          label={t("qc.allergiesQ")}
+          options={ALLERGIES}
           selected={d.allergies}
           onToggle={toggleAllergy}
         />
 
         <MultiSelect
-          label="Health conditions to be aware of?"
-          options={[
-            "On blood thinners",
-            "Autoimmune condition",
-            "Thyroid condition",
-            "Diabetes",
-            "High blood pressure",
-            "Bipolar",
-            "None of these",
-          ]}
+          label={t("qc.conditionsQ")}
+          options={CONDITIONS}
           selected={d.conditions}
           onToggle={toggleCondition}
         />
@@ -483,32 +555,34 @@ function Step9({ d, u }: { d: QuizData; u: Updater }) {
 }
 
 function Step10({ d, u }: { d: QuizData; u: Updater }) {
+  const { t } = useT();
+  const BUDGETS: Opt[] = [
+    { v: "Under $20 / month", l: t("qc.budgetUnder20"), s: t("qc.budgetUnder20Sub") },
+    { v: "$20 - $50 / month", l: t("qc.budget2050"), s: t("qc.budget2050Sub") },
+    { v: "$50 - $100 / month", l: t("qc.budget50100"), s: t("qc.budget50100Sub") },
+    { v: "$100+ / month", l: t("qc.budget100"), s: t("qc.budget100Sub") },
+  ];
   return (
     <>
-      <Heading step={10} title="Budget & preferences." subtitle="Last step, let's right-size the stack for your wallet and values." />
+      <Heading step={10} title={t("qc.s10title")} subtitle={t("qc.s10sub")} />
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         <div>
-          <QLabel text="Monthly supplement budget" />
+          <QLabel text={t("qc.budgetQ")} />
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {[
-              ["Under $20 / month", "2-3 highest-impact essentials"],
-              ["$20 - $50 / month", "A solid foundational stack"],
-              ["$50 - $100 / month", "Comprehensive and targeted"],
-              ["$100+ / month", "Full optimisation, no compromises"],
-            ].map(([label, sub]) => (
-              <Card key={label} label={label} sub={sub}
-                selected={d.budget === label} onClick={() => u({ budget: label })} compact />
+            {BUDGETS.map(b => (
+              <Card key={b.v} label={b.l} sub={b.s}
+                selected={d.budget === b.v} onClick={() => u({ budget: b.v })} compact />
             ))}
           </div>
         </div>
 
         {d.diet !== "Vegan" && (
           <div>
-            <QLabel text="Prefer 100% plant-based supplements?" optional />
+            <QLabel text={t("qc.veganQ")} optional />
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-              <Card label="Yes, plant-based only" selected={d.veganOnly}
+              <Card label={t("qc.veganYes")} selected={d.veganOnly}
                 onClick={() => u({ veganOnly: true })} compact />
-              <Card label="No preference" selected={!d.veganOnly}
+              <Card label={t("qc.veganNo")} selected={!d.veganOnly}
                 onClick={() => u({ veganOnly: false })} compact />
             </div>
           </div>
@@ -520,6 +594,7 @@ function Step10({ d, u }: { d: QuizData; u: Updater }) {
 
 function StepGenerating({ data }: { data: QuizData }) {
   const router = useRouter();
+  const { t } = useT();
   const [phase, setPhase] = useState<"email" | "loading">("email");
   const [email, setEmail] = useState("");
   const [tick, setTick] = useState(0);
@@ -549,12 +624,7 @@ function StepGenerating({ data }: { data: QuizData }) {
     setPhase("loading");
   }
 
-  const steps = [
-    "Analysing your wellness profile",
-    "Matching ingredients to the evidence",
-    "Filtering for safety and preferences",
-    "Building your personalised stack",
-  ];
+  const steps = [t("qc.gen1"), t("qc.gen2"), t("qc.gen3"), t("qc.gen4")];
 
   if (phase === "email") {
     return (
@@ -568,13 +638,13 @@ function StepGenerating({ data }: { data: QuizData }) {
           </svg>
         </div>
         <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 12 }}>
-          ALMOST READY
+          {t("qc.almostReady")}
         </div>
         <h1 style={{ ...S, fontSize: 44, color: th.ink, margin: "0 0 12px", letterSpacing: "-0.03em", lineHeight: 1 }}>
-          Want a copy in your inbox?
+          {t("qc.emailTitle")}
         </h1>
         <p style={{ color: th.inkSoft, fontSize: 15, lineHeight: 1.5, maxWidth: 420, margin: "0 auto 28px" }}>
-          We&apos;ll email your stack so you can revisit it anytime. Optional, your results are about to load either way.
+          {t("qc.emailSub")}
         </p>
 
         <form onSubmit={submitEmail} style={{ maxWidth: 420, margin: "0 auto", display: "flex", flexDirection: "column", gap: 12 }}>
@@ -597,7 +667,7 @@ function StepGenerating({ data }: { data: QuizData }) {
             display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
             fontFamily: '"Inter", system-ui, sans-serif',
           }}>
-            Email me my stack →
+            {t("qc.emailBtn")} →
           </button>
           <button type="button" onClick={skipEmail} style={{
             padding: "10px", background: "transparent", border: "none",
@@ -605,12 +675,12 @@ function StepGenerating({ data }: { data: QuizData }) {
             fontFamily: '"Inter", system-ui, sans-serif', textDecoration: "underline",
             textUnderlineOffset: 3,
           }}>
-            Skip, just show me my results
+            {t("qc.skipEmail")}
           </button>
         </form>
 
         <p style={{ fontSize: 11, color: th.inkMute, marginTop: 24, maxWidth: 360, marginLeft: "auto", marginRight: "auto", lineHeight: 1.5 }}>
-          We never share your email. Unsubscribe anytime. See our <a href="/privacy" style={{ color: th.sage }}>privacy policy</a>.
+          {t("qc.privacyNote")} <a href="/privacy" style={{ color: th.sage }}>{t("qc.privacyLink")}</a>.
         </p>
       </div>
     );
@@ -627,10 +697,10 @@ function StepGenerating({ data }: { data: QuizData }) {
         </svg>
       </div>
       <h1 style={{ ...S, fontSize: 48, color: th.ink, margin: "0 0 12px", letterSpacing: "-0.03em", lineHeight: 1 }}>
-        Composing your ritual&hellip;
+        {t("qc.composing")}
       </h1>
       <p style={{ color: th.inkSoft, fontSize: 16, marginBottom: 36, lineHeight: 1.5 }}>
-        Matching 25+ evidence-led ingredients<br />to your unique profile.
+        {t("qc.matching")}
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: 400, margin: "0 auto" }}>
         {steps.map((item, i) => (
@@ -674,6 +744,7 @@ function ProgressBar({ step }: { step: number }) {
 
 // ─── Main quiz page ──────────────────────────────────────────────────────────
 export default function QuizPage() {
+  const { t, lh } = useT();
   const [step, setStep] = useState(1);
   const [data, setData] = useState<QuizData>(INITIAL);
 
@@ -715,11 +786,11 @@ export default function QuizPage() {
       }}>
         <SuppdocLogo size={18} />
         {!isGenerating && (
-          <Link href="/" style={{
+          <Link href={lh("/")} style={{
             fontSize: 13, color: th.inkMute, textDecoration: "none",
             padding: "8px 14px", borderRadius: 999, border: `1px solid ${th.line}`,
           }}>
-            Save &amp; exit
+            {t("qc.saveExit")}
           </Link>
         )}
       </div>
@@ -768,7 +839,7 @@ export default function QuizPage() {
             cursor: step === 1 ? "default" : "pointer",
             fontFamily: '"Inter", system-ui, sans-serif',
           }}>
-            ← Back
+            ← {t("qc.back")}
           </button>
 
           <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
@@ -790,7 +861,7 @@ export default function QuizPage() {
             display: "flex", alignItems: "center", gap: 8,
             fontFamily: '"Inter", system-ui, sans-serif',
           }}>
-            {step === TOTAL_STEPS ? "Build my ritual" : "Continue"}
+            {step === TOTAL_STEPS ? t("qc.buildRitual") : t("qc.continue")}
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
               <path d="M5 12h14M13 5l7 7-7 7" />
             </svg>
