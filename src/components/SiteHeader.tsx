@@ -200,11 +200,11 @@ export default function SiteHeader() {
           <LanguageSwitcher />
           <ThemeToggle />
           {!user && (
-            <Link href="/signin" style={{ fontSize: 14, color: TH.inkSoft, textDecoration: "none", padding: "8px 12px", fontWeight: 500 }}>
+            <Link href={lh("/signin")} style={{ fontSize: 14, color: TH.inkSoft, textDecoration: "none", padding: "8px 12px", fontWeight: 500 }}>
               {t("nav.signIn")}
             </Link>
           )}
-          <Link href="/quiz" style={{
+          <Link href={lh("/quiz")} style={{
             background: TH.inkBg, color: "#fff", textDecoration: "none",
             padding: "10px 18px", borderRadius: 999,
             fontFamily: FONTS.body, fontWeight: 500, fontSize: 14,
@@ -347,7 +347,7 @@ export default function SiteHeader() {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 4 }}>
-            <Link href="/quiz" onClick={() => setOpenMobile(false)} style={{
+            <Link href={lh("/quiz")} onClick={() => setOpenMobile(false)} style={{
               padding: "15px 24px", background: TH.inkBg, color: "#fff", textDecoration: "none",
               borderRadius: 999, fontSize: 15, fontWeight: 600, textAlign: "center",
               boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 20%, transparent)`,
@@ -359,7 +359,7 @@ export default function SiteHeader() {
                 border: `1px solid ${TH.edge}`, fontFamily: FONTS.body,
               }}>Sign out</button>
             ) : (
-              <Link href="/signin" onClick={() => setOpenMobile(false)} style={{
+              <Link href={lh("/signin")} onClick={() => setOpenMobile(false)} style={{
                 padding: "13px 24px", background: "transparent", color: TH.inkSoft, textDecoration: "none",
                 borderRadius: 999, fontSize: 14, fontWeight: 500, textAlign: "center", border: `1px solid ${TH.edge}`,
               }}>{t("nav.signIn")}</Link>

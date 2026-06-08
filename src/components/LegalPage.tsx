@@ -7,9 +7,10 @@ const SI = { fontFamily: FONTS.serifItalic, fontStyle: "italic", fontWeight: 400
 const MM = { fontFamily: FONTS.mono } as const;
 
 export default function LegalPage({
-  eyebrow, title, lastUpdated, children,
+  eyebrow, title, lastUpdated, lastUpdatedLabel, children,
 }: {
   eyebrow: string; title: string; lastUpdated: string;
+  lastUpdatedLabel?: string; // defaults to "Last updated"; pass a translated label for localized pages
   children: React.ReactNode;
 }) {
   return (
@@ -25,7 +26,7 @@ export default function LegalPage({
             {title}
           </h1>
           <p style={{ color: TH.muted, fontSize: 13, ...MM, marginTop: 18 }}>
-            LAST UPDATED · {lastUpdated.toUpperCase()}
+            {(lastUpdatedLabel ?? "Last updated").toUpperCase()} · {lastUpdated.toUpperCase()}
           </p>
         </div>
       </section>

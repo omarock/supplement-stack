@@ -2,13 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { LOCALES, LOCALE_NATIVE, stripLocale, localeHref, type Locale } from "@/lib/i18n";
+import { LOCALES, LOCALE_NATIVE, stripLocale, localeHref, isLocalizedPath, type Locale } from "@/lib/i18n";
 import { useT } from "@/components/I18nProvider";
 import { TH, FONTS } from "@/lib/theme";
-
-// Paths that have localized versions today (v1: the landing). Extend as more
-// pages get translated so the switcher preserves the current page.
-const LOCALIZED_PATHS = new Set(["/"]);
 
 export default function LanguageSwitcher() {
   const router = useRouter();
@@ -28,7 +24,7 @@ export default function LanguageSwitcher() {
     setOpen(false);
     if (l === locale) return;
     const canonical = stripLocale(pathname || "/").path;
-    const target = LOCALIZED_PATHS.has(canonical) ? canonical : "/";
+    const target = isLocalizedPath(canonical) ? canonical : "/";
     router.push(localeHref(target, l));
   }
 

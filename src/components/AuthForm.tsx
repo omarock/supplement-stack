@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase";
 import SuppdocLogo from "@/components/SuppdocLogo";
+import { useT } from "@/components/I18nProvider";
 import { TH, FONTS } from "@/lib/theme";
 
 type Mode = "signin" | "signup";
@@ -17,14 +18,6 @@ function nextPath(): string {
 function callbackUrl(): string {
   return `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath())}`;
 }
-
-// Trust signals shown on the brand panel (no "AI" wording, premium framing).
-const TRUST: string[] = [
-  "Evidence graded, never brand sponsored",
-  "200+ research backed ingredients",
-  "We never sell our own supplements",
-  "Your bloodwork and data stay private",
-];
 
 function Spinner({ color }: { color: string }) {
   return (
@@ -45,6 +38,7 @@ function Check() {
 }
 
 export default function AuthForm({ mode }: { mode: Mode }) {
+  const { t, lh } = useT();
   const [email, setEmail] = useState("");
   const [agree, setAgree] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -53,6 +47,9 @@ export default function AuthForm({ mode }: { mode: Mode }) {
   const [sent, setSent] = useState<string | null>(null); // email we sent a link to
 
   const configured = isSupabaseConfigured();
+
+  // Trust signals shown on the brand panel (no "AI" wording, premium framing).
+  const TRUST: string[] = [t("auth.trust1"), t("auth.trust2"), t("auth.trust3"), t("auth.trust4")];
 
   // Surface any ?error=... coming back from /auth/callback as friendly copy.
   // "please_sign_in" is a normal gated-route redirect, shown as a neutral notice,
@@ -63,15 +60,15 @@ export default function AuthForm({ mode }: { mode: Mode }) {
     const err = params.get("error");
     if (!err) return;
     if (err === "please_sign_in") {
-      setNotice("Please sign in to continue.");
+      setNotice(t("auth.pleaseSignIn"));
     } else {
       const map: Record<string, string> = {
-        missing_code: "That sign-in link looks incomplete. Please request a new one below.",
-        expired: "That sign-in link has expired. Please request a new one below.",
-        supabase_not_configured: "Sign-in is temporarily unavailable. Please try again shortly.",
-        auth_not_configured: "Sign-in is temporarily unavailable. Please try again shortly.",
+        missing_code: t("auth.linkIncomplete"),
+        expired: t("auth.linkExpired"),
+        supabase_not_configured: t("auth.unavailable"),
+        auth_not_configured: t("auth.unavailable"),
       };
-      setError(map[err] ?? "We could not complete sign-in. Please request a new link below.");
+      setError(map[err] ?? t("auth.signInFailed"));
     }
     window.history.replaceState({}, "", window.location.pathname);
   }, []);
@@ -79,10 +76,10 @@ export default function AuthForm({ mode }: { mode: Mode }) {
   async function submitEmail() {
     setError(null);
     if (!email || !email.includes("@")) {
-      setError("Please enter a valid email address."); return;
+      setError(t("auth.invalidEmail")); return;
     }
     if (mode === "signup" && !agree) {
-      setError("Please accept the terms to continue."); return;
+      setError(t("auth.acceptTerms")); return;
     }
 
     setBusy(true);
@@ -105,7 +102,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
     setError(null);
     const supa = getSupabase();
     if (!supa) {
-      setError("Google sign in needs Supabase and Google OAuth configured first.");
+      setError(t("auth.googleNeedsConfig"));
       return;
     }
     setBusy(true);
@@ -117,11 +114,9 @@ export default function AuthForm({ mode }: { mode: Mode }) {
     // OAuth redirects away, so no setBusy(false) on success.
   }
 
-  const eyebrow = mode === "signin" ? "WELCOME BACK" : "GET STARTED";
-  const heading = mode === "signin" ? "Sign in to suppdoc." : "Create your account.";
-  const sub = mode === "signin"
-    ? "Pick up your stack, labs, and tracking right where you left off."
-    : "Save your stack, track your progress, and turn your bloodwork into a plan. Free.";
+  const eyebrow = mode === "signin" ? t("auth.signinEyebrow") : t("auth.signupEyebrow");
+  const heading = mode === "signin" ? t("auth.signinHeading") : t("auth.signupHeading");
+  const sub = mode === "signin" ? t("auth.signinSub") : t("auth.signupSub");
 
   return (
     <div className="sdauth-root">
@@ -140,14 +135,13 @@ export default function AuthForm({ mode }: { mode: Mode }) {
               fontFamily: FONTS.serifItalic, fontStyle: "italic", fontWeight: 400,
               fontSize: 40, lineHeight: 1.1, color: "#ffffff", margin: 0, letterSpacing: "-0.02em",
             }}>
-              Supplement clarity, backed by science.
+              {t("auth.brandH2")}
             </h2>
             <p style={{
               fontFamily: FONTS.body, fontSize: 15.5, lineHeight: 1.6,
               color: "rgba(255,255,255,0.72)", marginTop: 18, marginBottom: 0,
             }}>
-              Personalised stacks, interaction checks, and bloodwork analysis,
-              grounded in published research. We never sell our own supplements.
+              {t("auth.brandSub")}
             </p>
           </div>
 
@@ -206,12 +200,12 @@ export default function AuthForm({ mode }: { mode: Mode }) {
                     <path d="M4.09 9.885c-.16-.49-.255-1.015-.255-1.555s.095-1.065.255-1.555V4.645H1.37C.83 5.72.52 6.92.52 8.165s.31 2.445.85 3.52L4.09 9.885z" fill="#FBBC05"/>
                     <path d="M8.665 3.74c1.205 0 2.285.415 3.135 1.225l2.34-2.34C12.71 1.275 10.86.5 8.665.5 5.475.5 2.715 2.34 1.37 4.645l2.72 2.13c.645-1.93 2.445-3.035 4.575-3.035z" fill="#EA4335"/>
                   </svg>
-                  Continue with Google
+                  {t("auth.continueGoogle")}
                 </button>
 
                 <div className="sdauth-or">
                   <span />
-                  <span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TH.muted, letterSpacing: "0.08em" }}>OR</span>
+                  <span style={{ fontFamily: FONTS.mono, fontSize: 11, color: TH.muted, letterSpacing: "0.08em" }}>{t("auth.or")}</span>
                   <span />
                 </div>
 
@@ -220,12 +214,12 @@ export default function AuthForm({ mode }: { mode: Mode }) {
                   <div>
                     <label htmlFor="auth-email" style={{
                       fontFamily: FONTS.body, fontSize: 13, fontWeight: 600, color: TH.ink, display: "block", marginBottom: 8,
-                    }}>Email address</label>
+                    }}>{t("auth.emailLabel")}</label>
                     <input
                       id="auth-email"
                       className="sdauth-input"
                       type="email" autoComplete="email" required inputMode="email"
-                      placeholder="you@example.com"
+                      placeholder={t("auth.emailPlaceholder")}
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       disabled={busy}
@@ -243,21 +237,21 @@ export default function AuthForm({ mode }: { mode: Mode }) {
                         style={{ marginTop: 2, width: 16, height: 16, accentColor: TH.sage, flexShrink: 0 }}
                       />
                       <span>
-                        I agree to the <Link href="/terms" className="sdauth-link">Terms</Link>
-                        {" "}and{" "}
-                        <Link href="/privacy" className="sdauth-link">Privacy Policy</Link>.
+                        {t("auth.agreePre")}{" "}<Link href={lh("/terms")} className="sdauth-link">{t("auth.termsLink")}</Link>
+                        {" "}{t("auth.agreeMid")}{" "}
+                        <Link href={lh("/privacy")} className="sdauth-link">{t("auth.privacyLink")}</Link>{t("auth.agreePost")}
                       </span>
                     </label>
                   )}
 
                   <button type="submit" className="sdauth-primary" disabled={busy}>
                     {busy && <Spinner color="#ffffff" />}
-                    {busy ? "Sending your link" : (mode === "signin" ? "Continue with email" : "Create account")}
+                    {busy ? t("auth.sendingLink") : (mode === "signin" ? t("auth.signinSubmit") : t("auth.signupSubmit"))}
                   </button>
                   <p style={{
                     fontFamily: FONTS.body, fontSize: 12.5, color: TH.muted, textAlign: "center", margin: "2px 0 0", lineHeight: 1.5,
                   }}>
-                    We email you a secure sign in link. No password needed.
+                    {t("auth.magicLinkNote")}
                   </p>
                 </form>
 
@@ -269,9 +263,9 @@ export default function AuthForm({ mode }: { mode: Mode }) {
                   fontFamily: FONTS.body, marginTop: 24, textAlign: "center", fontSize: 14, color: TH.inkSoft,
                 }}>
                   {mode === "signin" ? (
-                    <>New to suppdoc.io? <Link href="/signup" className="sdauth-link" style={{ fontWeight: 600 }}>Create an account</Link></>
+                    <>{t("auth.signinSwitchPre")} <Link href={lh("/signup")} className="sdauth-link" style={{ fontWeight: 600 }}>{t("auth.signinSwitchLink")}</Link></>
                   ) : (
-                    <>Already have an account? <Link href="/signin" className="sdauth-link" style={{ fontWeight: 600 }}>Sign in</Link></>
+                    <>{t("auth.signupSwitchPre")} <Link href={lh("/signin")} className="sdauth-link" style={{ fontWeight: 600 }}>{t("auth.signupSwitchLink")}</Link></>
                   )}
                 </p>
 
@@ -281,8 +275,8 @@ export default function AuthForm({ mode }: { mode: Mode }) {
                     background: "rgba(232,160,74,0.08)", border: "1px solid rgba(232,160,74,0.25)",
                     borderRadius: 12, fontSize: 12, color: TH.amberDeep, lineHeight: 1.5,
                   }}>
-                    <strong style={{ display: "block", marginBottom: 3 }}>Demo mode</strong>
-                    Supabase auth is not connected yet, so email saves locally for now.
+                    <strong style={{ display: "block", marginBottom: 3 }}>{t("auth.demoTitle")}</strong>
+                    {t("auth.demoBody")}
                   </div>
                 )}
               </>
@@ -302,28 +296,27 @@ export default function AuthForm({ mode }: { mode: Mode }) {
                 <h1 style={{
                   fontFamily: FONTS.serifItalic, fontStyle: "italic", fontWeight: 400,
                   fontSize: 34, lineHeight: 1.1, color: TH.ink, margin: 0, letterSpacing: "-0.02em",
-                }}>Check your inbox.</h1>
+                }}>{t("auth.checkInbox")}</h1>
                 <p style={{
                   fontFamily: FONTS.body, color: TH.inkSoft, fontSize: 15, lineHeight: 1.6, marginTop: 12,
                 }}>
-                  We sent a secure sign in link to<br />
+                  {t("auth.sentTo")}<br />
                   <strong style={{ color: TH.ink }}>{sent}</strong>
                 </p>
                 <p style={{ fontFamily: FONTS.body, color: TH.muted, fontSize: 13, lineHeight: 1.6, marginTop: 14 }}>
-                  Click the link in that email to finish. It can take a minute to arrive,
-                  and it may land in spam or promotions.
+                  {t("auth.sentHint")}
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 22 }}>
                   <button type="button" className="sdauth-primary" onClick={submitEmail} disabled={busy}>
                     {busy && <Spinner color="#ffffff" />}
-                    {busy ? "Resending" : "Resend the link"}
+                    {busy ? t("auth.resending") : t("auth.resend")}
                   </button>
                   <button
                     type="button"
                     className="sdauth-ghost"
                     onClick={() => { setSent(null); setError(null); }}
                   >
-                    Use a different email
+                    {t("auth.differentEmail")}
                   </button>
                 </div>
                 {error && <div className="sdauth-alert" role="alert" aria-live="assertive">{error}</div>}

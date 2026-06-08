@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { isLocale, localeHref, lookup, DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
+import { isLocale, localeHref, navHref, lookup, DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
 import { getDict } from "@/lib/i18n-dicts";
 import { TH, FONTS, D, SI, MM } from "@/lib/theme";
 
@@ -63,7 +63,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
                 </div>
                 <h2 style={{ ...D, fontWeight: 600, fontSize: 22, letterSpacing: "-0.02em", margin: "0 0 8px" }}>{t(`landing.${c.k}Title`)}</h2>
                 <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 20px", flex: 1 }}>{t(`landing.${c.k}Desc`)}</p>
-                <Link href={c.href} style={{
+                <Link href={navHref(c.href, loc)} style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
                   padding: "13px 20px", borderRadius: 999, textDecoration: "none", ...D, fontWeight: 600, fontSize: 14.5,
                   background: c.reco ? `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})` : "transparent",
@@ -84,7 +84,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
           <section style={{ background: TH.inkBg, color: "#fff", borderRadius: 24, padding: "clamp(28px,5vw,44px)", textAlign: "center" }}>
             <h2 style={{ ...D, fontWeight: 600, fontSize: "clamp(26px,4vw,38px)", letterSpacing: "-0.02em", margin: "0 0 12px", color: "#fff" }}>{t("landing.ctaTitle")}</h2>
             <p style={{ fontSize: 16, opacity: 0.85, margin: "0 0 22px", lineHeight: 1.55 }}>{t("landing.ctaSub")}</p>
-            <Link href="/quiz" style={{
+            <Link href={navHref("/quiz", loc)} style={{
               display: "inline-flex", alignItems: "center", gap: 8, padding: "15px 30px", borderRadius: 999,
               background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 15.5,
             }}>{t("landing.ctaBtn")} →</Link>

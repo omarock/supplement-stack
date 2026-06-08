@@ -47,3 +47,52 @@ export function lookup(messages: Dict, path: string): string {
   );
   return typeof v === "string" ? v : path;
 }
+
+/** Tiny {placeholder} interpolation for translated strings (e.g. "{n} of {total}"). */
+export function fmt(template: string, vars?: Record<string, string | number>): string {
+  if (!vars) return template;
+  return template.replace(/\{(\w+)\}/g, (_, k) => (k in vars ? String(vars[k]) : `{${k}}`));
+}
+
+// Canonical (English) paths that have localized /fr /de /es routes today. This
+// is the single source of truth, consumed by navHref() (to keep in-app links
+// safe) and by the LanguageSwitcher (to preserve the page across locales).
+// Add a path here ONLY once its app/[locale]/<path>/page.tsx actually exists,
+// otherwise a localized link would point at a non-existent route (404, because
+// the [locale] segment uses dynamicParams=false).
+export const LOCALIZED_PATHS = new Set<string>([
+  "/",
+  "/pricing",
+  "/quiz",
+  "/signin",
+  "/signup",
+  "/about",
+  "/contact",
+  "/help",
+  "/refunds",
+]);
+
+/** Strip ?query / #hash so membership checks compare the bare pathname. */
+function barePath(path: string): string {
+  const i = path.search(/[?#]/);
+  return i === -1 ? path : path.slice(0, i);
+}
+
+export function isLocalizedPath(path: string): boolean {
+  return LOCALIZED_PATHS.has(barePath(path));
+}
+
+/**
+ * Locale-aware in-app href. Prefixes /fr /de /es ONLY when the target has a
+ * localized route; otherwise returns the canonical (English) path unchanged.
+ * Client components should use this for navigation so a localized page never
+ * links to a route that doesn't exist for that locale.
+ */
+export function navHref(path: string, locale: Locale): string {
+  if (locale === DEFAULT_LOCALE) return path;
+  if (!isLocalizedPath(path)) return path;
+  // Preserve any ?query / #hash that localeHref (path-only) would drop.
+  const bare = barePath(path);
+  const suffix = path.slice(bare.length);
+  return localeHref(bare, locale) + suffix;
+}
