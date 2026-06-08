@@ -3,7 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { richText } from "@/components/RichText";
 import { getDict } from "@/lib/i18n-dicts";
-import { lookup, type Locale } from "@/lib/i18n";
+import { lookup, navHref, type Locale } from "@/lib/i18n";
 import { TH, FONTS } from "@/lib/theme";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -64,7 +64,7 @@ export default function QuizChooserView({ locale }: { locale: Locale }) {
               body={t("quiz.expressBody")}
               points={[t("quiz.expressP1"), t("quiz.expressP2"), t("quiz.expressP3"), t("quiz.expressP4")]}
               cta={t("quiz.expressCta")}
-              href="/quiz/express"
+              href={navHref("/quiz/express", locale)}
               recommendedLabel={t("quiz.recommended")}
               freeLabel={t("quiz.freeNoSignup")}
               accent={TH.sage}
@@ -98,7 +98,7 @@ export default function QuizChooserView({ locale }: { locale: Locale }) {
             <p style={{ fontSize: 15, color: TH.inkSoft, maxWidth: 580, margin: "0 auto 16px", lineHeight: 1.6 }}>
               {richText(t("quiz.notSureBody"), { boldStyle: { color: TH.ink } })}
             </p>
-            <Link href="/quiz/express" style={{
+            <Link href={navHref("/quiz/express", locale)} style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               padding: "12px 22px", background: TH.inkBg, color: "#fff",
               borderRadius: 999, textDecoration: "none",
