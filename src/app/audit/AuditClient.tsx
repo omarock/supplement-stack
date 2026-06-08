@@ -132,7 +132,7 @@ export default function AuditClient() {
                 onClick={() => setShowLabs(true)}
                 style={{
                   width: "100%", padding: "12px 14px", borderRadius: 12,
-                  background: `${TH.sage}0d`, border: `1px dashed ${TH.sage}80`,
+                  background: `color-mix(in srgb, ${TH.sage} 5%, transparent)`, border: `1px dashed color-mix(in srgb, ${TH.sage} 50%, transparent)`,
                   cursor: "pointer", color: TH.sageDeep, fontSize: 13.5, fontWeight: 500,
                   fontFamily: FONTS.body, display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                 }}
@@ -181,12 +181,12 @@ export default function AuditClient() {
               disabled={loading || text.trim().length < 5}
               style={{
                 padding: "13px 22px", borderRadius: 999, border: "none",
-                background: loading ? TH.muted : TH.ink, color: TH.surface,
+                background: loading ? TH.muted : TH.inkBg, color: "#fff",
                 fontFamily: FONTS.body, fontWeight: 500, fontSize: 14.5,
                 cursor: loading || text.trim().length < 5 ? "not-allowed" : "pointer",
                 opacity: text.trim().length < 5 ? 0.5 : 1,
                 display: "inline-flex", alignItems: "center", gap: 10,
-                boxShadow: loading ? "none" : `0 8px 22px ${TH.ink}22`,
+                boxShadow: loading ? "none" : `0 8px 22px color-mix(in srgb, ${TH.ink} 13%, transparent)`,
                 transition: "all .2s",
               }}
             >
@@ -338,7 +338,7 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
 
       {data.findings.length === 0 && (
         <div style={{
-          background: "#f0f9f3", border: `1px solid ${TH.sage}33`, borderRadius: 18,
+          background: "#f0f9f3", border: `1px solid color-mix(in srgb, ${TH.sage} 20%, transparent)`, borderRadius: 18,
           padding: "20px 22px", display: "flex", gap: 12, alignItems: "center",
         }}>
           <span style={{ fontSize: 22 }} aria-hidden>🌿</span>
@@ -416,7 +416,7 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
 
       {/* CTA */}
       <div style={{
-        background: TH.ink, color: TH.surface, borderRadius: 18,
+        background: TH.inkBg, color: "#fff", borderRadius: 18,
         padding: "26px 28px", textAlign: "center",
       }}>
         <h3 style={{ ...D, fontSize: 22, margin: "0 0 8px", letterSpacing: "-0.015em" }}>

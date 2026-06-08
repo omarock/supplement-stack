@@ -324,7 +324,7 @@ function Section({ number, title, children }: { number: string; title: string; c
       <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 16 }}>
         <span style={{
           ...MM, fontSize: 12, color: TH.sageDeep, letterSpacing: "0.1em",
-          padding: "3px 9px", background: `${TH.sage}1a`, borderRadius: 999,
+          padding: "3px 9px", background: `color-mix(in srgb, ${TH.sage} 10%, transparent)`, borderRadius: 999,
         }}>{number}</span>
         <h2 style={{
           ...D, fontSize: 24, color: TH.ink, margin: 0,

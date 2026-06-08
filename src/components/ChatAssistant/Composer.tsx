@@ -74,7 +74,7 @@ export default function Composer({ value, onChange, onSend, onStop, disabled, st
             aria-label="Stop generating"
             style={{
               width: 44, height: 44, borderRadius: 999, flexShrink: 0,
-              background: TH.ink, color: TH.surface, border: "none",
+              background: TH.inkBg, color: "#fff", border: "none",
               cursor: "pointer", display: "inline-flex",
               alignItems: "center", justifyContent: "center",
               transition: "transform .15s",
@@ -92,7 +92,7 @@ export default function Composer({ value, onChange, onSend, onStop, disabled, st
             disabled={!canSend}
             style={{
               width: 44, height: 44, borderRadius: 999, flexShrink: 0,
-              background: canSend ? TH.ink : TH.mutedDim, color: TH.surface, border: "none",
+              background: canSend ? TH.inkBg : TH.mutedDim, color: "#fff", border: "none",
               cursor: canSend ? "pointer" : "not-allowed",
               opacity: canSend ? 1 : 0.55,
               display: "inline-flex", alignItems: "center", justifyContent: "center",

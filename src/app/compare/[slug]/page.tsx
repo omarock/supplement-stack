@@ -204,7 +204,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
               <p style={{ fontSize: 15, color: TH.inkSoft, lineHeight: 1.6, margin: 0 }}>{comp.bestFor}</p>
             </div>
             <div style={{
-              background: TH.ink, color: "#fff",
+              background: TH.inkBg, color: "#fff",
               borderRadius: 16, padding: "20px 22px",
             }}>
               <div style={{ ...MM, fontSize: 11, opacity: 0.7, letterSpacing: "0.12em", marginBottom: 10, textTransform: "uppercase" }}>

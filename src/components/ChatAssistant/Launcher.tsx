@@ -23,7 +23,7 @@ export default function Launcher({ onClick, open }: Props) {
         padding: "0 22px 0 16px",
         display: open ? "none" : "inline-flex",
         alignItems: "center", gap: 12,
-        background: TH.ink, color: TH.surface,
+        background: TH.inkBg, color: "#fff",
         border: "none", borderRadius: 999,
         cursor: "pointer",
         fontFamily: FONTS.body, fontSize: 14, fontWeight: 500,

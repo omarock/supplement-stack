@@ -292,7 +292,7 @@ function EnrollIntro({ onEnrolled }: { onEnrolled: (e: TrackerEnrollment) => voi
       <button onClick={start} disabled={busy} style={{
         marginTop: 20, padding: "12px 22px", borderRadius: 999, border: "none",
         background: TH.sage, color: "#fff", ...D, fontWeight: 600, fontSize: 14.5,
-        cursor: busy ? "wait" : "pointer", boxShadow: `0 8px 22px ${TH.sage}44`,
+        cursor: busy ? "wait" : "pointer", boxShadow: `0 8px 22px color-mix(in srgb, ${TH.sage} 27%, transparent)`,
       }}>
         {busy ? "Starting…" : "Start tracking →"}
       </button>
@@ -502,8 +502,8 @@ function CheckinCard({ today, existing, onSaved }: { today: string; existing: Ch
         )}
         <button onClick={save} disabled={saving} style={{
           padding: "13px 26px", borderRadius: 999, border: "none",
-          background: saving ? TH.muted : TH.ink, color: "#fff", ...D, fontWeight: 600, fontSize: 14.5,
-          cursor: saving ? "wait" : "pointer", boxShadow: saving ? "none" : `0 8px 22px ${TH.ink}22`,
+          background: saving ? TH.muted : TH.inkBg, color: "#fff", ...D, fontWeight: 600, fontSize: 14.5,
+          cursor: saving ? "wait" : "pointer", boxShadow: saving ? "none" : `0 8px 22px color-mix(in srgb, ${TH.ink} 13%, transparent)`,
           display: "inline-flex", alignItems: "center", gap: 8,
         }}>
           {saving ? "Saving…" : existing ? "Update check-in" : "Log today →"}
@@ -714,7 +714,7 @@ function SummaryCard({ checkinCount }: { checkinCount: number }) {
 
   return (
     <section style={{
-      background: `linear-gradient(135deg, ${TH.ink} 0%, #0d2f4f 100%)`, color: "#fff",
+      background: `linear-gradient(135deg, ${TH.inkBg} 0%, #0d2f4f 100%)`, color: "#fff",
       borderRadius: 22, padding: "26px 28px", marginBottom: 22, animation: "sd-fade-in .5s ease-out",
     }}>
       <div style={{ ...MM, fontSize: 11, color: TH.sage, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>

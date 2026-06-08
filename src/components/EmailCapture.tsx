@@ -71,7 +71,7 @@ export default function EmailCapture({
               style={{
                 flex: "1 1 220px", minWidth: 180, padding: "13px 15px", borderRadius: 12,
                 border: dark ? "none" : `1px solid ${TH.edgeStrong}`, fontSize: 16,
-                fontFamily: FONTS.body, color: TH.ink, background: "#fff",
+                fontFamily: FONTS.body, color: TH.ink, background: TH.surface,
               }}
             />
             <button onClick={submit} disabled={busy} style={{

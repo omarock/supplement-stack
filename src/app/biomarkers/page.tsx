@@ -39,7 +39,7 @@ export default function BiomarkersIndex() {
             <Link href="/bloodwork" style={{
               display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 26px", borderRadius: 999,
               background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 15,
-              boxShadow: `0 10px 24px -8px ${TH.sage}80`,
+              boxShadow: `0 10px 24px -8px color-mix(in srgb, ${TH.sage} 50%, transparent)`,
             }}>Analyze my bloodwork →</Link>
           </header>
 

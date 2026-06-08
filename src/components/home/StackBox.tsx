@@ -23,7 +23,7 @@ const triBtn: CSSProperties = {
   height: 50, borderRadius: 999, border: "none", cursor: "pointer",
   background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
   fontFamily: FONTS.body, fontWeight: 600, fontSize: 14.5, textDecoration: "none",
-  boxShadow: `0 10px 22px -6px ${TH.sage}80`,
+  boxShadow: `0 10px 22px -6px color-mix(in srgb, ${TH.sage} 50%, transparent)`,
 };
 const buylineStyle: CSSProperties = {
   ...MM, fontSize: 9, letterSpacing: "0.04em", color: TH.sageDeep, textTransform: "uppercase", margin: "14px 0 11px",
@@ -66,7 +66,7 @@ export default function StackBox() {
 
   return (
     <div style={triCardCenter}>
-      <span style={chipStyle(`${TH.amber}33`, "#7a4a10")}>02 · Build it yourself</span>
+      <span style={chipStyle(`color-mix(in srgb, ${TH.amber} 20%, transparent)`, "#7a4a10")}>02 · Build it yourself</span>
       <div style={{ marginTop: 12, background: TH.bg, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: 14 }}>
         <div style={{ ...MM, fontSize: 10, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>What do you want to improve?</div>
         <textarea

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import SuppdocLogo from "@/components/SuppdocLogo";
+import ThemeToggle from "@/components/ThemeToggle";
 import { getSupabase } from "@/lib/supabase";
 import { TH, FONTS } from "@/lib/theme";
 
@@ -128,7 +129,7 @@ export default function SiteHeader() {
         position: "sticky", top: 0, zIndex: 60,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: scrolled ? "14px var(--nav-pad-x)" : "20px var(--nav-pad-x)",
-        background: scrolled ? `${TH.bg}e6` : "transparent",
+        background: scrolled ? `color-mix(in srgb, ${TH.bg} 90%, transparent)` : "transparent",
         backdropFilter: scrolled ? "blur(20px) saturate(140%)" : "none",
         borderBottom: scrolled ? `1px solid ${TH.edge}` : "1px solid transparent",
         transition: "all .35s cubic-bezier(.2,.7,.2,1)",
@@ -191,17 +192,18 @@ export default function SiteHeader() {
         </div>
 
         <div style={{ display: "var(--nav-show)", gap: 10, alignItems: "center" }}>
+          <ThemeToggle />
           {!user && (
             <Link href="/signin" style={{ fontSize: 14, color: TH.inkSoft, textDecoration: "none", padding: "8px 12px", fontWeight: 500 }}>
               Sign in
             </Link>
           )}
           <Link href="/quiz" style={{
-            background: TH.ink, color: TH.surface, textDecoration: "none",
+            background: TH.inkBg, color: "#fff", textDecoration: "none",
             padding: "10px 18px", borderRadius: 999,
             fontFamily: FONTS.body, fontWeight: 500, fontSize: 14,
             display: "inline-flex", alignItems: "center", gap: 8,
-            boxShadow: `0 4px 14px ${TH.ink}1a`,
+            boxShadow: `0 4px 14px color-mix(in srgb, ${TH.ink} 10%, transparent)`,
           }}>
             {user ? "My stack" : "Build my stack"}
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
@@ -329,11 +331,16 @@ export default function SiteHeader() {
             </div>
           )}
 
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, paddingTop: 4 }}>
+            <span style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted }}>Theme</span>
+            <ThemeToggle />
+          </div>
+
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 4 }}>
             <Link href="/quiz" onClick={() => setOpenMobile(false)} style={{
-              padding: "15px 24px", background: TH.ink, color: TH.surface, textDecoration: "none",
+              padding: "15px 24px", background: TH.inkBg, color: "#fff", textDecoration: "none",
               borderRadius: 999, fontSize: 15, fontWeight: 600, textAlign: "center",
-              boxShadow: `0 8px 20px ${TH.ink}33`,
+              boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 20%, transparent)`,
             }}>{user ? "My stack →" : "Build my stack →"}</Link>
             {user ? (
               <button onClick={logout} style={{

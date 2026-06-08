@@ -29,7 +29,7 @@ function UserBubble({ content }: { content: string }) {
   return (
     <div style={{ display: "flex", justifyContent: "flex-end", paddingLeft: 36 }}>
       <div style={{
-        background: TH.ink, color: TH.surface,
+        background: TH.inkBg, color: "#fff",
         padding: "11px 15px", borderRadius: 18,
         borderBottomRightRadius: 6,
         maxWidth: "100%",
@@ -89,7 +89,7 @@ function Avatar() {
       borderRadius: 999,
       background: `linear-gradient(135deg, ${TH.sage} 0%, ${TH.sageDeep} 100%)`,
       display: "inline-flex", alignItems: "center", justifyContent: "center",
-      color: TH.surface, fontSize: 13, fontWeight: 700,
+      color: "#fff", fontSize: 13, fontWeight: 700,
       letterSpacing: "-0.02em",
       boxShadow: "0 2px 6px rgba(63,122,82,0.3)",
       ...MM,

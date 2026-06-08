@@ -155,7 +155,7 @@ export default async function SharePage({ params }: { params: Promise<{ token: s
           maxWidth: 880, margin: "0 auto",
         }}>
           <div style={{
-            background: `linear-gradient(135deg, ${TH.ink} 0%, #0e3a63 100%)`,
+            background: `linear-gradient(135deg, ${TH.inkBg} 0%, #0e3a63 100%)`,
             borderRadius: 22, padding: "28px 32px", color: "#fff", textAlign: "center",
           }}>
             <div style={{ ...MM, fontSize: 11, color: "#ffffff99", letterSpacing: "0.1em", marginBottom: 10, textTransform: "uppercase" }}>

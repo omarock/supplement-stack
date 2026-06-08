@@ -144,7 +144,7 @@ export default async function ResearchPage({ params }: { params: Promise<{ slug:
         <section style={{ padding: "0 var(--section-pad-x) var(--section-pad-y)" }}>
           <div style={{
             maxWidth: 1100, margin: "0 auto",
-            background: `linear-gradient(135deg, ${TH.ink} 0%, #0e3a63 100%)`,
+            background: `linear-gradient(135deg, ${TH.inkBg} 0%, #0e3a63 100%)`,
             borderRadius: 22, padding: "32px 36px", color: "#ffffff",
             display: "grid", gridTemplateColumns: "var(--research-cta-cols)", gap: 18, alignItems: "center",
           }}>
@@ -257,7 +257,7 @@ function FallbackHeader({ supp, fallbackUrl }: { supp: Supplement; fallbackUrl: 
         <a href={fallbackUrl} target="_blank" rel="noopener noreferrer"
           style={{
             display: "inline-flex", alignItems: "center", gap: 8,
-            padding: "11px 18px", background: TH.ink, color: TH.surface,
+            padding: "11px 18px", background: TH.inkBg, color: "#fff",
             borderRadius: 999, textDecoration: "none", fontSize: 13.5, fontWeight: 500,
           }}>
           Search PubMed for {supp.name.split(" (")[0]}

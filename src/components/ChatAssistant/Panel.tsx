@@ -91,7 +91,7 @@ export default function Panel({ open, onClose, onClear, children, hasHistory }: 
               width: 30, height: 30, borderRadius: 999, flexShrink: 0,
               background: `linear-gradient(135deg, ${TH.sage} 0%, ${TH.sageDeep} 100%)`,
               display: "inline-flex", alignItems: "center", justifyContent: "center",
-              color: TH.surface, fontSize: 12, fontWeight: 700, ...MM,
+              color: "#fff", fontSize: 12, fontWeight: 700, ...MM,
             }}>sd</span>
             <div>
               <div style={{ ...D, fontSize: 15, color: TH.ink, lineHeight: 1.2, letterSpacing: "-0.01em" }}>

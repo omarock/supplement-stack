@@ -111,7 +111,7 @@ export default function QuizChooser() {
             </p>
             <Link href="/quiz/express" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
-              padding: "12px 22px", background: TH.ink, color: TH.surface,
+              padding: "12px 22px", background: TH.inkBg, color: "#fff",
               borderRadius: 999, textDecoration: "none",
               fontSize: 14, fontWeight: 500,
             }}>
@@ -220,7 +220,7 @@ function ChooserCard({
           <span style={{
             position: "absolute", top: 14, right: 14,
             fontSize: 10, ...MM, letterSpacing: "0.08em",
-            background: accent, color: TH.surface,
+            background: accent, color: "#fff",
             padding: "3px 10px", borderRadius: 999, fontWeight: 600,
           }}>RECOMMENDED</span>
         )}

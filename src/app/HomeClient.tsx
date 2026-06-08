@@ -88,10 +88,10 @@ function Hero() {
   const triCard = (variant: "rec" | "center" | "plain"): CSSProperties => ({
     display: "flex", flexDirection: "column", textDecoration: "none", color: "inherit",
     borderRadius: 20, padding: 22,
-    background: variant === "rec" ? `linear-gradient(165deg, ${TH.sage}1f, ${TH.surface} 62%)` : TH.surface,
+    background: variant === "rec" ? `linear-gradient(165deg, color-mix(in srgb, ${TH.sage} 12%, transparent), ${TH.surface} 62%)` : TH.surface,
     border: variant === "rec" ? `2px solid ${TH.sage}` : `1px solid ${TH.edge}`,
     boxShadow: variant === "rec"
-      ? `0 18px 44px -18px ${TH.sage}88`
+      ? `0 18px 44px -18px color-mix(in srgb, ${TH.sage} 53%, transparent)`
       : variant === "center"
         ? "0 16px 40px -20px rgba(10,37,64,0.26)"
         : "0 10px 28px -18px rgba(10,37,64,0.2)",
@@ -101,7 +101,7 @@ function Hero() {
     height: 50, borderRadius: 999, border: "none", cursor: "pointer",
     background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
     fontFamily: FONTS.body, fontWeight: 600, fontSize: 14.5, textDecoration: "none",
-    boxShadow: `0 10px 22px -6px ${TH.sage}80`,
+    boxShadow: `0 10px 22px -6px color-mix(in srgb, ${TH.sage} 50%, transparent)`,
   };
   const buylineStyle: CSSProperties = {
     ...MM, fontSize: 9, letterSpacing: "0.04em", color: TH.sageDeep, textTransform: "uppercase", margin: "14px 0 11px",
@@ -126,11 +126,11 @@ function Hero() {
             <div style={{
               display: "inline-flex", alignItems: "center", gap: 9, marginBottom: 16,
               padding: "6px 15px 6px 7px", background: TH.surface,
-              border: `1px solid ${TH.edgeStrong}`, borderRadius: 999, boxShadow: `0 2px 6px ${TH.ink}0f`,
+              border: `1px solid ${TH.edgeStrong}`, borderRadius: 999, boxShadow: `0 2px 6px color-mix(in srgb, ${TH.ink} 6%, transparent)`,
             }}>
               <span style={{
                 width: 22, height: 22, borderRadius: 999, background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, flexShrink: 0,
-                display: "inline-flex", alignItems: "center", justifyContent: "center", boxShadow: `0 2px 5px ${TH.sage}66`,
+                display: "inline-flex", alignItems: "center", justifyContent: "center", boxShadow: `0 2px 5px color-mix(in srgb, ${TH.sage} 40%, transparent)`,
               }} aria-hidden>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 5.5A2 2 0 0 1 6 4h13v15H6a2 2 0 0 0-2 2z" /><path d="M8 8h7M8 11.5h7" />
@@ -159,7 +159,7 @@ function Hero() {
             {/* Quiz, recommended focus */}
             <Link href="/quiz" style={triCard("rec")}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={iconWrap(`${TH.sage}1f`, TH.sageDeep)}>
+                <span style={iconWrap(`color-mix(in srgb, ${TH.sage} 12%, transparent)`, TH.sageDeep)}>
                   <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke={TH.sageDeep} strokeWidth="1.4" strokeLinejoin="round" /></svg>
                 </span>
                 <span style={chipStyle(TH.sageDeep, "#fff")}>★ 01 · Recommended</span>
@@ -178,10 +178,10 @@ function Hero() {
             {/* Audit */}
             <Link href="/audit" style={triCard("plain")}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={iconWrap(`${TH.coral}24`, TH.coral)}>
+                <span style={iconWrap(`color-mix(in srgb, ${TH.coral} 14%, transparent)`, TH.coral)}>
                   <svg width="19" height="19" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke={TH.coral} strokeWidth="1.4" /><path d="M10.5 10.5l3 3" stroke={TH.coral} strokeWidth="1.6" strokeLinecap="round" /></svg>
                 </span>
-                <span style={chipStyle(`${TH.coral}26`, "#c2410c")}>03 · New</span>
+                <span style={chipStyle(`color-mix(in srgb, ${TH.coral} 15%, transparent)`, "#c2410c")}>03 · New</span>
               </div>
               <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Audit my stack</div>
               <div style={{ ...SI, color: "#c2410c", fontSize: 14.5, marginTop: 2 }}>Already taking supplements?</div>
@@ -267,7 +267,7 @@ function HowVisual({ which, color }: { which: "intake" | "engine" | "ritual"; co
           background: TH.surface, borderRadius: 10, padding: 13,
           border: `1px solid ${TH.edge}`,
           display: "flex", flexDirection: "column", gap: 8,
-          boxShadow: `0 8px 20px ${TH.ink}06`,
+          boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 2%, transparent)`,
         }}>
           <div style={{ fontSize: 11, color: TH.muted, fontWeight: 500 }}>How&apos;s your energy?</div>
           <div style={{ display: "flex", gap: 6 }}>
@@ -323,7 +323,7 @@ function HowVisual({ which, color }: { which: "intake" | "engine" | "ritual"; co
           background: TH.surface, borderRadius: 8, padding: "7px 11px",
           display: "flex", alignItems: "center", gap: 10,
           border: `1px solid ${TH.edge}`,
-          boxShadow: `0 4px 10px ${TH.ink}04`,
+          boxShadow: `0 4px 10px color-mix(in srgb, ${TH.ink} 2%, transparent)`,
         }}>
           <div style={{ width: 6, height: 6, borderRadius: 999, background: c }} />
           <div style={{ fontSize: 11, color: TH.muted, ...MM }}>{time}</div>
@@ -361,7 +361,7 @@ function How() {
               <div style={{
                 background: TH.surface, borderRadius: 22, padding: 30,
                 border: `1px solid ${TH.edge}`,
-                boxShadow: `0 4px 12px ${TH.ink}05`,
+                boxShadow: `0 4px 12px color-mix(in srgb, ${TH.ink} 2%, transparent)`,
                 minHeight: 360, display: "flex", flexDirection: "column", gap: 18,
               }}>
                 <HowVisual which={s.illust} color={s.color} />
@@ -388,7 +388,7 @@ function Stats() {
     <section style={{ padding: "32px var(--section-pad-x) 72px" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div style={{
-          background: `linear-gradient(135deg, ${TH.sage}10, ${TH.amber}10, ${TH.coral}08)`,
+          background: `linear-gradient(135deg, color-mix(in srgb, ${TH.sage} 6%, transparent), color-mix(in srgb, ${TH.amber} 6%, transparent), color-mix(in srgb, ${TH.coral} 3%, transparent))`,
           borderRadius: 22, padding: "48px 36px",
           border: `1px solid ${TH.edge}`,
           display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 30,
@@ -455,7 +455,7 @@ function Ingredients() {
               <div style={{
                 background: TH.surface, borderRadius: 22, padding: 28,
                 border: `1px solid ${TH.edge}`,
-                boxShadow: `0 4px 12px ${TH.ink}05`,
+                boxShadow: `0 4px 12px color-mix(in srgb, ${TH.ink} 2%, transparent)`,
                 minHeight: 300, display: "flex", flexDirection: "column", gap: 16,
               }}>
                 <div style={{
@@ -523,19 +523,19 @@ function Sample() {
           <div style={{
             background: TH.surface, borderRadius: 26,
             border: `1px solid ${TH.edge}`,
-            boxShadow: `0 30px 80px ${TH.ink}14`,
+            boxShadow: `0 30px 80px color-mix(in srgb, ${TH.ink} 8%, transparent)`,
             overflow: "hidden",
             display: "grid", gridTemplateColumns: "var(--grid-2-cols)",
           }}>
             <div style={{
               padding: 32, borderRight: `1px solid ${TH.edge}`,
-              background: `linear-gradient(180deg, ${TH.sage}08, transparent)`,
+              background: `linear-gradient(180deg, color-mix(in srgb, ${TH.sage} 3%, transparent), transparent)`,
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
                 <div style={{
                   width: 44, height: 44, borderRadius: 999,
                   background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
-                  boxShadow: `0 8px 20px ${TH.sage}33`,
+                  boxShadow: `0 8px 20px color-mix(in srgb, ${TH.sage} 20%, transparent)`,
                 }} />
                 <div>
                   <div style={{ ...D, fontSize: 18, color: TH.ink, letterSpacing: "-0.02em" }}>Sarah</div>
@@ -588,7 +588,7 @@ function Sample() {
                 <div style={{ ...D, fontSize: 20, color: TH.ink, letterSpacing: "-0.02em" }}>Recommended stack</div>
                 <span style={{
                   padding: "4px 10px", borderRadius: 999,
-                  background: `${TH.sage}1a`, color: TH.sageDeep,
+                  background: `color-mix(in srgb, ${TH.sage} 10%, transparent)`, color: TH.sageDeep,
                   fontSize: 11, fontWeight: 600,
                 }}>5 items · matched to her goals</span>
               </div>
@@ -616,7 +616,7 @@ function Sample() {
                   <div style={{ fontSize: 12, color: TH.muted, ...MM }}>{dose}</div>
                   <div style={{
                     padding: "3px 9px", borderRadius: 999,
-                    background: when === "AM" ? `${TH.amber}1a` : `${TH.lavender}1a`,
+                    background: when === "AM" ? `color-mix(in srgb, ${TH.amber} 10%, transparent)` : `color-mix(in srgb, ${TH.lavender} 10%, transparent)`,
                     color: when === "AM" ? TH.amberDeep : "#7c5ad9",
                     fontSize: 10, fontWeight: 600,
                   }}>{when}</div>
@@ -625,10 +625,10 @@ function Sample() {
 
               <Link href="/quiz" style={{
                 marginTop: 20, display: "block",
-                background: TH.ink, color: TH.surface, textDecoration: "none",
+                background: TH.inkBg, color: "#fff", textDecoration: "none",
                 padding: 14, borderRadius: 999,
                 textAlign: "center", fontSize: 15, fontWeight: 500,
-                boxShadow: `0 8px 20px ${TH.ink}22`,
+                boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 13%, transparent)`,
               }}>
                 Get my stack →
               </Link>
@@ -670,7 +670,7 @@ function Testimonials() {
               <div style={{
                 background: TH.surface, borderRadius: 22, padding: 32,
                 border: `1px solid ${TH.edge}`,
-                boxShadow: `0 4px 12px ${TH.ink}05`,
+                boxShadow: `0 4px 12px color-mix(in srgb, ${TH.ink} 2%, transparent)`,
                 display: "flex", flexDirection: "column", gap: 18, minHeight: 260,
               }}>
                 <div style={{
@@ -723,7 +723,7 @@ function FAQ() {
               <details className="sd-faq" style={{
                 background: TH.surface, border: `1px solid ${TH.edge}`,
                 borderRadius: 16, marginBottom: 10, padding: "20px 24px",
-                boxShadow: `0 2px 6px ${TH.ink}04`,
+                boxShadow: `0 2px 6px color-mix(in srgb, ${TH.ink} 2%, transparent)`,
               }}>
                 <summary className="sd-faq-summary" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, cursor: "pointer", listStyle: "none" }}>
                   <span style={{ ...D, fontSize: 18, color: TH.ink, letterSpacing: "-0.015em" }}>{q}</span>
@@ -756,7 +756,7 @@ function CTA() {
           borderRadius: 28,
           background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber} 60%, ${TH.coral})`,
           padding: "72px 36px", position: "relative", overflow: "hidden",
-          boxShadow: `0 30px 80px ${TH.sage}33`,
+          boxShadow: `0 30px 80px color-mix(in srgb, ${TH.sage} 20%, transparent)`,
         }}>
           <div style={{
             position: "absolute", top: -100, right: -100, width: 400, height: 400, borderRadius: 999,
@@ -785,7 +785,7 @@ function CTA() {
             </Reveal>
             <Reveal delay={0.25}>
               <Link href="/quiz" style={{
-                background: "white", color: TH.ink, textDecoration: "none",
+                background: "white", color: TH.inkBg, textDecoration: "none",
                 padding: "16px 26px", borderRadius: 999,
                 fontFamily: FONTS.body, fontSize: 15, fontWeight: 600,
                 display: "inline-flex", alignItems: "center", gap: 10,
@@ -846,7 +846,7 @@ function StrongestEvidence() {
                   <div className="ess-card" style={{
                     background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22, overflow: "hidden",
                     height: "100%", display: "flex", flexDirection: "column",
-                    boxShadow: `0 18px 40px -22px ${TH.ink}45`,
+                    boxShadow: `0 18px 40px -22px color-mix(in srgb, ${TH.ink} 27%, transparent)`,
                   }}>
                     {/* Real product photo (iHerb CDN where curated) on a clean white canvas */}
                     <div style={{ position: "relative", height: 172, background: "#fff", borderBottom: `1px solid ${TH.edge}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -883,7 +883,7 @@ function StrongestEvidence() {
           <Link href="/quiz" style={{
             display: "inline-flex", alignItems: "center", gap: 8, padding: "15px 30px", borderRadius: 999,
             background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none",
-            ...D, fontSize: 15, boxShadow: `0 12px 26px -8px ${TH.sage}88`,
+            ...D, fontSize: 15, boxShadow: `0 12px 26px -8px color-mix(in srgb, ${TH.sage} 53%, transparent)`,
           }}>
             Build my full stack &rarr;
           </Link>

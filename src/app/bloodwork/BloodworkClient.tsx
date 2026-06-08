@@ -350,7 +350,7 @@ function PastePanel({ value, onChange, onCancel, onSubmit }: { value: string; on
           Back to upload
         </button>
         <button onClick={onSubmit} disabled={value.trim().length < 4} style={{
-          padding: "12px 24px", borderRadius: 999, border: "none", background: value.trim().length < 4 ? TH.muted : TH.ink, color: "#fff",
+          padding: "12px 24px", borderRadius: 999, border: "none", background: value.trim().length < 4 ? TH.muted : TH.inkBg, color: "#fff",
           ...D, fontWeight: 600, fontSize: 14.5, cursor: value.trim().length < 4 ? "not-allowed" : "pointer", opacity: value.trim().length < 4 ? 0.5 : 1,
         }}>
           Analyze →
@@ -433,7 +433,7 @@ function AnalysisReport({ data, sourceKind, signedIn, isPremium = false, onReset
       {isSample && (
         <div style={{
           display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", borderRadius: 14,
-          background: TH.accentGlow, border: `1px solid ${TH.sage}40`,
+          background: TH.accentGlow, border: `1px solid color-mix(in srgb, ${TH.sage} 25%, transparent)`,
         }}>
           <span style={{ ...MM, fontSize: 10, fontWeight: 600, color: "#fff", background: TH.sageDeep, padding: "3px 9px", borderRadius: 999, letterSpacing: "0.06em", textTransform: "uppercase" }}>Example</span>
           <span style={{ fontSize: 13, color: TH.inkSoft, lineHeight: 1.45 }}>
@@ -537,18 +537,18 @@ function AnalysisReport({ data, sourceKind, signedIn, isPremium = false, onReset
       {/* Actions */}
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
         {isSample ? (
-          <button onClick={onReset} style={{ padding: "13px 24px", borderRadius: 999, border: "none", background: TH.sage, color: "#fff", ...D, fontWeight: 600, fontSize: 14, cursor: "pointer", boxShadow: `0 8px 22px -6px ${TH.sage}80` }}>
+          <button onClick={onReset} style={{ padding: "13px 24px", borderRadius: 999, border: "none", background: TH.sage, color: "#fff", ...D, fontWeight: 600, fontSize: 14, cursor: "pointer", boxShadow: `0 8px 22px -6px color-mix(in srgb, ${TH.sage} 50%, transparent)` }}>
             Analyze my own labs →
           </button>
         ) : signedIn ? (
           <button onClick={save} disabled={saving || saved} style={{
-            padding: "13px 22px", borderRadius: 999, border: "none", background: saved ? TH.sage : TH.ink, color: "#fff",
+            padding: "13px 22px", borderRadius: 999, border: "none", background: saved ? TH.sage : TH.inkBg, color: "#fff",
             ...D, fontWeight: 600, fontSize: 14, cursor: saved ? "default" : saving ? "wait" : "pointer",
           }}>
             {saved ? "✓ Saved to your profile" : saving ? "Saving…" : "Save to my profile"}
           </button>
         ) : (
-          <Link href="/signin?redirect=/bloodwork" style={{ padding: "13px 22px", borderRadius: 999, background: TH.ink, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14 }}>
+          <Link href="/signin?redirect=/bloodwork" style={{ padding: "13px 22px", borderRadius: 999, background: TH.inkBg, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14 }}>
             Sign in to save this
           </Link>
         )}

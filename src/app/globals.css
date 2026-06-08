@@ -1,23 +1,35 @@
 @import "tailwindcss";
+/* design tokens v3 (light + dark) */
 
 /* ─── Base type families ──────────────────────────────────────────────────
    --font-display / --font-sans / --font-serif / --font-mono are defined by
    next/font (see src/app/layout.tsx) and applied on <html>, self-hosted with a
    metric-matched fallback so there is no render-blocking request and no CLS. */
 :root {
-  /* Brand colors as CSS vars (for places that need raw color access) */
-  --c-bg:       #f6f5f1;
-  --c-surface:  #ffffff;
-  --c-ink:      #0a2540;
-  --c-ink-soft: #3c4858;
-  --c-muted:    #6b7280;
-  --c-sage:     #5ba373;
-  --c-sage-deep:#3f7a52;
-  --c-amber:    #e8a04a;
-  --c-amber-deep:#b5751e;
-  --c-coral:    #ff8b6b;
-  --c-lavender: #a78bfa;
-  --c-edge:     rgba(10, 37, 64, 0.08);
+  /* ─── Theme tokens (LIGHT, default) ───────────────────────────────────────
+     Dark lives in :root[data-theme="dark"] below. Every UI color flows through
+     these (via lib/theme.ts), so the whole app re-themes by toggling data-theme. */
+  color-scheme: light;
+  --c-bg:          #f6f5f1;   /* warm off-white page */
+  --c-surface:     #ffffff;   /* cards */
+  --c-elevated:    #ffffff;   /* modals, popovers, dropdowns */
+  --c-ink:         #0a2540;   /* primary text */
+  --c-ink-bg:      #0a2540;   /* deep-navy band / primary button bg (white text on it) */
+  --c-ink-soft:    #3c4858;   /* secondary text */
+  --c-muted:       #5b6573;   /* tertiary text (WCAG AA on bg) */
+  --c-muted-dim:   #a0a8b3;   /* faint labels */
+  --c-edge:        rgba(10, 37, 64, 0.08);
+  --c-edge-strong: rgba(10, 37, 64, 0.14);
+  --c-sage:        #5ba373;
+  --c-sage-deep:   #3f7a52;
+  --c-amber:       #e8a04a;
+  --c-amber-deep:  #b5751e;
+  --c-coral:       #ff8b6b;
+  --c-lavender:    #a78bfa;
+  --c-accent-glow: rgba(91, 163, 115, 0.12);
+  --c-success:     #3f7a52;
+  --c-warning:     #b5751e;
+  --c-destructive: #b91c1c;
 
   /* Responsive sizing tokens, desktop defaults */
   --hero-h1: 88px;
@@ -39,6 +51,43 @@
   --nav-gap: 28px;
   --nav-show: flex;
   --burger-show: none;
+}
+
+/* ─── Dark theme ────────────────────────────────────────────────────────────
+   Premium deep-navy dark (no pure black). Foreground tokens (ink / soft / muted)
+   become light; brand accents brighten for contrast on dark; ink-bg stays a dark
+   navy so the many "navy band / primary button" surfaces keep white text readable. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --c-bg:          #0b1521;
+  --c-surface:     #121f2e;
+  --c-elevated:    #1a2a3c;
+  --c-ink:         #e8eef4;
+  --c-ink-bg:      #21405d;
+  --c-ink-soft:    #b3c1cf;
+  --c-muted:       #8a98a8;
+  --c-muted-dim:   #5d6b7b;
+  --c-edge:        rgba(255, 255, 255, 0.10);
+  --c-edge-strong: rgba(255, 255, 255, 0.20);
+  --c-sage:        #63b483;
+  --c-sage-deep:   #79c79b;
+  --c-amber:       #ecb265;
+  --c-amber-deep:  #e0a44e;
+  --c-coral:       #ff9d83;
+  --c-lavender:    #bfa9fb;
+  --c-accent-glow: rgba(108, 186, 134, 0.18);
+  --c-success:     #79c79b;
+  --c-warning:     #ecb265;
+  --c-destructive: #f6736f;
+}
+
+/* Smooth, opt-in theme transition. The toggle adds .theme-anim briefly while it
+   switches, so the first paint never animates and scrolling/hover stays cheap. */
+.theme-anim, .theme-anim *, .theme-anim *::before, .theme-anim *::after {
+  transition: background-color .28s ease, border-color .28s ease, color .28s ease, fill .28s ease, stroke .28s ease, box-shadow .28s ease !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-anim, .theme-anim *, .theme-anim *::before, .theme-anim *::after { transition: none !important; }
 }
 
 /* ─── Accessibility (WCAG) ─────────────────────────────────────────────────
@@ -196,7 +245,7 @@ img, svg { max-width: 100%; }
    the "+" into an "x" with a sage fill when open. */
 .sd-faq-summary { list-style: none; }
 .sd-faq-summary::-webkit-details-marker { display: none; }
-.sd-faq[open] .sd-faq-plus { transform: rotate(45deg); background: #5ba373; color: #fff; }
+.sd-faq[open] .sd-faq-plus { transform: rotate(45deg); background: var(--c-sage); color: #fff; }
 
 /* Premium hover-lift on the homepage 'essentials' product cards. */
 .ess-card { transition: transform .18s cubic-bezier(.2,.7,.2,1), box-shadow .18s; }

@@ -34,7 +34,7 @@ export default function ShopCTA({ supplementId, heading }: { supplementId: strin
       {heading && (
         <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 10 }}>{heading}</div>
       )}
-      <div style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: 18, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", boxShadow: `0 10px 28px -20px ${TH.ink}35` }}>
+      <div style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: 18, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", boxShadow: `0 10px 28px -20px color-mix(in srgb, ${TH.ink} 21%, transparent)` }}>
         <div style={{ width: 88, height: 88, flexShrink: 0, borderRadius: 12, background: "#fff", border: `1px solid ${TH.edge}`, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
           {img ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -51,13 +51,13 @@ export default function ShopCTA({ supplementId, heading }: { supplementId: strin
         <div style={{ display: "flex", flexDirection: "column", gap: 8, minWidth: 156 }}>
           <a href={href} target="_blank" rel="noopener noreferrer sponsored" style={{
             display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-            padding: "12px 20px", borderRadius: 12, background: TH.ink, color: "#fff", textDecoration: "none",
-            ...D, fontSize: 14, boxShadow: `0 8px 20px -6px ${TH.ink}55`,
+            padding: "12px 20px", borderRadius: 12, background: TH.inkBg, color: "#fff", textDecoration: "none",
+            ...D, fontSize: 14, boxShadow: `0 8px 20px -6px color-mix(in srgb, ${TH.ink} 33%, transparent)`,
           }}>Buy on iHerb &rarr;</a>
           {amazonEnabled() && (
             <a href={amazonHref} target="_blank" rel="noopener noreferrer sponsored" style={{
               display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-              padding: "11px 20px", borderRadius: 12, background: "#fff", color: TH.ink,
+              padding: "11px 20px", borderRadius: 12, background: "#fff", color: TH.inkBg,
               border: `1px solid ${TH.edge}`, textDecoration: "none", ...D, fontSize: 14,
             }}>Buy on Amazon &rarr;</a>
           )}

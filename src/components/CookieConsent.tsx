@@ -154,7 +154,7 @@ function ConsentRow({ title, description, checked, onChange }: {
 function btnPrimary(): React.CSSProperties {
   return {
     padding: "10px 18px", borderRadius: 999, border: "none",
-    background: TH.ink, color: TH.surface, fontWeight: 500, fontSize: 13.5,
+    background: TH.inkBg, color: "#fff", fontWeight: 500, fontSize: 13.5,
     cursor: "pointer", fontFamily: FONTS.body,
   };
 }

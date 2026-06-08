@@ -56,10 +56,10 @@ export default function TrackStackCTA({
     <section
       data-source={source}
       style={{
-        background: `linear-gradient(135deg, ${TH.ink} 0%, #0d2f4f 100%)`, color: "#fff",
+        background: `linear-gradient(135deg, ${TH.inkBg} 0%, #0d2f4f 100%)`, color: "#fff",
         borderRadius: 20, padding: "24px 26px", display: "flex", alignItems: "center",
         gap: 20, flexWrap: "wrap", justifyContent: "space-between",
-        boxShadow: `0 14px 40px -16px ${TH.ink}66`,
+        boxShadow: `0 14px 40px -16px color-mix(in srgb, ${TH.ink} 40%, transparent)`,
       }}
     >
       <div style={{ flex: 1, minWidth: 240 }}>
@@ -80,7 +80,7 @@ export default function TrackStackCTA({
           padding: "14px 24px", borderRadius: 999, border: "none", cursor: busy ? "wait" : "pointer",
           background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
           ...D, fontWeight: 600, fontSize: 15, whiteSpace: "nowrap", flexShrink: 0,
-          boxShadow: `0 8px 20px -6px ${TH.sage}aa`,
+          boxShadow: `0 8px 20px -6px color-mix(in srgb, ${TH.sage} 67%, transparent)`,
           display: "inline-flex", alignItems: "center", gap: 9,
         }}
       >

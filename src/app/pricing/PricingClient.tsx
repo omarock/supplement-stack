@@ -176,7 +176,7 @@ export default function PricingClient({
             borderRadius: 24, padding: "clamp(24px, 4vw, 38px)", marginBottom: 34,
             boxShadow: "0 30px 70px -30px rgba(10,37,64,0.65)",
           }}>
-            <div aria-hidden style={{ position: "absolute", top: -120, right: -100, width: 380, height: 380, borderRadius: 999, background: `radial-gradient(circle, ${TH.sage}38 0%, ${TH.sage}00 70%)`, pointerEvents: "none" }} />
+            <div aria-hidden style={{ position: "absolute", top: -120, right: -100, width: 380, height: 380, borderRadius: 999, background: `radial-gradient(circle, color-mix(in srgb, ${TH.sage} 22%, transparent) 0%, color-mix(in srgb, ${TH.sage} 0%, transparent) 70%)`, pointerEvents: "none" }} />
             <div style={{ position: "relative", zIndex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
                 <span style={{ ...MM, fontSize: 10.5, color: "#0a1f38", background: TH.amber, padding: "4px 11px", borderRadius: 999, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>
@@ -254,7 +254,7 @@ export default function PricingClient({
                 <button key={p} onClick={() => setPlan(p)} style={{
                   padding: "9px 20px", borderRadius: 999, border: "none", cursor: "pointer",
                   fontFamily: FONTS.body, fontSize: 13.5, fontWeight: 600,
-                  background: plan === p ? TH.ink : "transparent", color: plan === p ? "#fff" : TH.inkSoft, transition: "all .15s",
+                  background: plan === p ? TH.inkBg : "transparent", color: plan === p ? "#fff" : TH.inkSoft, transition: "all .15s",
                 }}>
                   {p === "annual" ? "Annual" : "Monthly"}
                   {p === "annual" && <span style={{ ...MM, fontSize: 9.5, color: plan === p ? TH.sage : TH.sageDeep, marginLeft: 6 }}>SAVE 27%</span>}
@@ -280,7 +280,7 @@ export default function PricingClient({
           {/* Premium */}
           <div style={{
             background: TH.surface, border: `2px solid ${TH.sage}`, borderRadius: 22, padding: "28px 26px", position: "relative",
-            boxShadow: `0 18px 48px -18px ${TH.sage}66`,
+            boxShadow: `0 18px 48px -18px color-mix(in srgb, ${TH.sage} 40%, transparent)`,
           }}>
             <span style={{
               position: "absolute", top: -11, left: 24, ...MM, fontSize: 10, fontWeight: 700, color: "#fff",
@@ -338,7 +338,7 @@ export default function PricingClient({
         </section>
 
         {/* ===== Scientific credibility / trust ===== */}
-        <section style={{ marginTop: 44, background: TH.ink, color: "#fff", borderRadius: 20, padding: "clamp(24px,4vw,34px)", textAlign: "center" }}>
+        <section style={{ marginTop: 44, background: TH.inkBg, color: "#fff", borderRadius: 20, padding: "clamp(24px,4vw,34px)", textAlign: "center" }}>
           <div style={{ ...MM, fontSize: 11, color: TH.amber, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>Why you can trust the recommendations</div>
           <div style={{ display: "grid", gridTemplateColumns: "var(--trust-cols)", gap: 20, maxWidth: 720, margin: "0 auto" }}>
             <Stat n="70,000+" l="peer-reviewed studies behind our ratings" />
@@ -421,7 +421,7 @@ function Cellh({ children, center, highlight }: { children?: ReactNode; center?:
   return (
     <div style={{
       padding: "16px 18px", ...D, fontSize: 14, color: TH.ink, textAlign: center ? "center" : "left",
-      background: highlight ? `${TH.sage}12` : "transparent", borderBottom: `1px solid ${TH.edge}`,
+      background: highlight ? `color-mix(in srgb, ${TH.sage} 7%, transparent)` : "transparent", borderBottom: `1px solid ${TH.edge}`,
     }}>{children}</div>
   );
 }
@@ -439,7 +439,7 @@ function Row({ row, last }: { row: { label: string; free: Cell; premium: Cell };
 
 function CellVal({ v, border, highlight }: { v: Cell; border: string; highlight?: boolean }) {
   return (
-    <div style={{ padding: "14px 12px", textAlign: "center", borderBottom: border, background: highlight ? `${TH.sage}0c` : "transparent", fontSize: 13.5, color: TH.inkSoft }}>
+    <div style={{ padding: "14px 12px", textAlign: "center", borderBottom: border, background: highlight ? `color-mix(in srgb, ${TH.sage} 5%, transparent)` : "transparent", fontSize: 13.5, color: TH.inkSoft }}>
       {v === true ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="3" style={{ display: "inline" }}><path d="M5 12l5 5 9-11" /></svg>
         : v === false ? <span style={{ color: TH.mutedDim, fontSize: 18 }}>–</span>
         : <span style={{ ...MM, fontSize: 12, color: highlight ? TH.sageDeep : TH.inkSoft, fontWeight: 600 }}>{v}</span>}

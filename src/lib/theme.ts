@@ -1,25 +1,42 @@
 /**
- * suppdoc.io, design system tokens v2
- * Inspired by Stripe: light primary, navy ink, sage/amber/coral accents
+ * suppdoc.io, design system tokens v3 (theme-aware)
+ *
+ * Every color resolves to a CSS variable defined in globals.css for BOTH the
+ * light and dark themes. Because the whole UI styles inline from this object,
+ * toggling <html data-theme="dark"> re-themes the entire app with no
+ * per-component work.
+ *
+ * IMPORTANT: OG images (Satori / next/og) and emails do NOT import TH, they use
+ * literal hex, because CSS variables and color-mix() are unsupported in those
+ * renderers. Keep it that way.
+ *
+ * Semantic roles:
+ *  - ink     = primary foreground text (light in dark mode)
+ *  - inkBg   = the deep-navy band / primary-button surface; stays dark in BOTH
+ *              themes so the white text that sits on it never becomes invisible
+ *  - surface = card background (dark in dark mode)
  */
-
 export const TH = {
-  bg: "#f6f5f1",                         // warm off-white page background
-  surface: "#ffffff",                    // pure white cards
-  elevated: "#ffffff",
-  edge: "rgba(10, 37, 64, 0.08)",
-  edgeStrong: "rgba(10, 37, 64, 0.14)",
-  ink: "#0a2540",                        // deep navy, premium, trustworthy
-  inkSoft: "#3c4858",
-  muted: "#5b6573",                      // darkened from #6b7280 to clear WCAG AA 4.5:1 on warm bg
-  mutedDim: "#a0a8b3",
-  sage: "#5ba373",                       // friendly sage
-  sageDeep: "#3f7a52",
-  amber: "#e8a04a",                      // warm gold
-  amberDeep: "#b5751e",
-  coral: "#ff8b6b",                      // soft coral
-  lavender: "#a78bfa",                   // soft lavender
-  accentGlow: "rgba(91,163,115,0.12)",
+  bg: "var(--c-bg)",                     // page background
+  surface: "var(--c-surface)",           // cards
+  elevated: "var(--c-elevated)",         // modals, popovers, dropdowns
+  edge: "var(--c-edge)",                 // hairline borders
+  edgeStrong: "var(--c-edge-strong)",    // stronger borders
+  ink: "var(--c-ink)",                   // primary text
+  inkBg: "var(--c-ink-bg)",              // deep-navy band / primary button bg
+  inkSoft: "var(--c-ink-soft)",          // secondary text
+  muted: "var(--c-muted)",               // tertiary text
+  mutedDim: "var(--c-muted-dim)",        // faint labels
+  sage: "var(--c-sage)",                 // friendly green
+  sageDeep: "var(--c-sage-deep)",        // deep green accent / links
+  amber: "var(--c-amber)",               // warm gold
+  amberDeep: "var(--c-amber-deep)",      // deep gold
+  coral: "var(--c-coral)",               // soft coral
+  lavender: "var(--c-lavender)",         // soft lavender
+  accentGlow: "var(--c-accent-glow)",    // faint sage glow
+  success: "var(--c-success)",           // semantic: positive
+  warning: "var(--c-warning)",           // semantic: caution
+  destructive: "var(--c-destructive)",   // semantic: danger / errors
 } as const;
 
 // These reference the CSS variables defined by next/font (src/app/layout.tsx),

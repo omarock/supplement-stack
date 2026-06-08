@@ -374,12 +374,12 @@ const CSS = `
 }
 .sdauth-primary {
   width: 100%; display: flex; align-items: center; justify-content: center; gap: 9px;
-  padding: 15px 18px; border-radius: 13px; background: ${TH.ink}; color: #fff;
+  padding: 15px 18px; border-radius: 13px; background: ${TH.inkBg}; color: #fff;
   border: none; cursor: pointer; font-family: ${FONTS.body}; font-size: 15px; font-weight: 600;
   transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
-  box-shadow: 0 6px 18px -8px ${TH.ink}80;
+  box-shadow: 0 6px 18px -8px color-mix(in srgb, ${TH.ink} 50%, transparent);
 }
-.sdauth-primary:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.1); box-shadow: 0 10px 26px -10px ${TH.ink}99; }
+.sdauth-primary:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.1); box-shadow: 0 10px 26px -10px color-mix(in srgb, ${TH.ink} 60%, transparent); }
 .sdauth-ghost {
   width: 100%; padding: 12px 18px; border-radius: 13px; background: transparent;
   border: 1px solid ${TH.edge}; color: ${TH.inkSoft}; cursor: pointer;
@@ -412,7 +412,7 @@ const CSS = `
   border-radius: 11px; font-family: ${FONTS.body}; font-size: 13px; color: #991b1b; line-height: 1.45;
 }
 .sdauth-notice {
-  margin-bottom: 18px; padding: 12px 15px; background: ${TH.accentGlow}; border: 1px solid ${TH.sage}55;
+  margin-bottom: 18px; padding: 12px 15px; background: ${TH.accentGlow}; border: 1px solid color-mix(in srgb, ${TH.sage} 33%, transparent);
   border-radius: 11px; font-family: ${FONTS.body}; font-size: 13.5px; color: ${TH.sageDeep}; line-height: 1.45;
 }
 

@@ -80,7 +80,7 @@ export default function InteractionsIndex() {
             <Link href="/audit" style={{
               display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 22px", borderRadius: 999,
               background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14.5,
-              boxShadow: `0 10px 24px -8px ${TH.sage}80`,
+              boxShadow: `0 10px 24px -8px color-mix(in srgb, ${TH.sage} 50%, transparent)`,
             }}>
               Or check your whole stack at once →
             </Link>
@@ -118,7 +118,7 @@ export default function InteractionsIndex() {
 
           {/* Embed (link-earning): bloggers paste this; the widget carries a backlink */}
           <section style={{ marginTop: 8, marginBottom: 30 }}>
-            <div style={{ background: TH.ink, color: "#fff", borderRadius: 18, padding: "26px 26px" }}>
+            <div style={{ background: TH.inkBg, color: "#fff", borderRadius: 18, padding: "26px 26px" }}>
               <h2 style={{ ...D, fontSize: 22, margin: "0 0 8px", letterSpacing: "-0.02em" }}>Add this checker to your site, free</h2>
               <p style={{ fontSize: 14.5, opacity: 0.85, margin: "0 0 14px", lineHeight: 1.55, maxWidth: 620 }}>
                 Run a health, nutrition, or fitness site? Embed the interaction checker for your readers at no cost. Just paste this snippet where you want it to appear.

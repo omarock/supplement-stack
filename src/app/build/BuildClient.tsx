@@ -491,7 +491,7 @@ export default function BuildClient() {
                     style={{
                       flexShrink: 0, padding: "8px 14px", borderRadius: 999,
                       border: `1px solid ${active ? TH.ink : TH.edge}`,
-                      background: active ? TH.ink : TH.surface,
+                      background: active ? TH.inkBg : TH.surface,
                       color: active ? TH.surface : TH.inkSoft,
                       fontSize: 13, fontWeight: 500, cursor: "pointer",
                       whiteSpace: "nowrap", transition: "all .15s",
@@ -638,11 +638,11 @@ export default function BuildClient() {
               display: "flex", flexDirection: "column", gap: 8, background: TH.bg,
             }}>
               <button onClick={openBuy} style={{
-                padding: "14px 16px", background: TH.ink, color: TH.surface,
+                padding: "14px 16px", background: TH.inkBg, color: "#fff",
                 border: "none", borderRadius: 12, cursor: "pointer",
                 fontSize: 14.5, fontWeight: 600, minHeight: 48,
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                boxShadow: `0 8px 20px ${TH.ink}22`,
+                boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 13%, transparent)`,
               }}>
                 Buy full stack · ${totalCost}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -664,7 +664,7 @@ export default function BuildClient() {
             display: "var(--build-mobile-cta)",
             position: "fixed", bottom: 22, left: 18, right: 18, zIndex: 80,
             padding: "16px 20px", borderRadius: 999,
-            background: TH.ink, color: TH.surface, border: "none",
+            background: TH.inkBg, color: "#fff", border: "none",
             fontWeight: 600, fontSize: 15, cursor: "pointer",
             boxShadow: "0 10px 30px rgba(10,37,64,0.35)",
             alignItems: "center", justifyContent: "space-between",
@@ -711,7 +711,7 @@ export default function BuildClient() {
             </div>
             <div style={{ borderTop: `1px solid ${TH.edge}`, padding: "14px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
               <button onClick={() => { setStackDrawerOpen(false); openBuy(); }} style={{
-                padding: "15px 16px", background: TH.ink, color: TH.surface,
+                padding: "15px 16px", background: TH.inkBg, color: "#fff",
                 border: "none", borderRadius: 12, cursor: "pointer", fontSize: 15, fontWeight: 600, minHeight: 50,
               }}>Buy full stack · ${totalCost}</button>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
@@ -739,7 +739,7 @@ export default function BuildClient() {
       {savedToast && (
         <div role="status" style={{
           position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)",
-          background: TH.ink, color: TH.surface, padding: "10px 12px 10px 18px", borderRadius: 999,
+          background: TH.inkBg, color: "#fff", padding: "10px 12px 10px 18px", borderRadius: 999,
           fontSize: 13.5, fontWeight: 500, zIndex: 120,
           boxShadow: "0 14px 38px rgba(10,37,64,0.32)",
           animation: "sd-rise .25s ease-out",
@@ -1037,7 +1037,7 @@ function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void 
         <span style={{
           ...MM, fontSize: 10, padding: "3px 8px", borderRadius: 999,
           background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
-          color: TH.surface, fontWeight: 600, letterSpacing: "0.06em",
+          color: "#fff", fontWeight: 600, letterSpacing: "0.06em",
         }}>FOR YOU</span>
         <h2 style={{ ...D, fontSize: 18, color: TH.ink, margin: 0, letterSpacing: "-0.015em" }}>
           Describe your goals, we&apos;ll compose the stack
@@ -1089,7 +1089,7 @@ function AIDescribeMode({ onApply }: { onApply: (res: GenerateResponse) => void 
         <button onClick={run} disabled={loading || text.trim().length < 5}
           style={{
             padding: "10px 18px", borderRadius: 999, border: "none",
-            background: loading ? TH.muted : TH.ink, color: TH.surface,
+            background: loading ? TH.muted : TH.inkBg, color: "#fff",
             fontFamily: FONTS.body, fontWeight: 500, fontSize: 13.5,
             cursor: loading || text.trim().length < 5 ? "not-allowed" : "pointer",
             opacity: text.trim().length < 5 ? 0.5 : 1,
@@ -1133,7 +1133,7 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
       {/* Header band */}
       <div style={{
         padding: "var(--gen-pad)",
-        background: `linear-gradient(135deg, ${TH.sage}12, ${TH.amber}10 60%, ${TH.coral}08)`,
+        background: `linear-gradient(135deg, color-mix(in srgb, ${TH.sage} 7%, transparent), color-mix(in srgb, ${TH.amber} 6%, transparent) 60%, color-mix(in srgb, ${TH.coral} 3%, transparent))`,
         borderBottom: `1px solid ${TH.edge}`,
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
@@ -1239,7 +1239,7 @@ function GeneratedStackResult({ meta, supps, total, onBuy, onClear }: {
             background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
             fontFamily: FONTS.body, fontWeight: 600, fontSize: 15.5, cursor: "pointer",
             display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
-            boxShadow: `0 10px 22px -6px ${TH.sage}80`,
+            boxShadow: `0 10px 22px -6px color-mix(in srgb, ${TH.sage} 50%, transparent)`,
           }}>
             Buy full stack · ${total}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -1318,9 +1318,9 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
           <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
             <button onClick={onOpenAll} style={{
               width: "100%", minHeight: 52, borderRadius: 14, border: "none", cursor: "pointer",
-              background: TH.ink, color: "#fff", fontFamily: FONTS.body, fontWeight: 600, fontSize: 15,
+              background: TH.inkBg, color: "#fff", fontFamily: FONTS.body, fontWeight: 600, fontSize: 15,
               display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
-              boxShadow: `0 8px 20px ${TH.ink}22`,
+              boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 13%, transparent)`,
             }}>
               Open all {supps.length} on iHerb
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M7 7h10v10"/></svg>
@@ -1377,7 +1377,7 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
                 {/* Buttons */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }}>
                   <a href={iherb} target="_blank" rel="noopener noreferrer sponsored" style={{
-                    padding: "8px 12px", borderRadius: 999, background: TH.ink, color: "#fff",
+                    padding: "8px 12px", borderRadius: 999, background: TH.inkBg, color: "#fff",
                     textDecoration: "none", fontSize: 12, fontWeight: 600, textAlign: "center", minWidth: 92,
                   }}>iHerb{product ? ` · $${product.approxPrice}` : ""}</a>
                   {showAmazon && (

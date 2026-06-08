@@ -140,7 +140,7 @@ export default async function BestForGoalPage({ params }: { params: Promise<{ go
 }
 
 function ctaPrimary(): React.CSSProperties {
-  return { display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 22px", borderRadius: 999, background: TH.ink, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14 };
+  return { display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 22px", borderRadius: 999, background: TH.inkBg, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14 };
 }
 function ctaSecondary(): React.CSSProperties {
   return { display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 22px", borderRadius: 999, background: "transparent", color: TH.ink, textDecoration: "none", border: `1px solid ${TH.edge}`, fontSize: 14, fontWeight: 500 };

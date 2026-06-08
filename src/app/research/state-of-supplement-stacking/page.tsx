@@ -250,7 +250,7 @@ export default async function DataStudy() {
           </section>
 
           {/* CTA */}
-          <div style={{ background: TH.ink, color: "#fff", borderRadius: 18, padding: "24px 26px", textAlign: "center" }}>
+          <div style={{ background: TH.inkBg, color: "#fff", borderRadius: 18, padding: "24px 26px", textAlign: "center" }}>
             <h2 style={{ ...D, fontSize: 21, margin: "0 0 8px", letterSpacing: "-0.02em" }}>Check your own stack against the data</h2>
             <p style={{ fontSize: 14, opacity: 0.85, margin: "0 0 16px" }}>Paste what you take and the free checker flags every interaction, redundancy, and timing issue in seconds.</p>
             <Link href="/audit" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 999, background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14.5 }}>Run the free audit →</Link>

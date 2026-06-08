@@ -100,8 +100,8 @@ export default function SubscriptionClient({ initial, billing }: {
     <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
       {/* Plan card */}
       <div style={{
-        background: `linear-gradient(135deg, ${TH.sage}12, ${TH.surface} 65%)`,
-        border: `1.5px solid ${TH.sage}55`, borderRadius: 18, padding: "24px 26px",
+        background: `linear-gradient(135deg, color-mix(in srgb, ${TH.sage} 7%, transparent), ${TH.surface} 65%)`,
+        border: `1.5px solid color-mix(in srgb, ${TH.sage} 33%, transparent)`, borderRadius: 18, padding: "24px 26px",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
           <span style={{ ...D, fontSize: 22, color: TH.ink }}>{planLabel}</span>
@@ -131,7 +131,7 @@ export default function SubscriptionClient({ initial, billing }: {
 
       {/* Notices */}
       {notice && (
-        <div role="status" style={{ padding: "12px 16px", borderRadius: 12, background: "#e7f4ec", border: `1px solid ${TH.sage}55`, fontSize: 13.5, color: TH.sageDeep, lineHeight: 1.5 }}>
+        <div role="status" style={{ padding: "12px 16px", borderRadius: 12, background: "#e7f4ec", border: `1px solid color-mix(in srgb, ${TH.sage} 33%, transparent)`, fontSize: 13.5, color: TH.sageDeep, lineHeight: 1.5 }}>
           {notice}
         </div>
       )}

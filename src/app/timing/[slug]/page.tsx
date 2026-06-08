@@ -172,7 +172,7 @@ export default async function TimingPage({ params }: { params: Promise<{ slug: s
           ]} />
 
           {/* CTA to the quiz */}
-          <div style={{ background: TH.ink, color: "#fff", borderRadius: 18, padding: "24px 26px", textAlign: "center", marginBottom: 22 }}>
+          <div style={{ background: TH.inkBg, color: "#fff", borderRadius: 18, padding: "24px 26px", textAlign: "center", marginBottom: 22 }}>
             <h2 style={{ ...D, fontSize: 21, margin: "0 0 8px", letterSpacing: "-0.02em" }}>Build a stack with the timing built in</h2>
             <p style={{ fontSize: 14, opacity: 0.85, margin: "0 0 16px" }}>Answer a few questions and get a personalised stack, each pick with its dose, timing, and what to take it with.</p>
             <Link href="/quiz" style={{

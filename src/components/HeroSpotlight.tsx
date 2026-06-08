@@ -72,7 +72,7 @@ export default function HeroSpotlight() {
           left: "50%", top: "var(--spotlight-top)",
           transform: "translateX(-50%)",
           padding: "9px 16px 9px 12px",
-          background: TH.ink, color: TH.surface,
+          background: TH.inkBg, color: "#fff",
           borderRadius: 999,
           fontSize: 13, fontWeight: 500,
           boxShadow: "0 14px 36px rgba(10,37,64,0.28)",
@@ -83,7 +83,7 @@ export default function HeroSpotlight() {
       >
         <span aria-hidden style={{
           background: `linear-gradient(135deg, ${TH.sage}, ${TH.amber})`,
-          color: TH.surface, borderRadius: 999, padding: "1px 7px",
+          color: "#fff", borderRadius: 999, padding: "1px 7px",
           fontSize: 10, fontWeight: 700, ...MM, letterSpacing: "0.05em",
         }}>👋</span>
         <span>New here? Start with the quiz.</span>

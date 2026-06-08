@@ -174,6 +174,6 @@ function buildComparison(latest: Report, prev: Report): Cmp[] {
 function cta(): React.CSSProperties {
   return {
     display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 22px", borderRadius: 999,
-    background: TH.ink, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14,
+    background: TH.inkBg, color: "#fff", textDecoration: "none", ...D, fontWeight: 600, fontSize: 14,
   };
 }

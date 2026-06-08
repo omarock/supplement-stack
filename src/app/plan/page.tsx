@@ -244,8 +244,8 @@ function ItemCard({ it }: { it: PlanItem }) {
         {p && <div className="print-only" style={{ ...MM, fontSize: 11, color: TH.sageDeep, marginTop: 5 }}>Suggested: {p.brand} {p.productName}</div>}
       </div>
       <div className="no-print" style={{ display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }}>
-        <a href={iherb} target="_blank" rel="noopener noreferrer sponsored" style={{ ...MM, fontSize: 11.5, fontWeight: 600, color: "#fff", background: TH.ink, padding: "7px 12px", borderRadius: 8, textDecoration: "none", textAlign: "center" }}>iHerb</a>
-        {amazonEnabled() && <a href={amazon} target="_blank" rel="noopener noreferrer sponsored" style={{ ...MM, fontSize: 11.5, fontWeight: 600, color: TH.ink, background: "#fff", border: `1px solid ${TH.edge}`, padding: "7px 12px", borderRadius: 8, textDecoration: "none", textAlign: "center" }}>Amazon</a>}
+        <a href={iherb} target="_blank" rel="noopener noreferrer sponsored" style={{ ...MM, fontSize: 11.5, fontWeight: 600, color: "#fff", background: TH.inkBg, padding: "7px 12px", borderRadius: 8, textDecoration: "none", textAlign: "center" }}>iHerb</a>
+        {amazonEnabled() && <a href={amazon} target="_blank" rel="noopener noreferrer sponsored" style={{ ...MM, fontSize: 11.5, fontWeight: 600, color: TH.inkBg, background: "#fff", border: `1px solid ${TH.edge}`, padding: "7px 12px", borderRadius: 8, textDecoration: "none", textAlign: "center" }}>Amazon</a>}
       </div>
     </div>
   );

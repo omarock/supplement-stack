@@ -308,7 +308,7 @@ function EmptyState({ suggestions, onPick }: { suggestions: { label: string; tex
             width: 40, height: 40, borderRadius: 13, flexShrink: 0,
             background: `linear-gradient(135deg, ${TH.sage} 0%, ${TH.sageDeep} 100%)`,
             display: "inline-flex", alignItems: "center", justifyContent: "center",
-            color: "#fff", boxShadow: `0 6px 16px -4px ${TH.sage}99`,
+            color: "#fff", boxShadow: `0 6px 16px -4px color-mix(in srgb, ${TH.sage} 60%, transparent)`,
           }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4L12 3z" />

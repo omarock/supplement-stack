@@ -86,7 +86,7 @@ export default function ExpressQuiz() {
       <div style={{
         position: "sticky", top: 0, zIndex: 30,
         padding: "16px var(--section-pad-x)",
-        background: `${TH.bg}f0`, backdropFilter: "blur(14px) saturate(140%)",
+        background: `color-mix(in srgb, ${TH.bg} 94%, transparent)`, backdropFilter: "blur(14px) saturate(140%)",
         borderBottom: `1px solid ${TH.edge}`,
       }}>
         <div style={{ maxWidth: 720, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14 }}>
@@ -128,11 +128,11 @@ export default function ExpressQuiz() {
           }}>← Back</button>
           <button onClick={next} disabled={!ok} style={{
             padding: "13px 24px", borderRadius: 999, border: "none",
-            background: ok ? TH.ink : TH.muted, color: TH.surface,
+            background: ok ? TH.inkBg : TH.muted, color: "#fff",
             fontSize: 14, fontWeight: 500, cursor: ok ? "pointer" : "not-allowed",
             opacity: ok ? 1 : 0.6, transition: "all .2s",
             display: "inline-flex", alignItems: "center", gap: 8,
-            boxShadow: ok ? `0 8px 20px ${TH.ink}22` : "none",
+            boxShadow: ok ? `0 8px 20px color-mix(in srgb, ${TH.ink} 13%, transparent)` : "none",
           }}>
             {step === TOTAL ? "Generate my stack" : "Continue"} →
           </button>
@@ -191,7 +191,7 @@ function Step2({ data, update }: { data: QuizData; update: (u: Partial<QuizData>
             <button key={g} onClick={() => toggle(g)} style={{
               position: "relative",
               padding: "13px 14px", borderRadius: 14, cursor: "pointer",
-              background: active ? `${TH.sage}1a` : TH.surface,
+              background: active ? `color-mix(in srgb, ${TH.sage} 10%, transparent)` : TH.surface,
               border: `1.5px solid ${active ? TH.sage : TH.edge}`,
               fontSize: 14, color: active ? TH.sageDeep : TH.ink, fontWeight: active ? 600 : 500,
               textAlign: "left", transition: "all .15s",
@@ -283,7 +283,7 @@ function StepEmail({ data, update }: { data: QuizData; update: (u: Partial<QuizD
         />
       </Field>
       <div style={{
-        marginTop: 22, padding: "14px 16px", background: `${TH.sage}10`,
+        marginTop: 22, padding: "14px 16px", background: `color-mix(in srgb, ${TH.sage} 6%, transparent)`,
         borderRadius: 12, fontSize: 13.5, color: TH.inkSoft, lineHeight: 1.6,
       }}>
         <strong style={{ color: TH.sageDeep }}>Heads up:</strong>{" "}
@@ -320,7 +320,7 @@ function ChipGroup({ options, value, onChange }: { options: string[]; value: str
         return (
           <button key={o} type="button" onClick={() => onChange(o)} style={{
             padding: "10px 14px", borderRadius: 999, cursor: "pointer",
-            background: active ? TH.ink : TH.surface,
+            background: active ? TH.inkBg : TH.surface,
             border: `1.5px solid ${active ? TH.ink : TH.edge}`,
             color: active ? TH.surface : TH.ink,
             fontSize: 13.5, fontWeight: active ? 600 : 500,
