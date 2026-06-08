@@ -3,8 +3,8 @@
 import { useEffect, useState, useCallback } from "react";
 
 const th = {
-  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", sageDeep: "#3f7a52", amber: "#b5751e", red: "#b91c1c", line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", paper: "var(--c-surface)", ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", sageDeep: "var(--c-sage-deep)", amber: "var(--c-amber)", red: "#b91c1c", line: "var(--c-edge)",
 };
 const D = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;

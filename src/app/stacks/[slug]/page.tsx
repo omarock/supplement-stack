@@ -12,8 +12,8 @@ import SupplementGrid, { DailyRoutine } from "@/components/SupplementGrid";
 import BottleMockup from "@/components/BottleMockup";
 
 const th = {
-  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", paper: "var(--c-surface)", ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", burgundy: "var(--c-ink-bg)", line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
@@ -294,7 +294,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                             {/* Product image (clean white canvas) with a tidy fallback */}
                             <div style={{
                               position: "relative", height: 140, borderRadius: 10, overflow: "hidden",
-                              background: "#ffffff", border: `1px solid ${th.line}`,
+                              background: "var(--c-surface)", border: `1px solid ${th.line}`,
                               display: "flex", alignItems: "center", justifyContent: "center",
                             }}>
                               {img ? (
@@ -326,7 +326,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                               display: "flex", justifyContent: "space-between", alignItems: "baseline",
                               fontSize: 12, ...MM, color: th.inkMute,
                             }}>
-                              <span style={{ color: "#e8a04a" }}>★ {p.rating}</span>
+                              <span style={{ color: "var(--c-amber)" }}>★ {p.rating}</span>
                               <span>${p.approxPrice}</span>
                             </div>
                             <a

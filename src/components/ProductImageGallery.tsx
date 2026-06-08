@@ -50,7 +50,7 @@ export default function ProductImageGallery({ images, alt }: Props) {
           width: "100%",
           maxWidth: 520,
           aspectRatio: "1 / 1",
-          background: "#ffffff",
+          background: "var(--c-surface)",
           border: "1px solid #e5e7eb",
           borderRadius: 14,
           overflow: "hidden",
@@ -98,7 +98,7 @@ export default function ProductImageGallery({ images, alt }: Props) {
               aria-label={`View image ${i + 1} of ${gallery.length}`}
               style={{
                 width: 72, height: 72,
-                background: "#ffffff",
+                background: "var(--c-surface)",
                 border: i === activeIdx ? "2px solid #5ba373" : "1px solid #e5e7eb",
                 borderRadius: 10,
                 padding: 4,

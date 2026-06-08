@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 };
 
 const th = {
-  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", sageGlow: "rgba(91,163,115,0.10)",
-  burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", paper: "var(--c-surface)", ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", sageGlow: "var(--c-accent-glow)",
+  burgundy: "var(--c-ink-bg)", line: "var(--c-edge)",
 };
 // `S` retained as a name for backward compat, now points to Bricolage display (admin has no decorative serif glyphs)
 const S = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
@@ -24,7 +24,7 @@ const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
 const exportBtnStyle: React.CSSProperties = {
   padding: "8px 16px", borderRadius: 999, fontSize: 12, fontWeight: 600,
-  background: th.ink, color: "#fff", textDecoration: "none",
+  background: th.burgundy, color: "#fff", textDecoration: "none",
   fontFamily: '"Inter", system-ui, sans-serif',
   boxShadow: "0 2px 6px rgba(10,37,64,0.18)",
 };

@@ -10,8 +10,8 @@ import { renderMarkdown } from "@/lib/agents/markdown";
 export const dynamic = "force-dynamic";
 
 const th = {
-  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", sageDeep: "#3f7a52", line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", paper: "var(--c-surface)", ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", sageDeep: "var(--c-sage-deep)", line: "var(--c-edge)",
 };
 const D = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
@@ -72,7 +72,7 @@ export default async function LibraryArticle({ params }: { params: Promise<{ slu
           <div style={{ maxWidth: 760, margin: "0 auto", background: `linear-gradient(135deg, ${th.sage} 0%, ${th.sageDeep} 100%)`, borderRadius: 20, padding: "30px 34px", color: "#fff", textAlign: "center" }}>
             <h3 style={{ ...D, fontSize: 26, margin: "0 0 8px", letterSpacing: "-0.02em" }}>{tool.label}</h3>
             <p style={{ fontSize: 14.5, opacity: 0.9, margin: "0 0 20px" }}>{tool.sub}</p>
-            <Link href={tool.href} style={{ display: "inline-block", padding: "13px 24px", borderRadius: 999, background: "#fff", color: th.sageDeep, textDecoration: "none", fontWeight: 600, fontSize: 14 }}>Open the tool →</Link>
+            <Link href={tool.href} style={{ display: "inline-block", padding: "13px 24px", borderRadius: 999, background: "var(--c-surface)", color: th.sageDeep, textDecoration: "none", fontWeight: 600, fontSize: 14 }}>Open the tool →</Link>
           </div>
         </section>
 

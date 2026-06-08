@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 };
 
 const th = {
-  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", sageGlow: "rgba(91,163,115,0.10)", sageDeep: "#3f7a52",
-  burgundy: "#0a2540", line: "rgba(10,37,64,0.08)", amber: "#e8a04a",
+  bg: "var(--c-bg)", paper: "var(--c-surface)", ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", sageGlow: "var(--c-accent-glow)", sageDeep: "var(--c-sage-deep)",
+  burgundy: "var(--c-ink-bg)", line: "var(--c-edge)", amber: "var(--c-amber)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const D = { fontFamily: '"Bricolage Grotesque", system-ui, sans-serif' } as const;
@@ -361,12 +361,12 @@ export default async function ProfilePage() {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 const primaryBtn: React.CSSProperties = {
   padding: "14px 24px", borderRadius: 999, fontSize: 14, fontWeight: 600,
-  background: "#0a2540", color: "#fff", textDecoration: "none",
+  background: "var(--c-ink-bg)", color: "#fff", textDecoration: "none",
   boxShadow: "0 4px 14px rgba(10,37,64,0.18)",
 };
 const secondaryBtn: React.CSSProperties = {
   padding: "14px 24px", borderRadius: 999, fontSize: 14, fontWeight: 500,
-  background: "transparent", color: "#0a2540", textDecoration: "none",
+  background: "transparent", color: "var(--c-ink)", textDecoration: "none",
   border: "1px solid rgba(10,37,64,0.12)",
 };
 

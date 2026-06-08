@@ -15,11 +15,11 @@ import { track } from "@/lib/analytics";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
-  bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
-  ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", sageDeep: "#3f7a52", sageGlow: "rgba(91,163,115,0.10)",
-  burgundy: "#0a2540", burgundyDeep: "#0a2540",
-  line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", bgWarm: "var(--c-bg)", paper: "var(--c-surface)",
+  ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", sageDeep: "var(--c-sage-deep)", sageGlow: "var(--c-accent-glow)",
+  burgundy: "var(--c-ink-bg)", burgundyDeep: "var(--c-ink-bg)",
+  line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
@@ -315,7 +315,7 @@ export default function ResultsPage() {
           <a href={IHERB_HOME} target="_blank" rel="noopener noreferrer sponsored" style={{
             display: "inline-flex", alignItems: "center", gap: 10,
             padding: "16px 28px", borderRadius: 999, fontSize: 15, fontWeight: 600,
-            background: "#ffffff", color: th.burgundyDeep, textDecoration: "none",
+            background: "var(--c-surface)", color: th.burgundyDeep, textDecoration: "none",
           }}>
             Browse iHerb →
           </a>

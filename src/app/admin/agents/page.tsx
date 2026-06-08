@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const th = {
-  bg: "#f6f5f1", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280", sage: "#5ba373", line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)", sage: "var(--c-sage)", line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;

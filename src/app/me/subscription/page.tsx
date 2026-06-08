@@ -20,8 +20,8 @@ export const metadata: Metadata = {
 };
 
 const th = {
-  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", sageDeep: "#3f7a52", line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", paper: "var(--c-surface)", ink: "var(--c-ink)", burgundy: "var(--c-ink-bg)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", sageDeep: "var(--c-sage-deep)", line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 
@@ -173,7 +173,7 @@ function StripeManaged() {
       <form action="/api/stripe/portal" method="POST">
         <button type="submit" style={{
           padding: "12px 22px", borderRadius: 999, border: "none", cursor: "pointer",
-          background: th.ink, color: "#fff", fontFamily: '"Bricolage Grotesque", system-ui, sans-serif', fontWeight: 600, fontSize: 14.5,
+          background: th.burgundy, color: "#fff", fontFamily: '"Bricolage Grotesque", system-ui, sans-serif', fontWeight: 600, fontSize: 14.5,
         }}>Open billing portal →</button>
       </form>
     </Card>

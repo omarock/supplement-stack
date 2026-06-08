@@ -15,8 +15,8 @@ function cleanIherbImageUrl(url?: string): string | undefined {
 }
 
 const th = {
-  bg: "#f6f5f1", paper: "#ffffff", ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", paper: "var(--c-surface)", ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", burgundy: "var(--c-ink-bg)", line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
@@ -50,7 +50,7 @@ export default function StacksPage() {
           <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 24, flexWrap: "wrap" }}>
             <Link href="/build" style={{
               padding: "12px 22px", borderRadius: 999, fontSize: 14, fontWeight: 500,
-              background: th.ink, color: "#fff", border: `1.5px solid ${th.ink}`,
+              background: th.burgundy, color: "#fff", border: `1.5px solid ${th.ink}`,
               textDecoration: "none",
             }}>
               Build your own from scratch →
@@ -117,7 +117,7 @@ export default function StacksPage() {
                       }}>
                         {previewImages.map((p, idx) => (
                           <div key={idx} style={{
-                            background: "#ffffff",
+                            background: "var(--c-surface)",
                             borderRight: idx < previewImages.length - 1 ? `1px solid ${th.line}` : "none",
                             padding: "12px 8px",
                             display: "flex", alignItems: "center", justifyContent: "center",
@@ -167,7 +167,7 @@ export default function StacksPage() {
 
                       <div style={{
                         marginTop: 14, padding: "12px 14px", borderRadius: 999,
-                        background: th.ink, color: th.bg, textAlign: "center",
+                        background: th.burgundy, color: "#fff", textAlign: "center",
                         fontSize: 13, fontWeight: 600,
                       }}>
                         Explore stack →

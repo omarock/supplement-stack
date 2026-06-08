@@ -24,10 +24,10 @@ const BASE = "https://www.suppdoc.io";
 const LAST_REVIEWED = "2026-05-30";
 
 const th = {
-  bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
-  ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", sageDeep: "#3f7a52", sageGlow: "rgba(91,163,115,0.10)",
-  amber: "#e8a04a", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", bgWarm: "var(--c-bg)", paper: "var(--c-surface)",
+  ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", sageDeep: "var(--c-sage-deep)", sageGlow: "var(--c-accent-glow)",
+  amber: "var(--c-amber)", burgundy: "var(--c-ink-bg)", line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const D = { fontFamily: '"Bricolage Grotesque", system-ui, sans-serif' } as const;
@@ -35,7 +35,7 @@ const D = { fontFamily: '"Bricolage Grotesque", system-ui, sans-serif' } as cons
 function chip(): React.CSSProperties {
   return {
     display: "inline-flex", alignItems: "center", padding: "7px 14px", borderRadius: 999,
-    background: "#ffffff", border: "1px solid rgba(10,37,64,0.08)", color: "#3c4858",
+    background: "var(--c-surface)", border: "1px solid var(--c-edge)", color: "var(--c-ink-soft)",
     fontSize: 13, fontWeight: 500, textDecoration: "none",
   };
 }
@@ -242,7 +242,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             )}
             <Link href={`/ingredients/${slug}/research`} style={{
               padding: "6px 14px", borderRadius: 999, fontSize: 12, fontWeight: 600,
-              background: "#0a2540", color: "#fff", textDecoration: "none",
+              background: "var(--c-ink-bg)", color: "#fff", textDecoration: "none",
               ...MM, letterSpacing: "0.04em",
               display: "inline-flex", alignItems: "center", gap: 6,
             }}>
@@ -301,7 +301,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
               return (
                 <div style={{
                   width: 150, height: 150, flexShrink: 0, borderRadius: 16, overflow: "hidden",
-                  background: "#fff", border: `1px solid ${th.line}`,
+                  background: "var(--c-surface)", border: `1px solid ${th.line}`,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   {heroImg ? (
@@ -386,7 +386,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                   {/* Product image (clean white canvas) with a tidy fallback */}
                   <div style={{
                     position: "relative", height: 150, borderRadius: 12, overflow: "hidden", marginBottom: 14,
-                    background: "#ffffff", border: `1px solid ${th.line}`,
+                    background: "var(--c-surface)", border: `1px solid ${th.line}`,
                     display: "flex", alignItems: "center", justifyContent: "center",
                   }}>
                     {img ? (
@@ -651,7 +651,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
           </p>
           <Link href="/quiz" style={{
             display: "inline-flex", padding: "16px 36px", borderRadius: 999, fontSize: 15, fontWeight: 600,
-            background: "#fff", color: th.ink, textDecoration: "none",
+            background: "var(--c-surface)", color: th.ink, textDecoration: "none",
             boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
           }}>
             Take the quiz →
@@ -669,8 +669,8 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
 function FactRow({ label, value }: { label: string; value: string }) {
   return (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "10px 0", borderBottom: "1px solid rgba(10,37,64,0.06)" }}>
-      <span style={{ fontSize: 12, color: "#6b7280", ...MM, letterSpacing: "0.03em" }}>{label}</span>
-      <span style={{ fontSize: 13, color: "#0a2540", fontWeight: 500, textAlign: "right", maxWidth: "60%" }}>{value}</span>
+      <span style={{ fontSize: 12, color: "var(--c-muted)", ...MM, letterSpacing: "0.03em" }}>{label}</span>
+      <span style={{ fontSize: 13, color: "var(--c-ink)", fontWeight: 500, textAlign: "right", maxWidth: "60%" }}>{value}</span>
     </div>
   );
 }

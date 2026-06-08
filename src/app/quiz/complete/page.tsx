@@ -9,11 +9,11 @@ import SuppdocLogo from "@/components/SuppdocLogo";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
-  bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
-  ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", sageGlow: "rgba(91,163,115,0.12)",
-  burgundy: "#0a2540", burgundyDeep: "#0a2540",
-  line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", bgWarm: "var(--c-bg)", paper: "var(--c-surface)",
+  ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", sageGlow: "var(--c-accent-glow)",
+  burgundy: "var(--c-ink-bg)", burgundyDeep: "var(--c-ink-bg)",
+  line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;

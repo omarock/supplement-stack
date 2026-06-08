@@ -11,10 +11,10 @@ import ProductImageGallery from "@/components/ProductImageGallery";
 import BottleMockup from "@/components/BottleMockup";
 
 const th = {
-  bg: "#f6f5f1", bgWarm: "#f0eee8", paper: "#ffffff",
-  ink: "#0a2540", inkSoft: "#3c4858", inkMute: "#6b7280",
-  sage: "#5ba373", sageDeep: "#3f7a52", sageGlow: "rgba(91,163,115,0.10)",
-  amber: "#e8a04a", amazonOrange: "#ff9900", burgundy: "#0a2540", line: "rgba(10,37,64,0.08)",
+  bg: "var(--c-bg)", bgWarm: "var(--c-bg)", paper: "var(--c-surface)",
+  ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
+  sage: "var(--c-sage)", sageDeep: "var(--c-sage-deep)", sageGlow: "var(--c-accent-glow)",
+  amber: "var(--c-amber)", amazonOrange: "#ff9900", burgundy: "var(--c-ink-bg)", line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const D = { fontFamily: '"Bricolage Grotesque", system-ui, sans-serif' } as const;
@@ -304,7 +304,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                   {/* Product image (real photo, else branded bottle) */}
                   <div style={{
                     position: "relative", height: 150, borderRadius: 12, overflow: "hidden", marginBottom: 6,
-                    background: "#fff", border: `1px solid ${th.line}`,
+                    background: "var(--c-surface)", border: `1px solid ${th.line}`,
                     display: "flex", alignItems: "center", justifyContent: "center",
                   }}>
                     {img ? (
@@ -378,7 +378,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           </p>
           <Link href="/quiz" style={{
             display: "inline-flex", padding: "16px 36px", borderRadius: 999, fontSize: 15, fontWeight: 600,
-            background: "#fff", color: th.ink, textDecoration: "none",
+            background: "var(--c-surface)", color: th.ink, textDecoration: "none",
             boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
           }}>
             Take the quiz →
@@ -395,11 +395,11 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div style={{
-      background: "#ffffff", border: "1px solid rgba(10,37,64,0.08)", borderRadius: 14,
+      background: "var(--c-surface)", border: "1px solid var(--c-edge)", borderRadius: 14,
       padding: "16px 18px",
     }}>
       <div style={{
-        fontSize: 11, color: "#5ba373",
+        fontSize: 11, color: "var(--c-sage)",
         fontFamily: '"JetBrains Mono", monospace', letterSpacing: "0.1em",
         fontWeight: 600, marginBottom: 10,
       }}>
@@ -418,10 +418,10 @@ function KvRow({ label, value, last }: { label: string; value: string; last?: bo
       borderBottom: last ? "none" : "1px solid rgba(10,37,64,0.06)",
       gap: 12,
     }}>
-      <span style={{ fontSize: 12, color: "#6b7280", fontWeight: 500 }}>
+      <span style={{ fontSize: 12, color: "var(--c-muted)", fontWeight: 500 }}>
         {label}
       </span>
-      <span style={{ fontSize: 14, color: "#0a2540", fontWeight: 500, textAlign: "right" }}>
+      <span style={{ fontSize: 14, color: "var(--c-ink)", fontWeight: 500, textAlign: "right" }}>
         {value}
       </span>
     </div>
