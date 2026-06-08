@@ -3,7 +3,7 @@ import LegalPage from "@/components/LegalPage";
 
 export const metadata: Metadata = {
   title: "Refund & Cancellation Policy, suppdoc.io",
-  description: "suppdoc.io's refund and cancellation policy for premium subscriptions, including our 7-day money-back guarantee and how to cancel.",
+  description: "suppdoc.io's refund and cancellation policy for premium subscriptions, including our 14-day money-back guarantee and how to cancel.",
   alternates: { canonical: "https://www.suppdoc.io/refunds" },
 };
 
@@ -33,10 +33,10 @@ export default function Page() {
         renewal at the then-current price (we will notify you in advance of any price change).
       </p>
 
-      <h2>3. 7-day money-back guarantee</h2>
+      <h2>3. 14-day money-back guarantee</h2>
       <p>
         We want you to be happy with premium. If you are not satisfied, you may request a
-        <strong> full refund within 7 days</strong> of your initial purchase or of any renewal
+        <strong> full refund within 14 days</strong> of your initial purchase or of any renewal
         charge. Approved refunds are returned to your original payment method by Paddle, and your
         premium access ends when the refund is issued.
       </p>
@@ -46,7 +46,7 @@ export default function Page() {
         You can <strong>cancel anytime</strong> from your account settings (or via the link in any
         Paddle billing email). When you cancel, your subscription does not renew again and your
         premium access continues until the end of the period you have already paid for. We do not
-        provide pro-rated refunds for unused time after the 7-day window, but you keep access
+        provide pro-rated refunds for unused time after the 14-day window, but you keep access
         through the paid period.
       </p>
 
@@ -60,7 +60,7 @@ export default function Page() {
 
       <h2>6. Exceptional circumstances</h2>
       <p>
-        Refunds outside the 7-day window are at our discretion (for example, a confirmed technical
+        Refunds outside the 14-day window are at our discretion (for example, a confirmed technical
         fault that prevented you from using premium). Reach out and we will do our best to make it
         right.
       </p>

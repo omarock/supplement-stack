@@ -1,7 +1,8 @@
 import { NextRequest } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { weeklyDigestEmail } from "@/lib/email-templates";
-import { generateSummary } from "@/lib/tracker-summary";
+import { generateSummary, rulesSummary } from "@/lib/tracker-summary";
+import { emailIsPremium } from "@/lib/premium";
 import { computeStats, localDateKey, lastNDateKeys, type Checkin, type TrackerEnrollment } from "@/lib/tracker";
 
 export const dynamic = "force-dynamic";
@@ -77,7 +78,12 @@ export async function GET(req: NextRequest) {
     if (daysTracked < 3) { results.push({ email, status: "skip:low_activity" }); continue; }
 
     const stats = computeStats(checkins, enr as unknown as TrackerEnrollment, today);
-    const summary = await generateSummary(checkins, enr as unknown as TrackerEnrollment, today);
+    // Claude summary is Premium-only; free opt-ins still get a digest, built from the
+    // deterministic rules summary (zero API cost).
+    const premium = await emailIsPremium(email).catch(() => false);
+    const summary = premium
+      ? await generateSummary(checkins, enr as unknown as TrackerEnrollment, today)
+      : rulesSummary(checkins, enr as unknown as TrackerEnrollment, today);
 
     const payload = weeklyDigestEmail({
       headline: summary.headline,

@@ -1,6 +1,7 @@
 import { getAdminSupabase } from "@/lib/supabase-admin";
 import { getSessionUser } from "@/lib/auth-server";
-import { generateSummary } from "@/lib/tracker-summary";
+import { generateSummary, rulesSummary } from "@/lib/tracker-summary";
+import { emailIsPremium } from "@/lib/premium";
 import type { Checkin } from "@/lib/tracker";
 
 export const dynamic = "force-dynamic";
@@ -29,6 +30,11 @@ export async function POST() {
     .eq("user_email", user.email)
     .maybeSingle();
 
-  const summary = await generateSummary((data ?? []) as Checkin[], enr ?? null);
+  // Claude-powered summary is a Premium feature; free users get the deterministic
+  // rules summary (same data, zero API cost). Bounds API spend to paying users.
+  const premium = await emailIsPremium(user.email).catch(() => false);
+  const summary = premium
+    ? await generateSummary((data ?? []) as Checkin[], enr ?? null)
+    : rulesSummary((data ?? []) as Checkin[], enr ?? null);
   return Response.json({ ok: true, summary });
 }
