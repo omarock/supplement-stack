@@ -121,7 +121,7 @@ export default function QuizChooserView({ locale }: { locale: Locale }) {
                 <div style={{ ...D, fontSize: 16, color: TH.ink, marginBottom: 4 }}>{t("quiz.buildTitle")}</div>
                 <div style={{ fontSize: 13, color: TH.muted, lineHeight: 1.5 }}>{t("quiz.buildDesc")}</div>
               </Link>
-              <Link href="/audit" style={otherServiceStyle()}>
+              <Link href={navHref("/audit", locale)} style={otherServiceStyle()}>
                 <div style={{ ...D, fontSize: 16, color: TH.ink, marginBottom: 4 }}>{t("quiz.auditTitle")}</div>
                 <div style={{ fontSize: 13, color: TH.muted, lineHeight: 1.5 }}>{t("quiz.auditDesc")}</div>
               </Link>

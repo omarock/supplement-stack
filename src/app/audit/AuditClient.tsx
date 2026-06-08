@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import { TH, FONTS } from "@/lib/theme";
+import { useT } from "@/components/I18nProvider";
 import type { AuditResponse, AuditFinding } from "@/app/api/audit-stack/route";
 import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
 import TrackStackCTA from "@/components/TrackStackCTA";
@@ -24,6 +25,7 @@ Iron 25mg
 Calcium 500mg`;
 
 export default function AuditClient() {
+  const { t, lh } = useT();
   const [text, setText] = useState("");
   const [bloodwork, setBloodwork] = useState("");
   const [showLabs, setShowLabs] = useState(false);
@@ -43,7 +45,7 @@ export default function AuditClient() {
       });
       const body: AuditResponse = await res.json();
       if (!body.ok) {
-        setError(body.error ?? "Something went wrong.");
+        setError(body.error ?? t("audit.somethingWrong"));
       } else {
         setResult(body);
         track("audit_run", { score: body.score ?? 0, poweredBy: body.poweredBy ?? "rules", detected: body.detected?.length ?? 0 });
@@ -53,11 +55,11 @@ export default function AuditClient() {
         }, 80);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Network error");
+      setError(err instanceof Error ? err.message : t("audit.networkError"));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   return (
     <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 80px" }}>
@@ -67,18 +69,18 @@ export default function AuditClient() {
           <div style={{
             ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em",
             marginBottom: 14, textTransform: "uppercase",
-          }}>Service 03 · Stack Audit</div>
+          }}>{t("audit.eyebrow")}</div>
           <h1 style={{
             ...D, fontSize: "clamp(36px, 6vw, 60px)", lineHeight: 1.04,
             letterSpacing: "-0.03em", margin: "0 0 16px",
           }}>
-            Audit your current <span style={SI}>stack</span>.
+            {t("audit.h1pre")} <span style={SI}>{t("audit.h1em")}</span>{t("audit.h1post")}
           </h1>
           <p style={{
             fontSize: 18, color: TH.inkSoft, maxWidth: 620, margin: "0 auto",
             lineHeight: 1.55,
           }}>
-            Paste what you take today. We&apos;ll find what&apos;s redundant, missing, risky, or mistimed, then suggest a cleaner version. Add your recent bloodwork for a deeper, lab-aware check. Free, instant, no signup.
+            {t("audit.intro")}
           </p>
         </header>
 
@@ -92,7 +94,7 @@ export default function AuditClient() {
             display: "flex", justifyContent: "space-between", alignItems: "center",
             fontSize: 13, fontWeight: 500, color: TH.inkSoft, marginBottom: 10,
           }}>
-            <span>Your current supplements (one per line, include dose if you know it)</span>
+            <span>{t("audit.inputLabel")}</span>
             <button
               type="button"
               onClick={() => setText(EXAMPLE_STACK)}
@@ -101,7 +103,7 @@ export default function AuditClient() {
                 color: TH.sageDeep, fontSize: 12.5, fontWeight: 500, padding: 0,
               }}
             >
-              Load example
+              {t("audit.loadExample")}
             </button>
           </label>
 
@@ -137,14 +139,14 @@ export default function AuditClient() {
                   fontFamily: FONTS.body, display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                 }}
               >
-                <span aria-hidden>🩸</span> Add recent lab results for a deeper, lab-aware audit
-                <span style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.04em" }}>OPTIONAL</span>
+                <span aria-hidden>🩸</span> {t("audit.addLabs")}
+                <span style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.04em" }}>{t("audit.optional")}</span>
               </button>
             ) : (
               <div>
                 <label htmlFor="audit-labs" style={{ display: "block", fontSize: 13, fontWeight: 500, color: TH.inkSoft, marginBottom: 8 }}>
-                  Recent lab / bloodwork results
-                  <span style={{ color: TH.muted, fontWeight: 400 }}> we&apos;ll cross-check them against your stack (flag conflicts, spot deficiencies)</span>
+                  {t("audit.labsLabel")}
+                  <span style={{ color: TH.muted, fontWeight: 400 }}> {t("audit.labsHint")}</span>
                 </label>
                 <textarea
                   id="audit-labs"
@@ -173,7 +175,7 @@ export default function AuditClient() {
             marginTop: 14, flexWrap: "wrap", gap: 10,
           }}>
             <div style={{ fontSize: 12, color: TH.muted, lineHeight: 1.5 }}>
-              <strong style={{ color: TH.inkSoft }}>Privacy:</strong> What you paste isn&apos;t stored. Educational use only, not medical advice.
+              <strong style={{ color: TH.inkSoft }}>{t("audit.privacyLabel")}</strong> {t("audit.privacyBody")}
             </div>
             <button
               type="button"
@@ -194,7 +196,7 @@ export default function AuditClient() {
                 <ThinkingMessages phrases={PHRASES.audit} interval={900} />
               ) : (
                 <>
-                  Audit my stack
+                  {t("audit.auditBtn")}
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                     <path d="M5 12h14M13 5l7 7-7 7" />
                   </svg>
@@ -219,19 +221,19 @@ export default function AuditClient() {
             <div style={{
               ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.12em",
               marginBottom: 14, textAlign: "center", textTransform: "uppercase",
-            }}>What we check</div>
+            }}>{t("audit.whatWeCheck")}</div>
             <div style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
               gap: 12,
             }}>
               {[
-                { ic: "⚠", t: "Interactions", d: "Iron + calcium, NMN without methyl donor, NSAID-like stacking." },
-                { ic: "↻", t: "Redundancies", d: "Two omega-3s, CoQ10 + ubiquinol, three magnesiums." },
-                { ic: "✚", t: "Missing nutrients", d: "Foundational gaps you might want to fix." },
-                { ic: "◐", t: "Timing", d: "What to take morning vs evening, on empty stomach, etc." },
-                { ic: "$", t: "Cost analysis", d: "Spot waste, same effect for less." },
-                { ic: "★", t: "Evidence quality", d: "Each pick scored by published research." },
+                { ic: "⚠", t: t("audit.checkInteractions"), d: t("audit.checkInteractionsD") },
+                { ic: "↻", t: t("audit.checkRedundancies"), d: t("audit.checkRedundanciesD") },
+                { ic: "✚", t: t("audit.checkMissing"), d: t("audit.checkMissingD") },
+                { ic: "◐", t: t("audit.checkTiming"), d: t("audit.checkTimingD") },
+                { ic: "$", t: t("audit.checkCost"), d: t("audit.checkCostD") },
+                { ic: "★", t: t("audit.checkEvidence"), d: t("audit.checkEvidenceD") },
               ].map(item => (
                 <div key={item.t} style={{
                   padding: "16px 18px", background: TH.surface,
@@ -253,7 +255,7 @@ export default function AuditClient() {
           <section id="audit-result" style={{ marginTop: 36, animation: "sd-fade-in .4s ease-out" }}>
             <AuditResult data={result} onRedo={() => { setResult(null); setText(""); setBloodwork(""); setShowLabs(false); }} />
             <div style={{ maxWidth: 760, margin: "24px auto 0" }}>
-              <EmailCapture source="audit" headline="Get your audit by email" sub="We'll send your audit plus a short weekly evidence brief. No spam, unsubscribe anytime." />
+              <EmailCapture source="audit" headline={t("audit.emailHeadline")} sub={t("audit.emailSub")} />
             </div>
           </section>
         )}
@@ -264,6 +266,7 @@ export default function AuditClient() {
 
 // ─── Audit result UI ──────────────────────────────────────────────────────
 function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void }) {
+  const { t, lh } = useT();
   const scoreColor = data.score >= 85 ? TH.sageDeep : data.score >= 65 ? TH.amberDeep : "#b91c1c";
   const matchedCount = data.detected.filter(d => d.matched).length;
   const unmatched = data.detected.filter(d => !d.matched);
@@ -283,13 +286,13 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
           <ScoreRing value={data.score} color={scoreColor} />
           <div>
             <div style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.12em", marginBottom: 4, textTransform: "uppercase" }}>
-              Stack score
+              {t("audit.stackScore")}
             </div>
             <div style={{ ...D, fontSize: 30, color: TH.ink, letterSpacing: "-0.02em", lineHeight: 1 }}>
-              {data.score >= 85 ? "Strong stack." : data.score >= 65 ? "Decent, with room." : data.score >= 50 ? "Needs cleanup." : "Significant issues."}
+              {data.score >= 85 ? t("audit.verdictStrong") : data.score >= 65 ? t("audit.verdictDecent") : data.score >= 50 ? t("audit.verdictCleanup") : t("audit.verdictIssues")}
             </div>
             <div style={{ fontSize: 13.5, color: TH.muted, marginTop: 6 }}>
-              {matchedCount} ingredient{matchedCount === 1 ? "" : "s"} recognized
+              {matchedCount === 1 ? t("audit.recognized1", { n: matchedCount }) : t("audit.recognizedN", { n: matchedCount })}
               {data.monthlyCostEstimate ? ` · ~$${data.monthlyCostEstimate}/mo` : ""}
             </div>
           </div>
@@ -298,13 +301,13 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
           display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-end", gap: 8,
         }}>
           <span style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-            {data.poweredBy === "claude" ? "Powered by Claude" : "Rule-based audit"}
+            {data.poweredBy === "claude" ? t("audit.poweredClaude") : t("audit.poweredRules")}
           </span>
           <button onClick={onRedo} style={{
             padding: "8px 14px", borderRadius: 999, fontSize: 12.5, fontWeight: 500,
             background: TH.bg, border: `1px solid ${TH.edge}`, color: TH.ink, cursor: "pointer",
           }}>
-            Audit another stack
+            {t("audit.auditAnother")}
           </button>
         </div>
       </div>
@@ -318,7 +321,7 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
             <FindingBadge kind={g.kind} />
             <h2 style={{ ...D, fontSize: 18, color: TH.ink, margin: 0, letterSpacing: "-0.015em" }}>
-              {g.label}{" "}
+              {t(g.labelKey)}{" "}
               <span style={{ color: TH.muted, fontWeight: 500, fontSize: 14, ...MM }}>· {g.items.length}</span>
             </h2>
           </div>
@@ -343,9 +346,9 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
         }}>
           <span style={{ fontSize: 22 }} aria-hidden>🌿</span>
           <div>
-            <div style={{ ...D, fontSize: 17, color: TH.sageDeep, marginBottom: 2 }}>Clean stack.</div>
+            <div style={{ ...D, fontSize: 17, color: TH.sageDeep, marginBottom: 2 }}>{t("audit.cleanTitle")}</div>
             <div style={{ fontSize: 13.5, color: TH.inkSoft }}>
-              We didn&apos;t find any interactions, redundancies, or major gaps. Stay consistent and re-audit if you change anything.
+              {t("audit.cleanBody")}
             </div>
           </div>
         </div>
@@ -360,9 +363,9 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
           <div style={{
             ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em",
             marginBottom: 10, textTransform: "uppercase",
-          }}>Recommended additions</div>
+          }}>{t("audit.recoAdditions")}</div>
           <h2 style={{ ...D, fontSize: 20, color: TH.ink, margin: "0 0 14px", letterSpacing: "-0.015em" }}>
-            What we&apos;d add to make it complete
+            {t("audit.recoHeading")}
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {data.suggestedStack.slice(0, 6).map(s => (
@@ -394,7 +397,7 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
           borderRadius: 14, padding: "16px 18px",
         }}>
           <div style={{ fontSize: 13, color: TH.muted, marginBottom: 6 }}>
-            We couldn&apos;t recognize these, likely brand-specific or outside our 200+ ingredient library:
+            {t("audit.unmatched")}
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {unmatched.map((u, i) => (
@@ -409,7 +412,7 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
 
       {/* WOW → HOOK: track the audited stack over time */}
       <TrackStackCTA
-        stackName="My audited stack"
+        stackName={t("audit.trackStackName")}
         stackIds={data.detected.filter(d => d.matched && d.id).map(d => d.id!)}
         source="audit"
       />
@@ -420,20 +423,20 @@ function AuditResult({ data, onRedo }: { data: AuditResponse; onRedo: () => void
         padding: "26px 28px", textAlign: "center",
       }}>
         <h3 style={{ ...D, fontSize: 22, margin: "0 0 8px", letterSpacing: "-0.015em" }}>
-          Want a fresh stack instead?
+          {t("audit.freshTitle")}
         </h3>
         <p style={{ fontSize: 14, opacity: 0.85, margin: "0 0 18px" }}>
-          Take the quiz or describe your goals in plain English, we&apos;ll compose one from scratch.
+          {t("audit.freshBody")}
         </p>
         <div style={{ display: "flex", justifyContent: "center", gap: 10, flexWrap: "wrap" }}>
-          <Link href="/quiz" style={ctaBtn(TH.surface, TH.ink)}>Take the quiz →</Link>
-          <Link href="/build" style={ctaBtn("transparent", TH.surface, true)}>Describe my goals →</Link>
+          <Link href={lh("/quiz")} style={ctaBtn(TH.surface, TH.ink)}>{t("audit.freshQuiz")}</Link>
+          <Link href={lh("/build")} style={ctaBtn("transparent", TH.surface, true)}>{t("audit.freshBuild")}</Link>
         </div>
       </div>
 
       {/* Disclaimer */}
       <p style={{ fontSize: 12, color: TH.muted, lineHeight: 1.6, marginTop: 12, textAlign: "center" }}>
-        Educational use only, not medical advice. Always consult a qualified clinician before changing your supplements, especially if you have medical conditions, take prescription medications, or are pregnant or nursing.
+        {t("audit.disclaimer")}
       </p>
 
       <style>{`
@@ -484,16 +487,16 @@ function FindingBadge({ kind }: { kind: AuditFinding["kind"] }) {
 
 function groupFindings(findings: AuditFinding[]) {
   const order: AuditFinding["kind"][] = ["warning", "redundant", "missing", "timing", "cost", "info"];
-  const labels: Record<AuditFinding["kind"], string> = {
-    warning: "Safety & interactions",
-    redundant: "Redundancies",
-    missing: "What's missing",
-    timing: "Timing & absorption",
-    cost: "Cost",
-    info: "Notes",
+  const labelKeys: Record<AuditFinding["kind"], string> = {
+    warning: "audit.grpWarning",
+    redundant: "audit.grpRedundant",
+    missing: "audit.grpMissing",
+    timing: "audit.grpTiming",
+    cost: "audit.grpCost",
+    info: "audit.grpInfo",
   };
   return order
-    .map(kind => ({ kind, label: labels[kind], items: findings.filter(f => f.kind === kind) }))
+    .map(kind => ({ kind, labelKey: labelKeys[kind], items: findings.filter(f => f.kind === kind) }))
     .filter(g => g.items.length > 0);
 }
 
