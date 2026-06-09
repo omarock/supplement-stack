@@ -142,8 +142,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BRAND_JSONLD) }} />
-        <I18nProvider locale="en" messages={getDict("en")}>{children}</I18nProvider>
-        <DeferredWidgets />
+        <I18nProvider locale="en" messages={getDict("en")}>
+          {children}
+          {/* DeferredWidgets (cookie banner + chat) MUST live inside the provider,
+              or CookieConsent's useT() has no i18n context and renders raw
+              "cookie.*" keys to every first-time visitor. */}
+          <DeferredWidgets />
+        </I18nProvider>
         <ConsentedAnalytics />
         <GoogleAnalytics />
       </body>
