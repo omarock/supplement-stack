@@ -58,8 +58,25 @@ export const metadata: Metadata = {
   },
 };
 
-// Brand entity for Google + AI search ("suppdoc" knowledge). Add real social
-// profile URLs to `sameAs` once they exist to strengthen the brand panel.
+// Brand entity for Google + AI search ("suppdoc" knowledge graph).
+// TODO(founder): add suppdoc.io's REAL public profile URLs below so Google and AI
+// engines (ChatGPT/Perplexity/Gemini) can consolidate the "suppdoc" entity. This
+// is the single biggest fix for the brand-name collision with suppdoc.co. Each
+// must be a live, public URL. Once added, `sameAs` activates automatically.
+const BRAND_SAMEAS: string[] = [
+  // "https://www.reddit.com/user/<your-handle>",
+  // "https://www.producthunt.com/@<your-handle>",
+  // "https://x.com/<your-handle>",
+  // "https://www.linkedin.com/company/suppdoc",
+  // "https://www.instagram.com/<your-handle>",
+];
+
+// TODO(founder): name the real founder to strengthen E-E-A-T (a health site needs a
+// human behind it). Set once you approve being named publicly; then it activates.
+// `as` cast (not a plain annotation) so TS does not narrow this const to the
+// literal `null` and flag the `founder` branch below as unreachable.
+const BRAND_FOUNDER = null as null | { name: string; url?: string; jobTitle?: string };
+
 const BRAND_JSONLD = {
   "@context": "https://schema.org",
   "@graph": [
@@ -69,8 +86,41 @@ const BRAND_JSONLD = {
       name: "suppdoc",
       alternateName: "suppdoc.io",
       url: "https://www.suppdoc.io",
-      logo: "https://www.suppdoc.io/favicon.svg",
+      // TODO(founder): drop a 512x512 PNG at /public/logo-512.png and switch this
+      // url to it (Google prefers a raster logo >=112x112 for the brand result).
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.suppdoc.io/favicon.svg",
+      },
       description: "Evidence-graded supplement platform. Personalised stacks, interaction checking, and bloodwork analysis, we don't sell our own supplements.",
+      slogan: "Evidence over hype.",
+      email: "hello@suppdoc.io",
+      knowsAbout: [
+        "dietary supplements",
+        "evidence-based supplementation",
+        "supplement interactions",
+        "supplement dosing and timing",
+        "bloodwork and biomarker interpretation",
+        "vitamins and minerals",
+      ],
+      publishingPrinciples: "https://www.suppdoc.io/editorial",
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "hello@suppdoc.io",
+        contactType: "customer support",
+        availableLanguage: ["en", "fr", "de", "es"],
+      },
+      ...(BRAND_SAMEAS.length ? { sameAs: BRAND_SAMEAS } : {}),
+      ...(BRAND_FOUNDER
+        ? {
+            founder: {
+              "@type": "Person",
+              name: BRAND_FOUNDER.name,
+              ...(BRAND_FOUNDER.url ? { url: BRAND_FOUNDER.url } : {}),
+              ...(BRAND_FOUNDER.jobTitle ? { jobTitle: BRAND_FOUNDER.jobTitle } : {}),
+            },
+          }
+        : {}),
     },
     {
       "@type": "WebSite",

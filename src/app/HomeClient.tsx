@@ -852,7 +852,7 @@ function StrongestEvidence() {
                     <div style={{ position: "relative", height: 172, background: "#fff", borderBottom: `1px solid ${TH.edge}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
                       {img ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={img} alt={`${p?.brand ?? ""} ${s.name.split(" (")[0]}`} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 18 }} />
+                        <img src={img} alt={`${p?.brand ?? ""} ${s.name.split(" (")[0]}`} loading="lazy" width={500} height={500} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 18 }} />
                       ) : (
                         <div aria-hidden style={{ width: 64, height: 96, borderRadius: 32, background: `linear-gradient(135deg, ${s.hue}, ${s.hue}cc)`, boxShadow: `0 16px 32px -10px ${s.hue}77`, position: "relative", overflow: "hidden" }}>
                           <div style={{ position: "absolute", top: 8, left: 10, right: 10, height: "30%", background: "linear-gradient(180deg, rgba(255,255,255,0.55), transparent)", borderRadius: 32 }} />
