@@ -5,6 +5,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import DeferredWidgets from "@/components/DeferredWidgets";
 import { I18nProvider } from "@/components/I18nProvider";
 import { getDict } from "@/lib/i18n-dicts";
+import { FOUNDER } from "@/lib/social-proof";
 import "./globals.css";
 
 // Self-hosted at build time via next/font: no render-blocking request to Google,
@@ -71,11 +72,8 @@ const BRAND_SAMEAS: string[] = [
   // "https://www.instagram.com/<your-handle>",
 ];
 
-// TODO(founder): name the real founder to strengthen E-E-A-T (a health site needs a
-// human behind it). Set once you approve being named publicly; then it activates.
-// `as` cast (not a plain annotation) so TS does not narrow this const to the
-// literal `null` and flag the `founder` branch below as unreachable.
-const BRAND_FOUNDER = null as null | { name: string; url?: string; jobTitle?: string };
+// Founder for the schema is sourced from FOUNDER in @/lib/social-proof — the single
+// place to set founder identity (also drives the on-page FounderNote block).
 
 const BRAND_JSONLD = {
   "@context": "https://schema.org",
@@ -111,13 +109,13 @@ const BRAND_JSONLD = {
         availableLanguage: ["en", "fr", "de", "es"],
       },
       ...(BRAND_SAMEAS.length ? { sameAs: BRAND_SAMEAS } : {}),
-      ...(BRAND_FOUNDER
+      ...(FOUNDER
         ? {
             founder: {
               "@type": "Person",
-              name: BRAND_FOUNDER.name,
-              ...(BRAND_FOUNDER.url ? { url: BRAND_FOUNDER.url } : {}),
-              ...(BRAND_FOUNDER.jobTitle ? { jobTitle: BRAND_FOUNDER.jobTitle } : {}),
+              name: FOUNDER.name,
+              ...(FOUNDER.url ? { url: FOUNDER.url } : {}),
+              ...(FOUNDER.title ? { jobTitle: FOUNDER.title } : {}),
             },
           }
         : {}),

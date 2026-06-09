@@ -10,6 +10,8 @@ import SiteFooter from "@/components/SiteFooter";
 import HeroSpotlight from "@/components/home/HeroSpotlightLazy";
 import StackBox from "@/components/home/StackBox";
 import AuthCodeCatcher from "@/components/home/AuthCodeCatcher";
+import SocialProof from "@/components/SocialProof";
+import FounderNote from "@/components/FounderNote";
 import { TH, FONTS, D, SI, MM } from "@/lib/theme";
 import { STACKS } from "@/lib/stacks";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
@@ -911,11 +913,13 @@ export default function HomePage() {
         {/* Show the actual output early (reduces uncertainty), then the trust
             reasons, before the deeper how/ingredient detail. */}
         <Sample />
+        <SocialProof />
         <Testimonials />
         <How />
         <Ingredients />
         <Stats />
         <FAQ />
+        <FounderNote />
         <CTA />
       </main>
       <SiteFooter />
