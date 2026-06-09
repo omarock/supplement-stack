@@ -206,7 +206,6 @@ export const RESEARCH_VOLUME: Record<string, ResearchVolume> = {
   "pomegranate": { term: "Pomegranate", count: 240 },
   "bitter-melon": { term: "Bitter Melon", count: 37 },
   "dong-quai": { term: "Dong Quai", count: 35 },
-  "DONE rows=201": { term: "", count: 0 },
 };
 
 export const RESEARCH_VOLUME_AS_OF = "2026-06-05";

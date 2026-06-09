@@ -394,7 +394,7 @@ function Stats() {
           display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 30,
         }}>
           {[
-            ["150+", "researched ingredients in the library"],
+            [`${INGREDIENT_COUNT}+`, "researched ingredients in the library"],
             [`${STACKS.length}`, "ready-made stacks to start from"],
             ["$0", "to use, we never sell our own pills"],
           ].map(([n, l], i) => (

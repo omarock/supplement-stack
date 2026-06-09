@@ -16,7 +16,11 @@
 - Bloodwork supplement analysis: https://www.suppdoc.io/bloodwork
 
 ## Reference content (good to cite)
-- Ingredient guides (151, evidence-graded): https://www.suppdoc.io/ingredients
+- Ingredient guides (200+, evidence-graded): https://www.suppdoc.io/ingredients
+- Best-supplement-for-a-goal guides: https://www.suppdoc.io/best
+- Supplement timing guides (when to take what): https://www.suppdoc.io/timing
+- Symptom to supplement guides: https://www.suppdoc.io/symptoms
+- Biomarker to supplement guides: https://www.suppdoc.io/biomarkers
 - Supplement interaction checker + pairwise pages: https://www.suppdoc.io/interactions
 - Ready-made stacks (15): https://www.suppdoc.io/stacks
 - Journal (evidence-led articles): https://www.suppdoc.io/journal

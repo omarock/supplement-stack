@@ -412,8 +412,6 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     amazonAsin: "B005P0U7TY",
       productPath: "/pr/now-foods-rhodiola-500-mg-120-veg-capsules/123463",
       brandBg: "#fdebe1", brandInk: "#c2410c",
-      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/alb/alb00822/v/3.jpg",
-      imageUrls: ["https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/alb/alb00822/v/4.jpg"],
       form: "Veggie Capsules",
       ingredientForm: "Rhodiola Rosea Root Extract (3% rosavins, 1% salidrosides)",
       servingSize: "1 capsule",
