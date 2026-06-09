@@ -20,6 +20,11 @@ export default async function LocaleLayout({
   if (!isLocale(locale) || locale === DEFAULT_LOCALE) notFound();
   return (
     <I18nProvider locale={locale} messages={getDict(locale)}>
+      {/* The <html> element lives in the root layout (above this segment) and is
+          hardcoded lang="en". Correct it for fr/de/es before paint, mirroring the
+          THEME_INIT pattern, so screen readers and Chrome auto-translate see the
+          right language. hreflang in <head> carries the SEO signal. */}
+      <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang=${JSON.stringify(locale)};` }} />
       {children}
     </I18nProvider>
   );

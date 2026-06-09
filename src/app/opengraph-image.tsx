@@ -67,7 +67,7 @@ export default async function Image() {
           borderTop: "2px solid rgba(10,37,64,0.1)",
         }}>
           <div style={{ display: "flex", gap: 50, fontSize: 22, color: "#3c4858", fontWeight: 500 }}>
-            <span>📚 150+ ingredients</span>
+            <span>📚 200+ ingredients</span>
             <span>🌿 15 ready-made stacks</span>
             <span>⚡ Evidence-based</span>
           </div>

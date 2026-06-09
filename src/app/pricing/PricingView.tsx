@@ -6,6 +6,7 @@ import { getSubscription, isPremium } from "@/lib/premium";
 import { stripeEnabled } from "@/lib/stripe";
 import { paddleConfigured, paddleClientConfig } from "@/lib/paddle";
 import { foundingStats } from "@/lib/agents/store";
+import { FOUNDING_MODE } from "@/lib/billing-mode";
 
 // Founding-member validation phase: automated recurring billing (Paddle) was
 // declined for the health/supplements category, so we sell a one-time lifetime
@@ -13,7 +14,7 @@ import { foundingStats } from "@/lib/agents/store";
 // hand in /admin. Flip to false once a real recurring processor (Stripe via a US
 // entity) is live, and the normal monthly/annual checkout returns automatically.
 // Shared by the English route (/pricing) and the localized routes (/fr|/de|/es/pricing).
-const FOUNDING_MODE = true;
+// FOUNDING_MODE now lives in @/lib/billing-mode so the /refunds page reads the same flag.
 
 export default async function PricingView() {
   const user = await getSessionUser();
