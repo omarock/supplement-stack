@@ -213,7 +213,7 @@ export default function ResultsPage() {
 
         {/* Email capture, after the user has their stack */}
         <section style={{ marginBottom: 56 }}>
-          <EmailCapture source="quiz-results" headline="Want your stack emailed to you?" sub="Get your personalised stack plus a short weekly evidence brief. No spam, unsubscribe anytime." tone="dark" />
+          <EmailCapture source="quiz-results" headline="Get evidence-led updates" sub="Join the list and we'll send occasional, no-hype updates so you can pick up where you left off. No spam, unsubscribe anytime." tone="dark" />
         </section>
 
         {/* Reasoning */}

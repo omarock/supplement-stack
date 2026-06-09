@@ -136,7 +136,7 @@ export default function InteractionsIndex() {
           </section>
 
           <section style={{ marginTop: 8, marginBottom: 30 }}>
-            <EmailCapture source="interactions" headline="One safe-stacking tip a week" sub="A short weekly brief on what works together, what to separate, and what to skip. Evidence-led, no spam." cta="Get the brief" />
+            <EmailCapture source="interactions" headline="Safe-stacking tips" sub="Occasional, evidence-led emails on what works together, what to separate, and what to skip. No spam." cta="Get updates" />
           </section>
 
           <section style={{ marginTop: 8, marginBottom: 24 }}>

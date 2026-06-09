@@ -11,6 +11,7 @@ import { TIMING, TIMING_IDS, timingIndexable } from "@/lib/timing";
 import { SYMPTOMS, SYMPTOM_SLUGS, symptomIndexable } from "@/lib/symptoms";
 import { directionParams } from "@/lib/biomarker-directions";
 import { allPublishedDrafts } from "@/lib/agents/store";
+import { PREFIXED_LOCALES, LOCALIZED_PATHS } from "@/lib/i18n";
 
 const BASE = "https://www.suppdoc.io";
 
@@ -166,6 +167,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${BASE}${path}`,
       lastModified: now, changeFrequency: "yearly", priority: 0.3,
     });
+  }
+
+  // ─── Localized routes (fr/de/es) for the pages we actually translate ───
+  // Previously absent from the sitemap, so Google could barely discover the
+  // shipped FR/DE/ES pages on a young domain. LOCALIZED_PATHS is the shared
+  // source of truth (also used by the language switcher).
+  for (const loc of PREFIXED_LOCALES) {
+    for (const path of LOCALIZED_PATHS) {
+      entries.push({
+        url: `${BASE}/${loc}${path === "/" ? "" : path}`,
+        lastModified: now,
+        changeFrequency: "monthly",
+        priority: path === "/" ? 0.8 : 0.55,
+      });
+    }
   }
 
   // Dedupe by URL (guards against any duplicate slug in the source data leaking

@@ -10,14 +10,15 @@ const MM = { fontFamily: FONTS.mono } as const;
 
 /**
  * Reusable email capture, placed at the result moment of each tool. Not a hard
- * gate (the free value is already shown); it offers to email the result plus the
- * weekly evidence brief, which is the on-brand way to grow the list for a
- * trust-first health product. Stores into email_signups with a per-tool source.
+ * gate (the free value is already shown); it offers occasional evidence-led
+ * updates, the on-brand way to grow the list for a trust-first health product.
+ * Stores into email_signups with a per-tool source. NOTE: no per-result email is
+ * sent yet, so copy must not promise "we'll email your results/stack/audit".
  */
 export default function EmailCapture({
   source,
-  headline = "Want this emailed to you?",
-  sub = "Get your results plus a short weekly evidence brief. No spam, unsubscribe anytime.",
+  headline = "Get evidence-led updates",
+  sub = "Join the list for an occasional, no-hype email on what's actually worth taking. No spam, unsubscribe anytime.",
   cta = "Email me this",
   tone = "light",
 }: {
@@ -54,7 +55,7 @@ export default function EmailCapture({
       {done ? (
         <div>
           <div style={{ ...D, fontSize: 17, color: fg, marginBottom: 4 }}>You&apos;re in 🎉</div>
-          <div style={{ fontSize: 14, color: fgSoft, lineHeight: 1.55 }}>Check your inbox. We&apos;ll send your results and the weekly brief from hello@suppdoc.io.</div>
+          <div style={{ fontSize: 14, color: fgSoft, lineHeight: 1.55 }}>You&apos;re on the list. We&apos;ll send occasional, evidence-led updates from hello@suppdoc.io, and never spam you.</div>
         </div>
       ) : (
         <>

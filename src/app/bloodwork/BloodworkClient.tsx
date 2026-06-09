@@ -302,7 +302,7 @@ export default function BloodworkClient({ signedIn, isPremium = false }: { signe
           <section id="bw-result" style={{ animation: "sd-fade-in .4s ease-out" }}>
             <AnalysisReport data={result} sourceKind={sourceKind} signedIn={signedIn} isPremium={isPremium} onReset={reset} isSample={isSample} />
             <div style={{ maxWidth: 760, margin: "24px auto 0" }}>
-              <EmailCapture source="bloodwork" headline="Get the weekly evidence brief" sub="A short weekly brief on supplements and biomarkers, evidence-led. We never email your lab data. Unsubscribe anytime." />
+              <EmailCapture source="bloodwork" headline="Get evidence-led updates" sub="Occasional, evidence-led emails on supplements and biomarkers. We never email your lab data. Unsubscribe anytime." />
             </div>
           </section>
         )}
