@@ -11,10 +11,6 @@ import { RESEARCH_STUDY_TOTAL } from "@/lib/research-volume";
 
 const fmt = (n: number) => n.toLocaleString("en-US");
 
-function initials(name: string) {
-  return name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase() ?? "").join("");
-}
-
 function Stars({ rating = 5 }: { rating?: number }) {
   return (
     <span aria-label={`${rating} out of 5`} style={{ display: "inline-flex", gap: 2, color: TH.amber, fontSize: 15, lineHeight: 1 }}>
@@ -28,33 +24,54 @@ function Stars({ rating = 5 }: { rating?: number }) {
 function Card({ t }: { t: Testimonial }) {
   return (
     <figure style={{
-      margin: 0, background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 20,
-      padding: "22px 22px 20px", display: "flex", flexDirection: "column", gap: 14, height: "100%",
-      boxShadow: `0 18px 40px -24px color-mix(in srgb, ${TH.ink} 28%, transparent)`,
+      margin: 0, position: "relative", overflow: "hidden",
+      background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 22,
+      padding: "26px 24px 22px", display: "flex", flexDirection: "column", gap: 16, height: "100%",
+      boxShadow: `0 20px 44px -26px color-mix(in srgb, ${TH.ink} 30%, transparent)`,
     }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        {typeof t.rating === "number" ? <Stars rating={t.rating} /> : <span aria-hidden style={{ ...D, fontSize: 26, lineHeight: 0.8, color: TH.edgeStrong }}>“</span>}
-        {t.verified ? (
-          <span style={{ ...MM, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: TH.sageDeep, display: "inline-flex", alignItems: "center", gap: 4 }}>
-            <span aria-hidden>✓</span> Verified member
-          </span>
-        ) : null}
-      </div>
-      <blockquote style={{ margin: 0, fontSize: 16, lineHeight: 1.55, color: TH.ink }}>“{t.quote}”</blockquote>
-      <figcaption style={{ display: "flex", alignItems: "center", gap: 12, marginTop: "auto" }}>
+      {/* Decorative quote mark */}
+      <span aria-hidden style={{
+        position: "absolute", top: -8, right: 16, ...SI, fontSize: 92, lineHeight: 1,
+        color: `color-mix(in srgb, ${TH.sage} 16%, transparent)`, pointerEvents: "none", userSelect: "none",
+      }}>”</span>
+
+      {typeof t.rating === "number" ? <Stars rating={t.rating} /> : null}
+
+      <blockquote style={{ margin: 0, fontSize: 16.5, lineHeight: 1.6, color: TH.ink, position: "relative", zIndex: 1 }}>
+        {t.quote}
+      </blockquote>
+
+      <figcaption style={{
+        display: "flex", alignItems: "center", gap: 12, marginTop: "auto",
+        paddingTop: 16, borderTop: `1px solid ${TH.edge}`,
+      }}>
         {t.avatarUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={t.avatarUrl} alt={t.name} width={40} height={40} style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover" }} />
+          <img src={t.avatarUrl} alt={t.name} width={42} height={42} style={{ width: 42, height: 42, borderRadius: "50%", objectFit: "cover" }} />
         ) : (
           <span aria-hidden style={{
-            width: 40, height: 40, borderRadius: "50%", flexShrink: 0,
-            background: `linear-gradient(135deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
-            display: "flex", alignItems: "center", justifyContent: "center", ...D, fontSize: 15,
-          }}>{initials(t.name)}</span>
+            width: 42, height: 42, borderRadius: "50%", flexShrink: 0,
+            background: `linear-gradient(135deg, ${TH.sage}, ${TH.sageDeep})`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: `0 0 0 3px color-mix(in srgb, ${TH.sage} 18%, transparent)`,
+          }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden>
+              <circle cx="12" cy="8" r="3.6" />
+              <path d="M4.5 20c0-3.9 3.4-6.2 7.5-6.2s7.5 2.3 7.5 6.2z" />
+            </svg>
+          </span>
         )}
-        <span style={{ display: "flex", flexDirection: "column" }}>
-          <span style={{ ...D, fontSize: 14.5, color: TH.ink }}>{t.name}</span>
-          {t.context ? <span style={{ fontSize: 12.5, color: TH.inkSoft }}>{t.context}</span> : null}
+        <span style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+          <span style={{ ...D, fontSize: 14.5, color: TH.ink, lineHeight: 1.1 }}>{t.name}</span>
+          {t.context ? (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 12.5, color: TH.inkSoft }}>
+              <svg width="11" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M12 22s7-5.6 7-11.5A7 7 0 0 0 5 10.5C5 16.4 12 22 12 22z" stroke={TH.sageDeep} strokeWidth="2" />
+                <circle cx="12" cy="10.5" r="2.4" fill={TH.sageDeep} />
+              </svg>
+              {t.context}
+            </span>
+          ) : null}
         </span>
       </figcaption>
     </figure>
@@ -101,6 +118,18 @@ export default function SocialProof() {
               We launched recently, and we'd rather show you nothing than fake it. As our founding members share results, their words land here, unedited. Until then, here's what you can verify yourself.
             </p>
           )}
+          {hasReviews ? (
+            <div style={{ marginTop: 20, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8 }}>
+              {["Evidence-graded", "No house brand", "Every claim links to its source"].map((c) => (
+                <span key={c} style={{
+                  ...MM, fontSize: 11, letterSpacing: "0.03em", color: TH.sageDeep,
+                  background: `color-mix(in srgb, ${TH.sage} 12%, transparent)`,
+                  border: `1px solid color-mix(in srgb, ${TH.sage} 22%, transparent)`,
+                  padding: "6px 13px", borderRadius: 999,
+                }}>{c}</span>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         {hasReviews ? (
