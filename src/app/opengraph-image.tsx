@@ -16,48 +16,54 @@ export default async function Image() {
           width: "100%", height: "100%",
           display: "flex", flexDirection: "column",
           background: "linear-gradient(135deg, #f6f5f1 0%, #ede9d8 100%)",
-          padding: 80,
+          padding: 64,
           position: "relative",
         }}
       >
-        {/* Sage accent stripe top */}
+        {/* Teal-to-coral accent stripe (capsule colours) */}
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, height: 8,
-          background: "linear-gradient(90deg, #5ba373 0%, #e8a04a 100%)",
+          background: "linear-gradient(90deg, #79c6bc 0%, #f0b49e 100%)",
         }} />
 
-        {/* Brand */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 70 }}>
-          {/* Sprout SVG inline */}
-          <svg width="60" height="60" viewBox="0 0 40 40" style={{ display: "block" }}>
-            <path d="M 20 36 Q 20 24 20 12" stroke="#3f7a52" strokeWidth="3" strokeLinecap="round" fill="none" />
-            <path d="M 20 23 Q 12 22 8 15 Q 14 14.5 20 23 Z" fill="#5ba373" />
-            <path d="M 20 19 Q 28 18 32 11 Q 26 10.5 20 19 Z" fill="#e8a04a" />
-            <circle cx="20" cy="10" r="4" fill="#e8a04a" />
-          </svg>
-          <div style={{ fontSize: 44, fontWeight: 700, color: "#0a2540", letterSpacing: "-0.02em", display: "flex" }}>
-            suppdoc<span style={{ color: "#5ba373" }}>.io</span>
+        {/* Brand: tilted teal+coral capsule + SuppDoc.io wordmark */}
+        <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 70 }}>
+          <div style={{ width: 68, height: 68, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 68, height: 32, borderRadius: 16, transform: "rotate(-35deg)", display: "flex", overflow: "hidden" }}>
+              <div style={{ flex: 1, height: "100%", background: "#79c6bc" }} />
+              <div style={{ width: 2, height: "100%", background: "#ffffff" }} />
+              <div style={{ flex: 1, height: "100%", background: "#f0b49e" }} />
+            </div>
+          </div>
+          <div style={{ fontSize: 48, fontWeight: 800, letterSpacing: "-0.02em", display: "flex" }}>
+            <span style={{ color: "#0f1a15" }}>Supp</span>
+            <span style={{ color: "#0c7a54" }}>Doc</span>
+            <span style={{ color: "#9db0a6" }}>.io</span>
           </div>
         </div>
 
-        {/* Headline */}
+        {/* Headline (each line is its own flex row so Satori lays out the mixed
+            italic/regular run correctly instead of overlapping the spans). */}
         <div style={{
-          fontSize: 88, lineHeight: 1.05, fontWeight: 400, color: "#0a2540",
+          fontSize: 78, lineHeight: 1.06, fontWeight: 400, color: "#0a2540",
           fontFamily: "Georgia, serif", letterSpacing: "-0.03em",
-          marginBottom: 28,
+          marginBottom: 22,
           display: "flex", flexDirection: "column",
         }}>
-          <span>Evidence-Based</span>
-          <span><i style={{ color: "#0a2540" }}>Personalised</i> Supplement Stacks</span>
+          <div style={{ display: "flex" }}>Evidence-Based</div>
+          <div style={{ display: "flex" }}>
+            <span style={{ fontStyle: "italic" }}>Personalised</span>
+            <span>&nbsp;Supplement Stacks</span>
+          </div>
         </div>
 
         {/* Subline */}
         <div style={{
-          fontSize: 28, color: "#3c4858", lineHeight: 1.4, maxWidth: 900,
-          marginBottom: 50,
+          fontSize: 27, color: "#3c4858", lineHeight: 1.4, maxWidth: 880,
+          marginBottom: 44, display: "flex",
         }}>
-          Take the quiz. Get a curated stack of 5-9 evidence-based supplements
-          tailored to your goals, body, and budget. From top-rated, third-party-tested brands.
+          Take the quiz and get a curated stack of 5-9 evidence-based supplements,
+          tailored to your goals, body, and budget.
         </div>
 
         {/* Bottom strip, stats + CTA */}
@@ -73,10 +79,10 @@ export default async function Image() {
           </div>
           <div style={{
             padding: "14px 32px", borderRadius: 999,
-            background: "#0a2540", color: "#ffffff",
+            background: "#0f1a15", color: "#ffffff",
             fontSize: 22, fontWeight: 600, display: "flex",
           }}>
-            suppdoc.io
+            SuppDoc.io
           </div>
         </div>
       </div>

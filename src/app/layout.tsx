@@ -50,11 +50,9 @@ export const metadata: Metadata = {
   applicationName: "suppdoc.io",
   keywords:
     "suppdoc, suppdoc.io, personalised supplement stack, supplement audit, supplement interaction checker, bloodwork supplement analysis, evidence-based supplements, personalized supplements",
-  icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-    ],
-  },
+  // Favicons come from the app-router file convention: app/favicon.ico,
+  // app/icon.png (512, PWA/stores), app/apple-icon.png (180). Next emits the
+  // <link> tags automatically, so no explicit `icons` override here.
   verification: {
     google: "g3pNVxrU5kcIHyzAwSKhh3JlUlomQ9c4WpiyBFniDFI",
   },
@@ -85,11 +83,12 @@ const BRAND_JSONLD = {
       name: "suppdoc",
       alternateName: "suppdoc.io",
       url: "https://www.suppdoc.io",
-      // TODO(founder): drop a 512x512 PNG at /public/logo-512.png and switch this
-      // url to it (Google prefers a raster logo >=112x112 for the brand result).
+      // Raster brand logo (Google prefers a raster >=112x112 for the brand panel).
       logo: {
         "@type": "ImageObject",
-        url: "https://www.suppdoc.io/favicon.svg",
+        url: "https://www.suppdoc.io/suppdoc-icon-512.png",
+        width: 512,
+        height: 512,
       },
       description: "Evidence-graded supplement platform. Personalised stacks, interaction checking, and bloodwork analysis, we don't sell our own supplements.",
       slogan: "Evidence over hype.",
@@ -135,7 +134,7 @@ const BRAND_JSONLD = {
 // No-flash theme init: runs before paint, reads the saved preference (or the OS
 // setting for "system") and sets <html data-theme>, which the CSS variables in
 // globals.css react to. Keeps the first render in the correct theme.
-const THEME_INIT = `(function(){try{var p=localStorage.getItem('sd-theme')||'light';var d=p==='dark'||(p==='system'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light';}catch(e){}})();`;
+const THEME_INIT = `(function(){try{var p=localStorage.getItem('sd-theme');document.documentElement.dataset.theme=p==='dark'?'dark':'light';}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

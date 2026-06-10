@@ -47,7 +47,7 @@ export function ogResponse({
           position: "relative",
         }}
       >
-        {/* Sage-to-amber accent stripe */}
+        {/* Teal-to-coral accent stripe (capsule colours) */}
         <div
           style={{
             position: "absolute",
@@ -55,28 +55,23 @@ export function ogResponse({
             left: 0,
             right: 0,
             height: 8,
-            background: "linear-gradient(90deg, #5ba373 0%, #e8a04a 100%)",
+            background: "linear-gradient(90deg, #79c6bc 0%, #f0b49e 100%)",
           }}
         />
 
-        {/* Brand */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 52 }}>
-          <svg width="56" height="56" viewBox="0 0 40 40" style={{ display: "block" }}>
-            <path d="M 20 36 Q 20 24 20 12" stroke="#3f7a52" strokeWidth="3" strokeLinecap="round" fill="none" />
-            <path d="M 20 23 Q 12 22 8 15 Q 14 14.5 20 23 Z" fill="#5ba373" />
-            <path d="M 20 19 Q 28 18 32 11 Q 26 10.5 20 19 Z" fill="#e8a04a" />
-            <circle cx="20" cy="10" r="4" fill="#e8a04a" />
-          </svg>
-          <div
-            style={{
-              fontSize: 40,
-              fontWeight: 700,
-              color: "#0a2540",
-              letterSpacing: "-0.02em",
-              display: "flex",
-            }}
-          >
-            suppdoc<span style={{ color: "#5ba373" }}>.io</span>
+        {/* Brand: tilted teal+coral capsule + SuppDoc.io wordmark */}
+        <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 52 }}>
+          <div style={{ width: 64, height: 64, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 64, height: 30, borderRadius: 15, transform: "rotate(-35deg)", display: "flex", overflow: "hidden" }}>
+              <div style={{ flex: 1, height: "100%", background: "#79c6bc" }} />
+              <div style={{ width: 2, height: "100%", background: "#ffffff" }} />
+              <div style={{ flex: 1, height: "100%", background: "#f0b49e" }} />
+            </div>
+          </div>
+          <div style={{ fontSize: 44, fontWeight: 800, letterSpacing: "-0.02em", display: "flex" }}>
+            <span style={{ color: "#0f1a15" }}>Supp</span>
+            <span style={{ color: "#0c7a54" }}>Doc</span>
+            <span style={{ color: "#9db0a6" }}>.io</span>
           </div>
         </div>
 
@@ -145,14 +140,14 @@ export function ogResponse({
             style={{
               padding: "14px 30px",
               borderRadius: 999,
-              background: "#0a2540",
+              background: "#0f1a15",
               color: "#ffffff",
               fontSize: 22,
               fontWeight: 600,
               display: "flex",
             }}
           >
-            suppdoc.io
+            SuppDoc.io
           </div>
         </div>
       </div>

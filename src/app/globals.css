@@ -31,6 +31,11 @@
   --c-warning:     #b5751e;
   --c-destructive: #b91c1c;
 
+  /* Brand logo wordmark fills (the capsule stays fixed teal+coral). */
+  --logo-supp: #0f1a15;  /* "Supp" */
+  --logo-doc:  #0c7a54;  /* "Doc"  */
+  --logo-io:   #9db0a6;  /* ".io"  */
+
   /* Responsive sizing tokens, desktop defaults */
   --hero-h1: 88px;
   --hero-h1-line: 0.96;
@@ -79,6 +84,11 @@
   --c-success:     #79c79b;
   --c-warning:     #ecb265;
   --c-destructive: #f6736f;
+
+  /* Brand logo wordmark fills, brightened for the dark surface. */
+  --logo-supp: #f4f7f5;
+  --logo-doc:  #3fc394;
+  --logo-io:   #8fa89b;
 }
 
 /* Smooth, opt-in theme transition. The toggle adds .theme-anim briefly while it
