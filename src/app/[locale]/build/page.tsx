@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import BuildClient from "@/app/build/BuildClient";
+import BuildClientLazy from "@/app/build/BuildClientLazy";
 import { isLocale, localeHref, lookup, DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
 import { getDict } from "@/lib/i18n-dicts";
 import { TH } from "@/lib/theme";
@@ -26,7 +26,7 @@ export default function Page() {
   return (
     <div style={{ minHeight: "100vh", background: TH.bg, color: TH.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
       <SiteHeader />
-      <BuildClient />
+      <BuildClientLazy />
       <SiteFooter />
     </div>
   );
