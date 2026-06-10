@@ -127,7 +127,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
         <aside className="sdauth-brand" aria-hidden="true">
           <div className="sdauth-brand-glow" />
           <div style={{ position: "relative", zIndex: 1 }}>
-            <SuppdocLogo size={24} color="#ffffff" accent={TH.amber} />
+            <SuppdocLogo size={26} onDark asLink={false} />
           </div>
 
           <div style={{ position: "relative", zIndex: 1, maxWidth: 420 }}>
@@ -164,7 +164,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
         {/* ===== Form column ===== */}
         <main className="sdauth-form-col">
           <div className="sdauth-logo-mobile">
-            <SuppdocLogo size={22} />
+            <SuppdocLogo size={26} href={lh("/")} />
           </div>
 
           <div className="sdauth-card sdauth-fade">

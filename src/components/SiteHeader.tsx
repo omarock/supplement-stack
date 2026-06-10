@@ -139,7 +139,7 @@ export default function SiteHeader() {
         borderBottom: scrolled ? `1px solid ${TH.edge}` : "1px solid transparent",
         transition: "all .35s cubic-bezier(.2,.7,.2,1)",
       }}>
-        <SuppdocLogo size={20} href={lh("/")} />
+        <SuppdocLogo h="var(--logo-h)" href={lh("/")} />
 
         {/* Desktop nav, grouped dropdowns */}
         <div
@@ -272,22 +272,39 @@ export default function SiteHeader() {
           )}
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setOpenMobile(o => !o)}
-          aria-label={openMobile ? t("menu.closeMenu") : t("menu.openMenu")}
-          aria-expanded={openMobile}
-          aria-controls="mobile-menu"
-          style={{
-            display: "var(--burger-show)", alignItems: "center", justifyContent: "center",
-            width: 40, height: 40, borderRadius: 999,
-            border: `1px solid ${TH.edge}`, background: TH.surface, cursor: "pointer",
-          }}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={TH.ink} strokeWidth="2">
-            {openMobile ? <path d="M18 6L6 18M6 6l12 12" /> : <><path d="M3 6h18" /><path d="M3 12h18" /><path d="M3 18h18" /></>}
-          </svg>
-        </button>
+        {/* Mobile controls: a VISIBLE sign-in (or account avatar) kept in the bar,
+            not buried in the menu, plus the hamburger. */}
+        <div style={{ display: "var(--burger-show)", alignItems: "center", gap: 8 }}>
+          {user ? (
+            <Link href={lh("/me")} aria-label={t("menu.accountMenu")} style={{
+              width: 38, height: 38, borderRadius: 999, flexShrink: 0,
+              background: `linear-gradient(135deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+              fontFamily: FONTS.mono, fontSize: 12, fontWeight: 700, textDecoration: "none",
+            }}>{initials(user.email)}</Link>
+          ) : (
+            <Link href={lh("/signin")} style={{
+              padding: "9px 15px", borderRadius: 999, border: `1.5px solid ${TH.edgeStrong}`,
+              background: TH.surface, color: TH.ink, textDecoration: "none",
+              fontFamily: FONTS.body, fontSize: 14, fontWeight: 600, whiteSpace: "nowrap",
+            }}>{t("nav.signIn")}</Link>
+          )}
+          <button
+            onClick={() => setOpenMobile(o => !o)}
+            aria-label={openMobile ? t("menu.closeMenu") : t("menu.openMenu")}
+            aria-expanded={openMobile}
+            aria-controls="mobile-menu"
+            style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+              width: 40, height: 40, borderRadius: 999, flexShrink: 0,
+              border: `1px solid ${TH.edge}`, background: TH.surface, cursor: "pointer",
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={TH.ink} strokeWidth="2">
+              {openMobile ? <path d="M18 6L6 18M6 6l12 12" /> : <><path d="M3 6h18" /><path d="M3 12h18" /><path d="M3 18h18" /></>}
+            </svg>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu overlay, grouped */}
@@ -352,17 +369,12 @@ export default function SiteHeader() {
               borderRadius: 999, fontSize: 15, fontWeight: 600, textAlign: "center",
               boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 20%, transparent)`,
             }}>{user ? `${t("nav.myStack")} →` : `${t("nav.buildMyStack")} →`}</Link>
-            {user ? (
+            {user && (
               <button onClick={logout} style={{
                 padding: "13px 24px", background: "transparent", color: "var(--c-destructive)", cursor: "pointer",
                 borderRadius: 999, fontSize: 14, fontWeight: 500, textAlign: "center",
                 border: `1px solid ${TH.edge}`, fontFamily: FONTS.body,
               }}>{t("menu.signOut")}</button>
-            ) : (
-              <Link href={lh("/signin")} onClick={() => setOpenMobile(false)} style={{
-                padding: "13px 24px", background: "transparent", color: TH.inkSoft, textDecoration: "none",
-                borderRadius: 999, fontSize: 14, fontWeight: 500, textAlign: "center", border: `1px solid ${TH.edge}`,
-              }}>{t("nav.signIn")}</Link>
             )}
           </div>
         </div>

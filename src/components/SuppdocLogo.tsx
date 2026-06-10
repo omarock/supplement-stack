@@ -30,15 +30,16 @@ export function SDMark({ size = 28, monoColor }: { size?: number; monoColor?: st
   );
 }
 
-/** Full lockup (capsule + "SuppDoc.io" wordmark), theme-aware, sized by height. */
-export function SDFullLogo({ height = 30, onDark = false }: { height?: number; onDark?: boolean }) {
+/** Full lockup (capsule + "SuppDoc.io" wordmark), theme-aware. Sized by `height`
+ * (number → px) or, for responsive use, by `h` (any CSS length, e.g. a var). */
+export function SDFullLogo({ height = 30, h, onDark = false }: { height?: number; h?: string; onDark?: boolean }) {
   const uid = useId().replace(/:/g, "");
   const width = Math.round((457 / 132) * height);
   const supp = onDark ? DARK.supp : "var(--logo-supp, #0F1A15)";
   const doc = onDark ? DARK.doc : "var(--logo-doc, #0C7A54)";
   const io = onDark ? DARK.io : "var(--logo-io, #9DB0A6)";
   return (
-    <svg width={width} height={height} viewBox="0 0 457 132" style={{ display: "block" }} role="img" aria-label="SuppDoc.io">
+    <svg width={width} height={height} viewBox="0 0 457 132" style={{ display: "block", height: h ?? height, width: h ? "auto" : width }} role="img" aria-label="SuppDoc.io">
       <defs><clipPath id={`lcap-${uid}`}><rect x="-39" y="-17" width="78" height="34" rx="17" /></clipPath></defs>
       {/* Capsule */}
       <g transform="translate(52 66) rotate(-35)">
@@ -70,13 +71,14 @@ export function SDWordmark({ size = 22, onDark }: { size?: number; color?: strin
   return <SDFullLogo height={Math.round(size * 1.4)} onDark={onDark} />;
 }
 
-/** Combined logo (capsule + wordmark) with optional link wrap. */
+/** Combined logo (capsule + wordmark) with optional link wrap. Pass `h` (a CSS
+ * length such as "var(--logo-h)") for a responsive height; otherwise `size`. */
 export default function SuppdocLogo({
-  size = 22, asLink = true, href = "/", onDark = false,
+  size = 22, h, asLink = true, href = "/", onDark = false,
 }: {
-  size?: number; color?: string; accent?: string; asLink?: boolean; href?: string; onDark?: boolean;
+  size?: number; h?: string; color?: string; accent?: string; asLink?: boolean; href?: string; onDark?: boolean;
 }) {
-  const logo = <SDFullLogo height={Math.round(size * 1.5)} onDark={onDark} />;
+  const logo = <SDFullLogo height={Math.round(size * 1.5)} h={h} onDark={onDark} />;
   if (asLink) {
     return (
       <Link href={href} aria-label="SuppDoc.io home" style={{ display: "inline-flex", alignItems: "center", textDecoration: "none" }}>
