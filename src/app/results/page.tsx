@@ -36,7 +36,7 @@ const TIMING_COLOR: Record<Supplement["timing"], string> = {
   morning: th.burgundy, midday: "#a87a52", "pre-train": th.sage, evening: th.sageDeep,
 };
 
-import SuppdocLogo from "@/components/SuppdocLogo";
+import SuppdocLogo, { SDMark } from "@/components/SuppdocLogo";
 
 function ScoreCard({ label, score, color }: { label: string; score: number; color: string }) {
   // "Reach X with your stack": close ~45% of the gap to 100. Aspirational, and it
@@ -238,12 +238,7 @@ export default function ResultsPage() {
                 width: 32, height: 32, borderRadius: 999, background: th.sageGlow,
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                <svg width="16" height="16" viewBox="0 0 24 24">
-                  <ellipse cx="12" cy="6" rx="3" ry="5.5" fill={th.sage} />
-                  <ellipse cx="6.5" cy="14" rx="3" ry="5" transform="rotate(-50 6.5 14)" fill={th.sage} />
-                  <ellipse cx="17.5" cy="14" rx="3" ry="5" transform="rotate(50 17.5 14)" fill={th.sage} />
-                  <circle cx="12" cy="12" r="1.6" fill={th.burgundy} />
-                </svg>
+                <SDMark size={18} />
               </div>
               <h2 style={{ ...S, fontSize: 24, margin: 0, letterSpacing: "-0.02em", color: th.ink }}>
                 Why this blend, for you
@@ -252,7 +247,7 @@ export default function ResultsPage() {
             <ul style={{ margin: 0, paddingLeft: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
               {rec.reasoning.map((r, i) => (
                 <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                  <span style={{ color: th.sage, marginTop: 2 }}>✿</span>
+                  <span style={{ color: th.sage, marginTop: 2, fontWeight: 700 }}>✓</span>
                   <span style={{ fontSize: 14, color: th.inkSoft, lineHeight: 1.55 }}>{r}</span>
                 </li>
               ))}
