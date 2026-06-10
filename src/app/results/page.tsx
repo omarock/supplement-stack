@@ -165,8 +165,8 @@ export default function ResultsPage() {
           </div>
           <h1 style={{
             fontFamily: '"Bricolage Grotesque", system-ui, sans-serif',
-            fontWeight: 600, fontSize: 68, color: th.ink,
-            margin: "0 0 14px", letterSpacing: "-0.035em", lineHeight: 1,
+            fontWeight: 600, fontSize: "clamp(40px, 12vw, 68px)", color: th.ink,
+            margin: "0 0 14px", letterSpacing: "-0.035em", lineHeight: 1.02,
           }}>
             Your personalised <span style={{ fontFamily: '"Instrument Serif", Georgia, serif', fontStyle: "italic", fontWeight: 400, color: th.sageDeep }}>stack</span>.
           </h1>

@@ -134,7 +134,12 @@ function saveHistory(messages: ChatMessage[]) {
 // ─── ChatAssistant component ──────────────────────────────────────────────
 export default function ChatAssistant() {
   const pathname = usePathname() ?? "/";
-  const hidden = HIDE_PATHS.some(re => re.test(pathname));
+  // Hide the assistant on the quiz funnel (incl. locale-prefixed routes). Its
+  // full-width step nav puts the Continue button at the bottom-right, under a
+  // fixed launcher, at every width up to a wide desktop — so the launcher would
+  // block the primary action. The quiz is self-guiding; no coach needed there.
+  const onQuiz = /^\/(?:[a-z]{2}\/)?quiz(?:\/|$)/.test(pathname);
+  const hidden = HIDE_PATHS.some(re => re.test(pathname)) || onQuiz;
 
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
