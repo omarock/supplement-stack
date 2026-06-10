@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { QuizData } from "@/types/quiz";
-import { recommend, Recommendation, Supplement } from "@/lib/supplements";
+import type { Recommendation, Supplement } from "@/lib/supplements";
 import { IHERB_HOME } from "@/lib/iherb";
 import { trackQuizSubmission } from "@/lib/track";
-import SupplementGrid from "@/components/SupplementGrid";
+// Lazy-loaded so its products.ts (~360KB) dependency is code-split out of the
+// initial /results bundle and fetched after the shell paints (mobile LCP/TTI win).
+const SupplementGrid = dynamic(() => import("@/components/SupplementGrid"), { ssr: false });
 import TrackStackCTA from "@/components/TrackStackCTA";
 import EmailCapture from "@/components/EmailCapture";
 import SiteHeader from "@/components/SiteHeader";
@@ -63,7 +66,9 @@ export default function ResultsPage() {
 
   useEffect(() => {
     const saved = localStorage.getItem("phylaQuizData");
-    if (saved) {
+    if (!saved) { setLoaded(true); return; }
+    let cancelled = false;
+    (async () => {
       try {
         const parsed = JSON.parse(saved);
         const safeData: QuizData = {
@@ -79,11 +84,14 @@ export default function ResultsPage() {
           budget: "", veganOnly: false,
           ...parsed,
         };
+        // Dynamic import keeps supplements.ts (~270KB) out of the initial bundle;
+        // the effect runs after hydration anyway, so the engine loads on demand.
+        const { recommend } = await import("@/lib/supplements");
+        if (cancelled) return;
         setData(safeData);
         const r = recommend(safeData);
         setRec(r);
-        // Fire-and-forget: log this quiz submission to Supabase
-        // Only log once per quiz session
+        // Fire-and-forget: log this quiz submission to Supabase (once per session)
         const submissionKey = `phylaSubmitted:${JSON.stringify(safeData).slice(0, 60)}`;
         if (!sessionStorage.getItem(submissionKey)) {
           sessionStorage.setItem(submissionKey, "1");
@@ -91,8 +99,9 @@ export default function ResultsPage() {
           track("quiz_complete", { supplements: r.supplements.length, cost: r.totalMonthlyCost });
         }
       } catch { /* ignore */ }
-    }
-    setLoaded(true);
+      finally { if (!cancelled) setLoaded(true); }
+    })();
+    return () => { cancelled = true; };
   }, []);
 
   if (loaded && !data) {
