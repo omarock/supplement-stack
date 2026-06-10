@@ -3,8 +3,9 @@ import PricingView from "@/app/pricing/PricingView";
 import { isLocale, localeHref, lookup, DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
 import { getDict } from "@/lib/i18n-dicts";
 
-// Reads cookies (session) via the shared view, so render per-request like /pricing.
-export const dynamic = "force-dynamic";
+// Statically rendered with ISR (mirrors /pricing): per-user signed-in/Premium
+// state is resolved client-side in PricingClient via /api/me/premium.
+export const revalidate = 300;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;

@@ -1,8 +1,6 @@
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import PricingClient from "./PricingClient";
-import { getSessionUser } from "@/lib/auth-server";
-import { getSubscription, isPremium } from "@/lib/premium";
 import { stripeEnabled } from "@/lib/stripe";
 import { paddleConfigured, paddleClientConfig } from "@/lib/paddle";
 import { foundingStats } from "@/lib/agents/store";
@@ -15,10 +13,14 @@ import { FOUNDING_MODE } from "@/lib/billing-mode";
 // entity) is live, and the normal monthly/annual checkout returns automatically.
 // Shared by the English route (/pricing) and the localized routes (/fr|/de|/es/pricing).
 // FOUNDING_MODE now lives in @/lib/billing-mode so the /refunds page reads the same flag.
+//
+// Statically rendered (ISR — see `revalidate` in the route files): this ships the
+// anonymous/founding view plus the live scarcity counter (refreshed on revalidate),
+// with NO per-request cookie read, so it can be served from the CDN. The signed-in
+// / Premium state is resolved on the client (PricingClient -> /api/me/premium).
+// Cold paid traffic is signed out, so the static view is exactly what they see.
 
 export default async function PricingView() {
-  const user = await getSessionUser();
-  const sub = user ? await getSubscription(user.email) : null;
   const paddleOn = paddleConfigured();
   // Live founding-member scarcity (claimed lifetime memberships vs total spots).
   const stats = FOUNDING_MODE ? await foundingStats().catch(() => null) : null;
@@ -27,9 +29,9 @@ export default async function PricingView() {
     <div style={{ minHeight: "100vh", background: "var(--c-bg)", color: "var(--c-ink)", fontFamily: '"Inter", system-ui, sans-serif' }}>
       <SiteHeader />
       <PricingClient
-        signedIn={Boolean(user)}
-        email={user?.email ?? null}
-        isPremium={isPremium(sub)}
+        signedIn={false}
+        email={null}
+        isPremium={false}
         foundingMode={FOUNDING_MODE}
         billingEnabled={!FOUNDING_MODE && (paddleOn || stripeEnabled())}
         paddle={FOUNDING_MODE ? null : paddleOn ? paddleClientConfig() : null}

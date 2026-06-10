@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics";
 import { TH, FONTS } from "@/lib/theme";
-import { getSupabase } from "@/lib/supabase";
 import { trackEmailSignup } from "@/lib/track";
 import { useT } from "@/components/I18nProvider";
 import { richText } from "@/components/RichText";
@@ -46,7 +45,7 @@ function loadPaddle(cfg: PaddleClientConfig): Promise<PaddleGlobal> {
 type Cell = boolean | string;
 
 export default function PricingClient({
-  signedIn, email, isPremium, billingEnabled, paddle, foundingMode, spotsLeft, foundingTotal,
+  signedIn: initialSignedIn, email, isPremium: initialIsPremium, billingEnabled, paddle, foundingMode, spotsLeft, foundingTotal,
 }: {
   signedIn: boolean; email: string | null; isPremium: boolean; billingEnabled: boolean;
   paddle: PaddleClientConfig | null; foundingMode: boolean; spotsLeft: number; foundingTotal: number;
@@ -57,19 +56,37 @@ export default function PricingClient({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [authEmail, setAuthEmail] = useState<string | null>(email);
-  useEffect(() => {
-    const supa = getSupabase();
-    if (!supa) return;
-    supa.auth.getSession().then(({ data }) => {
-      if (data.session?.user?.email) setAuthEmail(data.session.user.email);
-    });
-  }, []);
+  // /pricing is statically rendered (ISR), so per-user state is resolved on the
+  // client. The static shell is the anonymous/founding view — exactly what cold
+  // (signed-out) visitors should see, with no flash — and we fill in the signed-in
+  // / Premium state after mount (see the /api/me/premium effect below).
+  const [signedIn, setSignedIn] = useState(initialSignedIn);
+  const [isPremium, setIsPremium] = useState(initialIsPremium);
 
   // ── Founding-member capture (manual validation phase) ──
   const [foundingEmail, setFoundingEmail] = useState(email ?? "");
   const [foundingBusy, setFoundingBusy] = useState(false);
   const [foundingDone, setFoundingDone] = useState(false);
   const [foundingErr, setFoundingErr] = useState<string | null>(null);
+
+  // Resolve the signed-in + Premium state for the statically-rendered page. Runs
+  // once on mount; until it returns, the page shows the anonymous/founding view.
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/me/premium")
+      .then((r) => r.json())
+      .then((d: { signedIn?: boolean; email?: string | null; isPremium?: boolean }) => {
+        if (cancelled || !d) return;
+        setSignedIn(Boolean(d.signedIn));
+        setIsPremium(Boolean(d.isPremium));
+        if (d.email) {
+          setAuthEmail(d.email);
+          setFoundingEmail((prev) => prev || d.email!);
+        }
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
 
   const scrollToFounding = useCallback(() => {
     document.getElementById("founding-offer")?.scrollIntoView({ behavior: "smooth", block: "center" });

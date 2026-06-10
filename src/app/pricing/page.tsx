@@ -10,7 +10,9 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = "force-dynamic";
+// Statically rendered with ISR: per-user signed-in/Premium state is resolved
+// client-side in PricingClient (via /api/me/premium), so the shell is CDN-served.
+export const revalidate = 300;
 
 export default function PricingPage() {
   return <PricingView />;
