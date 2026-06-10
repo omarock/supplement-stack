@@ -42,4 +42,10 @@ export interface QuizData {
   // ─── Preferences ───
   budget: string;
   veganOnly: boolean;
+
+  // ─── Refinements (Complete quiz Phase 7) ───
+  // Optional: default to empty when absent (the Express quiz never asks them, and
+  // older saved drafts predate them), so every other entry point keeps working.
+  currentSupplements?: string[]; // what the user already takes -> excluded from the stack
+  healthPriorities?: string[];   // extra priority areas -> weighted toward in scoring
 }

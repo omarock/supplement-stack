@@ -36,10 +36,11 @@ const INITIAL: QuizData = {
   bodyConcerns: [],
   pregnant: "", allergies: [], conditions: [],
   budget: "", veganOnly: false,
+  currentSupplements: [], healthPriorities: [],
 };
 
 type Updater = (u: Partial<QuizData>) => void;
-const TOTAL_STEPS = 10;
+const TOTAL_STEPS = 11;
 
 // ─── Validation ──────────────────────────────────────────────────────────────
 function canProceed(step: number, d: QuizData): boolean {
@@ -592,6 +593,52 @@ function Step10({ d, u }: { d: QuizData; u: Updater }) {
   );
 }
 
+// Phase 7 refinements: both lists are OPTIONAL. Option `v` values are the exact
+// English strings the recommend() engine matches on (current-supp ids + priority
+// tags); only `l` labels are localized. Never translate a `v`.
+function Step11({ d, u }: { d: QuizData; u: Updater }) {
+  const { t } = useT();
+  const CURRENT: Opt[] = [
+    { v: "Multivitamin", l: t("qc.csMulti") },
+    { v: "Vitamin D", l: t("qc.csVitD") },
+    { v: "Omega-3 fish oil", l: t("qc.csOmega") },
+    { v: "Magnesium", l: t("qc.csMag") },
+    { v: "Probiotic", l: t("qc.csProbiotic") },
+    { v: "Creatine", l: t("qc.csCreatine") },
+    { v: "B12 or B-complex", l: t("qc.csB") },
+    { v: "Collagen", l: t("qc.csCollagen") },
+    { v: "Vitamin C", l: t("qc.csVitC") },
+    { v: "Zinc", l: t("qc.csZinc") },
+  ];
+  const PRIORITIES: Opt[] = [
+    { v: "Heart & circulation", l: t("qc.hpHeart") },
+    { v: "Brain & memory", l: t("qc.hpBrain") },
+    { v: "Gut & digestion", l: t("qc.hpGut") },
+    { v: "Immune resilience", l: t("qc.hpImmune") },
+    { v: "Energy & metabolism", l: t("qc.hpEnergy") },
+    { v: "Joints & mobility", l: t("qc.hpJoints") },
+    { v: "Skin, hair & nails", l: t("qc.hpSkin") },
+    { v: "Longevity & healthy aging", l: t("qc.hpLongevity") },
+    { v: "Mood & stress", l: t("qc.hpMood") },
+    { v: "Sleep quality", l: t("qc.hpSleep") },
+  ];
+  const cur = d.currentSupplements ?? [];
+  const pri = d.healthPriorities ?? [];
+  const toggleCurrent = (v: string) =>
+    u({ currentSupplements: cur.includes(v) ? cur.filter(x => x !== v) : [...cur, v] });
+  const togglePriority = (v: string) =>
+    u({ healthPriorities: pri.includes(v) ? pri.filter(x => x !== v) : [...pri, v] });
+  return (
+    <>
+      <Heading step={11} title={t("qc.s11title")} subtitle={t("qc.s11sub")} />
+      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        <MultiSelect label={t("qc.currentQ")} options={CURRENT} selected={cur} onToggle={toggleCurrent} optional />
+        <MultiSelect label={t("qc.priorityQ")} options={PRIORITIES} selected={pri} onToggle={togglePriority} optional />
+      </div>
+    </>
+  );
+}
+
 function StepGenerating({ data }: { data: QuizData }) {
   const router = useRouter();
   const { t } = useT();
@@ -809,6 +856,7 @@ export default function QuizPage() {
             {step === 8 && <Step8 {...props} />}
             {step === 9 && <Step9 {...props} />}
             {step === 10 && <Step10 {...props} />}
+            {step === 11 && <Step11 {...props} />}
             {isGenerating && <StepGenerating data={data} />}
           </div>
         </div>

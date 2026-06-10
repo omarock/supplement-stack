@@ -2945,6 +2945,21 @@ function buildTags(d: QuizData): Set<string> {
     if (goal.includes("skin") || goal.includes("hair") || goal.includes("Beauty")) t.add("beauty");
   }
 
+  // Health priorities (Complete quiz Phase 7): same weighting language as goals.
+  // Values are matched by substring exactly like goals; never translate them.
+  for (const p of d.healthPriorities ?? []) {
+    if (p.includes("Heart")) t.add("heart");
+    if (p.includes("Brain")) { t.add("memory"); t.add("focus"); }
+    if (p.includes("Gut")) t.add("digestive-issues");
+    if (p.includes("Immune")) t.add("immune");
+    if (p.includes("Energy")) t.add("energy");
+    if (p.includes("Joints")) { t.add("joint"); t.add("joint-pain"); }
+    if (p.includes("Skin")) { t.add("beauty"); t.add("skin"); t.add("hair"); }
+    if (p.includes("Longevity")) t.add("longevity");
+    if (p.includes("Mood")) { t.add("stress"); t.add("low-mood"); }
+    if (p.includes("Sleep")) { t.add("sleep"); }
+  }
+
   // Sleep
   if (d.sleep <= 2) { t.add("low-sleep"); t.add("sleep"); }
   for (const issue of d.sleepIssues) {
@@ -3053,6 +3068,27 @@ export function recommend(d: QuizData): Recommendation {
   if (tags.has("vegan-only")) pool = pool.filter(({ supp }) => supp.id !== "omega3");
   else pool = pool.filter(({ supp }) => supp.id !== "omega3-algae");
 
+  // Exclude what the user already takes (Complete quiz Phase 7) so we build AROUND
+  // their current routine instead of telling them to re-buy it. Each option value
+  // maps to the matching supplement id(s); matched by substring, never translated.
+  const ALREADY: Record<string, string[]> = {
+    "Multivitamin": ["multivit"],
+    "Vitamin D": ["d3k2"],
+    "Omega-3": ["omega3", "omega3-algae"],
+    "Magnesium": ["mag-glycinate", "mag-citrate", "mag-threonate"],
+    "Probiotic": ["probiotic"],
+    "Creatine": ["creatine"],
+    "B12": ["b12", "b-complex"],
+    "Collagen": ["collagen"],
+    "Vitamin C": ["vit-c"],
+    "Zinc": ["zinc"],
+  };
+  const taking = new Set<string>();
+  for (const cur of d.currentSupplements ?? [])
+    for (const key in ALREADY)
+      if (cur.includes(key)) for (const id of ALREADY[key]) taking.add(id);
+  if (taking.size) pool = pool.filter(({ supp }) => !taking.has(supp.id));
+
   // Sort by score
   pool.sort((a, b) => b.score - a.score);
 
@@ -3070,10 +3106,11 @@ export function recommend(d: QuizData): Recommendation {
     total += supp.monthlyCost;
   }
 
-  // If still nothing matched (unusual), force at least D3+K2 as a baseline
+  // If still nothing matched (unusual), fall back to the top-scored eligible item
+  // (already filtered for safety, vegan-only, and what they already take), else D3+K2.
   if (chosen.length === 0) {
-    const d3 = SUPPLEMENT_DB.find(s => s.id === "d3k2")!;
-    chosen.push(d3); total += d3.monthlyCost;
+    const base = pool[0]?.supp ?? SUPPLEMENT_DB.find(s => s.id === "d3k2")!;
+    chosen.push(base); total += base.monthlyCost;
   }
 
   // Build reasoning
@@ -3100,6 +3137,8 @@ export function recommend(d: QuizData): Recommendation {
     reasoning.push("Frequent illness, we strengthened the immune pillar of your stack.");
   if (tags.has("female") && tags.has("low-energy"))
     reasoning.push("As a woman with low energy, iron is a common culprit, we included a gentle, well-absorbed form.");
+  if ((d.currentSupplements ?? []).length)
+    reasoning.push(`You already take ${(d.currentSupplements ?? []).join(", ")}, so we built around those and left them out of this stack.`);
 
   // Safety notes
   const notes: string[] = [];
