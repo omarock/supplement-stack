@@ -141,9 +141,10 @@ export default function SiteHeader() {
       }}>
         <SuppdocLogo h="var(--logo-h)" href={lh("/")} />
 
-        {/* Desktop nav, grouped dropdowns */}
+        {/* Desktop nav, grouped dropdowns. Absolutely centred in the bar so it
+            stays ergonomically in the middle regardless of logo / right-side width. */}
         <div
-          style={{ display: "var(--nav-show)", gap: "var(--nav-gap)", alignItems: "center" }}
+          style={{ display: "var(--nav-show)", gap: "var(--nav-gap)", alignItems: "center", position: "absolute", left: "50%", transform: "translateX(-50%)" }}
           onMouseLeave={() => setOpenGroup(null)}
         >
           {NAV.map(group => {

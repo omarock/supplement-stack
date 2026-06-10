@@ -76,6 +76,9 @@ export default function ExpressQuiz() {
   const props = { data, update };
   return (
     <div style={{ minHeight: "100vh", background: TH.bg, color: TH.ink, fontFamily: FONTS.body, display: "flex", flexDirection: "column" }}>
+      {/* Lift the floating chat launcher above the sticky quiz nav on mobile, so
+          it never covers the Continue button (it sits bottom-right by default). */}
+      <style>{`@media (max-width:1100px){:root{--chat-launcher-bottom:104px !important;}}`}</style>
       {/* Top bar with premium progress */}
       <div style={{
         position: "sticky", top: 0, zIndex: 30, padding: "14px var(--section-pad-x)",

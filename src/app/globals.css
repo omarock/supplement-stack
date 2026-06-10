@@ -56,7 +56,7 @@
   --nav-gap: 28px;
   --nav-show: flex;
   --burger-show: none;
-  --logo-h: 42px;   /* header logo height (responsive, see breakpoints below) */
+  --logo-h: 48px;   /* header logo height (responsive, see breakpoints below) */
 }
 
 /* ─── Dark theme ────────────────────────────────────────────────────────────
@@ -178,7 +178,7 @@ textarea:focus-visible,
     --nav-pad-x: 22px;
     --nav-show: none;
     --burger-show: flex;
-    --logo-h: 38px;
+    --logo-h: 44px;
   }
 }
 
@@ -196,7 +196,7 @@ textarea:focus-visible,
     --grid-2-gap: 28px;
     --footer-cols: 1fr;
     --nav-pad-x: 16px;
-    --logo-h: 34px;
+    --logo-h: 40px;
   }
   /* Prevent iOS Safari auto-zoom on focus: typeable fields must be >=16px on
      mobile (QA M4). Excludes range/checkbox/radio where font-size is irrelevant. */

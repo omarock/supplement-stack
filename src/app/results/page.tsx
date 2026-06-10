@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { QuizData } from "@/types/quiz";
 import type { Recommendation, Supplement } from "@/lib/supplements";
-import { IHERB_HOME } from "@/lib/iherb";
 import { trackQuizSubmission } from "@/lib/track";
 // Lazy-loaded so its products.ts (~360KB) dependency is code-split out of the
 // initial /results bundle and fetched after the shell paints (mobile LCP/TTI win).
@@ -40,19 +39,28 @@ const TIMING_COLOR: Record<Supplement["timing"], string> = {
 import SuppdocLogo from "@/components/SuppdocLogo";
 
 function ScoreCard({ label, score, color }: { label: string; score: number; color: string }) {
+  // "Reach X with your stack": close ~45% of the gap to 100. Aspirational, and it
+  // nudges the user to actually take (and track) the stack to get there.
+  const projected = Math.min(100, score + Math.round((100 - score) * 0.45));
   return (
-    <div style={{ background: th.paper, border: `1px solid ${th.line}`, borderRadius: 14, padding: "16px 18px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-        <span style={{ fontSize: 11, color: th.inkSoft, letterSpacing: "0.05em", textTransform: "uppercase" }}>{label}</span>
-        <span style={{ ...S, fontSize: 28, color, letterSpacing: "-0.02em" }}>
+    <div style={{ background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16, padding: "16px 18px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 11 }}>
+        <span style={{ fontSize: 11, color: th.inkSoft, letterSpacing: "0.06em", textTransform: "uppercase", fontWeight: 600 }}>{label}</span>
+        <span style={{ ...S, fontSize: 30, color, letterSpacing: "-0.02em", lineHeight: 1 }}>
           {score}<span style={{ fontSize: 12, color: th.inkMute, ...MM }}>/100</span>
         </span>
       </div>
-      <div style={{ height: 5, background: th.bgWarm, borderRadius: 5, overflow: "hidden" }}>
+      <div style={{ position: "relative", height: 7, background: th.bgWarm, borderRadius: 999, overflow: "hidden" }}>
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${projected}%`, background: `${color}2e`, borderRadius: 999 }} />
         <div style={{
-          height: "100%", width: `${score}%`, background: color,
-          borderRadius: 5, animation: "phyla-bar 1.4s ease-out",
+          position: "absolute", left: 0, top: 0, bottom: 0, width: `${score}%`,
+          background: `linear-gradient(90deg, ${color}cc, ${color})`, borderRadius: 999,
+          boxShadow: `0 1px 4px ${color}55`, animation: "phyla-bar 1.4s cubic-bezier(.2,.7,.2,1)",
         }} />
+      </div>
+      <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: th.sageDeep, fontWeight: 600 }}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
+        <span>Reach <span style={{ color }}>{projected}</span> with your stack</span>
       </div>
     </div>
   );
@@ -145,21 +153,8 @@ export default function ResultsPage() {
     }}>
       <SiteHeader />
 
-      {/* Top bar */}
-      <header style={{
-        padding: "18px 32px", borderBottom: `1px solid ${th.line}`,
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        background: `${th.bg}cc`, backdropFilter: "blur(20px)",
-        position: "sticky", top: 0, zIndex: 10,
-      }}>
-        <SuppdocLogo size={20} />
-        <Link href="/quiz" style={{
-          fontSize: 13, color: th.inkMute, textDecoration: "none",
-          padding: "8px 14px", borderRadius: 999, border: `1px solid ${th.line}`,
-        }}>
-          Retake quiz
-        </Link>
-      </header>
+      {/* No duplicate brand bar here, SiteHeader above already provides the logo
+          + nav. "Retake quiz" lives in the hero below. */}
 
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "48px 24px 64px" }}>
 
@@ -178,6 +173,13 @@ export default function ResultsPage() {
           <p style={{ color: th.inkSoft, fontSize: 18, lineHeight: 1.55, maxWidth: 580, margin: "0 auto" }}>
             {rec.supplements.length} bestseller-grade ingredients matched to your goals, lifestyle, and biology, from top-rated, third-party-tested brands.
           </p>
+          <div style={{ marginTop: 22 }}>
+            <Link href="/quiz" style={{
+              display: "inline-flex", alignItems: "center", gap: 7, padding: "9px 18px", borderRadius: 999,
+              border: `1px solid ${th.line}`, background: th.paper, color: th.inkSoft,
+              fontSize: 13.5, fontWeight: 500, textDecoration: "none",
+            }}>↻ Retake quiz</Link>
+          </div>
         </section>
 
         {/* ─── Wellness reading (before the stack) ─── */}
@@ -309,25 +311,35 @@ export default function ResultsPage() {
           </div>
         </section>
 
-        {/* iHerb CTA */}
+        {/* Quality + value close: reinforce WHY the stack is trustworthy (shows the
+            quality of the platform) and drive the high-value next step, tracking,
+            which leads to Premium, instead of a generic iHerb-homepage link. The
+            per-item buy buttons above remain the affiliate path. */}
         <section style={{
           background: `linear-gradient(135deg, ${th.burgundyDeep}, ${th.burgundy})`,
           borderRadius: 24, padding: 40, textAlign: "center", color: "#ffffff",
           marginBottom: 28,
         }}>
-          <h2 style={{ ...S, fontSize: 40, margin: "0 0 12px", letterSpacing: "-0.02em", lineHeight: 1.05 }}>
-            Ready to shop your stack?
+          <h2 style={{ ...S, fontSize: 40, margin: "0 0 16px", letterSpacing: "-0.02em", lineHeight: 1.05 }}>
+            A stack you can <span style={{ fontStyle: "italic" }}>actually trust</span>.
           </h2>
-          <p style={{ color: "rgba(251,246,236,0.85)", fontSize: 15, marginBottom: 22, maxWidth: 480, marginLeft: "auto", marginRight: "auto", lineHeight: 1.5 }}>
-            Use the buy buttons on each item above to pick your preferred retailer, most are available on iHerb and Amazon, and ship globally. New iHerb customers get a first-order discount.
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px 22px", maxWidth: 640, margin: "0 auto 22px" }}>
+            {["Evidence-graded", "No house brand", "Linked to its source", "Third-party-tested brands"].map(q => (
+              <span key={q} style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 14, color: "rgba(251,246,236,0.92)" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={th.sage} strokeWidth="2.6"><path d="M5 12l5 5 9-11" /></svg>{q}
+              </span>
+            ))}
+          </div>
+          <p style={{ color: "rgba(251,246,236,0.78)", fontSize: 14.5, marginBottom: 24, maxWidth: 500, marginLeft: "auto", marginRight: "auto", lineHeight: 1.5 }}>
+            A stack only works if you take it. Track every dose, watch your wellness scores climb, and keep what works.
           </p>
-          <a href={IHERB_HOME} target="_blank" rel="noopener noreferrer sponsored" style={{
+          <Link href="/track" style={{
             display: "inline-flex", alignItems: "center", gap: 10,
-            padding: "16px 28px", borderRadius: 999, fontSize: 15, fontWeight: 600,
+            padding: "16px 30px", borderRadius: 999, fontSize: 15, fontWeight: 600,
             background: "var(--c-surface)", color: th.burgundyDeep, textDecoration: "none",
           }}>
-            Browse iHerb →
-          </a>
+            Track my stack, free →
+          </Link>
         </section>
 
         {/* Disclaimer */}

@@ -124,10 +124,10 @@ export default function AuthForm({ mode }: { mode: Mode }) {
 
       <div className="sdauth-grid">
         {/* ===== Brand / trust panel (desktop only) ===== */}
-        <aside className="sdauth-brand" aria-hidden="true">
+        <aside className="sdauth-brand">
           <div className="sdauth-brand-glow" />
           <div style={{ position: "relative", zIndex: 1 }}>
-            <SuppdocLogo size={26} onDark asLink={false} />
+            <SuppdocLogo size={28} onDark href={lh("/")} />
           </div>
 
           <div style={{ position: "relative", zIndex: 1, maxWidth: 420 }}>
@@ -164,7 +164,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
         {/* ===== Form column ===== */}
         <main className="sdauth-form-col">
           <div className="sdauth-logo-mobile">
-            <SuppdocLogo size={26} href={lh("/")} />
+            <SuppdocLogo size={28} href={lh("/")} />
           </div>
 
           <div className="sdauth-card sdauth-fade">
