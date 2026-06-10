@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { isLocale, DEFAULT_LOCALE, PREFIXED_LOCALES } from "@/lib/i18n";
+import { isLocale, DEFAULT_LOCALE, PREFIXED_LOCALES, dictExcept, HEAVY_NAMESPACES } from "@/lib/i18n";
 import { getDict } from "@/lib/i18n-dicts";
 import { I18nProvider } from "@/components/I18nProvider";
 
@@ -19,7 +19,7 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!isLocale(locale) || locale === DEFAULT_LOCALE) notFound();
   return (
-    <I18nProvider locale={locale} messages={getDict(locale)}>
+    <I18nProvider locale={locale} messages={dictExcept(getDict(locale), HEAVY_NAMESPACES)}>
       {/* The <html> element lives in the root layout (above this segment) and is
           hardcoded lang="en". Correct it for fr/de/es before paint, mirroring the
           THEME_INIT pattern, so screen readers and Chrome auto-translate see the

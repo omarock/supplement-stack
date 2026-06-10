@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BuildClientLazy from "./BuildClientLazy";
+import NamespaceProvider from "@/components/NamespaceProvider";
 import { TH } from "@/lib/theme";
 
 export const metadata: Metadata = {
@@ -22,7 +23,9 @@ export default function BuildPage() {
   return (
     <div style={{ minHeight: "100vh", background: TH.bg, color: TH.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
       <SiteHeader />
-      <BuildClientLazy />
+      <NamespaceProvider locale="en" keep="build">
+        <BuildClientLazy />
+      </NamespaceProvider>
       <SiteFooter />
     </div>
   );

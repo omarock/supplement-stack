@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AuthForm from "@/components/AuthForm";
+import NamespaceProvider from "@/components/NamespaceProvider";
 
 export const metadata: Metadata = {
   title: "Sign in, suppdoc.io",
@@ -11,5 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <AuthForm mode="signin" />;
+  return (
+    <NamespaceProvider locale="en" keep="auth">
+      <AuthForm mode="signin" />
+    </NamespaceProvider>
+  );
 }

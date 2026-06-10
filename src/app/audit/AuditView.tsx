@@ -2,6 +2,7 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import AuditClient from "./AuditClient";
+import NamespaceProvider from "@/components/NamespaceProvider";
 import { getDict } from "@/lib/i18n-dicts";
 import { lookup, type Locale } from "@/lib/i18n";
 import { TH } from "@/lib/theme";
@@ -27,7 +28,9 @@ export default function AuditView({ locale }: { locale: Locale }) {
     <div style={{ minHeight: "100vh", background: TH.bg, color: TH.ink, fontFamily: '"Inter", system-ui, sans-serif' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
-      <AuditClient />
+      <NamespaceProvider locale={locale} keep="audit">
+        <AuditClient />
+      </NamespaceProvider>
       <section style={{ maxWidth: 760, margin: "0 auto", padding: "0 var(--section-pad-x) 72px" }}>
         <h2 style={{ fontFamily: '"Bricolage Grotesque", sans-serif', fontWeight: 600, fontSize: 24, color: TH.ink, margin: "0 0 16px", letterSpacing: "-0.02em" }}>
           {t("audit.faqTitle")}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AuthForm from "@/components/AuthForm";
+import NamespaceProvider from "@/components/NamespaceProvider";
 import { isLocale, localeHref, lookup, DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
 import { getDict } from "@/lib/i18n-dicts";
 
@@ -17,6 +18,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default function Page() {
-  return <AuthForm mode="signup" />;
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const loc: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
+  return (
+    <NamespaceProvider locale={loc} keep="auth">
+      <AuthForm mode="signup" />
+    </NamespaceProvider>
+  );
 }

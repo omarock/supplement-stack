@@ -5,6 +5,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import DeferredWidgets from "@/components/DeferredWidgets";
 import { I18nProvider } from "@/components/I18nProvider";
 import { getDict } from "@/lib/i18n-dicts";
+import { dictExcept, HEAVY_NAMESPACES } from "@/lib/i18n";
 import { FOUNDER } from "@/lib/social-proof";
 import "./globals.css";
 
@@ -142,7 +143,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BRAND_JSONLD) }} />
-        <I18nProvider locale="en" messages={getDict("en")}>
+        <I18nProvider locale="en" messages={dictExcept(getDict("en"), HEAVY_NAMESPACES)}>
           {children}
           {/* DeferredWidgets (cookie banner + chat) MUST live inside the provider,
               or CookieConsent's useT() has no i18n context and renders raw

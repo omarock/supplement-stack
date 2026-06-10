@@ -54,6 +54,37 @@ export function fmt(template: string, vars?: Record<string, string | number>): s
   return template.replace(/\{(\w+)\}/g, (_, k) => (k in vars ? String(vars[k]) : `{${k}}`));
 }
 
+// Heavy page-specific namespaces, each used by exactly ONE route's client
+// component (build -> BuildClient, audit -> AuditClient, auth -> AuthForm). They
+// are OMITTED from the always-shipped base i18n provider (the root and [locale]
+// layouts) and re-provided only on their own route via <NamespaceProvider>, so
+// every other page (incl. the cold-traffic landing pages) stops paying to ship
+// them in its RSC payload. Chrome namespaces (nav/menu/footer/cookie/theme/
+// switcher) and the quiz (qe/qc, whose pages are client components with no
+// server parent to slice) deliberately stay in the base dict; the pricing
+// namespace is sliced inside PricingView instead. Verified: each client uses
+// ONLY its own namespace and is imported on no other route.
+export const HEAVY_NAMESPACES = ["build", "audit", "auth"] as const;
+export type HeavyNamespace = (typeof HEAVY_NAMESPACES)[number];
+
+/** Shallow copy of a dictionary without the given top-level namespaces. */
+export function dictExcept(dict: Dict, exclude: readonly string[]): Dict {
+  const out: Dict = {};
+  for (const k of Object.keys(dict)) {
+    if (!exclude.includes(k)) out[k] = dict[k];
+  }
+  return out;
+}
+
+/** Shallow copy of a dictionary with ONLY the given top-level namespaces. */
+export function pickNamespaces(dict: Dict, names: readonly string[]): Dict {
+  const out: Dict = {};
+  for (const n of names) {
+    if (n in dict) out[n] = dict[n];
+  }
+  return out;
+}
+
 // Canonical (English) paths that have localized /fr /de /es routes today. This
 // is the single source of truth, consumed by navHref() (to keep in-app links
 // safe) and by the LanguageSwitcher (to preserve the page across locales).
