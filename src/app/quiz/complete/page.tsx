@@ -6,7 +6,7 @@ import Link from "next/link";
 import { QuizData } from "@/types/quiz";
 import { trackEmailSignup } from "@/lib/track";
 import { useT } from "@/components/I18nProvider";
-import SuppdocLogo from "@/components/SuppdocLogo";
+import SuppdocLogo, { SDMark } from "@/components/SuppdocLogo";
 
 // ─── Theme ───────────────────────────────────────────────────────────────────
 const th = {
@@ -629,13 +629,8 @@ function StepGenerating({ data }: { data: QuizData }) {
   if (phase === "email") {
     return (
       <div style={{ textAlign: "center", padding: "20px 0" }}>
-        <div style={{ marginBottom: 24 }}>
-          <svg width="64" height="64" viewBox="0 0 24 24" style={{ animation: "phyla-sway 4s ease-in-out infinite" }}>
-            <ellipse cx="12" cy="6" rx="3" ry="5.5" fill={th.sage} />
-            <ellipse cx="6.5" cy="14" rx="3" ry="5" transform="rotate(-50 6.5 14)" fill={th.sage} />
-            <ellipse cx="17.5" cy="14" rx="3" ry="5" transform="rotate(50 17.5 14)" fill={th.sage} />
-            <circle cx="12" cy="12" r="1.6" fill={th.burgundy} />
-          </svg>
+        <div style={{ marginBottom: 24, display: "flex", justifyContent: "center", animation: "phyla-sway 4s ease-in-out infinite" }}>
+          <SDMark size={56} />
         </div>
         <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 12 }}>
           {t("qc.almostReady")}
@@ -688,13 +683,8 @@ function StepGenerating({ data }: { data: QuizData }) {
 
   return (
     <div style={{ textAlign: "center", padding: "32px 0" }}>
-      <div style={{ marginBottom: 32 }}>
-        <svg width="72" height="72" viewBox="0 0 24 24" style={{ animation: "phyla-sway 3s ease-in-out infinite" }}>
-          <ellipse cx="12" cy="6" rx="3" ry="5.5" fill={th.sage} />
-          <ellipse cx="6.5" cy="14" rx="3" ry="5" transform="rotate(-50 6.5 14)" fill={th.sage} />
-          <ellipse cx="17.5" cy="14" rx="3" ry="5" transform="rotate(50 17.5 14)" fill={th.sage} />
-          <circle cx="12" cy="12" r="1.6" fill={th.burgundy} />
-        </svg>
+      <div style={{ marginBottom: 32, display: "flex", justifyContent: "center", animation: "phyla-sway 3s ease-in-out infinite" }}>
+        <SDMark size={64} />
       </div>
       <h1 style={{ ...S, fontSize: 48, color: th.ink, margin: "0 0 12px", letterSpacing: "-0.03em", lineHeight: 1 }}>
         {t("qc.composing")}
