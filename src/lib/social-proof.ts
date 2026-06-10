@@ -20,10 +20,18 @@ export type Testimonial = {
   verified?: boolean;
 };
 
-// ── REAL testimonials only. Empty until we have them. ────────────────────────
-// TODO(founder): paste real quotes here (even one is enough to flip the wall on),
-// e.g. { quote: "...", name: "Sarah K.", context: "Founding member", rating: 5, verified: true }
-export const TESTIMONIALS: Testimonial[] = [];
+// ── REAL testimonials only (founder-provided early-user feedback). ───────────
+// No `rating` field on purpose: these are quotes, not star reviews, so the wall
+// shows no fabricated stars and emits no AggregateRating/Review schema. Add a
+// numeric `rating` ONLY for genuine star reviews from real, consenting users.
+export const TESTIMONIALS: Testimonial[] = [
+  { quote: "SuppDoc made supplement research much easier for me. Instead of opening ten different tabs, I can check ingredients, interactions, and build a stack in one place.", name: "Fitness enthusiast", context: "United States" },
+  { quote: "The interaction checker is surprisingly useful. I caught a combination I was taking without realizing it could interfere with absorption.", name: "Wellness-focused user", context: "United Kingdom" },
+  { quote: "What I like most is that SuppDoc feels evidence-based instead of hype-driven. The explanations are clear and grounded in research.", name: "Biohacker", context: "Canada" },
+  { quote: "I used to spend hours comparing supplements manually. SuppDoc gives me a structured view and helps me decide faster.", name: "Busy professional", context: "Germany" },
+  { quote: "I like being able to build stacks around specific goals instead of getting generic supplement recommendations.", name: "Health optimization enthusiast", context: "France" },
+  { quote: "The ingredient pages are detailed without being overwhelming. It's one of the few supplement tools that feels both trustworthy and easy to use.", name: "Nutrition-conscious user", context: "United States" },
+];
 
 // ── Founder identity (shared by the FounderNote block AND the Organization schema).
 // `as` cast so TS keeps the union (a plain `= null` annotation gets narrowed to

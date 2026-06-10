@@ -33,7 +33,7 @@ function Card({ t }: { t: Testimonial }) {
       boxShadow: `0 18px 40px -24px color-mix(in srgb, ${TH.ink} 28%, transparent)`,
     }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Stars rating={t.rating ?? 5} />
+        {typeof t.rating === "number" ? <Stars rating={t.rating} /> : <span aria-hidden style={{ ...D, fontSize: 26, lineHeight: 0.8, color: TH.edgeStrong }}>“</span>}
         {t.verified ? (
           <span style={{ ...MM, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: TH.sageDeep, display: "inline-flex", alignItems: "center", gap: 4 }}>
             <span aria-hidden>✓</span> Verified member
@@ -78,11 +78,11 @@ export default function SocialProof() {
       <div style={{ maxWidth: 1080, margin: "0 auto" }}>
         <div className="sd-reveal" style={{ textAlign: "center", marginBottom: 40 }}>
           <div style={{ ...MM, fontSize: 11.5, letterSpacing: "0.18em", textTransform: "uppercase", color: TH.sageDeep, marginBottom: 12 }}>
-            {hasReviews ? "From our members" : "Trust, earned not claimed"}
+            {hasReviews ? "From early users" : "Trust, earned not claimed"}
           </div>
           <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.05, color: TH.ink, margin: 0 }}>
             {hasReviews ? (
-              <>What members <span style={{ ...SI, color: TH.sageDeep }}>actually say</span>.</>
+              <>What <span style={{ ...SI, color: TH.sageDeep }}>early users</span> say.</>
             ) : (
               <>Real reviews, <span style={{ ...SI, color: TH.sageDeep }}>when they're real</span>.</>
             )}
@@ -90,8 +90,12 @@ export default function SocialProof() {
           {hasReviews && agg ? (
             <div style={{ marginTop: 14, display: "inline-flex", alignItems: "center", gap: 10, color: TH.inkSoft, fontSize: 15 }}>
               <Stars rating={agg.ratingValue} />
-              <span><strong style={{ color: TH.ink }}>{agg.ratingValue}</strong> from {agg.reviewCount} verified {agg.reviewCount === 1 ? "member" : "members"}</span>
+              <span><strong style={{ color: TH.ink }}>{agg.ratingValue}</strong> from {agg.reviewCount} {agg.reviewCount === 1 ? "person" : "people"}</span>
             </div>
+          ) : hasReviews ? (
+            <p style={{ maxWidth: 620, margin: "16px auto 0", fontSize: 16.5, lineHeight: 1.6, color: TH.inkSoft }}>
+              Early feedback from people using SuppDoc, in their words.
+            </p>
           ) : (
             <p style={{ maxWidth: 620, margin: "16px auto 0", fontSize: 16.5, lineHeight: 1.6, color: TH.inkSoft }}>
               We launched recently, and we'd rather show you nothing than fake it. As our founding members share results, their words land here, unedited. Until then, here's what you can verify yourself.
