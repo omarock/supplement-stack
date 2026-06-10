@@ -9,7 +9,7 @@
 import { useState, useRef, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics";
-import { TH, FONTS, MM } from "@/lib/theme";
+import { TH, FONTS, MM, D } from "@/lib/theme";
 
 const GOAL_CHIPS = ["Sleep", "Energy", "Focus", "Stress", "Muscle Growth", "Longevity"];
 
@@ -31,6 +31,17 @@ const buylineStyle: CSSProperties = {
 const chipStyle = (bg: string, fg: string): CSSProperties => ({
   ...MM, display: "inline-flex", alignItems: "center", fontSize: 9.5, fontWeight: 600,
   letterSpacing: "0.06em", textTransform: "uppercase", padding: "4px 9px", borderRadius: 6, background: bg, color: fg,
+});
+// Mirrors the header treatment of the two sibling cards in HomeClient's Hero.
+const iconWrap = (bg: string, fg: string): CSSProperties => ({
+  width: 42, height: 42, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center",
+  background: bg, color: fg, flexShrink: 0,
+});
+const stepBadge = (grad: string): CSSProperties => ({
+  ...D, fontSize: 13, lineHeight: 1, width: 30, height: 30, borderRadius: 9,
+  display: "flex", alignItems: "center", justifyContent: "center",
+  background: grad, color: "#fff", flexShrink: 0,
+  boxShadow: "0 5px 12px -4px rgba(10,37,64,0.3)",
 });
 
 export default function StackBox() {
@@ -65,8 +76,16 @@ export default function StackBox() {
   const ctaLabel = primaryGoal ? `Build my ${primaryGoal} stack` : "Build my stack";
 
   return (
-    <div style={triCardCenter}>
-      <span style={chipStyle(`color-mix(in srgb, ${TH.amber} 20%, transparent)`, "var(--c-amber-deep)")}>02 · Build it yourself</span>
+    <div className="sd-buildcard" style={triCardCenter}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <span style={iconWrap(`color-mix(in srgb, ${TH.amber} 16%, transparent)`, "var(--c-amber-deep)")}>
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="var(--c-amber-deep)" strokeWidth="1.3" strokeLinejoin="round" strokeLinecap="round">
+            <path d="M8 1.8l6 3-6 3-6-3 6-3z" /><path d="M2 8l6 3 6-3" /><path d="M2 11l6 3 6-3" />
+          </svg>
+        </span>
+        <span style={stepBadge(`linear-gradient(180deg, ${TH.amber}, var(--c-amber-deep))`)}>02</span>
+      </div>
+      <span style={{ ...chipStyle(`color-mix(in srgb, ${TH.amber} 20%, transparent)`, "var(--c-amber-deep)"), alignSelf: "flex-start", marginTop: 12 }}>Build it yourself</span>
       <div style={{ marginTop: 12, background: TH.bg, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: 14 }}>
         <div style={{ ...MM, fontSize: 10, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>What do you want to improve?</div>
         <textarea
@@ -100,7 +119,7 @@ export default function StackBox() {
       )}
       <div style={{ flex: 1, minHeight: 8 }} />
       <div style={{ ...buylineStyle, textAlign: "center" }}>describe it or pick a goal → generate → buy</div>
-      <button type="button" onClick={generateStack} style={triBtn}>
+      <button type="button" onClick={generateStack} className="sd-cta" style={triBtn}>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
         {ctaLabel}
       </button>

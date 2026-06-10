@@ -116,6 +116,13 @@ function Hero() {
     width: 42, height: 42, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center",
     background: bg, color: fg, flexShrink: 0,
   });
+  // Numbered step badge (01 / 02 / 03), filled with the card's accent, white digits.
+  const stepBadge = (grad: string): CSSProperties => ({
+    ...D, fontSize: 13, lineHeight: 1, width: 30, height: 30, borderRadius: 9,
+    display: "flex", alignItems: "center", justifyContent: "center",
+    background: grad, color: "#fff", flexShrink: 0,
+    boxShadow: "0 5px 12px -4px rgba(10,37,64,0.3)",
+  });
   const cardSpacer = <div style={{ flex: 1, minHeight: 8 }} />;
 
   return (
@@ -159,38 +166,40 @@ function Hero() {
           <div style={{ display: "grid", gridTemplateColumns: "var(--tri-cols)", gap: 18, alignItems: "stretch", marginTop: 24 }}>
 
             {/* Quiz, recommended focus */}
-            <Link href="/quiz" style={triCard("rec")}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={iconWrap(`color-mix(in srgb, ${TH.sage} 12%, transparent)`, TH.sageDeep)}>
+            <Link href="/quiz" className="sd-tricard sd-tricard-rec" style={triCard("rec")}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={iconWrap(`color-mix(in srgb, ${TH.sage} 14%, transparent)`, TH.sageDeep)}>
                   <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke={TH.sageDeep} strokeWidth="1.4" strokeLinejoin="round" /></svg>
                 </span>
-                <span style={chipStyle(TH.sageDeep, "#fff")}>★ 01 · Recommended</span>
+                <span style={stepBadge(`linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`)}>01</span>
               </div>
-              <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Take the quiz</div>
+              <span style={{ ...chipStyle(TH.sageDeep, "#fff"), alignSelf: "flex-start", marginTop: 12 }}>★ Recommended</span>
+              <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 10, letterSpacing: "-0.01em" }}>Take the quiz</div>
               <div style={{ ...SI, color: TH.sageDeep, fontSize: 14.5, marginTop: 2 }}>The fastest way in.</div>
               <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Answer a few questions about how you sleep, eat, and feel. We match you to evidence-backed ingredients.</p>
               {cardSpacer}
               <div style={buylineStyle}>→ generate a stack → buy on iHerb / Amazon</div>
-              <span style={triBtn}>Start the quiz →</span>
+              <span className="sd-cta" style={triBtn}>Start the quiz →</span>
             </Link>
 
             {/* Build box, center (the one interactive island) */}
             <StackBox />
 
             {/* Audit */}
-            <Link href="/audit" style={triCard("plain")}>
+            <Link href="/audit" className="sd-tricard sd-tricard-plain" style={triCard("plain")}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={iconWrap(`color-mix(in srgb, ${TH.coral} 14%, transparent)`, TH.coral)}>
+                <span style={iconWrap(`color-mix(in srgb, ${TH.coral} 16%, transparent)`, TH.coral)}>
                   <svg width="19" height="19" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke={TH.coral} strokeWidth="1.4" /><path d="M10.5 10.5l3 3" stroke={TH.coral} strokeWidth="1.6" strokeLinecap="round" /></svg>
                 </span>
-                <span style={chipStyle(`color-mix(in srgb, ${TH.coral} 15%, transparent)`, "var(--c-amber-deep)")}>03 · New</span>
+                <span style={stepBadge(`linear-gradient(180deg, ${TH.coral}, color-mix(in srgb, ${TH.coral} 62%, #000))`)}>03</span>
               </div>
-              <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 12, letterSpacing: "-0.01em" }}>Audit my stack</div>
+              <span style={{ ...chipStyle(`color-mix(in srgb, ${TH.coral} 15%, transparent)`, "var(--c-amber-deep)"), alignSelf: "flex-start", marginTop: 12 }}>New</span>
+              <div style={{ ...D, fontSize: 21, color: TH.ink, marginTop: 10, letterSpacing: "-0.01em" }}>Audit my stack</div>
               <div style={{ ...SI, color: "var(--c-amber-deep)", fontSize: 14.5, marginTop: 2 }}>Already taking supplements?</div>
               <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Paste what you take today (and your bloodwork) and we score interactions, doses, and gaps, then suggest fixes.</p>
               {cardSpacer}
               <div style={buylineStyle}>→ a cleaner stack → buy the upgrades</div>
-              <span style={triBtn}>Audit my stack →</span>
+              <span className="sd-cta" style={triBtn}>Audit my stack →</span>
             </Link>
 
           </div>
@@ -205,6 +214,20 @@ function Hero() {
       <style>{`
         :root { --hh-pad-y: 18px; --hh-pad-b: 46px; --hh-h1: 46px; --hh-sub: 17.5px; --facts-cols: repeat(4, 1fr); --tri-cols: 1fr 1.18fr 1fr; }
         .sd-hero-intro { text-align: center; }
+        /* Premium hover-lift on the two clickable service cards (pure CSS, no hydration).
+           box-shadow/border are set inline on the cards, so the hover overrides need !important. */
+        .sd-tricard { transition: transform .26s cubic-bezier(.2,.7,.2,1), box-shadow .26s ease, border-color .26s ease; }
+        .sd-tricard:hover, .sd-tricard:focus-visible { transform: translateY(-6px); }
+        .sd-tricard-rec:hover, .sd-tricard-rec:focus-visible { box-shadow: 0 30px 60px -22px color-mix(in srgb, var(--c-sage) 62%, transparent) !important; }
+        .sd-tricard-plain:hover, .sd-tricard-plain:focus-visible { box-shadow: 0 28px 56px -24px rgba(10,37,64,0.34) !important; border-color: var(--c-edge-strong) !important; }
+        /* The interactive build card glows (no lift) when its input is focused. */
+        .sd-buildcard { transition: border-color .26s ease, box-shadow .26s ease; }
+        .sd-buildcard:focus-within { border-color: var(--c-sage) !important; box-shadow: 0 20px 46px -22px color-mix(in srgb, var(--c-sage) 40%, transparent) !important; }
+        .sd-cta { transition: transform .2s ease, filter .2s ease; }
+        .sd-cta:hover, .sd-tricard:hover .sd-cta, .sd-tricard:focus-visible .sd-cta { transform: translateY(-1px); filter: brightness(1.05); }
+        @media (prefers-reduced-motion: reduce) {
+          .sd-tricard, .sd-tricard:hover, .sd-tricard:focus-visible, .sd-cta, .sd-cta:hover, .sd-tricard:hover .sd-cta { transform: none; }
+        }
         @media (max-width: 1024px) { :root { --hh-pad-y: 12px; --hh-pad-b: 40px; --hh-h1: 40px; --tri-cols: 1fr 1.1fr 1fr; } }
         @media (max-width: 860px)  { :root { --tri-cols: 1fr; } }
         @media (max-width: 640px)  { :root { --hh-pad-y: 6px; --hh-pad-b: 34px; --hh-h1: 32px; --hh-sub: 16px; --facts-cols: repeat(2, 1fr); } }
