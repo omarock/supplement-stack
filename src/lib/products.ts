@@ -411,6 +411,7 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
       approxPrice: 17, rating: 4.6, reviewCount: 4800, badge: "Bestseller",
     amazonAsin: "B005P0U7TY",
       productPath: "/pr/now-foods-rhodiola-500-mg-120-veg-capsules/123463",
+      imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04767/l/8.jpg",
       brandBg: "#fdebe1", brandInk: "#c2410c",
       form: "Veggie Capsules",
       ingredientForm: "Rhodiola Rosea Root Extract (3% rosavins, 1% salidrosides)",
@@ -2730,6 +2731,86 @@ export const PRODUCTS: Record<string, ProductOption[]> = {
     servingSize: "2 capsules", servingsPerContainer: 30, mgPerServing: "500 mg Ca + 400 IU D3",
     certifications: ["Non-GMO", "Vegan", "Kosher", "Gluten Free"],
   }],
+
+  // ── Real iHerb primaries for former long-tail (EXTRA-only) ingredients ──────
+  // Each was a BottleMockup; now a verified, real iHerb product with a working
+  // product page, a high-res CDN photo, and its real iHerb rating/review count
+  // (captured via the live catalog, 2026-06-10). Prices are approximate USD.
+  cinnamon: [
+    { brand: "Organic India", productName: "Ceylon Cinnamon, 325 mg", size: "90 veg capsules", approxPrice: 14, rating: 4.7, reviewCount: 1327, badge: "Bestseller", productPath: "/pr/organic-india-ceylon-cinnamon-90-vegetarian-caps-325-mg-per-capsule/90450", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/ori/ori51258/l/45.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  tremella: [
+    { brand: "Real Mushrooms", productName: "Tremella Mushroom Extract", size: "120 capsules", approxPrice: 24, rating: 4.8, reviewCount: 512, badge: "Bestseller", productPath: "/pr/real-mushrooms-tremella-mushroom-extract-powder-120-capsules/113977", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/rms/rms06840/l/56.jpg", brandBg: "#fef3c7", brandInk: "#92400e" },
+  ],
+  sulforaphane: [
+    { brand: "Swanson", productName: "Sulforaphane, Broccoli Sprout, 400 mcg", size: "60 vegan caps", approxPrice: 13, rating: 4.8, reviewCount: 4164, badge: "Bestseller", productPath: "/pr/swanson-vitamins-sulforaphane-from-broccoli-sprout-extract-400-mcg-60-vegan-caps/118029", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/swv/swv06048/l/48.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  maitake: [
+    { brand: "Solgar", productName: "Reishi Shiitake & Maitake Extract", size: "50 veg capsules", approxPrice: 17, rating: 4.7, reviewCount: 1207, badge: "Bestseller", productPath: "/pr/solgar-reishi-shiitake-maitake-mushroom-extract-50-vegetable-capsules/15449", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sol/sol02327/l/79.jpg", brandBg: "#dbeafe", brandInk: "#1e40af" },
+  ],
+  agmatine: [
+    { brand: "California Gold Nutrition", productName: "Agmatine Sulfate, 750 mg", size: "120 veg capsules", approxPrice: 17, rating: 4.7, reviewCount: 101, badge: "Bestseller", productPath: "/pr/california-gold-nutrition-agmatine-sulfate-750-mg-120-veggie-capsules/139254", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/spn/spn02471/l/63.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  carnosine: [
+    { brand: "NOW Foods", productName: "L-Carnosine, 500 mg", size: "100 veg capsules", approxPrice: 22, rating: 4.7, reviewCount: 5489, badge: "Bestseller", productPath: "/pr/now-foods-l-carnosine-500-mg-100-veg-capsules/457", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now00079/l/19.jpg", brandBg: "#fdebe1", brandInk: "#c2410c" },
+  ],
+  gymnema: [
+    { brand: "Swanson", productName: "Gymnema Sylvestre, 400 mg", size: "100 vegan caps", approxPrice: 9, rating: 4.6, reviewCount: 4892, badge: "Bestseller", productPath: "/pr/swanson-vitamins-full-spectrum-gymnema-sylvestre-leaf-400-mg-100-vegan-capsules/111013", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/swv/swv01983/l/56.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  shatavari: [
+    { brand: "Organic India", productName: "Shatavari, 400 mg", size: "90 veg capsules", approxPrice: 15, rating: 4.7, reviewCount: 1997, badge: "Bestseller", productPath: "/pr/organic-india-shatavari-90-vegetarian-caps-400-mg-per-capsule/90434", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/ori/ori00057/l/45.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  echinacea: [
+    { brand: "NOW Foods", productName: "Echinacea, 400 mg", size: "250 veg capsules", approxPrice: 15, rating: 4.8, reviewCount: 3936, badge: "Bestseller", productPath: "/pr/now-foods-echinacea-250-veg-capsules-400-mg-per-capsule/556", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04662/l/61.jpg", brandBg: "#fdebe1", brandInk: "#c2410c" },
+  ],
+  andrographis: [
+    { brand: "California Gold Nutrition", productName: "Andrographis Immune (AP-Bio), 100 mg", size: "120 tablets", approxPrice: 13, rating: 4.7, reviewCount: 5400, badge: "Bestseller", productPath: "/pr/california-gold-nutrition-andrographis-immune-with-ap-bio-andrographis-extract-with-vitamin-c-and-zinc-100-mg-120-tablets/101059", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/cgn/cgn01819/l/50.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  shilajit: [
+    { brand: "Paradise Herbs", productName: "Shilajit Premium Extract, 250 mg", size: "60 veg capsules", approxPrice: 12, rating: 4.5, reviewCount: 8650, badge: "Bestseller", productPath: "/pr/paradise-herbs-shilajit-premium-extract-250-mg-60-vegetarian-capsules/40251", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/par/par77818/l/55.jpg", brandBg: "#f0fdf4", brandInk: "#15803d" },
+  ],
+  caffeine: [
+    { brand: "California Gold Nutrition", productName: "TheanineUP, L-Theanine & Caffeine", size: "60 veg capsules", approxPrice: 12, rating: 4.6, reviewCount: 2014, badge: "Bestseller", productPath: "/pr/california-gold-nutrition-theanineup-l-theanine-caffeine-plus-cocoa-and-matcha-60-veggie-capsules/83281", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/cgn/cgn01241/l/204.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  chamomile: [
+    { brand: "Nutricost", productName: "Chamomile, 375 mg", size: "240 capsules", approxPrice: 12, rating: 4.8, reviewCount: 189, badge: "Bestseller", productPath: "/pr/nutricost-chamomile-240-capsules-375-mg-per-capsule/135544", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/ncs/ncs67406/l/8.jpg", brandBg: "#ede9fe", brandInk: "#5b21b6" },
+  ],
+  glucomannan: [
+    { brand: "NOW Foods", productName: "Glucomannan, 575 mg", size: "180 veg capsules", approxPrice: 14, rating: 4.5, reviewCount: 6052, badge: "Bestseller", productPath: "/pr/now-foods-glucomannan-575-mg-180-veg-capsules/6673", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now06512/l/79.jpg", brandBg: "#fdebe1", brandInk: "#c2410c" },
+  ],
+  colostrum: [
+    { brand: "California Gold Nutrition", productName: "Colostrum, 20% IgG", size: "240 veg capsules", approxPrice: 25, rating: 4.7, reviewCount: 7664, badge: "Bestseller", productPath: "/pr/california-gold-nutrition-colostrum-with-20-igg-immunoglobulins-240-veggie-capsules/52395", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/cgn/cgn00913/l/163.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  dhea: [
+    { brand: "Life Extension", productName: "DHEA, 25 mg", size: "100 capsules", approxPrice: 10, rating: 4.8, reviewCount: 5710, badge: "Bestseller", productPath: "/pr/life-extension-dhea-25-mg-100-capsules/4056", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/lex/lex33510/l/120.jpg", brandBg: "#ede9fe", brandInk: "#5b21b6" },
+  ],
+  bromelain: [
+    { brand: "California Gold Nutrition", productName: "Bromelain, 625 mg", size: "90 veg capsules", approxPrice: 14, rating: 4.7, reviewCount: 6212, badge: "Bestseller", productPath: "/pr/california-gold-nutrition-bromelain-625-mg-90-veggie-capsules/109656", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/cgn/cgn02105/l/29.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  serrapeptase: [
+    { brand: "California Gold Nutrition", productName: "Serrapeptase, 120,000 SPU", size: "180 veg capsules", approxPrice: 30, rating: 4.7, reviewCount: 6585, badge: "Bestseller", productPath: "/pr/california-gold-nutrition-serrapeptase-proteolytic-enzyme-120-000-spus-180-veggie-capsules/97395", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/lkn/lkn01572/l/107.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  pygeum: [
+    { brand: "Nutricost", productName: "Pygeum, 500 mg", size: "120 capsules", approxPrice: 12, rating: 4.7, reviewCount: 609, badge: "Bestseller", productPath: "/pr/nutricost-pygeum-120-capsules-500-mg-per-capsule/129078", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/ncs/ncs67340/l/24.jpg", brandBg: "#ede9fe", brandInk: "#5b21b6" },
+  ],
+  propolis: [
+    { brand: "California Gold Nutrition", productName: "Bee Propolis 2X, 500 mg", size: "240 veg capsules", approxPrice: 19, rating: 4.6, reviewCount: 31367, badge: "Bestseller", productPath: "/pr/california-gold-nutrition-bee-propolis-2x-concentrated-extract-500-mg-240-veggie-capsules/61840", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/cgn/cgn00946/l/122.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  chondroitin: [
+    { brand: "California Gold Nutrition", productName: "Glucosamine Chondroitin MSM + Hyaluronic Acid", size: "120 veg capsules", approxPrice: 19, rating: 4.8, reviewCount: 22388, badge: "Bestseller", productPath: "/pr/california-gold-nutrition-glucosamine-chondroitin-msm-plus-hyaluronic-acid-120-veggie-caps/69436", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/cgn/cgn01071/l/95.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  lycopene: [
+    { brand: "Nutricost", productName: "Lycopene, 20 mg", size: "120 softgels", approxPrice: 16, rating: 4.8, reviewCount: 655, badge: "Bestseller", productPath: "/pr/nutricost-lycopene-20-mg-120-softgels/136835", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/ncs/ncs67377/l/24.jpg", brandBg: "#ede9fe", brandInk: "#5b21b6" },
+  ],
+  feverfew: [
+    { brand: "NOW Foods", productName: "Feverfew", size: "100 veg capsules", approxPrice: 10, rating: 4.5, reviewCount: 493, badge: "Bestseller", productPath: "/pr/now-foods-feverfew-100-veg-capsules/2449", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now04670/l/44.jpg", brandBg: "#fdebe1", brandInk: "#c2410c" },
+  ],
+  lavender: [
+    { brand: "Nature's Way", productName: "CalmAid Lavender, 80 mg", size: "30 softgels", approxPrice: 15, rating: 4.5, reviewCount: 2073, badge: "Bestseller", productPath: "/pr/nature-s-way-calmaid-clinically-studied-lavender-80-mg-30-softgels/43054", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nwy/nwy15819/l/42.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
+  pomegranate: [
+    { brand: "Source Naturals", productName: "Pomegranate Extract, 500 mg", size: "240 tablets", approxPrice: 16, rating: 4.6, reviewCount: 4970, badge: "Bestseller", productPath: "/pr/source-naturals-pomegranate-extract-500-mg-240-tablets/19121", imageUrl: "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sns/sns02086/l/44.jpg", brandBg: "#d1fae5", brandInk: "#065f46" },
+  ],
 };
 
 /**
