@@ -37,6 +37,7 @@ const TIMING_COLOR: Record<Supplement["timing"], string> = {
 };
 
 import SuppdocLogo, { SDMark } from "@/components/SuppdocLogo";
+import PremadeStacksShowcase from "@/components/PremadeStacksShowcase";
 
 function ScoreCard({ label, score, color }: { label: string; score: number; color: string }) {
   // "Reach X with your stack": close ~45% of the gap to 100. Aspirational, and it
@@ -305,6 +306,11 @@ export default function ResultsPage() {
             })}
           </div>
         </section>
+
+        {/* Ready-made stacks: a premium, elegant alternative path, a vetted
+            goal-specific blend for users who want one alongside (or instead of)
+            their personalised result. Reusable showcase component. */}
+        <PremadeStacksShowcase />
 
         {/* Quality + value close: reinforce WHY the stack is trustworthy (shows the
             quality of the platform) and drive the high-value next step, tracking,
