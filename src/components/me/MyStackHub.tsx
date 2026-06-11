@@ -58,6 +58,29 @@ export default function MyStackHub({ premium }: { premium: boolean }) {
   const [tab, setTab] = useState<Tab>("stack");
   const [filter, setFilter] = useState<string | null>(null);
   const [logged, setLogged] = useState<Record<string, boolean>>({});
+  const [todayKey, setTodayKey] = useState<string>("");
+
+  // Persist today's dose check-ins so the ritual survives a reload, and reset
+  // automatically at the day boundary (old day-keys are swept on load).
+  useEffect(() => {
+    const key = `sd-me-today-${new Date().toISOString().slice(0, 10)}`;
+    setTodayKey(key);
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw) setLogged(JSON.parse(raw));
+      const stale: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith("sd-me-today-") && k !== key) stale.push(k);
+      }
+      stale.forEach(k => localStorage.removeItem(k));
+    } catch { /* ignore */ }
+  }, []);
+
+  useEffect(() => {
+    if (!todayKey) return;
+    try { localStorage.setItem(todayKey, JSON.stringify(logged)); } catch { /* ignore */ }
+  }, [logged, todayKey]);
 
   useEffect(() => {
     const saved = localStorage.getItem("phylaQuizData");
@@ -214,6 +237,7 @@ function TodayPanel({ supplements, logged, setLogged }: { supplements: Supplemen
   const groups = TIMING_ORDER.map(t => ({ t, items: supplements.filter(s => s.timing === t) })).filter(g => g.items.length);
   const doneCount = supplements.filter(s => logged[s.id]).length;
   const pct = Math.round((doneCount / supplements.length) * 100);
+  const allDone = doneCount === supplements.length && supplements.length > 0;
   return (
     <div style={{ ...card }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap", marginBottom: 16 }}>
@@ -223,9 +247,20 @@ function TodayPanel({ supplements, logged, setLogged }: { supplements: Supplemen
         </div>
         <Link href="/track" style={{ ...secondaryBtn }}>Open tracker →</Link>
       </div>
-      <div style={{ height: 7, borderRadius: 999, background: TH.edge, overflow: "hidden", marginBottom: 18 }}>
-        <div style={{ width: `${Math.max(3, pct)}%`, height: "100%", borderRadius: 999, background: `linear-gradient(90deg, ${TH.sage}, ${TH.sageDeep})`, transition: "width .3s" }} />
-      </div>
+      {allDone ? (
+        <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "13px 16px", borderRadius: 12, marginBottom: 18, background: "color-mix(in srgb, var(--c-sage) 14%, transparent)", border: `1px solid color-mix(in srgb, var(--c-sage) 32%, transparent)` }}>
+          <span style={{ fontSize: 20, lineHeight: 1 }} aria-hidden>✓</span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <span style={{ display: "block", ...D, fontWeight: 600, fontSize: 14.5, color: TH.ink }}>Stack complete for today.</span>
+            <span style={{ display: "block", fontSize: 12.5, color: TH.muted }}>Log it in the tracker to build your streak.</span>
+          </span>
+          <Link href="/track" style={{ ...MM, fontSize: 12.5, fontWeight: 600, color: TH.sageDeep, textDecoration: "none", whiteSpace: "nowrap" }}>Log →</Link>
+        </div>
+      ) : (
+        <div style={{ height: 7, borderRadius: 999, background: TH.edge, overflow: "hidden", marginBottom: 18 }}>
+          <div style={{ width: `${Math.max(3, pct)}%`, height: "100%", borderRadius: 999, background: `linear-gradient(90deg, ${TH.sage}, ${TH.sageDeep})`, transition: "width .3s" }} />
+        </div>
+      )}
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {groups.map(g => (
           <div key={g.t}>
@@ -264,7 +299,7 @@ function InsightsPanel({ rec, supplements, premium }: { rec: Recommendation; sup
       <div style={{ ...card }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 10, flexWrap: "wrap", marginBottom: 16 }}>
           <div style={{ ...D, fontWeight: 600, fontSize: 19, color: TH.ink }}>Your wellness reading</div>
-          <span style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.05em" }}>{premium ? "30-DAY VIEW" : "BASELINE · TODAY"}</span>
+          <span style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.05em" }}>BASELINE · FROM YOUR QUIZ</span>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px,1fr))", gap: 12 }}>
           {SCORE_KEYS.map(({ key, label, color }) => {
