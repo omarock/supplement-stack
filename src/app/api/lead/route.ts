@@ -21,7 +21,7 @@ const escHtml = (s: string) => s.replace(/[&<>"']/g, c => ESC[c]);
 export async function POST(req: NextRequest) {
   // Public + unauthenticated, and each call writes to the DB and emails the
   // founder. Rate-limit per IP so it can't be flooded into spam / Resend cost.
-  const rl = checkRateLimit(`lead:${getClientIp(req)}`, 8);
+  const rl = await checkRateLimit(`lead:${getClientIp(req)}`, 8);
   if (!rl.ok) {
     return Response.json({ ok: false, error: "rate_limited" }, {
       status: 429,

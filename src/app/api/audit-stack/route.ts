@@ -310,7 +310,7 @@ function clamp(min: number, max: number, n: number) {
 }
 
 export async function POST(req: NextRequest) {
-  const rl = checkRateLimit(`audit:${getClientIp(req)}`, 40);
+  const rl = await checkRateLimit(`audit:${getClientIp(req)}`, 40);
   if (!rl.ok) {
     return Response.json(
       { ok: false, error: "Too many requests. Please wait a moment." },

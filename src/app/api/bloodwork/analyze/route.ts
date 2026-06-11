@@ -189,7 +189,7 @@ Return the JSON analysis now.`;
 
 export async function POST(req: NextRequest) {
   // Rate limit: bloodwork sends a paid image/PDF Claude call; cap anonymous abuse.
-  const rl = checkRateLimit(`bloodwork:${getClientIp(req)}`, 12);
+  const rl = await checkRateLimit(`bloodwork:${getClientIp(req)}`, 12);
   if (!rl.ok) {
     return Response.json(
       { ok: false, error: "Too many requests. Please wait a minute and try again." },

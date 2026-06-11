@@ -43,10 +43,12 @@ function rateLimit(ip: string): { ok: boolean; retryAfterSec?: number } {
 }
 
 function getClientIp(req: NextRequest): string {
+  // Prefer x-real-ip (set by the Vercel edge, not client-spoofable). The leftmost
+  // x-forwarded-for entry can be forged to dodge the per-IP limiter.
+  const real = req.headers.get("x-real-ip");
+  if (real) return real.trim();
   const fwd = req.headers.get("x-forwarded-for");
   if (fwd) return fwd.split(",")[0].trim();
-  const real = req.headers.get("x-real-ip");
-  if (real) return real;
   return "unknown";
 }
 

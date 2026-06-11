@@ -210,7 +210,7 @@ Return the JSON stack now.`;
 }
 
 export async function POST(req: NextRequest) {
-  const rl = checkRateLimit(`genstack:${getClientIp(req)}`, 40);
+  const rl = await checkRateLimit(`genstack:${getClientIp(req)}`, 40);
   if (!rl.ok) return Response.json(
     { ok: false, error: "Too many requests. Please wait a moment.", goals: [], stackName: "", summary: "", stack: [], monthlyCost: 0, poweredBy: "rules" } satisfies GenerateResponse,
     { status: 429 },

@@ -9,12 +9,12 @@
 
 | Domaine | Score | Verdict |
 |---|---|---|
-| 🔐 Sécurité | **90 / 100** | Solide. 0 faille Critique/Haute. Quelques durcissements Moyens/Bas, 3 corrigés automatiquement. |
+| 🔐 Sécurité | **95 / 100** | Solide. 0 faille Critique/Haute. RLS vérifiée OK (§4). Rate-limiter durci. Reste : CSP `unsafe-inline` (perf vs sécurité), durcissements Bas. |
 | ⚡ Performance | **92 / 100** | Très bon. PageSpeed mobile 96, SSG/CDN, LCP = texte SSR. |
-| 📈 Scalabilité | **78 / 100** | Bonne base serverless. Plafond = pool de connexions Supabase + rate-limiter en mémoire (estimation architecturale, non mesurée). |
-| **Préparation au lancement** | **🟢 GO (conditionnel)** | Lançable après **1 vérification manuelle obligatoire** : confirmer que la RLS est activée sur toutes les tables Supabase. |
+| 📈 Scalabilité | **78 / 100** | Bonne base serverless. Plafond = pool de connexions Supabase (plan **Free/NANO** confirmé) + rate-limiter (désormais distribuable via Upstash). Estimation architecturale, non mesurée. |
+| **Préparation au lancement** | **🟢 GO** | Le point bloquant (RLS) est **VÉRIFIÉ ET RÉSOLU** le 2026-06-11. |
 
-**Le point unique bloquant avant lancement :** vérifier dans le dashboard Supabase que **Row Level Security est ON sur les 11 tables** (voir §4 et la checklist §9). Le code est sûr (tous les accès passent par la session vérifiée), mais la RLS est la seule barrière contre un accès **direct** à l'API REST Supabase avec la clé anon (qui est publique). Ça ne se vérifie pas depuis le code.
+**✅ Point bloquant RÉSOLU (vérifié le 2026-06-11 via le dashboard Supabase) :** RLS **activée (ON) sur les 11 tables**, et les **13 policies** auditées une par une — chaque table PII (`bloodwork_reports`, `subscriptions`, `stack_checkins`, `quiz_submissions`, `tracker_enrollments`) restreint le `SELECT` à `authenticated` avec `auth.uid() = user_id` (propriétaire uniquement). **Aucune policy `SELECT` pour `anon` sur une table PII.** Les `anon` n'ont que des `INSERT` sur les tables de tracking (par design). `agent_runs`/`agent_items` = RLS on + 0 policy = deny-all (service-role only). **Aucune fuite de données possible via l'API REST.**
 
 ---
 
@@ -45,11 +45,11 @@
 
 ### ⚠️ Recommandés (non auto-corrigés — nécessitent une décision ou un service externe)
 
-| # | Gravité | Faille | Pourquoi pas auto-corrigé | Action |
+| # | Gravité | Faille | Statut | Action |
 |---|---|---|---|---|
-| 5 | **Moyen** | **RLS non vérifiable depuis le code** | Vit dans le dashboard Supabase | **OBLIGATOIRE avant lancement** — voir §4 + checklist |
-| 6 | **Moyen** | CSP autorise `'unsafe-inline'` + `'unsafe-eval'` sur `script-src` | Migration vers CSP à nonce = risque de casser les scripts inline (theme-init, JSON-LD, Vercel/Paddle/GTM). À tester hors-prod. | Court terme : CSP à nonce via `proxy.ts` |
-| 7 | **Bas** | Rate-limiter en mémoire (par instance) + `x-forwarded-for` spoofable | Nécessite Vercel KV / Upstash | Court terme : déplacer le store vers Upstash |
+| 5 | ~~Moyen~~ | ~~RLS non vérifiable depuis le code~~ | ✅ **VÉRIFIÉ OK (2026-06-11)** — RLS ON + policies propriétaire-only sur les 11 tables (§4) | Aucune |
+| 6 | **Moyen** | CSP autorise `'unsafe-inline'` + `'unsafe-eval'` sur `script-src` | Migration vers CSP à nonce = risque de casser les scripts inline (theme-init, Vercel/Paddle/GTM) ET force le rendu dynamique (perte du cache CDN → perf). Compromis réel. | Court terme : CSP à hash, ou nonce sur les pages déjà dynamiques |
+| 7 | ~~Bas~~ | ~~Rate-limiter en mémoire + IP spoofable~~ | ✅ **CORRIGÉ (2026-06-11)** — IP non-spoofable (`x-real-ip`) ; backend distribué Upstash (s'active via 2 env vars, fallback mémoire) | Optionnel : créer une DB Upstash gratuite + ajouter `UPSTASH_REDIS_REST_URL`/`_TOKEN` |
 | 8 | **Bas** | `admin/agents` import = mass-assignment du `payload` ; publie en page publique `/library` | Admin-only ; le rendu markdown échappe déjà le HTML | Moyen terme : valider le schéma par `kind` |
 | 9 | **Bas** | `/api/unsubscribe` sans token signé (désinscription de n'importe quel email) | Touche les templates d'emails | Moyen terme : HMAC du token de désinscription |
 | 10 | **Bas** | anon peut INSERT des lignes à email usurpé dans `quiz_submissions`/`email_signups` (tracking client) | Choix de design (tracking anonyme) | Accepter, ou passer le tracking par une route serveur rate-limitée |
@@ -147,16 +147,16 @@ Les scripts ciblent **uniquement les pages publiques GET** (home, /pricing, /bui
 ## 9. Checklist de validation AVANT mise en production
 
 **🔴 Bloquant**
-- [ ] **RLS ON sur les 11 tables** (exécuter la requête §4 dans Supabase ; `bloodwork_reports`, `subscriptions`, `stack_checkins`, `quiz_submissions` en priorité).
+- [x] **RLS ON sur les 11 tables** — ✅ vérifié le 2026-06-11 (RLS + policies propriétaire-only, §4).
 
 **🟠 Fortement recommandé (court terme)**
 - [ ] Confirmer en prod : `ADMIN_EMAILS`, `CRON_SECRET`, `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY` sont bien définis (sinon fonctionnalités cassées/ouvertes).
+- [ ] **Activer le rate-limiter distribué** : créer une DB Upstash Redis gratuite → ajouter `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` dans Vercel (le code bascule tout seul ; sinon il reste en mémoire). Recommandé vu le plan Free/NANO.
 - [ ] Activer le **pooling Supabase** (Supavisor, mode transaction) pour les routes serverless.
 - [ ] Lancer les scripts k6 (§8) pour des chiffres réels à 100/500/1000 VUs.
 - [ ] `npm i next@16.2.9 @supabase/supabase-js@latest react@latest react-dom@latest` (patchs).
 
 **🟡 Moyen terme (post-lancement)**
-- [ ] Migrer le rate-limiter vers Upstash/Vercel KV (garanties multi-instances).
 - [ ] CSP à nonce (retirer `unsafe-inline`/`unsafe-eval`).
 - [ ] Token HMAC sur les liens de désinscription.
 - [ ] Validation de schéma sur `admin/agents` import.
@@ -169,6 +169,8 @@ Les scripts ciblent **uniquement les pages publiques GET** (home, /pricing, /bui
 
 ## 10. Note finale de préparation au lancement
 
-> ## 🟢 **GO — 90/100**, sous réserve de cocher l'unique point bloquant (RLS).
+> ## 🟢 **GO — 95/100.** Le point bloquant (RLS) est vérifié et résolu.
 
-Le code est **mûr et sécurisé** : aucune faille critique, architecture saine, secrets propres, webhooks signés, headers complets. Les 4 correctifs sûrs sont déployés. **Le seul prérequis dur** est la vérification manuelle de la RLS Supabase (5 minutes, requête fournie). Les autres points sont du durcissement progressif, non bloquant pour un lancement.
+Le code est **mûr et sécurisé** : aucune faille critique, architecture saine, secrets propres, webhooks signés, headers complets, **RLS vérifiée correcte sur les 11 tables**, rate-limiter durci (IP non-spoofable + Upstash-ready). Tous les correctifs sûrs sont déployés. **Plus aucun prérequis dur.** Les points restants (CSP à nonce/hash, provisionner Upstash, pooling Supabase, patchs npm) sont du durcissement/scalabilité progressif, non bloquant pour le lancement.
+
+Pourquoi pas 100 : un 100/100 littéral n'existe pas. Les 5 points retenus : CSP encore en `unsafe-inline` (compromis perf/sécurité réel sur un site très statique), rate-limiter en *fail-open* (dispo > blocage dur — voulu), plan Supabase Free/NANO (scalabilité), pas de tests de charge réels exécutés, et quelques durcissements Bas optionnels (unsubscribe HMAC, schéma admin/agents).
