@@ -133,30 +133,55 @@ function Plan({ raw, quiz, premium, email }: { raw: RawItem[]; quiz: { total_mon
         <div style={{ ...MM, fontSize: 11, color: TH.muted, marginTop: 6 }}>Prepared for {email}</div>
       </div>
 
-      {/* Header */}
-      <header style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 14, marginBottom: 22 }}>
-        <div>
-          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 10 }}>My Plan</div>
-          <h1 style={{ ...D, fontSize: "clamp(28px,5vw,42px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: 0 }}>
-            Your personalized <span style={SI}>protocol</span>.
-          </h1>
-        </div>
-        {premium && <div className="no-print"><PrintButton /></div>}
-      </header>
-
-      {/* Summary (always visible) */}
-      <section style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: "20px 22px", marginBottom: 22 }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 22, marginBottom: goals.length ? 14 : 0 }}>
-          <Sum n={String(items.length)} l="supplements" />
-          <Sum n={`$${Math.round(monthly)}`} l="per month" />
-          <Sum n={String(warnings.length)} l="combos to watch" />
+      {/* Print-only summary (the gradient hero below is screen-only) */}
+      <div className="print-only" style={{ marginBottom: 18 }}>
+        <h1 style={{ ...D, fontSize: 24, color: TH.ink, margin: "0 0 8px", letterSpacing: "-0.02em" }}>Your personalized protocol</h1>
+        <div style={{ ...MM, fontSize: 12.5, color: TH.inkSoft }}>
+          {items.length} supplements · ${Math.round(monthly)}/month · {warnings.length} combo{warnings.length === 1 ? "" : "s"} to watch
         </div>
         {goals.length > 0 && (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {goals.map(g => <span key={g} style={{ ...MM, fontSize: 11, color: TH.sageDeep, background: TH.accentGlow, padding: "4px 11px", borderRadius: 999 }}>{g}</span>)}
+          <div style={{ ...MM, fontSize: 11.5, color: TH.muted, marginTop: 6 }}>Goals: {goals.join(" · ")}</div>
+        )}
+      </div>
+
+      {/* Premium hero band (screen only; matches the /me + tracker language) */}
+      <header className="no-print" style={{
+        position: "relative", overflow: "hidden", borderRadius: 24, padding: "26px 26px 24px", marginBottom: 22,
+        background: "linear-gradient(135deg, #0b3a31 0%, #14614d 52%, #2f9070 100%)", color: "#fff",
+        boxShadow: "0 22px 50px -26px rgba(11,58,49,0.6)",
+      }}>
+        <div style={{ position: "absolute", right: -50, top: -50, width: 230, height: 230, borderRadius: 999, background: "radial-gradient(circle, rgba(240,180,158,0.32), transparent 70%)", pointerEvents: "none" }} />
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, position: "relative", flexWrap: "wrap" }}>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ ...MM, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", marginBottom: 10 }}>My Plan</div>
+            <h1 style={{ ...D, fontSize: "clamp(28px,5vw,42px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: 0 }}>
+              Your personalized <span style={{ ...SI, color: "#ffe2cf" }}>protocol</span>.
+            </h1>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", justifyContent: "flex-end" }}>
+            <span style={{
+              ...MM, fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", padding: "5px 12px", borderRadius: 999, whiteSpace: "nowrap",
+              background: premium ? "linear-gradient(180deg,#f5d08a,#e0a040)" : "rgba(255,255,255,0.16)", color: premium ? "#3a2a06" : "#fff",
+            }}>{premium ? "★ PREMIUM" : "FREE PLAN"}</span>
+            {premium && <PrintButton label="Download / print" />}
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 22, position: "relative" }}>
+          <HeroStat n={String(items.length)} l="supplements" />
+          <HeroStat n={`$${Math.round(monthly)}`} l="per month" />
+          <HeroStat n={String(warnings.length)} l={`combo${warnings.length === 1 ? "" : "s"} to watch`} />
+        </div>
+
+        {/* Goals */}
+        {goals.length > 0 && (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 16, position: "relative" }}>
+            {goals.map(g => <span key={g} style={{ ...MM, fontSize: 11, color: "#fff", background: "rgba(255,255,255,0.14)", border: "1px solid rgba(255,255,255,0.18)", padding: "4px 11px", borderRadius: 999 }}>{g}</span>)}
           </div>
         )}
-      </section>
+      </header>
 
       {/* Detailed plan — blurred + overlaid for free users */}
       <div style={{ position: "relative" }}>
@@ -251,11 +276,11 @@ function ItemCard({ it }: { it: PlanItem }) {
   );
 }
 
-function Sum({ n, l }: { n: string; l: string }) {
+function HeroStat({ n, l }: { n: string; l: string }) {
   return (
-    <div>
-      <div style={{ ...D, fontSize: 26, color: TH.ink, letterSpacing: "-0.02em", lineHeight: 1 }}>{n}</div>
-      <div style={{ fontSize: 12, color: TH.muted, marginTop: 4 }}>{l}</div>
+    <div style={{ flex: "1 1 120px", minWidth: 120, background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 16, padding: "14px 16px" }}>
+      <div style={{ ...D, fontSize: 28, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1 }}>{n}</div>
+      <div style={{ fontSize: 12, color: "rgba(255,255,255,0.72)", marginTop: 5 }}>{l}</div>
     </div>
   );
 }
