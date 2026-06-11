@@ -318,6 +318,24 @@ export default function SiteHeader() {
             animation: "sd-fade-in .2s ease-out", display: "flex", flexDirection: "column", gap: 22,
           }}
         >
+          {/* Profile / account first on mobile (signed in) */}
+          {user && (
+            <div>
+              <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>
+                {t("menu.myAccount")}
+              </div>
+              <div style={{ fontSize: 13, color: TH.inkSoft, marginBottom: 8 }}>{user.email}</div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {ACCOUNT_LINKS.map(item => (
+                  <Link key={item.href} href={lh(item.href)} onClick={() => setOpenMobile(false)} style={{
+                    padding: "12px 0", borderBottom: `1px solid ${TH.edge}`, textDecoration: "none",
+                    fontFamily: FONTS.display, fontWeight: 600, fontSize: 18, color: TH.ink,
+                  }}>{t(item.labelKey)}</Link>
+                ))}
+              </div>
+            </div>
+          )}
+
           {NAV.map(group => (
             <div key={group.label}>
               <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>
@@ -336,24 +354,6 @@ export default function SiteHeader() {
               </div>
             </div>
           ))}
-
-          {/* Account section (signed in) */}
-          {user && (
-            <div>
-              <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>
-                {t("menu.myAccount")}
-              </div>
-              <div style={{ fontSize: 13, color: TH.inkSoft, marginBottom: 6 }}>{user.email}</div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                {ACCOUNT_LINKS.map(item => (
-                  <Link key={item.href} href={lh(item.href)} onClick={() => setOpenMobile(false)} style={{
-                    padding: "12px 0", borderBottom: `1px solid ${TH.edge}`, textDecoration: "none",
-                    fontFamily: FONTS.display, fontWeight: 600, fontSize: 18, color: TH.ink,
-                  }}>{t(item.labelKey)}</Link>
-                ))}
-              </div>
-            </div>
-          )}
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, paddingTop: 4 }}>
             <span style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted }}>{t("switcher.label")}</span>

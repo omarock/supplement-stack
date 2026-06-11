@@ -54,6 +54,7 @@ export default async function PlanPage() {
       <SiteHeader />
       <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
+          <Link href="/me" className="no-print" style={{ ...MM, display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: TH.sageDeep, textDecoration: "none", marginBottom: 16 }}>← My Stack</Link>
           {raw.length === 0 ? <EmptyState /> : <Plan raw={raw} quiz={quiz!} premium={premium} email={user.email} />}
         </div>
       </main>
@@ -104,6 +105,11 @@ function Plan({ raw, quiz, premium, email }: { raw: RawItem[]; quiz: { total_mon
     <>
       <style>{`
         .print-only { display: none; }
+        .plan-buy { transition: transform .15s ease, box-shadow .15s ease, filter .15s ease; }
+        .plan-buy-iherb:hover { transform: translateY(-1px); filter: brightness(1.12); box-shadow: 0 7px 16px -6px color-mix(in srgb, var(--c-ink) 45%, transparent); }
+        .plan-buy-amazon:hover { transform: translateY(-1px); border-color: var(--c-sage); box-shadow: 0 6px 14px -8px rgba(10,37,64,0.22); }
+        .plan-buy .buy-arrow { opacity: .65; transition: transform .15s ease; }
+        .plan-buy:hover .buy-arrow { transform: translate(1px,-1px); opacity: 1; }
         @media print {
           @page { margin: 14mm; }
           header, footer, .no-print { display: none !important; }
@@ -268,11 +274,23 @@ function ItemCard({ it }: { it: PlanItem }) {
         {it.why && <div style={{ fontSize: 13, color: TH.inkSoft, lineHeight: 1.45, marginTop: 3 }}>{it.why}</div>}
         {p && <div className="print-only" style={{ ...MM, fontSize: 11, color: TH.sageDeep, marginTop: 5 }}>Suggested: {p.brand} {p.productName}</div>}
       </div>
-      <div className="no-print" style={{ display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }}>
-        <a href={iherb} target="_blank" rel="noopener noreferrer sponsored" style={{ ...MM, fontSize: 11.5, fontWeight: 600, color: "#fff", background: TH.inkBg, padding: "7px 12px", borderRadius: 8, textDecoration: "none", textAlign: "center" }}>iHerb</a>
-        {amazonEnabled() && <a href={amazon} target="_blank" rel="noopener noreferrer sponsored" style={{ ...MM, fontSize: 11.5, fontWeight: 600, color: TH.inkBg, background: "#fff", border: `1px solid ${TH.edge}`, padding: "7px 12px", borderRadius: 8, textDecoration: "none", textAlign: "center" }}>Amazon</a>}
+      <div className="no-print" style={{ display: "flex", flexDirection: "column", gap: 7, flexShrink: 0, minWidth: 96 }}>
+        <a href={iherb} target="_blank" rel="noopener noreferrer sponsored" className="plan-buy plan-buy-iherb" style={{ ...MM, fontSize: 12, fontWeight: 700, color: "#fff", background: TH.inkBg, padding: "9px 14px", borderRadius: 10, textDecoration: "none", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 5 }}>
+          iHerb <BuyArrow />
+        </a>
+        {amazonEnabled() && <a href={amazon} target="_blank" rel="noopener noreferrer sponsored" className="plan-buy plan-buy-amazon" style={{ ...MM, fontSize: 12, fontWeight: 700, color: TH.ink, background: TH.surface, border: `1px solid ${TH.edgeStrong}`, padding: "9px 14px", borderRadius: 10, textDecoration: "none", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 5 }}>
+          Amazon <BuyArrow />
+        </a>}
       </div>
     </div>
+  );
+}
+
+function BuyArrow() {
+  return (
+    <svg className="buy-arrow" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M7 17L17 7M9 7h8v8" />
+    </svg>
   );
 }
 

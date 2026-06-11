@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
+import Link from "next/link";
 import UpgradeCTA from "@/components/UpgradeCTA";
 import { TH, FONTS } from "@/lib/theme";
 import {
@@ -77,6 +78,8 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
   return (
     <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
       <div style={{ maxWidth: 940, margin: "0 auto" }}>
+
+        <Link href="/me" style={{ ...MM, display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: TH.sageDeep, textDecoration: "none", marginBottom: 14 }}>← My Stack</Link>
 
         {/* Premium hero (enrolled) or plain header (first run) */}
         {enrolled || todayCheckin ? (

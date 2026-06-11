@@ -245,7 +245,11 @@ function TodayPanel({ supplements, logged, setLogged }: { supplements: Supplemen
           <div style={{ ...D, fontWeight: 600, fontSize: 19, color: TH.ink }}>Today&apos;s doses</div>
           <div style={{ fontSize: 13, color: TH.muted }}>{doneCount} of {supplements.length} checked · a 60-second ritual</div>
         </div>
-        <Link href="/track" style={{ ...secondaryBtn }}>Open tracker →</Link>
+        <Link href="/track" style={{
+          ...D, display: "inline-flex", alignItems: "center", gap: 7, padding: "10px 18px", borderRadius: 999,
+          textDecoration: "none", background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff",
+          fontSize: 13.5, fontWeight: 600, boxShadow: "0 8px 18px -8px color-mix(in srgb, var(--c-sage) 60%, transparent)",
+        }}>Open tracker →</Link>
       </div>
       {allDone ? (
         <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "13px 16px", borderRadius: 12, marginBottom: 18, background: "color-mix(in srgb, var(--c-sage) 14%, transparent)", border: `1px solid color-mix(in srgb, var(--c-sage) 32%, transparent)` }}>
@@ -394,7 +398,6 @@ function Skeleton() {
 
 const card: React.CSSProperties = { background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: "20px 22px" };
 const primaryBtn: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 24px", borderRadius: 999, textDecoration: "none", background: `linear-gradient(180deg, ${TH.sage}, ${TH.sageDeep})`, color: "#fff", fontFamily: FONTS.display, fontWeight: 600, fontSize: 14.5, boxShadow: "0 10px 24px -8px color-mix(in srgb, var(--c-sage) 60%, transparent)" };
-const secondaryBtn: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 7, padding: "11px 18px", borderRadius: 999, textDecoration: "none", background: TH.surface, color: TH.ink, border: `1px solid ${TH.edge}`, fontFamily: FONTS.display, fontWeight: 600, fontSize: 13.5 };
 
 function evPill(ev: Ev): React.CSSProperties {
   return { ...MM, fontSize: 10.5, fontWeight: 700, padding: "4px 10px", borderRadius: 999, background: EV[ev].bg, color: EV[ev].fg, whiteSpace: "nowrap" };

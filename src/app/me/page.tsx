@@ -84,30 +84,6 @@ export default async function ProfilePage() {
           </p>
         </section>
 
-        {/* Premium plan status (premium users only — free users get the hub upsell) */}
-        {premium && (
-          <section style={{ marginBottom: 22 }}>
-            <div style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap",
-              background: "color-mix(in srgb, var(--c-sage) 10%, var(--c-surface))",
-              border: `1.5px solid color-mix(in srgb, var(--c-sage) 40%, transparent)`, borderRadius: 18, padding: "18px 22px",
-            }}>
-              <div>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                  <span style={{ ...MM, fontSize: 10.5, fontWeight: 700, color: "#fff", background: th.sage, padding: "3px 10px", borderRadius: 999, letterSpacing: "0.08em" }}>★ {planLabel.toUpperCase()}</span>
-                  <span style={{ ...MM, fontSize: 11, color: th.sageDeep, letterSpacing: "0.04em" }}>ACTIVE</span>
-                </div>
-                <div style={{ fontSize: 13.5, color: th.inkSoft }}>
-                  {sub?.cancel_at_period_end
-                    ? `Access ends ${fmtShortDate(sub?.current_period_end)} (cancellation scheduled)`
-                    : `Renews ${fmtShortDate(sub?.current_period_end)} · cancel anytime`}
-                </div>
-              </div>
-              <Link href="/me/subscription" style={secondaryBtn}>Manage plan →</Link>
-            </div>
-          </section>
-        )}
-
         {/* ★ The premium My Stack hub */}
         <section style={{ marginBottom: 32 }}>
           <MyStackHub premium={premium} />
@@ -118,12 +94,28 @@ export default async function ProfilePage() {
           <ActivationChecklist activation={activation} done={activationDone} />
         )}
 
-        {/* Account */}
+        {/* Account & plan */}
         <section style={{ marginBottom: 8 }}>
           <h2 style={{ ...S, fontSize: 24, margin: "0 0 14px", letterSpacing: "-0.02em" }}>Account</h2>
           <div style={{ background: th.paper, border: `1px solid ${th.line}`, borderRadius: 14, padding: 20, display: "flex", flexDirection: "column", gap: 12 }}>
             <KvRow label="Email" value={email} />
-            <KvRow label="Member since" value={memberSince} last />
+            <KvRow label="Member since" value={memberSince} last={!premium} />
+            {premium && (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap", paddingTop: 4 }}>
+                <div>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+                    <span style={{ ...MM, fontSize: 10.5, fontWeight: 700, color: "#fff", background: th.sage, padding: "3px 10px", borderRadius: 999, letterSpacing: "0.08em" }}>★ {planLabel.toUpperCase()}</span>
+                    <span style={{ ...MM, fontSize: 11, color: th.sageDeep, letterSpacing: "0.04em" }}>ACTIVE</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: th.inkSoft }}>
+                    {sub?.cancel_at_period_end
+                      ? `Access ends ${fmtShortDate(sub?.current_period_end)} (cancellation scheduled)`
+                      : `Renews ${fmtShortDate(sub?.current_period_end)} · cancel anytime`}
+                  </div>
+                </div>
+                <Link href="/me/subscription" style={secondaryBtn}>Manage plan →</Link>
+              </div>
+            )}
           </div>
           <div style={{ marginTop: 16 }}>
             <form action="/auth/signout" method="POST" style={{ display: "inline" }}>
