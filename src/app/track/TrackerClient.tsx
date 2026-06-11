@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
-import Link from "next/link";
 import UpgradeCTA from "@/components/UpgradeCTA";
 import { TH, FONTS } from "@/lib/theme";
 import {
@@ -16,7 +15,6 @@ import {
   allTrends,
   metricSeries,
   lastNDateKeys,
-  scoreTier,
   trackingWindow,
 } from "@/lib/tracker";
 import { track } from "@/lib/analytics";
@@ -80,29 +78,16 @@ export default function TrackerClient({ initialCheckins, initialEnrollment, emai
     <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
       <div style={{ maxWidth: 940, margin: "0 auto" }}>
 
-        {/* Header */}
-        <header style={{ marginBottom: 28, animation: "sd-fade-in .5s ease-out" }}>
-          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", marginBottom: 12, textTransform: "uppercase" }}>
-            Daily Tracker
-          </div>
-          <h1 style={{ ...D, fontSize: "clamp(34px, 5.5vw, 54px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 12px" }}>
-            How are you <span style={SI}>today</span>?
-          </h1>
-          <p style={{ fontSize: 17, color: TH.inkSoft, maxWidth: 560, margin: 0, lineHeight: 1.5 }}>
-            {stats.checkedInToday
-              ? "You've logged today. Here's how your stack is tracking."
-              : "A 60-second check-in. Consistency is what turns supplements into real, measurable progress."}
-          </p>
-        </header>
+        {/* Premium hero (enrolled) or plain header (first run) */}
+        {enrolled || todayCheckin ? (
+          <TrackerHero stats={stats} windowDays={windowDays} isPremium={isPremium} />
+        ) : (
+          <PlainHeader checkedInToday={stats.checkedInToday} />
+        )}
 
         {!enrolled && !todayCheckin ? (
           <EnrollIntro onEnrolled={(e) => setEnrollment(e)} />
         ) : null}
-
-        {/* Streak + stats row */}
-        {(enrolled || todayCheckin) && (
-          <StatsRow stats={stats} windowDays={windowDays} />
-        )}
 
         {/* Today's check-in */}
         <CheckinCard
@@ -300,74 +285,109 @@ function EnrollIntro({ onEnrolled }: { onEnrolled: (e: TrackerEnrollment) => voi
   );
 }
 
-// ─── Stats row (streak + adherence + consistency rings) ───────────────────────
-function StatsRow({ stats, windowDays }: { stats: ReturnType<typeof computeStats>; windowDays: number }) {
+// ─── Plain header (first run, before enrolling) ───────────────────────────────
+function PlainHeader({ checkedInToday }: { checkedInToday: boolean }) {
   return (
-    <section style={{
-      display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-      gap: 14, marginBottom: 22, animation: "sd-fade-in .5s ease-out",
-    }}>
-      <StreakTile streak={stats.currentStreak} longest={stats.longestStreak} />
-      <RingTile label="Adherence" value={stats.adherence} sub={`${stats.totalCheckins} day${stats.totalCheckins === 1 ? "" : "s"} logged`} />
-      <RingTile label="Consistency" value={stats.consistency} sub={`last ${windowDays} days`} />
-    </section>
+    <header style={{ marginBottom: 28, animation: "sd-fade-in .5s ease-out" }}>
+      <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", marginBottom: 12, textTransform: "uppercase" }}>
+        Daily Tracker
+      </div>
+      <h1 style={{ ...D, fontSize: "clamp(34px, 5.5vw, 54px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 12px" }}>
+        How are you <span style={SI}>today</span>?
+      </h1>
+      <p style={{ fontSize: 17, color: TH.inkSoft, maxWidth: 560, margin: 0, lineHeight: 1.5 }}>
+        {checkedInToday
+          ? "You've logged today. Here's how your stack is tracking."
+          : "A 60-second check-in. Consistency is what turns supplements into real, measurable progress."}
+      </p>
+    </header>
   );
 }
 
-function StreakTile({ streak, longest }: { streak: number; longest: number }) {
+// ─── Premium hero band (matches the /me hub language) ─────────────────────────
+function TrackerHero({ stats, windowDays, isPremium }: { stats: ReturnType<typeof computeStats>; windowDays: number; isPremium: boolean }) {
+  return (
+    <header style={{
+      position: "relative", overflow: "hidden", borderRadius: 24, padding: "26px 26px 24px", marginBottom: 22,
+      background: "linear-gradient(135deg, #0b3a31 0%, #14614d 52%, #2f9070 100%)", color: "#fff",
+      boxShadow: "0 22px 50px -26px rgba(11,58,49,0.6)", animation: "sd-fade-in .5s ease-out",
+    }}>
+      <div style={{ position: "absolute", right: -50, top: -50, width: 230, height: 230, borderRadius: 999, background: "radial-gradient(circle, rgba(240,180,158,0.32), transparent 70%)", pointerEvents: "none" }} />
+
+      {/* Top row: title + plan badge */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, position: "relative", flexWrap: "wrap" }}>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ ...MM, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", marginBottom: 10 }}>Daily Tracker</div>
+          <h1 style={{ ...D, fontSize: "clamp(30px, 5vw, 46px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 10px" }}>
+            How are you <span style={{ ...SI, color: "#ffe2cf" }}>today</span>?
+          </h1>
+          <p style={{ fontSize: 15, color: "rgba(255,255,255,0.82)", margin: 0, lineHeight: 1.5, maxWidth: 440 }}>
+            {stats.checkedInToday
+              ? "Logged for today. Here's how your stack is tracking."
+              : "A 60-second check-in. Consistency turns supplements into measurable progress."}
+          </p>
+        </div>
+        <span style={{
+          ...MM, fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", padding: "5px 12px", borderRadius: 999, whiteSpace: "nowrap",
+          background: isPremium ? "linear-gradient(180deg,#f5d08a,#e0a040)" : "rgba(255,255,255,0.16)",
+          color: isPremium ? "#3a2a06" : "#fff",
+        }}>{isPremium ? "★ PREMIUM" : "FREE PLAN"}</span>
+      </div>
+
+      {/* Stats strip */}
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 22, position: "relative" }}>
+        <HeroStreak streak={stats.currentStreak} longest={stats.longestStreak} />
+        <HeroRing label="Adherence" value={stats.adherence} sub={`${stats.totalCheckins} day${stats.totalCheckins === 1 ? "" : "s"} logged`} />
+        <HeroRing label="Consistency" value={stats.consistency} sub={`last ${windowDays} days`} />
+      </div>
+    </header>
+  );
+}
+
+const glassTile: React.CSSProperties = {
+  flex: "1 1 150px", minWidth: 150, background: "rgba(255,255,255,0.10)",
+  border: "1px solid rgba(255,255,255,0.16)", borderRadius: 16, padding: "15px 17px",
+};
+
+function HeroStreak({ streak, longest }: { streak: number; longest: number }) {
   const hot = streak >= 3;
   return (
-    <div style={{
-      background: hot ? `linear-gradient(135deg, #fff7ed 0%, ${TH.surface} 100%)` : TH.surface,
-      border: `1px solid ${hot ? "#f5d3a8" : TH.edge}`, borderRadius: 18, padding: "18px 20px",
-      position: "relative", overflow: "hidden",
-    }}>
-      <div style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>
+    <div style={{ ...glassTile }}>
+      <div style={{ ...MM, fontSize: 10, color: "rgba(255,255,255,0.65)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>
         Current streak
       </div>
       <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-        <span style={{ ...D, fontSize: 44, lineHeight: 1, color: hot ? TH.amberDeep : TH.ink, letterSpacing: "-0.02em" }}><CountUp value={streak} /></span>
-        <span style={{ fontSize: 22 }} aria-hidden>{hot ? "🔥" : "🌱"}</span>
+        <span style={{ ...D, fontSize: 40, lineHeight: 1, color: "#fff", letterSpacing: "-0.02em" }}><CountUp value={streak} /></span>
+        <span style={{ fontSize: 20 }} aria-hidden>{hot ? "🔥" : "🌱"}</span>
       </div>
-      <div style={{ fontSize: 12, color: TH.muted, marginTop: 6 }}>
+      <div style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", marginTop: 6 }}>
         {streak === 0 ? "Check in to start" : `day${streak === 1 ? "" : "s"} in a row · best ${longest}`}
       </div>
     </div>
   );
 }
 
-function RingTile({ label, value, sub }: { label: string; value: number; sub: string }) {
-  const tier = scoreTier(value);
-  return (
-    <div style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: "18px 20px", display: "flex", alignItems: "center", gap: 14 }}>
-      <Ring value={value} color={tier.hue} size={62} stroke={6} label={`${value}%`} />
-      <div>
-        <div style={{ ...MM, fontSize: 10.5, color: TH.muted, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>{label}</div>
-        <div style={{ ...D, fontSize: 15, color: TH.ink }}>{tier.label}</div>
-        <div style={{ fontSize: 12, color: TH.muted, marginTop: 2 }}>{sub}</div>
-      </div>
-    </div>
-  );
-}
-
-function Ring({ value, color, size = 96, stroke = 6, label }: { value: number; color: string; size?: number; stroke?: number; label?: string }) {
+function HeroRing({ label, value, sub }: { label: string; value: number; sub: string }) {
+  const size = 56, stroke = 6;
   const r = (size - stroke) / 2 - 2;
   const circ = 2 * Math.PI * r;
   const offset = circ * (1 - Math.max(0, Math.min(100, value)) / 100);
   const c = size / 2;
   return (
-    <div style={{ position: "relative", width: size, height: size, flexShrink: 0 }}>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        <circle cx={c} cy={c} r={r} stroke={TH.edge} strokeWidth={stroke} fill="none" />
-        <circle cx={c} cy={c} r={r} stroke={color} strokeWidth={stroke} fill="none" strokeLinecap="round"
-          strokeDasharray={circ} strokeDashoffset={offset} transform={`rotate(-90 ${c} ${c})`}
-          style={{ transition: "stroke-dashoffset .9s cubic-bezier(.2,.7,.2,1)" }} />
-      </svg>
-      {label && (
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", ...D, fontSize: size * 0.23, color: TH.ink }}>
-          {label}
-        </div>
-      )}
+    <div style={{ ...glassTile, display: "flex", alignItems: "center", gap: 13 }}>
+      <div style={{ position: "relative", width: size, height: size, flexShrink: 0 }}>
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+          <circle cx={c} cy={c} r={r} stroke="rgba(255,255,255,0.2)" strokeWidth={stroke} fill="none" />
+          <circle cx={c} cy={c} r={r} stroke="#ffe2cf" strokeWidth={stroke} fill="none" strokeLinecap="round"
+            strokeDasharray={circ} strokeDashoffset={offset} transform={`rotate(-90 ${c} ${c})`}
+            style={{ transition: "stroke-dashoffset .9s cubic-bezier(.2,.7,.2,1)" }} />
+        </svg>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", ...D, fontSize: 13, color: "#fff" }}>{value}%</div>
+      </div>
+      <div style={{ minWidth: 0 }}>
+        <div style={{ ...MM, fontSize: 10, color: "rgba(255,255,255,0.65)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 3 }}>{label}</div>
+        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.78)" }}>{sub}</div>
+      </div>
     </div>
   );
 }
