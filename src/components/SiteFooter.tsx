@@ -77,10 +77,11 @@ export default function SiteFooter() {
               <div style={{ fontSize: 13, color: TH.ink, fontWeight: 600, marginBottom: 16 }}>
                 {t(HEADING_KEY[heading] ?? heading)}
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 {links.map(([labelKey, href]) => (
                   <Link key={labelKey} href={lh(href)} style={{
                     fontSize: 14, color: TH.muted, textDecoration: "none",
+                    padding: "6px 0", display: "inline-block",
                   }}>
                     {t(labelKey)}
                   </Link>
