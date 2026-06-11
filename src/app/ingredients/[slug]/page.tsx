@@ -152,18 +152,13 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
         lastReviewed: LAST_REVIEWED,
         author: authorSchema(),
         ...(reviewedBy ? { reviewedBy } : {}),
-        mainEntity: { "@type": "DietarySupplement", name: supp.name },
-      },
-      {
-        "@type": "DietarySupplement",
-        name: supp.name,
-        description: desc,
-        activeIngredient: supp.name,
-        recommendedIntake: supp.dose,
-        mechanismOfAction: supp.why,
-        ...(supp.warnings && supp.warnings.length
-          ? { safetyConsideration: supp.warnings.map(w => warningLabel(w)).join("; ") }
-          : {}),
+        // Subject of the page. Typed as Substance (a MedicalEntity), NOT
+        // DietarySupplement: the latter is a Product subtype, so Google validates it
+        // as a product snippet and requires offers/review/aggregateRating — fields we
+        // have no honest data for (affiliate model, no first-party ratings). Substance
+        // carries the topic without triggering that requirement. Scholarly citations
+        // stay on the page entity for E-E-A-T.
+        about: { "@type": "Substance", name: supp.name, description: desc },
         ...(citations.length ? { citation: citations } : {}),
       },
       {
