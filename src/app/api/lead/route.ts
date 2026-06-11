@@ -1,11 +1,14 @@
 import { NextRequest } from "next/server";
 import { getAdminSupabase, adminEmails } from "@/lib/supabase-admin";
 import { sendViaResend } from "@/lib/resend";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const ESC: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const escHtml = (s: string) => s.replace(/[&<>"']/g, c => ESC[c]);
 
 /**
  * Reliable lead capture. Replaces the old client-side insert that silently lost
@@ -16,6 +19,16 @@ const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
  * Returns: { ok: boolean, stored: boolean, notified: boolean }
  */
 export async function POST(req: NextRequest) {
+  // Public + unauthenticated, and each call writes to the DB and emails the
+  // founder. Rate-limit per IP so it can't be flooded into spam / Resend cost.
+  const rl = checkRateLimit(`lead:${getClientIp(req)}`, 8);
+  if (!rl.ok) {
+    return Response.json({ ok: false, error: "rate_limited" }, {
+      status: 429,
+      headers: rl.retryAfterSec ? { "Retry-After": String(rl.retryAfterSec) } : undefined,
+    });
+  }
+
   let body: Record<string, unknown> = {};
   try { body = await req.json(); } catch { /* empty body handled below */ }
 
@@ -54,9 +67,9 @@ export async function POST(req: NextRequest) {
       <div style="font-family:system-ui,sans-serif;max-width:520px">
         <h2 style="margin:0 0 12px">${isFounding ? "New founding-member lead" : "New signup"}</h2>
         <table style="font-size:15px;line-height:1.7">
-          <tr><td style="color:#667;padding-right:12px">Email</td><td><strong>${email}</strong></td></tr>
-          <tr><td style="color:#667;padding-right:12px">Source</td><td>${source}</td></tr>
-          ${note ? `<tr><td style="color:#667;padding-right:12px">Note</td><td>${note}</td></tr>` : ""}
+          <tr><td style="color:#667;padding-right:12px">Email</td><td><strong>${escHtml(email)}</strong></td></tr>
+          <tr><td style="color:#667;padding-right:12px">Source</td><td>${escHtml(source)}</td></tr>
+          ${note ? `<tr><td style="color:#667;padding-right:12px">Note</td><td>${escHtml(note)}</td></tr>` : ""}
           <tr><td style="color:#667;padding-right:12px">Stored in DB</td><td>${stored ? "yes ✅" : `NO ⚠️ (${storeError ?? "unknown"})`}</td></tr>
         </table>
         ${isFounding ? `<p style="margin-top:16px;padding:12px 14px;background:#f0f9f3;border-radius:10px">Next: email the $79 lifetime payment link, then grant Premium in <a href="https://www.suppdoc.io/admin">/admin</a>.</p>` : ""}

@@ -72,7 +72,11 @@ export async function GET(
   const headers = Object.keys(rows[0]);
   const escape = (v: unknown): string => {
     if (v === null || v === undefined) return "";
-    const s = typeof v === "object" ? JSON.stringify(v) : String(v);
+    let s = typeof v === "object" ? JSON.stringify(v) : String(v);
+    // Neutralize spreadsheet formula injection: a cell starting with = + - @
+    // (or tab/CR) is executed as a formula by Excel/Sheets. The email/name values
+    // here are attacker-influenced (signup forms), so prefix with an apostrophe.
+    if (/^[=+\-@\t\r]/.test(s)) s = `'${s}`;
     // Quote + escape any cell containing comma, quote, or newline
     return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };

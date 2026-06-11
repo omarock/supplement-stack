@@ -209,5 +209,10 @@ export function verifyPaddleWebhook(rawBody: string, signatureHeader: string | n
   const expected = crypto.createHmac("sha256", secret).update(`${ts}:${rawBody}`).digest("hex");
   const a = Buffer.from(expected);
   const b = Buffer.from(h1);
-  return a.length === b.length && crypto.timingSafeEqual(a, b);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return false;
+  // Reject stale / replayed events outside a 5-min window (matches the Stripe
+  // verifier). `ts` is unix seconds; a captured webhook can't be replayed later.
+  const tsSec = Number(ts);
+  if (!Number.isFinite(tsSec) || Math.abs(Date.now() / 1000 - tsSec) > 300) return false;
+  return true;
 }
