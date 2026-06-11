@@ -9,7 +9,7 @@
 
 | Domaine | Score | Verdict |
 |---|---|---|
-| 🔐 Sécurité | **95 / 100** | Solide. 0 faille Critique/Haute. RLS vérifiée OK (§4). Rate-limiter durci. Reste : CSP `unsafe-inline` (perf vs sécurité), durcissements Bas. |
+| 🔐 Sécurité | **96 / 100** | Solide. 0 faille Critique/Haute. RLS vérifiée OK (§4). Rate-limiter durci. `unsafe-eval` retiré de la prod. Reste : CSP `unsafe-inline` (non retirable sans sacrifier le cache CDN), durcissements Bas optionnels. |
 | ⚡ Performance | **92 / 100** | Très bon. PageSpeed mobile 96, SSG/CDN, LCP = texte SSR. |
 | 📈 Scalabilité | **78 / 100** | Bonne base serverless. Plafond = pool de connexions Supabase (plan **Free/NANO** confirmé) + rate-limiter (désormais distribuable via Upstash). Estimation architecturale, non mesurée. |
 | **Préparation au lancement** | **🟢 GO** | Le point bloquant (RLS) est **VÉRIFIÉ ET RÉSOLU** le 2026-06-11. |
@@ -48,7 +48,7 @@
 | # | Gravité | Faille | Statut | Action |
 |---|---|---|---|---|
 | 5 | ~~Moyen~~ | ~~RLS non vérifiable depuis le code~~ | ✅ **VÉRIFIÉ OK (2026-06-11)** — RLS ON + policies propriétaire-only sur les 11 tables (§4) | Aucune |
-| 6 | **Moyen** | CSP autorise `'unsafe-inline'` + `'unsafe-eval'` sur `script-src` | Migration vers CSP à nonce = risque de casser les scripts inline (theme-init, Vercel/Paddle/GTM) ET force le rendu dynamique (perte du cache CDN → perf). Compromis réel. | Court terme : CSP à hash, ou nonce sur les pages déjà dynamiques |
+| 6 | ~~Moyen~~ → **Bas** | ~~`'unsafe-eval'`~~ **RETIRÉ de la prod** (2026-06-11, dev-only désormais ; testé en build prod : 0 violation CSP sur home/build/pricing). Reste `'unsafe-inline'` sur `script-src` — **non retirable** sans nonce (or le nonce force le rendu dynamique → perte du cache CDN → perf). Pas un trou actif : aucun sink XSS (audité). | Accepté tel quel (compromis perf/sécurité documenté) |
 | 7 | ~~Bas~~ | ~~Rate-limiter en mémoire + IP spoofable~~ | ✅ **CORRIGÉ (2026-06-11)** — IP non-spoofable (`x-real-ip`) ; backend distribué Upstash (s'active via 2 env vars, fallback mémoire) | Optionnel : créer une DB Upstash gratuite + ajouter `UPSTASH_REDIS_REST_URL`/`_TOKEN` |
 | 8 | **Bas** | `admin/agents` import = mass-assignment du `payload` ; publie en page publique `/library` | Admin-only ; le rendu markdown échappe déjà le HTML | Moyen terme : valider le schéma par `kind` |
 | 9 | **Bas** | `/api/unsubscribe` sans token signé (désinscription de n'importe quel email) | Touche les templates d'emails | Moyen terme : HMAC du token de désinscription |

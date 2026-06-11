@@ -2,15 +2,25 @@ import type { NextConfig } from "next";
 
 // Content-Security-Policy: defense against XSS and content-injection.
 // Notes:
-// - 'unsafe-inline' + 'unsafe-eval' required for Next.js 16 hydration
-//   (without these, the app breaks because Next inlines runtime scripts/styles)
+// - 'unsafe-inline' is required by the Next.js App Router (it inlines streaming
+//   hydration scripts that vary per page — not hashable, and a nonce would force
+//   dynamic rendering and kill the CDN cache). It's a defense-in-depth gap, not an
+//   active hole: the app renders no user-supplied HTML (audited).
+// - 'unsafe-eval' is only needed by the DEV HMR (React Refresh). It is DROPPED in
+//   production — the prod bundle never eval()s — which removes an XSS amplifier.
 // - Allow Cloudinary CDN for product images, Supabase for auth,
 //   Vercel Analytics + Google Analytics (googletagmanager.com loads gtag.js;
 //   *.google-analytics.com / *.analytics.google.com receive the hits) for stats
 // - Fonts are self-hosted via next/font, so no Google Fonts origins are needed.
+const isDev = process.env.NODE_ENV !== "production";
+const scriptSrc = [
+  "script-src 'self' 'unsafe-inline'",
+  isDev ? "'unsafe-eval'" : "",
+  "https://*.vercel-insights.com https://*.vercel-analytics.com https://va.vercel-scripts.com https://*.paddle.com https://www.googletagmanager.com",
+].filter(Boolean).join(" ");
 const cspDirectives = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel-insights.com https://*.vercel-analytics.com https://va.vercel-scripts.com https://*.paddle.com https://www.googletagmanager.com",
+  scriptSrc,
   "style-src 'self' 'unsafe-inline' https://*.paddle.com",
   "img-src 'self' data: blob: https://cloudinary.images-iherb.com https://s3.images-iherb.com https://*.googleusercontent.com https://*.paddle.com https://www.googletagmanager.com https://*.google-analytics.com",
   "font-src 'self' data: https://*.paddle.com",
