@@ -1,61 +1,62 @@
-# SuppDoc.io — Session Handoff (2026-06-07)
+# SuppDoc.io — Passation de session (2026-06-12) — « Pré-lancement : sécurité, Product Hunt, polish »
 
-Paste this into a new session to continue with full context. (In this project, MEMORY.md also auto-loads.)
+À coller dans une nouvelle session pour reprendre avec tout le contexte. (Dans ce projet, `MEMORY.md` se charge aussi automatiquement.)
 
-## Founder & working style
-- **Omar Fakir**, Casablanca. Non-technical founder. Wants work done FOR him, step-by-step, no jargon. Replies in **French**. Cost-sensitive (esp. API spend).
+## 0. Identité & directives permanentes (ne jamais redemander)
+- **Omar Fakir**, Casablanca, fondateur non-technique, répond en **français**, sensible aux coûts API, veut le travail fait **POUR** lui, premium, sans jargon.
+- **suppdoc.io** : compléments evidence-based. Revenus = affiliation **iHerb (DII6469)** + **Amazon (suppdoc07-20)**. Pas de marque maison.
+- Stack : Next.js 16.2.6 modifié (Turbopack, lire `node_modules/next/dist/docs/` avant d'écrire du Next), React 19, TS, Supabase, Vercel. Styles inline + tokens `TH` (`src/lib/theme.ts`). Repo : `…\AI Supplement Stack Generator\supplement-stack`.
+- **Déploiement** = commit + push master (Vercel auto ~2-4 min). Fichiers src en LF.
+- **Règles dures** : pas de « AI » visible, **pas de tirets longs (—)**, YMYL (rien d'inventé, pas de faux avis/stats), commits finissent par `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`.
+- **🔴 DIRECTIVES** : Omar reste **ANONYME** (jamais demander sameAs/FOUNDER, restent vides). Paiement = **Stripe via LLC** (PAS Lemon Squeezy/Paddle ; Stripe câblé pour quand FOUNDING_MODE=false).
+- **Préférence design** : il déteste les petits **« eyebrows » en capitales au-dessus des titres** (« YOUR STACK », style AI/template) → retirés partout, **ne jamais en remettre** (garder les labels fonctionnels/sécurité).
 
-## Product & stack
-- **suppdoc.io** — live, evidence-based supplement site. Free tools (quiz, stack builder, audit, interaction/timing checkers, bloodwork analysis, daily tracker) + affiliate revenue (iHerb code DII6469 + Amazon tag `suppdoc07-20`). No house brand (key positioning).
-- **Next.js 16 (modified — READ `node_modules/next/dist/docs/` before writing Next code)**, React 19, TypeScript, Supabase, Vercel. Inline styles + TH design tokens (not Tailwind for content pages).
-- **Repo:** `C:\Users\X1\Desktop\AI Supplement Stack Generator\supplement-stack`. Parent dir is `AI Supplement Stack Generator` (the `growth/` docs live there, outside the repo).
-- **Deploy:** commit + push to `master` → Vercel auto-deploys. Verify with `npx tsc --noEmit` then `npm run build` (use a Google-Fonts-fetch retry guard: local builds sometimes fail fetching Bricolage Grotesque; Vercel is fine).
+## 1. État actuel
+- **HEAD master = `d70cd66`**, tout déployé et vérifié live.
+- Sécurité **96/100**, RLS vérifiée OK, perf PageSpeed mobile 96. **🟢 GO pour le lancement.**
 
-## Hard rules (always)
-- No literal word **"AI"** in visible site copy. No **em/en dashes** (— –); use commas/parentheses.
-- **YMYL:** no fabricated studies/products/claims; real brands only; education-not-medical-advice framing.
-- Commit messages end with: `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`
-- Files are CRLF; the Edit tool needs a prior Read; for multi-file literal edits use a Node script (handles CRLF, no BOM).
+## 2. Fait cette session (commits master, par thème)
+- **Hero premium** (dégradé teal→vert signature) sur **/me, /track, /plan** (`a9e4a06`, `98174a2`). Onglet « Today » du hub /me rendu réel (localStorage + reset quotidien + célébration), label Insights honnête (`42bbc9b`).
+- **SEO/indexation** (`c9d16a9`) : GSC = **25 indexées (↑ de 7)**, 550 « détectées non indexées » = budget crawl domaine jeune (PAS un bug ; sitemap 714 URLs OK ; tunnel indexé). **Bug réel corrigé** : erreurs « product snippet » (DietarySupplement) sur TOUTES les fiches ingrédients → retiré les 2 nœuds Produit, gardé `Substance` + citations. Vérifié live (GSC test). Indexation demandée pour ashwagandha + creatine.
+- **UX profil** (`744cc43`) : lien « ← My Stack » sur /track + /plan ; « Manage plan » fusionné dans Account de /me ; bouton « Open tracker » attractif ; boutons iHerb/Amazon de /plan améliorés ; menu mobile = compte en premier.
+- **Mobile** (`c046515`) : audit 375px (tout clean, 0 débordement) ; liens footer 21→33px.
+- **Audit sécurité** (`6b785b2`) : 0 faille crit/haute. 4 fixes (rate-limit + échappement HTML sur /api/lead, injection formule CSV export admin, anti-rejeu webhook Paddle). Rapport = `SECURITY_AUDIT.md`, scripts charge k6 = `loadtest/`.
+- **RLS vérifiée** (dashboard Supabase) : ON sur les 11 tables, 13 policies = propriétaire-only, **aucune fuite**. Projet ref `ihbourjkfjufdenzrypm`, org « AI Supplement », **plan Free/NANO, AWS eu-west-1**.
+- **Rate-limiter durci** (`ddb89ae`) : IP non-spoofable (`x-real-ip`) ; `checkRateLimit` async + **Upstash** (activé si env `UPSTASH_REDIS_REST_URL`/`_TOKEN`, sinon fallback mémoire).
+- **CSP** (`6c89076`) : `unsafe-eval` retiré de la prod (dev-only). `unsafe-inline` reste (obligatoire Next App Router ; le retirer casserait le cache CDN).
+- **Home raccourcie** (`016dee7`) : 12 → 9 sections (retiré Stats isolée, SocialProof/témoignages, Ingredients faible ; gardé StrongestEvidence + « Built to be trusted »).
+- **Eyebrows retirés** (`12442f7` + `184716d`) : ~20 pages, kickers décoratifs au-dessus des titres. **Gardés** : labels fonctionnels/sécurité (« When to see a doctor », « TL;DR », badges, stat labels).
+- **Modale /build** (`d70cd66`) : retiré les 2 boutons « Open all » (bloqués par popups, multi-onglets `window.open`) + note + eyebrow ; gardé la liste par-produit (1 tap = 1 onglet). ⚠️ « Je vois encore les boutons » = **cache navigateur** (hard refresh) ; le fix est live.
 
-## Env / integrations (all confirmed set in Vercel)
-- `SUPABASE_SERVICE_ROLE_KEY` (→ `getAdminSupabase()` bypasses RLS), `NEXT_PUBLIC_SUPABASE_*`.
-- `RESEND_API_KEY` (→ `sendViaResend`, from hello@suppdoc.io), `ADMIN_EMAILS` (lead notifications arrive — verified).
-- `ANTHROPIC_API_KEY` **is set** (coach + bloodwork analysis run live).
-- `NEXT_PUBLIC_AMAZON_AFFILIATE_TAG = suppdoc07-20` (Amazon buttons live site-wide).
-- **Billing:** Paddle was DECLINED for the supplements category; Stripe needs a US entity. So `FOUNDING_MODE = true` in `src/app/pricing/page.tsx`: Premium sold as a **one-time $79 lifetime "founding member"**, invoiced manually (Payoneer), granted by hand in `/admin` (`/api/admin/grant-premium` writes a `subscriptions` row → `isPremium`). Flip `FOUNDING_MODE=false` when a real recurring processor is live ($9/mo, $79/yr already wired).
+## 3. 🚀 PRODUCT HUNT — programmé (le gros morceau)
+- **Lancement CRÉÉ et PROGRAMMÉ sur le compte PH d'Omar** (connecté dans Chrome) pour **mercredi 17 juin 2026, 12:01 AM PDT (08:01 Casablanca)**.
+- Rempli : nom « suppdoc.io », tagline « Free, evidence-based supplement stack builder & checker », description complète, 3 tags (Health & Fitness · Quantified Self · Productivity), thumbnail (logo capsule auto), **1 image galerie** (og-image), **commentaire maker** (se poste AUTO au lancement), Omar Fakir solo maker, Pricing = Paid-with-free-version.
+- **Lien pré-lancement à partager** (collecte de followers) : `https://www.producthunt.com/products/suppdoc-io`
+- Thread de discussion pré-lancement publié sur PH (répondre aux commentaires).
+- **⚠️ RESTE À FAIRE (à la main d'Omar)** : ajouter **3-4 images galerie** via Edit launch → Images and media (glisser ses propres captures propres : home hero, hub /me, /stacks, /audit). Captures headless ont échoué + outil d'upload sandboxé.
+- Kits prêts dans `growth/` (hors repo) : `product-hunt-launch.md`, messages supporters, posts LinkedIn/X. Logo PH dans `growth/product-hunt-assets/`.
+- **Règle PH** : jamais « vote pour moi » en public (ban) ; partage privé « jette un œil ».
 
-## Catalog state
-- **~200 ingredients** (`src/lib/supplements.ts` `SUPPLEMENT_DB`). Each has **≥4 real product options** (`src/lib/products.ts`, `EXTRA_PRODUCTS` + `getProducts()` merges base+extra, dedupes). Catalog audited 2026-06-07 (`scripts/audit-catalog.mjs`): 200 ingredients, zero duplicate ids or names. The old `garlic-aged-evening`/`olive-leaf` duplicate is confirmed gone.
-- **Studies:** real PubMed counts in `src/lib/research-volume.ts` (`RESEARCH_STUDY_TOTAL = 71,776`, deduped RCT/meta/review counts). Homepage stat + per-ingredient "N CLINICAL STUDIES" chip → PubMed. Auditable source: `scripts/research-volume.source.tsv`.
-- **Interactions:** 161 real pairs in `src/lib/interactions.ts`. Pages at `/interactions/[pair]`.
-- **Homepage stat strip** (`src/app/HomeClient.tsx`) is dynamic: ingredients = `SUPPLEMENT_DB.length`, studies = `RESEARCH_STUDY_TOTAL`, interactions = `INTERACTIONS.length`.
-- **Product images:** ~199 have real iHerb cloudinary photos; the rest use the premium `BottleMockup` SVG fallback. Real photos are captured via the connected Chrome browser (NOW-brand searches are reliable). 4 added this session (l-lysine, saw-palmetto, cranberry, boron).
+## 4. ⏳ Tâches ouvertes / prochaines actions
+- **Ajouter les images galerie PH** (Omar) + relire le lancement.
+- **17 juin** : exécuter l'outreach supporters (privé), répondre aux commentaires PH, poster LinkedIn/X.
+- **Marketing trafic réel US** (à sa main, kits prêts) : commentaires Reddit de valeur (compte EvidenceOverHype ; Reddit **bloqué pour l'agent** via l'outil), Quora long-tail, Pinterest infographies. NE PAS mettre de liens dans r/Supplements (brûle le compte).
+- **Fiverr gig trafic** (Linda) : acheté ; lancer **après le 17 juin**, pointer sur l'**accueil**, source **Pinterest**, surveiller clics affiliés. (Trafic social non ciblé, ne convertira pas — vanity metric.)
+- **Garder /compare + data report** (assets SEO/backlinks, surtout le data report pour débloquer l'indexation). Option : renforcer le data report.
+- **Recommandé non fait** : provisionner **Upstash** (env vars) pour le rate-limiter distribué ; **Supabase Pro $25/mo + pooler Supavisor** avant de scaler (Free pause + limite) ; patchs npm (`next@16.2.9`, supabase, react). Infra ~45-80 $/mo pour 10k users/1k simultanés.
+- Optionnel : retirer aussi les labels « TL;DR/THE SHORT ANSWER » (garder ceux de sécurité) ; brancher l'« Amazon add-all-to-cart » (non fait, couverture ASIN partielle : 139 produits).
 
-## Conversion funnel (this session's major work — all live)
-- **Lead-capture leak FIXED** (was the #1 revenue bug): `src/app/api/lead/route.ts` stores via service-role + emails the founder as a backstop; `trackEmailSignup` POSTs it and returns honest `{ok}`; the pricing form no longer fakes success. **Verified end-to-end** (founder received the test email).
-- **Pricing redesigned** (`src/app/pricing/PricingClient.tsx`): premium hero, live founding scarcity (`foundingStats()`), Free vs Premium comparison table, value/ROI cards, scientific-credibility trust block, FAQ, 14-day money-back, mobile-perfect.
-- **Upgrade experiences:** reusable `src/components/UpgradeCTA.tsx` (card/lock/banner). Wired into the tracker nudge, the bloodwork post-analysis upsell, and `Paywall` (history gate now delegates to it). Activation checklist on `/me` (quiz → bloodwork → tracking) for free users.
-- **NEW feature — My Plan** (`src/app/plan/page.tsx`): personalized protocol from the user's latest quiz (AM/PM schedule, doses, why, combinations to watch, iHerb+Amazon links, monthly cost). Free = summary + **blurred preview + UpgradeCTA**; Premium = full + print/PDF (`PrintButton`). Linked from `/me`, sold on `/pricing`.
-- **NEW — Premium coach** (`src/app/api/chat/route.ts`): Premium = full Claude coach with memory of stack/labs/goals (`buildMemoryBlock`); **Free = ONE rules-based taste, then a hard gate → /pricing** (zero API cost). This monetizes the coach AND bounds API cost to paying users (before, it ran for everyone incl. anonymous = cost leak).
-- Docs: `CONVERSION_AUDIT.md`, `FINAL_DELIVERABLES.md`.
+## 5. ⚙️ Gotchas techniques
+- **Cache navigateur** après déploiement : changements client (modale, JS) → **hard refresh** côté user. Les clés i18n (ex « openAllIherb ») restent dans le dictionnaire même si le composant ne les rend plus → ne pas se fier au grep du HTML pour vérifier un déploiement ; vérifier un texte **non-i18n** retiré.
+- **`.next` corrompu** après serveur dev preview → `rm -rf .next` avant tsc/build. Stopper la preview avant build.
+- **Screenshots Claude Preview TIMEOUT** sur pages à grille (/results, /me, /products) → vérifier via `preview_eval` (DOM). Pages légères OK.
+- **Pages auth** (/me, /track, /plan) non prévisualisables → route de test temporaire publique sous `src/app/<nom>-preview/` (PAS `_nom`, underscore = 404), puis SUPPRIMER avant commit.
+- **Frappe navigateur (Chrome MCP)** saute des caractères → préférer `form_input` (remplissage direct) ; mais ça ne déclenche pas toujours React (champs contrôlés) → taper au clavier dans ce cas.
+- **Reddit bloqué** par l'outil navigateur (« site not allowed »).
+- **Mobile QA** : `preview_resize` preset mobile = vrai 375×812.
+- **Commits PowerShell** : message via fichier `..\_commitmsg.txt` (outil Write) + `git commit -F`, puis supprimer (BOM).
 
-## Free vs Premium (current, live)
-- **Free:** all guides/checkers, quiz/builder/audit, 1 bloodwork (view), 7-day tracking, **My Plan preview**, 1 coach taste.
-- **Premium ($79 lifetime founding):** My Plan (saved + downloadable), unlimited+saved bloodwork, re-test comparison, full tracking trends, **coach with memory**, reminders + weekly reports.
+## 6. 🧠 Mémoire & accès
+Index dans `…\.claude\projects\…\memory\MEMORY.md`. Fichiers clés ajoutés cette session : `project_premium_hero.md`, `project_seo_indexation.md`, `project_security_audit.md`, `feedback_no_eyebrow_kickers.md`. **Claude in Chrome connecté** : GSC, Vercel, **Supabase**, **Product Hunt** (tous connectés et authentifiés).
 
-## Growth (status)
-- **GSC:** sitemap healthy (675 URLs, read 6 Jun) but only ~7 pages indexed → **young-domain authority bottleneck**, not a site problem. Fix = backlinks + time.
-- **Reddit:** account created — display name **EvidenceOverHype**, handle **u/SupportHour6498**, email **suppdoc.growth@gmail.com**. Day 1 done (joined 12 subs, F5Bot, ~20 upvotes). Phase: Days 1–30 pure karma, **no links/brand**. Next: Day 2 comments from `growth/week-1-comment-pack.md`; then `growth/week-2-pack.md`. Reddit blocks all automated tools → hand Omar paste-ready content + live search URLs.
-- **Product Hunt:** maker profile done (name "Omar Fakir"; username — "suppdoc" was taken, Omar picked an alternative; real photo avatar). **Launch planned Wed 17 June 2026, 00:01 PT (~08:01 Casablanca).** Full kit in `growth/product-hunt-launch.md` (tagline `Free, evidence-based supplement stack builder & checker`, description, maker comment, 5 gallery screenshots captured, minute-by-minute checklist, supporter messages, LinkedIn/X posts). Done 2026-06-07: **240×240 logo** in `growth/product-hunt-assets/` (+ 400/512 sizes), Upcoming-page content in `growth/product-hunt-upcoming.md`. Still needs: create the Upcoming page on PH, line up 8-12 supporters.
-- **Backlinks:** paste-ready in `growth/submission-kit.md` + `growth/backlink-targets.md` (AlternativeTo, Crunchbase, SaaSHub, BetaList, There's An AI For That, Futurepedia, etc.). Logo now ready; Show HN + Indie Hackers + Wikidata copy prepped in `growth/backlink-content.md`. Not yet submitted.
-- `growth/` folder is at the **project root** (outside the repo): reddit-growth-playbook.md, week-1-comment-pack.md, week-2-pack.md, backlink-targets.md, submission-kit.md, product-hunt-launch.md.
-
-## Access / tools
-- **Claude in Chrome** connected (Browser, Windows). Use for GSC, Vercel, Supabase dashboards, and iHerb image capture. GSC screenshots time out → use `get_page_text`.
-
-## Open next steps (pick up here)
-1. **Reddit Day 2+** (week-1 pack) → week 2.
-2. **Product Hunt 17 Jun:** make the 240×240 logo, create the Upcoming page, line up supporters.
-3. **Backlinks:** submit the P1 directories (after logo).
-4. Optional product (DONE 2026-06-07/08): hard per-user coach limit (server IP counter), richer My Plan PDF (branded print header + suggested product per line + print paywall leak fixed), free tracking tightened to 7 days (premium 30), `garlic-aged-evening` duplicate confirmed gone. Still open: more real product images; the money-back text mismatch (Pricing says 14-day, /refunds says 7-day) needs the founder to pick one.
-5. Pricing: raise lifetime to $99–$149 after first sales; flip `FOUNDING_MODE=false` when Stripe/US entity is ready.
+**Prochaine action recommandée** : aider Omar à finaliser les **images galerie Product Hunt** + préparer le jour J (17 juin).
