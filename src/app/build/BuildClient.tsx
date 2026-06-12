@@ -11,7 +11,6 @@ import { useT } from "@/components/I18nProvider";
 import ThinkingMessages, { PHRASES } from "@/components/ThinkingMessages";
 import EvidenceBadge from "@/components/EvidenceBadge";
 import { track } from "@/lib/analytics";
-import { trackClick } from "@/lib/track";
 import { encodeShareToken } from "@/lib/share";
 import type { GenerateResponse } from "@/app/api/generate-stack/route";
 
@@ -345,26 +344,6 @@ export default function BuildClient() {
     track("checkout_click", { count: selected.length, total: totalCost });
     setBuyOpen(true);
   }, [selected.length, totalCost]);
-
-  // Triggered by a direct click inside the modal. We open each product as a new
-  // TAB (window.open with no "features" string), passing a features string makes
-  // the browser treat each as a popup window, which is what the popup blocker was
-  // killing. Opening plain tabs synchronously inside the click gesture lets Chrome
-  // open the whole batch. We null the opener for security (replaces noopener).
-  const openAllAt = useCallback((which: "iherb" | "amazon") => {
-    if (typeof window === "undefined") return;
-    for (const s of selected) {
-      const url = buyLinks(s)[which];
-      if (!url) continue;
-      const w = window.open(url, "_blank");
-      if (w) w.opener = null;
-      // QA M1: record the affiliate click for attribution (buy-all was untracked).
-      const opt = getPrimaryProduct(s.id);
-      if (opt) trackClick(s, opt, `build-buy-all-${which}`).catch(() => {});
-    }
-  }, [selected]);
-  const openAllIherb = useCallback(() => openAllAt("iherb"), [openAllAt]);
-  const openAllAmazon = useCallback(() => openAllAt("amazon"), [openAllAt]);
 
   // ── Layout ────────────────────────────────────────────────────────────
   return (
@@ -738,8 +717,6 @@ export default function BuildClient() {
           supps={selected}
           name={stackName}
           total={totalCost}
-          onOpenAll={openAllIherb}
-          onOpenAllAmazon={openAllAmazon}
           onClose={() => setBuyOpen(false)}
         />
       )}
@@ -1282,9 +1259,9 @@ function Stat({ label, value }: { label: string; value: string }) {
 }
 
 // ─── Buy full stack modal ───────────────────────────────────────────────────
-function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }: {
+function BuyAllModal({ supps, name, total, onClose }: {
   supps: Supplement[]; name: string; total: number;
-  onOpenAll: () => void; onOpenAllAmazon: () => void; onClose: () => void;
+  onClose: () => void;
 }) {
   const { t } = useT();
   const showAmazon = amazonEnabled();
@@ -1314,42 +1291,10 @@ function BuyAllModal({ supps, name, total, onOpenAll, onOpenAllAmazon, onClose }
             background: TH.bg, border: `1px solid ${TH.edge}`, cursor: "pointer",
             display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: TH.ink,
           }}>×</button>
-          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 6 }}>
-            {t("build.buyModalEyebrow")}
-          </div>
           <h2 style={{ ...D, fontSize: 24, color: TH.ink, margin: 0, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{name}</h2>
           <div style={{ fontSize: 13.5, color: TH.inkSoft, marginTop: 6 }}>
             {supps.length} {supps.length === 1 ? t("build.product") : t("build.products")} · {t("build.buyModalMeta", { total })}
           </div>
-        </div>
-
-        {/* One-tap open all */}
-        <div style={{ padding: "16px 24px 0" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
-            <button onClick={onOpenAll} style={{
-              width: "100%", minHeight: 52, borderRadius: 14, border: "none", cursor: "pointer",
-              background: TH.inkBg, color: "#fff", fontFamily: FONTS.body, fontWeight: 600, fontSize: 15,
-              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
-              boxShadow: `0 8px 20px color-mix(in srgb, ${TH.ink} 13%, transparent)`,
-            }}>
-              {t("build.openAllIherb", { n: supps.length })}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M7 7h10v10"/></svg>
-            </button>
-            {showAmazon && (
-              <button onClick={onOpenAllAmazon} style={{
-                width: "100%", minHeight: 52, borderRadius: 14, border: "1px solid #e3ac00", cursor: "pointer",
-                background: "#ffd814", color: "#0f1111", fontFamily: FONTS.body, fontWeight: 600, fontSize: 15,
-                display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 9,
-                boxShadow: "0 8px 20px rgba(227,172,0,0.25)",
-              }}>
-                {t("build.openAllAmazon", { n: supps.length })}
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M7 7h10v10"/></svg>
-              </button>
-            )}
-          </div>
-          <p style={{ fontSize: 11.5, color: TH.muted, textAlign: "center", margin: "9px 0 0", lineHeight: 1.45 }}>
-            {t("build.openAllNote")}
-          </p>
         </div>
 
         {/* Per-product list */}
