@@ -69,9 +69,6 @@ export default function MethodologyPage() {
             border: `1px solid ${TH.edge}`,
             borderRadius: 18, padding: "22px 26px",
           }}>
-            <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", marginBottom: 10, textTransform: "uppercase" }}>
-              TL;DR
-            </div>
             <ul style={{
               listStyle: "none", padding: 0, margin: 0,
               display: "flex", flexDirection: "column", gap: 8,

@@ -65,7 +65,6 @@ export default function InteractionsIndex() {
 
           {/* Answer block (AEO: self-contained, key-phrase first) */}
           <div style={{ maxWidth: 720, margin: "0 auto 26px", background: TH.surface, border: `1px solid ${TH.edge}`, borderLeft: `3px solid ${TH.sage}`, borderRadius: 14, padding: "16px 20px", textAlign: "left" }}>
-            <div style={{ ...MM, fontSize: 10.5, color: TH.sageDeep, letterSpacing: "0.1em", marginBottom: 8 }}>THE SHORT ANSWER</div>
             <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: TH.ink }}>
               Supplement interactions fall into four types: synergy (take them together), timing (space them apart), redundant (pick one), and caution (check with a clinician). For example, vitamin C boosts iron absorption, calcium blocks it, and CoQ10 with ubiquinol is redundant. Paste your full stack below to check yours free.
             </p>

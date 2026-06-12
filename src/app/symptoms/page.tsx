@@ -63,7 +63,6 @@ export default function SymptomsIndex() {
 
           {/* Answer block (AEO: self-contained, key-phrase first) */}
           <div style={{ maxWidth: 720, margin: "0 auto 26px", background: TH.surface, border: `1px solid ${TH.edge}`, borderLeft: `3px solid ${TH.sage}`, borderRadius: 14, padding: "16px 20px", textAlign: "left" }}>
-            <div style={{ ...MM, fontSize: 10.5, color: TH.sageDeep, letterSpacing: "0.1em", marginBottom: 8 }}>THE SHORT ANSWER</div>
             <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: TH.ink }}>
               Many everyday symptoms, fatigue, brain fog, hair loss, cramps, and poor sleep, can be linked to a specific nutrient shortfall. Persistent fatigue, for instance, is commonly associated with low iron, vitamin D, B12, or magnesium. These guides map each symptom to the nutrients and the evidence behind them. This is education, not a diagnosis.
             </p>
