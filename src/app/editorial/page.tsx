@@ -58,7 +58,6 @@ export default function EditorialPage() {
       <SiteHeader />
       <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
-          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Editorial standards</div>
           <h1 style={{ ...D, fontSize: "clamp(32px, 5.5vw, 48px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 16px" }}>
             How we evaluate the <span style={SI}>evidence</span>.
           </h1>

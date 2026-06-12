@@ -124,7 +124,6 @@ export default async function DataStudy() {
       <SiteHeader />
       <main id="main-content" style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>suppdoc data report · 2026</div>
           <h1 style={{ ...D, fontSize: "clamp(32px, 6vw, 54px)", lineHeight: 1.03, letterSpacing: "-0.03em", margin: "0 0 16px" }}>
             The State of <span style={SI}>Supplement Stacking</span>
           </h1>

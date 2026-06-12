@@ -51,7 +51,6 @@ export default function TimingIndex() {
       <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <header style={{ textAlign: "center", marginBottom: 30 }}>
-            <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Free guide</div>
             <h1 style={{ ...D, fontSize: "clamp(32px, 6vw, 52px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 16px" }}>
               Best time to take <span style={SI}>your supplements</span>.
             </h1>

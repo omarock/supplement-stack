@@ -45,7 +45,6 @@ export default function SymptomsIndex() {
       <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <header style={{ textAlign: "center", marginBottom: 30 }}>
-            <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Free guide</div>
             <h1 style={{ ...D, fontSize: "clamp(30px, 5.5vw, 50px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 16px" }}>
               Supplements for <span style={SI}>your symptoms</span>.
             </h1>

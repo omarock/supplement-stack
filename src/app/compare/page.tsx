@@ -25,9 +25,6 @@ export default function CompareIndex() {
           padding: "var(--section-pad-y) var(--section-pad-x) 40px",
           maxWidth: 1100, margin: "0 auto", textAlign: "center",
         }}>
-          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", marginBottom: 14, textTransform: "uppercase" }}>
-            Compare
-          </div>
           <h1 style={{
             ...D, fontSize: "clamp(36px, 6vw, 60px)", lineHeight: 1.04,
             letterSpacing: "-0.03em", margin: "0 0 16px",

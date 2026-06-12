@@ -39,7 +39,6 @@ export default async function BloodworkHistoryPage() {
       <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
           <header style={{ marginBottom: 26 }}>
-            <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Bloodwork history</div>
             <h1 style={{ ...D, fontSize: "clamp(30px, 5vw, 46px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: 0 }}>
               See what <span style={SI}>changed</span>.
             </h1>

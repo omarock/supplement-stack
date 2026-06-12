@@ -371,10 +371,6 @@ export default function BuildClient() {
     <main style={{ padding: "32px var(--section-pad-x) 80px", maxWidth: 1480, margin: "0 auto" }}>
       {/* Hero */}
       <header style={{ marginBottom: 28, animation: "sd-fade-in .5s ease-out" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-          <span style={{ ...MM, fontSize: 11, letterSpacing: "0.12em", color: TH.sageDeep, textTransform: "uppercase" }}>{t("build.eyebrow")}</span>
-          <span style={{ height: 1, flex: 1, background: TH.edge }} />
-        </div>
         <h1 style={{
           ...D, fontSize: "clamp(38px, 6vw, 64px)", lineHeight: 1.02,
           letterSpacing: "-0.025em", margin: "0 0 14px",

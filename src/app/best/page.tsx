@@ -63,7 +63,6 @@ export default function BestIndex() {
       <main style={{ padding: "var(--section-pad-y) var(--section-pad-x) 90px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <header style={{ textAlign: "center", marginBottom: 38 }}>
-            <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Evidence guides</div>
             <h1 style={{ ...D, fontSize: "clamp(32px, 6vw, 52px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 16px" }}>
               Best supplements for <span style={SI}>your goal</span>.
             </h1>
