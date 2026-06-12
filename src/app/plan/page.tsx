@@ -66,7 +66,6 @@ export default async function PlanPage() {
 function EmptyState() {
   return (
     <div style={{ textAlign: "center", padding: "40px 0" }}>
-      <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>My Plan</div>
       <h1 style={{ ...D, fontSize: "clamp(28px,5vw,42px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 12px" }}>
         Your plan is <span style={SI}>one quiz away</span>.
       </h1>
@@ -160,7 +159,6 @@ function Plan({ raw, quiz, premium, email }: { raw: RawItem[]; quiz: { total_mon
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, position: "relative", flexWrap: "wrap" }}>
           <div style={{ minWidth: 0 }}>
-            <div style={{ ...MM, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", marginBottom: 10 }}>My Plan</div>
             <h1 style={{ ...D, fontSize: "clamp(28px,5vw,42px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: 0 }}>
               Your personalized <span style={{ ...SI, color: "#ffe2cf" }}>protocol</span>.
             </h1>

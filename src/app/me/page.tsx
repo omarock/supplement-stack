@@ -75,7 +75,6 @@ export default async function ProfilePage() {
 
         {/* Welcome */}
         <section style={{ marginBottom: 24 }}>
-          <div style={{ ...MM, fontSize: 12, color: th.sageDeep, letterSpacing: "0.1em", marginBottom: 8 }}>YOUR STACK</div>
           <h1 style={{ ...S, fontSize: "clamp(38px, 9vw, 52px)", margin: "0 0 8px", letterSpacing: "-0.025em", lineHeight: 1.03 }}>
             Welcome back.
           </h1>

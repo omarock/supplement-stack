@@ -206,9 +206,6 @@ export default function BloodworkClient({ signedIn, isPremium = false }: { signe
       <div style={{ maxWidth: 920, margin: "0 auto" }}>
 
         <header style={{ textAlign: "center", marginBottom: 22, animation: "sd-fade-in .5s ease-out" }}>
-          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", marginBottom: 12, textTransform: "uppercase" }}>
-            Advanced · Bloodwork Analysis
-          </div>
           <h1 style={{ ...D, fontSize: "clamp(28px, 5vw, 44px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 12px" }}>
             Turn your labs into a <span style={SI}>plan</span>.
           </h1>

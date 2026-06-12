@@ -292,9 +292,6 @@ function EnrollIntro({ onEnrolled }: { onEnrolled: (e: TrackerEnrollment) => voi
 function PlainHeader({ checkedInToday }: { checkedInToday: boolean }) {
   return (
     <header style={{ marginBottom: 28, animation: "sd-fade-in .5s ease-out" }}>
-      <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em", marginBottom: 12, textTransform: "uppercase" }}>
-        Daily Tracker
-      </div>
       <h1 style={{ ...D, fontSize: "clamp(34px, 5.5vw, 54px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 12px" }}>
         How are you <span style={SI}>today</span>?
       </h1>
@@ -320,7 +317,6 @@ function TrackerHero({ stats, windowDays, isPremium }: { stats: ReturnType<typeo
       {/* Top row: title + plan badge */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, position: "relative", flexWrap: "wrap" }}>
         <div style={{ minWidth: 0 }}>
-          <div style={{ ...MM, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", marginBottom: 10 }}>Daily Tracker</div>
           <h1 style={{ ...D, fontSize: "clamp(30px, 5vw, 46px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 10px" }}>
             How are you <span style={{ ...SI, color: "#ffe2cf" }}>today</span>?
           </h1>

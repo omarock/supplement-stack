@@ -166,7 +166,6 @@ export default function PricingClient({
 
         {/* ===== Hero ===== */}
         <header style={{ textAlign: "center", marginBottom: 30 }}>
-          <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>{t("pricing.eyebrow")}</div>
           <h1 style={{ ...D, fontSize: "clamp(32px, 5.5vw, 52px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 14px" }}>
             {t("pricing.h1a")} <span style={{ ...SI, color: TH.sageDeep }}>{t("pricing.h1b")}</span>
           </h1>
