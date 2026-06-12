@@ -10,10 +10,8 @@ import SiteFooter from "@/components/SiteFooter";
 import HeroSpotlight from "@/components/home/HeroSpotlightLazy";
 import StackBox from "@/components/home/StackBox";
 import AuthCodeCatcher from "@/components/home/AuthCodeCatcher";
-import SocialProof from "@/components/SocialProof";
 import FounderNote from "@/components/FounderNote";
 import { TH, FONTS, D, SI, MM } from "@/lib/theme";
-import { STACKS } from "@/lib/stacks";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { getPrimaryProduct, productImage } from "@/lib/products";
 import { INTERACTIONS } from "@/lib/interactions";
@@ -35,8 +33,6 @@ function Reveal({ children, style }: {
 // ════════════════════════════════════════════════════════════════════════════
 // Hero
 // ════════════════════════════════════════════════════════════════════════════
-
-const GOAL_CHIPS = ["Sleep", "Energy", "Focus", "Stress", "Muscle Growth", "Longevity"];
 
 // Real, verifiable platform numbers (no fabrication) for the proof strip.
 // Computed live from the actual datasets so the strip can never drift stale.
@@ -395,121 +391,6 @@ function How() {
                   {s.title}
                 </h3>
                 <p style={{ color: TH.inkSoft, fontSize: 16, lineHeight: 1.6, margin: 0 }}>{s.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ════════════════════════════════════════════════════════════════════════════
-// Stats
-// ════════════════════════════════════════════════════════════════════════════
-
-function Stats() {
-  return (
-    <section style={{ padding: "32px var(--section-pad-x) 72px" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div style={{
-          background: `linear-gradient(135deg, color-mix(in srgb, ${TH.sage} 6%, transparent), color-mix(in srgb, ${TH.amber} 6%, transparent), color-mix(in srgb, ${TH.coral} 3%, transparent))`,
-          borderRadius: 22, padding: "48px 36px",
-          border: `1px solid ${TH.edge}`,
-          display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 30,
-        }}>
-          {[
-            [`${INGREDIENT_COUNT}+`, "researched ingredients in the library"],
-            [`${STACKS.length}`, "ready-made stacks to start from"],
-            ["$0", "to use, we never sell our own pills"],
-          ].map(([n, l], i) => (
-            <Reveal key={l} delay={i * 0.08}>
-              <div>
-                <div style={{ ...D, fontSize: 56, lineHeight: 1, letterSpacing: "-0.04em", color: TH.ink }}>
-                  {n}
-                </div>
-                <div style={{ marginTop: 10, fontSize: 15, color: TH.inkSoft }}>{l}</div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ════════════════════════════════════════════════════════════════════════════
-// Ingredients
-// ════════════════════════════════════════════════════════════════════════════
-
-function Ingredients() {
-  const items = [
-    { name: "Magnesium Glycinate", pitch: "For deeper sleep and a calmer evening.", c1: "#7eb5d4", c2: "#5d97b8", tag: "Sleep · stress" },
-    { name: "Creatine Monohydrate", pitch: "For strength, recovery, and sharper thinking.", c1: "#5ba373", c2: "#3f7a52", tag: "Strength · cognition" },
-    { name: "Omega-3 EPA/DHA", pitch: "For heart, brain, and bouncing back from training.", c1: "#f0b56b", c2: "#e8a04a", tag: "Recovery · longevity" },
-  ];
-  return (
-    <section id="ingredients" style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <Reveal>
-          <div style={{
-            display: "flex", justifyContent: "space-between", alignItems: "flex-end",
-            marginBottom: 48, flexWrap: "wrap", gap: 18,
-          }}>
-            <div style={{ maxWidth: 700 }}>
-              <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 12 }}>
-                Inside the engine
-              </div>
-              <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.02, color: TH.ink, margin: 0 }}>
-                Only ingredients with the{" "}
-                <span style={{ ...SI, color: TH.sageDeep }}>research to back them.</span>
-              </h2>
-            </div>
-            <Link href="/stacks" style={{
-              color: TH.ink, fontWeight: 500, fontSize: 15, textDecoration: "none",
-              display: "flex", alignItems: "center", gap: 6,
-            }}>
-              Browse {STACKS.length} ready-made stacks <span>→</span>
-            </Link>
-          </div>
-        </Reveal>
-
-        <div style={{ display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 18 }}>
-          {items.map((it, i) => (
-            <Reveal key={it.name} delay={i * 0.08}>
-              <div style={{
-                background: TH.surface, borderRadius: 22, padding: 28,
-                border: `1px solid ${TH.edge}`,
-                boxShadow: `0 4px 12px color-mix(in srgb, ${TH.ink} 2%, transparent)`,
-                minHeight: 300, display: "flex", flexDirection: "column", gap: 16,
-              }}>
-                <div style={{
-                  width: 54, height: 80, borderRadius: 27,
-                  background: `linear-gradient(135deg, ${it.c1}, ${it.c2})`,
-                  position: "relative", overflow: "hidden",
-                  boxShadow: `0 12px 30px ${it.c1}40`,
-                }}>
-                  <div style={{
-                    position: "absolute", top: 6, left: 8, right: 8, height: "35%",
-                    background: "linear-gradient(180deg, rgba(255,255,255,0.5), transparent)",
-                    borderRadius: 27,
-                  }} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <h3 style={{ ...D, fontSize: 22, letterSpacing: "-0.02em", color: TH.ink, margin: "0 0 4px" }}>
-                    {it.name}
-                  </h3>
-                  <div style={{ fontSize: 13, color: it.c2, fontWeight: 500, marginBottom: 12 }}>{it.tag}</div>
-                  <p style={{ color: TH.inkSoft, fontSize: 16, lineHeight: 1.6, margin: 0 }}>
-                    {it.pitch}
-                  </p>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: TH.muted, fontWeight: 500 }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.5">
-                    <path d="M5 12l5 5 9-11" />
-                  </svg>
-                  Backed by clinical evidence
-                </div>
               </div>
             </Reveal>
           ))}
@@ -931,16 +812,14 @@ export default function HomePage() {
       <main id="main-content">
         <Hero />
         <Trust />
-        {/* Real graded ingredients early = proof, not promises (drives to /ingredients -> buy). */}
+        {/* Real graded ingredients with photos + links to /ingredients (proof, not
+            promises, and the homepage's strongest internal links). */}
         <StrongestEvidence />
-        {/* Show the actual output early (reduces uncertainty), then the trust
-            reasons, before the deeper how/ingredient detail. */}
+        {/* Show the actual output early to reduce uncertainty. */}
         <Sample />
-        <SocialProof />
+        {/* Why us: the differentiators (no house brand, every pick explained). */}
         <Testimonials />
         <How />
-        <Ingredients />
-        <Stats />
         <FAQ />
         <FounderNote />
         <CTA />
