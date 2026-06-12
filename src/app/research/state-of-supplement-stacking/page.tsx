@@ -8,6 +8,7 @@ import { TIMING, TIMING_IDS } from "@/lib/timing";
 import { SYMPTOMS, SYMPTOM_SLUGS } from "@/lib/symptoms";
 import { BIOMARKERS } from "@/lib/biomarkers";
 import { getAdminSupabase } from "@/lib/supabase-admin";
+import { RESEARCH_STUDY_TOTAL } from "@/lib/research-volume";
 import { TH, FONTS } from "@/lib/theme";
 
 const D = { fontFamily: FONTS.display, fontWeight: 600 } as const;
@@ -17,9 +18,11 @@ const BASE = "https://www.suppdoc.io";
 
 export const dynamic = "force-dynamic";
 
+const LAST_UPDATED = "2026-06-12";
+
 export const metadata: Metadata = {
   title: "The State of Supplement Stacking 2026: data on interactions, redundancy & timing | suppdoc.io",
-  description: "We analysed 151 supplements, 143 interaction pairs, and 87 timing guides. The data on what people stack, which combinations are redundant, what to never mix, and the nutrients linked to the most symptoms.",
+  description: `We analysed ${SUPPLEMENT_DB.length} supplements, ${INTERACTIONS.length} interaction pairs, ${TIMING_IDS.length} timing guides, and ${RESEARCH_STUDY_TOTAL.toLocaleString("en-US")} PubMed-indexed studies. The data on which combinations are redundant, what to never mix, and the nutrients linked to the most symptoms.`,
   keywords: "supplement stacking statistics, supplement interaction data, supplement redundancy, most common supplement deficiencies, supplement research report",
   alternates: { canonical: `${BASE}/research/state-of-supplement-stacking` },
   openGraph: { title: "The State of Supplement Stacking 2026, suppdoc.io", description: "Data on supplement interactions, redundancy, timing, and the nutrients linked to the most symptoms." },
@@ -75,11 +78,17 @@ export default async function DataStudy() {
   for (const k of SYMPTOM_SLUGS) for (const n of SYMPTOMS[k].nutrients) nutFreq[n] = (nutFreq[n] ?? 0) + 1;
   const topNutrients = Object.entries(nutFreq).sort((a, b) => b[1] - a[1]).slice(0, 6);
 
+  // Interaction hubs (which single ingredients appear in the most mapped pairs)
+  const hubFreq: Record<string, number> = {};
+  for (const it of INTERACTIONS) { hubFreq[it.a] = (hubFreq[it.a] ?? 0) + 1; hubFreq[it.b] = (hubFreq[it.b] ?? 0) + 1; }
+  const topHubs = Object.entries(hubFreq).sort((a, b) => b[1] - a[1]).slice(0, 6);
+
   const live = await liveData();
 
   const stat = [
     [`${ingredients}`, "supplements graded"],
     [`${pairs}`, "interaction pairs mapped"],
+    [`${RESEARCH_STUDY_TOTAL.toLocaleString("en-US")}`, "PubMed studies indexed"],
     [`${TIMING_IDS.length}`, "timing guides"],
     [`${SYMPTOM_SLUGS.length}`, "symptoms analysed"],
   ];
@@ -95,6 +104,8 @@ export default async function DataStudy() {
         creator: { "@type": "Organization", name: "suppdoc", url: BASE },
         license: "https://creativecommons.org/licenses/by/4.0/",
         isAccessibleForFree: true,
+        dateModified: LAST_UPDATED,
+        variableMeasured: ["supplement interaction type", "evidence grade", "optimal intake timing", "symptom-to-nutrient links", "PubMed study volume"],
       },
       {
         "@type": "Article",
@@ -102,6 +113,7 @@ export default async function DataStudy() {
         author: { "@type": "Organization", name: "suppdoc" },
         publisher: { "@type": "Organization", name: "suppdoc" },
         datePublished: "2026-06-02",
+        dateModified: LAST_UPDATED,
         mainEntityOfPage: `${BASE}/research/state-of-supplement-stacking`,
       },
     ],
@@ -128,7 +140,7 @@ export default async function DataStudy() {
             The State of <span style={SI}>Supplement Stacking</span>
           </h1>
           <p style={{ fontSize: 18, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 26px", maxWidth: 660 }}>
-            We mapped {ingredients} supplements, {pairs} interaction pairs, and {TIMING_IDS.length} timing guides into one evidence-graded dataset. Here is what it shows about what is redundant, what to never combine, when to take things, and the nutrients linked to the most symptoms. Free to cite with a link.
+            We mapped {ingredients} supplements, {pairs} interaction pairs, and {TIMING_IDS.length} timing guides into one evidence-graded dataset, backed by {RESEARCH_STUDY_TOTAL.toLocaleString("en-US")} randomized trials, meta-analyses and systematic reviews indexed on PubMed. Here is what it shows about what is redundant, what to never combine, when to take things, and the nutrients linked to the most symptoms. Free to cite with a link.
           </p>
 
           {/* Headline stat strip */}
@@ -210,8 +222,23 @@ export default async function DataStudy() {
             </div>
           </Finding>
 
-          {/* Finding 6: evidence honesty */}
-          <Finding n="06" title="Only a minority of popular supplements have strong evidence, and we say so.">
+          {/* Finding 6: interaction hubs */}
+          <Finding n="06" title={`A few ingredients are interaction hubs: ${ingName(topHubs[0][0])} alone appears in ${topHubs[0][1]} of the ${pairs} mapped pairs.`}>
+            <p style={{ fontSize: 15.5, color: TH.inkSoft, lineHeight: 1.6, margin: "0 0 16px" }}>
+              Interactions are not spread evenly. A handful of staples sit at the centre of the map, so if your stack contains one of these, it is worth checking before adding anything new. The most connected ingredients in the dataset:
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 230px), 1fr))", gap: 10 }}>
+              {topHubs.map(([id, n]) => (
+                <Link key={id} href={`/ingredients/${id}`} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: "14px 16px", textDecoration: "none", color: "inherit" }}>
+                  <span style={{ ...D, fontSize: 15, color: TH.ink }}>{ingName(id)}</span>
+                  <span style={{ ...MM, fontSize: 12, color: TH.sageDeep }}>{n} pairs</span>
+                </Link>
+              ))}
+            </div>
+          </Finding>
+
+          {/* Finding 7: evidence honesty */}
+          <Finding n="07" title="Only a minority of popular supplements have strong evidence, and we say so.">
             <p style={{ fontSize: 15.5, color: TH.inkSoft, lineHeight: 1.6, margin: 0 }}>
               Of the {ingredients} supplements in the database, <strong style={{ color: TH.ink }}>{strongish} ({pct(strongish, ingredients)}%)</strong> are graded strong or very strong, with the rest moderate or emerging. The honest read: a small core (creatine, omega-3, vitamin D, magnesium, protein) is well-proven, and most of the rest is reasonable but not settled. Grading this openly, rather than hyping everything, is the point of suppdoc.
             </p>
@@ -219,7 +246,7 @@ export default async function DataStudy() {
 
           {/* Live user data (only when there is enough) */}
           {live && (
-            <Finding n="07" title={`What ${live.quizzes.toLocaleString()} suppdoc users are actually stacking for.`}>
+            <Finding n="08" title={`What ${live.quizzes.toLocaleString()} suppdoc users are actually stacking for.`}>
               <p style={{ fontSize: 15.5, color: TH.inkSoft, lineHeight: 1.6, margin: "0 0 16px" }}>
                 Aggregated and anonymised from {live.quizzes.toLocaleString()} quiz results{live.avgCost ? `, with an average stack costing about $${live.avgCost} per month` : ""}. Top goals and most-clicked supplements:
               </p>
@@ -240,7 +267,7 @@ export default async function DataStudy() {
           <section style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: "24px 26px", marginTop: 12, marginBottom: 24 }}>
             <h2 style={{ ...D, fontSize: 20, color: TH.ink, margin: "0 0 12px", letterSpacing: "-0.02em" }}>Methodology and citation</h2>
             <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.6, margin: "0 0 14px" }}>
-              Figures are derived from suppdoc.io&apos;s own structured datasets: {ingredients} evidence-graded ingredient profiles, {pairs} hand-curated interaction pairs, {TIMING_IDS.length} timing guides, {SYMPTOM_SLUGS.length} symptom-to-nutrient maps, and {BIOMARKERS.length} biomarker references. Interaction categories follow a fixed taxonomy (synergy, timing, redundant, caution). User figures, where shown, are aggregated and anonymised. This report updates as the datasets grow.
+              Figures are derived from suppdoc.io&apos;s own structured datasets: {ingredients} evidence-graded ingredient profiles, {pairs} hand-curated interaction pairs, {TIMING_IDS.length} timing guides, {SYMPTOM_SLUGS.length} symptom-to-nutrient maps, and {BIOMARKERS.length} biomarker references. The study-volume figure ({RESEARCH_STUDY_TOTAL.toLocaleString("en-US")}) is the deduplicated count of randomized controlled trials, meta-analyses and systematic reviews returned by per-ingredient PubMed queries; each ingredient page links to its exact search so the number can be verified. Interaction categories follow a fixed taxonomy (synergy, timing, redundant, caution). User figures, where shown, are aggregated and anonymised. This report updates as the datasets grow. Last updated {LAST_UPDATED}.
             </p>
             <div style={{ ...MM, fontSize: 12, color: TH.ink, background: TH.bg, border: `1px solid ${TH.edge}`, borderRadius: 10, padding: "12px 14px", lineHeight: 1.6 }}>
               suppdoc.io (2026). The State of Supplement Stacking. https://www.suppdoc.io/research/state-of-supplement-stacking
