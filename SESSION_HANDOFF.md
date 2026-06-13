@@ -1,62 +1,51 @@
-# SuppDoc.io — Passation de session (2026-06-12) — « Pré-lancement : sécurité, Product Hunt, polish »
+# suppdoc.io — Passation de session (2026-06-13)
 
 À coller dans une nouvelle session pour reprendre avec tout le contexte. (Dans ce projet, `MEMORY.md` se charge aussi automatiquement.)
 
 ## 0. Identité & directives permanentes (ne jamais redemander)
-- **Omar Fakir**, Casablanca, fondateur non-technique, répond en **français**, sensible aux coûts API, veut le travail fait **POUR** lui, premium, sans jargon.
-- **suppdoc.io** : compléments evidence-based. Revenus = affiliation **iHerb (DII6469)** + **Amazon (suppdoc07-20)**. Pas de marque maison.
-- Stack : Next.js 16.2.6 modifié (Turbopack, lire `node_modules/next/dist/docs/` avant d'écrire du Next), React 19, TS, Supabase, Vercel. Styles inline + tokens `TH` (`src/lib/theme.ts`). Repo : `…\AI Supplement Stack Generator\supplement-stack`.
-- **Déploiement** = commit + push master (Vercel auto ~2-4 min). Fichiers src en LF.
-- **Règles dures** : pas de « AI » visible, **pas de tirets longs (—)**, YMYL (rien d'inventé, pas de faux avis/stats), commits finissent par `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`.
-- **🔴 DIRECTIVES** : Omar reste **ANONYME** (jamais demander sameAs/FOUNDER, restent vides). Paiement = **Stripe via LLC** (PAS Lemon Squeezy/Paddle ; Stripe câblé pour quand FOUNDING_MODE=false).
-- **Préférence design** : il déteste les petits **« eyebrows » en capitales au-dessus des titres** (« YOUR STACK », style AI/template) → retirés partout, **ne jamais en remettre** (garder les labels fonctionnels/sécurité).
+- **Omar Fakir**, Casablanca, fondateur non-technique. Répond en **français**, sensible aux coûts API, veut le travail fait POUR lui, premium, sans jargon.
+- **suppdoc.io** : compléments evidence-based. Revenus = affiliation iHerb (DII6469) + Amazon (suppdoc07-20). **Pas de marque maison.**
+- Stack : Next.js **16.2.9** modifié (Turbopack — lire `node_modules/next/dist/docs/` avant d'écrire du Next), React 19.2.7, TS, Supabase, Vercel. Styles inline + tokens `TH` (`src/lib/theme.ts`). Repo : `…\AI Supplement Stack Generator\supplement-stack`.
+- Déploiement = **commit + push master** (Vercel auto, build ~7 min pour 1000+ pages). Fichiers src en LF. Commits finissent par `Co-Authored-By: Claude …`.
+- 🔴 **DIRECTIVES** : Omar reste ANONYME (jamais demander sameAs/FOUNDER). Paiement = Stripe via LLC. YMYL (rien d'inventé, pas de faux avis/stats). **Pas de « AI » visible. Pas de tirets longs. Casse normale partout, JAMAIS de label en capitales-mono au-dessus d'un titre** (le « tell IA » qu'il déteste).
 
-## 1. État actuel
-- **HEAD master = `d70cd66`**, tout déployé et vérifié live.
-- Sécurité **96/100**, RLS vérifiée OK, perf PageSpeed mobile 96. **🟢 GO pour le lancement.**
+## 1. 🚀 LANCEMENT — le gros sujet
+- **Product Hunt programmé : mercredi 17 juin 2026, 12:01 AM PDT (08:01 Casablanca).** Page complète (6 images galerie, tagline, description, commentaire maker auto, tags, thread pré-lancement). Lien pré-lancement : https://www.producthunt.com/products/suppdoc-io
+- **On est en CODE FREEZE jusqu'au lancement** : que des changements sûrs et vérifiés.
+- ⏳ **La SEULE vraie tâche qui reste à Omar** : réunir **8-12 supporters** à prévenir le jour J (messages prêts dans `growth/product-hunt-launch.md` : « save the date », « we're live », posts LinkedIn/X). Facteur n°1 du classement. Jamais « vote pour moi » en public.
 
-## 2. Fait cette session (commits master, par thème)
-- **Hero premium** (dégradé teal→vert signature) sur **/me, /track, /plan** (`a9e4a06`, `98174a2`). Onglet « Today » du hub /me rendu réel (localStorage + reset quotidien + célébration), label Insights honnête (`42bbc9b`).
-- **SEO/indexation** (`c9d16a9`) : GSC = **25 indexées (↑ de 7)**, 550 « détectées non indexées » = budget crawl domaine jeune (PAS un bug ; sitemap 714 URLs OK ; tunnel indexé). **Bug réel corrigé** : erreurs « product snippet » (DietarySupplement) sur TOUTES les fiches ingrédients → retiré les 2 nœuds Produit, gardé `Substance` + citations. Vérifié live (GSC test). Indexation demandée pour ashwagandha + creatine.
-- **UX profil** (`744cc43`) : lien « ← My Stack » sur /track + /plan ; « Manage plan » fusionné dans Account de /me ; bouton « Open tracker » attractif ; boutons iHerb/Amazon de /plan améliorés ; menu mobile = compte en premier.
-- **Mobile** (`c046515`) : audit 375px (tout clean, 0 débordement) ; liens footer 21→33px.
-- **Audit sécurité** (`6b785b2`) : 0 faille crit/haute. 4 fixes (rate-limit + échappement HTML sur /api/lead, injection formule CSV export admin, anti-rejeu webhook Paddle). Rapport = `SECURITY_AUDIT.md`, scripts charge k6 = `loadtest/`.
-- **RLS vérifiée** (dashboard Supabase) : ON sur les 11 tables, 13 policies = propriétaire-only, **aucune fuite**. Projet ref `ihbourjkfjufdenzrypm`, org « AI Supplement », **plan Free/NANO, AWS eu-west-1**.
-- **Rate-limiter durci** (`ddb89ae`) : IP non-spoofable (`x-real-ip`) ; `checkRateLimit` async + **Upstash** (activé si env `UPSTASH_REDIS_REST_URL`/`_TOKEN`, sinon fallback mémoire).
-- **CSP** (`6c89076`) : `unsafe-eval` retiré de la prod (dev-only). `unsafe-inline` reste (obligatoire Next App Router ; le retirer casserait le cache CDN).
-- **Home raccourcie** (`016dee7`) : 12 → 9 sections (retiré Stats isolée, SocialProof/témoignages, Ingredients faible ; gardé StrongestEvidence + « Built to be trusted »).
-- **Eyebrows retirés** (`12442f7` + `184716d`) : ~20 pages, kickers décoratifs au-dessus des titres. **Gardés** : labels fonctionnels/sécurité (« When to see a doctor », « TL;DR », badges, stat labels).
-- **Modale /build** (`d70cd66`) : retiré les 2 boutons « Open all » (bloqués par popups, multi-onglets `window.open`) + note + eyebrow ; gardé la liste par-produit (1 tap = 1 onglet). ⚠️ « Je vois encore les boutons » = **cache navigateur** (hard refresh) ; le fix est live.
+## 2. État actuel
+- **HEAD master = `fcf2a6d`**, tout déployé et vérifié live. Sécurité 96/100, perf 96, RLS OK. 🟢 GO.
+- Untracked sans impact : `scripts/make-marketing-cards.mjs` (ignorer).
 
-## 3. 🚀 PRODUCT HUNT — programmé (le gros morceau)
-- **Lancement CRÉÉ et PROGRAMMÉ sur le compte PH d'Omar** (connecté dans Chrome) pour **mercredi 17 juin 2026, 12:01 AM PDT (08:01 Casablanca)**.
-- Rempli : nom « suppdoc.io », tagline « Free, evidence-based supplement stack builder & checker », description complète, 3 tags (Health & Fitness · Quantified Self · Productivity), thumbnail (logo capsule auto), **1 image galerie** (og-image), **commentaire maker** (se poste AUTO au lancement), Omar Fakir solo maker, Pricing = Paid-with-free-version.
-- **Lien pré-lancement à partager** (collecte de followers) : `https://www.producthunt.com/products/suppdoc-io`
-- Thread de discussion pré-lancement publié sur PH (répondre aux commentaires).
-- **⚠️ RESTE À FAIRE (à la main d'Omar)** : ajouter **3-4 images galerie** via Edit launch → Images and media (glisser ses propres captures propres : home hero, hub /me, /stacks, /audit). Captures headless ont échoué + outil d'upload sandboxé.
-- Kits prêts dans `growth/` (hors repo) : `product-hunt-launch.md`, messages supporters, posts LinkedIn/X. Logo PH dans `growth/product-hunt-assets/`.
-- **Règle PH** : jamais « vote pour moi » en public (ban) ; partage privé « jette un œil ».
+## 3. Fait cette session (2026-06-13)
+- **Emails GSC réglés** : « noindex » = page research dong-quai (garde anti-thin-content volontaire) ; « product snippet » = vieux crawls creatine/ashwagandha, validation relancée. Indexées : 29.
+- **Deps patchées** (`dfc5d60`) : next 16.2.9, react 19.2.7, supabase-js 2.108.1. `@supabase/ssr` laissé à 0.10.3 exprès.
+- **Data report renforcé** (`3626646`) : meta dynamique, 71 776 études en avant, Finding « interaction hubs ».
+- **Tell IA retiré en masse** : labels TL;DR (`9579363`), eyebrows dynamiques (`4131516`), **refonte premium fiche ingrédient ×200** (`7dddbc4` : badges casse-normale + indicateur de preuve, quick-answer/why-it-matters/quick-facts/avoid-if + cartes produit premium), **polissage home** (`543e50d`), **sweep pages publiques batch 1** (`f740bfd` : quiz/audit/stacks/EvidenceBadge/pricing/CTA), **fix dict** `recommended` 4 langues (`7e76a2b`).
+- **Section home « Built to be trusted » supprimée** (`d4fe113`).
+- **Audit + nettoyage sûr** (`479f4b2`) : supprimé Navbar.tsx + SocialProof.tsx (orphelins) + dép lucide-react. Rapport : `CLEANUP_AUDIT.md`.
+- **Trafic Fiverr (Linda) démasqué = bots** (analytics Vercel = 8 vrais visiteurs, firewall = datacenters) → **dispute Fiverr gagnée, remboursé 61,53 $**.
+- **Design system premium livré** (`fcf2a6d`, `DESIGN_SYSTEM.md`) via le skill `ui-ux-pro-max` : direction couleur/typo/composants/UX-confiance + guide d'écriture premium. + maquettes home premium montrées (approuvées, **parkées** — voir mémoire `project_home_redesign_concept`).
 
-## 4. ⏳ Tâches ouvertes / prochaines actions
-- **Ajouter les images galerie PH** (Omar) + relire le lancement.
-- **17 juin** : exécuter l'outreach supporters (privé), répondre aux commentaires PH, poster LinkedIn/X.
-- **Marketing trafic réel US** (à sa main, kits prêts) : commentaires Reddit de valeur (compte EvidenceOverHype ; Reddit **bloqué pour l'agent** via l'outil), Quora long-tail, Pinterest infographies. NE PAS mettre de liens dans r/Supplements (brûle le compte).
-- **Fiverr gig trafic** (Linda) : acheté ; lancer **après le 17 juin**, pointer sur l'**accueil**, source **Pinterest**, surveiller clics affiliés. (Trafic social non ciblé, ne convertira pas — vanity metric.)
-- **Garder /compare + data report** (assets SEO/backlinks, surtout le data report pour débloquer l'indexation). Option : renforcer le data report.
-- **Recommandé non fait** : provisionner **Upstash** (env vars) pour le rate-limiter distribué ; **Supabase Pro $25/mo + pooler Supavisor** avant de scaler (Free pause + limite) ; patchs npm (`next@16.2.9`, supabase, react). Infra ~45-80 $/mo pour 10k users/1k simultanés.
-- Optionnel : retirer aussi les labels « TL;DR/THE SHORT ANSWER » (garder ceux de sécurité) ; brancher l'« Amazon add-all-to-cart » (non fait, couverture ASIN partielle : 139 produits).
+## 4. Tâches ouvertes (après le 17, sauf mention)
+- **AVANT mercredi** : Omar contacte ses supporters + (optionnel, ma main) cleanup **batch 2** du tell IA sur pages auth (`/me /track /plan /bloodwork`) + `/build` (labels mono encore présents — voir `feedback_no_eyebrow_kickers.md`, dont valeurs UPPERCASE du dict : signinEyebrow, signupEyebrow, almostReady, orTemplate, yourStack, forYou).
+- **Refonte premium de la home** (parkée, approuvée) : construire avec les vrais comptes de niveaux de preuve depuis `SUPPLEMENT_DB`. Recette dans `project_home_redesign_concept` (mémoire) + `DESIGN_SYSTEM.md`.
+- **Refactoring profond** (reporté, `CLEANUP_AUDIT.md`) : ~60 exports/types morts (knip), découpage gros composants, typage. Après lancement.
+- **Décisions infra** (optionnel) : Supabase Pro 25 $/mo (pic inscriptions jour J), Upstash gratuit (à créer par Omar), brancher `lib/indexnow.ts` (codé mais pas câblé).
+- **Marketing à la main d'Omar** : Reddit (compte EvidenceOverHype, outil bloqué pour moi), Quora, Pinterest. NE PAS relancer de gig « trafic » (bots).
 
-## 5. ⚙️ Gotchas techniques
-- **Cache navigateur** après déploiement : changements client (modale, JS) → **hard refresh** côté user. Les clés i18n (ex « openAllIherb ») restent dans le dictionnaire même si le composant ne les rend plus → ne pas se fier au grep du HTML pour vérifier un déploiement ; vérifier un texte **non-i18n** retiré.
-- **`.next` corrompu** après serveur dev preview → `rm -rf .next` avant tsc/build. Stopper la preview avant build.
-- **Screenshots Claude Preview TIMEOUT** sur pages à grille (/results, /me, /products) → vérifier via `preview_eval` (DOM). Pages légères OK.
-- **Pages auth** (/me, /track, /plan) non prévisualisables → route de test temporaire publique sous `src/app/<nom>-preview/` (PAS `_nom`, underscore = 404), puis SUPPRIMER avant commit.
-- **Frappe navigateur (Chrome MCP)** saute des caractères → préférer `form_input` (remplissage direct) ; mais ça ne déclenche pas toujours React (champs contrôlés) → taper au clavier dans ce cas.
-- **Reddit bloqué** par l'outil navigateur (« site not allowed »).
-- **Mobile QA** : `preview_resize` preset mobile = vrai 375×812.
-- **Commits PowerShell** : message via fichier `..\_commitmsg.txt` (outil Write) + `git commit -F`, puis supprimer (BOM).
+## 5. ⚙️ Gotchas techniques (importants)
+- **PowerShell `-match` est INSENSIBLE à la casse** → `'>BESTSELLER<'` matche `>Bestseller<`. Pour vérifier qu'un label MAJUSCULE a disparu : `[regex]::Matches($html,[regex]::Escape('TEXTE')).Count` (sensible) ou `-cmatch`.
+- **Vérif déploiement** : toujours `-Headers @{'Cache-Control'='no-cache'}` (le CDN sert du stale → faux « pas déployé »). Le build finit souvent **juste après** une boucle de 7 min.
+- **Certains tells sont dans le dict i18n** (`src/messages/{en,fr,de,es}.json`), pas le CSS → changer la valeur dans les 4 langues. Les valeurs retirées **restent** dans le payload i18n du HTML (faux positifs grep) → grepper un marqueur visible.
+- **Capture preview** : `preview_screenshot` TIMEOUT sur pages à grille (fiche ingrédient, /results) → vérifier via `preview_eval`. Home/quiz OK.
+- **`.next` corrompu** si on le supprime pendant que la preview tourne → **stopper la preview AVANT** `rm .next`/build.
+- **Maquettes** : `show_widget` impose un style sobre → pour du premium suppdoc, coder les vrais dégradés/ombres/couleurs inline.
+- Accès live : **Claude in Chrome connecté** (GSC, Vercel, Supabase, Product Hunt, Fiverr). Reddit bloqué par l'outil.
+- **Python pas installé** (stub Windows Store) ; le skill `ui-ux-pro-max` a été exploité en lisant ses CSV (`…\.claude\skills\ui-ux-pro-max\data\`).
 
-## 6. 🧠 Mémoire & accès
-Index dans `…\.claude\projects\…\memory\MEMORY.md`. Fichiers clés ajoutés cette session : `project_premium_hero.md`, `project_seo_indexation.md`, `project_security_audit.md`, `feedback_no_eyebrow_kickers.md`. **Claude in Chrome connecté** : GSC, Vercel, **Supabase**, **Product Hunt** (tous connectés et authentifiés).
+## 6. 🧠 Mémoire
+Index : `…\.claude\projects\…\memory\MEMORY.md`. Mis à jour cette session : `feedback_no_eyebrow_kickers.md` (règle élargie + dict trap), `project_prelaunch_maintenance.md`, `project_seo_indexation.md`, `project_home_redesign_concept.md` (nouveau, parké). Docs repo : `CLEANUP_AUDIT.md`, `DESIGN_SYSTEM.md`.
 
-**Prochaine action recommandée** : aider Omar à finaliser les **images galerie Product Hunt** + préparer le jour J (17 juin).
+**Prochaine action recommandée : aider Omar à finaliser sa liste de supporters Product Hunt pour mercredi.**
