@@ -544,64 +544,6 @@ function Sample() {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// Testimonials
-// ════════════════════════════════════════════════════════════════════════════
-
-function Testimonials() {
-  const items = [
-    { title: "No private label", body: "We don't make or sell our own pills, so we have no reason to over-recommend. You buy proven, third-party-tested brands direct from the retailer.", c1: "#f0b56b", c2: "#e8a04a" },
-    { title: "Every pick is explained", body: "Each supplement comes with the dose, the timing, and the plain-language reason it's in your stack, with the evidence behind it.", c1: "#5ba373", c2: "#3f7a52" },
-    { title: "We'll tell you to stop", body: "When lifestyle alone is enough, or a supplement isn't worth it, we say so. The goal is fewer, better-chosen pills, not more.", c1: "#a78bfa", c2: "#8d6ce8" },
-  ];
-  return (
-    <section style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <Reveal>
-          <div style={{ textAlign: "center", marginBottom: 36, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
-            <div style={{ fontSize: 14, color: TH.sageDeep, fontWeight: 600, marginBottom: 12 }}>
-              What makes us different
-            </div>
-            <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.02, color: TH.ink, margin: 0 }}>
-              Built to be <span style={{ ...SI, color: TH.sageDeep }}>trusted</span>.
-            </h2>
-          </div>
-        </Reveal>
-
-        <div style={{ display: "grid", gridTemplateColumns: "var(--grid-3-cols)", gap: 18 }}>
-          {items.map((it, i) => (
-            <Reveal key={it.title} delay={i * 0.08}>
-              <div style={{
-                background: TH.surface, borderRadius: 22, padding: 32,
-                border: `1px solid ${TH.edge}`,
-                boxShadow: `0 4px 12px color-mix(in srgb, ${TH.ink} 2%, transparent)`,
-                display: "flex", flexDirection: "column", gap: 18, minHeight: 260,
-              }}>
-                <div style={{
-                  width: 46, height: 46, borderRadius: 14,
-                  background: `linear-gradient(135deg, ${it.c1}, ${it.c2})`,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  boxShadow: `0 8px 20px ${it.c1}40`,
-                }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.6">
-                    <path d="M5 12l5 5 9-11" />
-                  </svg>
-                </div>
-                <h3 style={{ ...D, fontSize: 22, letterSpacing: "-0.02em", color: TH.ink, margin: 0 }}>
-                  {it.title}
-                </h3>
-                <p style={{
-                  fontSize: 17, color: TH.inkSoft, lineHeight: 1.6, margin: 0,
-                }}>{it.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ════════════════════════════════════════════════════════════════════════════
 // FAQ
 // ════════════════════════════════════════════════════════════════════════════
 
@@ -814,8 +756,6 @@ export default function HomePage() {
         <StrongestEvidence />
         {/* Show the actual output early to reduce uncertainty. */}
         <Sample />
-        {/* Why us: the differentiators (no house brand, every pick explained). */}
-        <Testimonials />
         <How />
         <FAQ />
         <FounderNote />
