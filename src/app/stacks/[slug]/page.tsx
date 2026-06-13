@@ -70,9 +70,6 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
           }}>
             ← All stacks
           </Link>
-          <div style={{ fontSize: 11, ...MM, opacity: 0.85, letterSpacing: "0.15em", marginBottom: 18 }}>
-            {stack.category.toUpperCase()} STACK
-          </div>
           <div style={{ ...S, fontSize: 100, lineHeight: 1, marginBottom: 16, letterSpacing: "-0.04em" }}>
             {stack.coverGlyph}
           </div>

@@ -252,9 +252,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             background: th.sageGlow, borderRadius: 16, borderLeft: `3px solid ${th.sage}`,
             maxWidth: 760,
           }}>
-            <div style={{ fontSize: 11, ...MM, color: th.sageDeep, letterSpacing: "0.08em", marginBottom: 8 }}>
-              WHY {supp.name.split(" (")[0].toUpperCase()} MATTERS
-            </div>
             <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: th.ink }}>
               {supp.why}
             </p>

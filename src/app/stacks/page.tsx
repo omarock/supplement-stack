@@ -38,9 +38,6 @@ export default function StacksPage() {
       <main>
         {/* Hero */}
         <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 32px", textAlign: "center" }}>
-          <div style={{ fontSize: 13, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>
-          READY-MADE STACKS
-          </div>
           <h1 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.025em", lineHeight: 1.05 }}>
             Skip the quiz. <em style={{ color: th.burgundy }}>Pick a stack</em>.
           </h1>

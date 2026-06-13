@@ -161,9 +161,6 @@ export default function ResultsPage() {
 
         {/* Hero */}
         <section style={{ marginBottom: 48, textAlign: "center" }}>
-          <div style={{ fontSize: 12, color: th.sage, fontWeight: 600, letterSpacing: "0.04em", marginBottom: 14 }}>
-            YOUR RITUAL IS READY
-          </div>
           <h1 style={{
             fontFamily: '"Bricolage Grotesque", system-ui, sans-serif',
             fontWeight: 600, fontSize: "clamp(40px, 12vw, 68px)", color: th.ink,

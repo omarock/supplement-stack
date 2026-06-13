@@ -197,9 +197,6 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
       {/* Hero */}
       <section style={{ padding: "32px var(--section-pad-x) 48px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
-          <div style={{ fontSize: 12, color: th.sageDeep, ...MM, letterSpacing: "0.1em", marginBottom: 12 }}>
-          {categoryLabel.toUpperCase()}
-          </div>
           <h1 style={{
             ...D, fontSize: "clamp(40px, 6vw, 64px)", margin: 0,
             letterSpacing: "-0.025em", lineHeight: 1.05, fontWeight: 600,
@@ -269,7 +266,6 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
       <section style={{ padding: "0 var(--section-pad-x) 8px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
           <div style={{ background: th.paper, border: `1px solid ${th.line}`, borderLeft: `3px solid ${th.sage}`, borderRadius: 14, padding: "18px 20px" }}>
-            <div style={{ ...MM, fontSize: 10.5, color: th.sageDeep, letterSpacing: "0.1em", marginBottom: 8 }}>QUICK ANSWER</div>
             <p style={{ margin: 0, fontSize: 16.5, lineHeight: 1.6, color: th.ink }}>{quickAnswer}</p>
           </div>
         </div>

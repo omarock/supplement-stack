@@ -63,9 +63,6 @@ export default function IngredientsIndexPage() {
       <main id="main-content">
       {/* Hero */}
       <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 24px", textAlign: "center" }}>
-        <div style={{ fontSize: 13, color: th.sageDeep, ...MM, letterSpacing: "0.1em", marginBottom: 16 }}>
-          INGREDIENT LIBRARY
-        </div>
         <h1 style={{
           ...S, fontSize: "var(--section-h2)", margin: 0,
           letterSpacing: "-0.025em", lineHeight: 1.05,
