@@ -9,7 +9,7 @@
 import { useState, useRef, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics";
-import { TH, FONTS, MM, D } from "@/lib/theme";
+import { TH, FONTS, D } from "@/lib/theme";
 
 const GOAL_CHIPS = ["Sleep", "Energy", "Focus", "Stress", "Muscle Growth", "Longevity"];
 
@@ -26,11 +26,11 @@ const triBtn: CSSProperties = {
   boxShadow: `0 10px 22px -6px color-mix(in srgb, ${TH.sage} 50%, transparent)`,
 };
 const buylineStyle: CSSProperties = {
-  ...MM, fontSize: 9, letterSpacing: "0.04em", color: TH.sageDeep, textTransform: "uppercase", margin: "14px 0 11px",
+  fontFamily: FONTS.body, fontSize: 12, color: TH.muted, fontWeight: 500, margin: "14px 0 11px",
 };
 const chipStyle = (bg: string, fg: string): CSSProperties => ({
-  ...MM, display: "inline-flex", alignItems: "center", fontSize: 9.5, fontWeight: 600,
-  letterSpacing: "0.06em", textTransform: "uppercase", padding: "4px 9px", borderRadius: 6, background: bg, color: fg,
+  ...D, display: "inline-flex", alignItems: "center", fontSize: 11.5, fontWeight: 600,
+  padding: "5px 12px", borderRadius: 999, background: bg, color: fg,
 });
 // Mirrors the header treatment of the two sibling cards in HomeClient's Hero.
 const iconWrap = (bg: string, fg: string): CSSProperties => ({
@@ -87,7 +87,7 @@ export default function StackBox() {
       </div>
       <span style={{ ...chipStyle(`color-mix(in srgb, ${TH.amber} 20%, transparent)`, "var(--c-amber-deep)"), alignSelf: "flex-start", marginTop: 12 }}>Build it yourself</span>
       <div style={{ marginTop: 12, background: TH.bg, border: `1px solid ${TH.edge}`, borderRadius: 14, padding: 14 }}>
-        <div style={{ ...MM, fontSize: 10, letterSpacing: "0.07em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>What do you want to improve?</div>
+        <div style={{ fontSize: 13, fontWeight: 600, color: TH.muted, marginBottom: 8 }}>What do you want to improve?</div>
         <textarea
           ref={goalRef}
           value={goal}
@@ -118,7 +118,7 @@ export default function StackBox() {
         </div>
       )}
       <div style={{ flex: 1, minHeight: 8 }} />
-      <div style={{ ...buylineStyle, textAlign: "center" }}>describe it or pick a goal → generate → buy</div>
+      <div style={{ ...buylineStyle, textAlign: "center" }}>Describe it or pick a goal, then generate</div>
       <button type="button" onClick={generateStack} className="sd-cta" style={triBtn}>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.4 4.2 4.1 1.3-4.1 1.3L8 12.5l-1.4-4.2-4.1-1.3 4.1-1.3L8 1.5z" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg>
         {ctaLabel}

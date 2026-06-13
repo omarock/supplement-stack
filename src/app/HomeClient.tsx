@@ -102,11 +102,11 @@ function Hero() {
     boxShadow: `0 10px 22px -6px color-mix(in srgb, ${TH.sage} 50%, transparent)`,
   };
   const buylineStyle: CSSProperties = {
-    ...MM, fontSize: 9, letterSpacing: "0.04em", color: TH.sageDeep, textTransform: "uppercase", margin: "14px 0 11px",
+    fontFamily: FONTS.body, fontSize: 12, color: TH.muted, fontWeight: 500, margin: "14px 0 11px",
   };
   const chipStyle = (bg: string, fg: string): CSSProperties => ({
-    ...MM, display: "inline-flex", alignItems: "center", fontSize: 9.5, fontWeight: 600,
-    letterSpacing: "0.06em", textTransform: "uppercase", padding: "4px 9px", borderRadius: 6, background: bg, color: fg,
+    ...D, display: "inline-flex", alignItems: "center", fontSize: 11.5, fontWeight: 600,
+    padding: "5px 12px", borderRadius: 999, background: bg, color: fg,
   });
   const iconWrap = (bg: string, fg: string): CSSProperties => ({
     width: 42, height: 42, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center",
@@ -174,7 +174,7 @@ function Hero() {
               <div style={{ ...SI, color: TH.sageDeep, fontSize: 14.5, marginTop: 2 }}>The fastest way in.</div>
               <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Answer a few questions about how you sleep, eat, and feel. We match you to evidence-backed ingredients.</p>
               {cardSpacer}
-              <div style={buylineStyle}>→ generate a stack → buy on iHerb / Amazon</div>
+              <div style={buylineStyle}>Generate a stack, then buy on iHerb or Amazon</div>
               <span className="sd-cta" style={triBtn}>Start the quiz →</span>
             </Link>
 
@@ -194,7 +194,7 @@ function Hero() {
               <div style={{ ...SI, color: "var(--c-amber-deep)", fontSize: 14.5, marginTop: 2 }}>Already taking supplements?</div>
               <p style={{ fontSize: 14.5, color: TH.inkSoft, lineHeight: 1.55, margin: "9px 0 0" }}>Paste what you take today (and your bloodwork) and we score interactions, doses, and gaps, then suggest fixes.</p>
               {cardSpacer}
-              <div style={buylineStyle}>→ a cleaner stack → buy the upgrades</div>
+              <div style={buylineStyle}>A cleaner stack, then buy the upgrades</div>
               <span className="sd-cta" style={triBtn}>Audit my stack →</span>
             </Link>
 
@@ -357,9 +357,9 @@ function HowVisual({ which, color }: { which: "intake" | "engine" | "ritual"; co
 
 function How() {
   const steps: { tag: string; title: string; body: string; illust: "intake" | "engine" | "ritual"; color: string }[] = [
-    { tag: "Step 1", title: "Tell us about you.", body: "A two-minute reflection on how you sleep, train, eat, and feel. No medical jargon, no signup, just you.", illust: "intake", color: TH.sage },
-    { tag: "Step 2", title: "We match the evidence.", body: "We match your answers against the published research and clinical dosing guidance behind each ingredient.", illust: "engine", color: TH.amber },
-    { tag: "Step 3", title: "Live the ritual.", body: "Your morning, midday, and evening plan, with exact doses, timing, and the reasoning behind every pick.", illust: "ritual", color: TH.coral },
+    { tag: "Step 1", title: "Tell us about you.", body: "Two minutes on how you sleep, train, and feel. No jargon, no signup.", illust: "intake", color: TH.sage },
+    { tag: "Step 2", title: "We match the evidence.", body: "Your answers, matched to the published research and clinical dosing behind each ingredient.", illust: "engine", color: TH.amber },
+    { tag: "Step 3", title: "Live the ritual.", body: "A morning-to-evening plan with exact doses, timing, and the reason for every pick.", illust: "ritual", color: TH.coral },
   ];
   return (
     <section id="how-it-works" style={{ padding: "var(--section-pad-y) var(--section-pad-x)" }}>
@@ -413,9 +413,6 @@ function Sample() {
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <Reveal>
           <div style={{ textAlign: "center", marginBottom: 32, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
-            <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, fontWeight: 500, marginBottom: 12, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-              See it in action
-            </div>
             <h2 style={{ ...D, fontSize: "var(--section-h2)", letterSpacing: "-0.03em", lineHeight: 1.02, color: TH.ink, margin: 0 }}>
               A sample stack for <span style={{ ...SI, color: TH.sageDeep }}>Sarah, 34</span>.
             </h2>
@@ -449,7 +446,7 @@ function Sample() {
                 </div>
               </div>
 
-              <div style={{ ...MM, fontSize: 10.5, color: TH.muted, fontWeight: 500, marginBottom: 16, letterSpacing: "0.1em", textTransform: "uppercase" }}>Wellness scores</div>
+              <div style={{ fontSize: 13, color: TH.muted, fontWeight: 600, marginBottom: 16 }}>Wellness scores</div>
               {[
                 ["Energy", 72, TH.amber],
                 ["Sleep", 61, "#5d97b8"],
@@ -480,7 +477,7 @@ function Sample() {
                 marginTop: 22, padding: "14px 16px", borderRadius: 14,
                 background: TH.surface, border: `1px solid ${TH.edge}`,
               }}>
-                <div style={{ ...MM, fontSize: 9.5, color: TH.sageDeep, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 7 }}>
+                <div style={{ fontSize: 12.5, color: TH.sageDeep, fontWeight: 600, marginBottom: 7 }}>
                   Why these picks
                 </div>
                 <p style={{ fontSize: 12.5, color: TH.inkSoft, lineHeight: 1.55, margin: 0 }}>

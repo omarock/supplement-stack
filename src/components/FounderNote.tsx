@@ -1,11 +1,11 @@
 // Server component (static). Shows a personal founder card when FOUNDER is set,
 // otherwise an honest brand-voice mission (no invented person, no stock photo).
-import { TH, FONTS, D, SI, MM } from "@/lib/theme";
+import { TH, FONTS, D, SI } from "@/lib/theme";
 import { FOUNDER } from "@/lib/social-proof";
 import { SDMark } from "@/components/SuppdocLogo";
 
 const MISSION =
-  "The supplement aisle runs on hype, house brands, and influencer kickbacks. We built SuppDoc as the second opinion we wanted for ourselves: every pick graded on the actual research, linked to its source, and matched to products we don't make and earn nothing from selling. When the evidence says a supplement isn't worth it, we say so. That honesty is the whole company.";
+  "The supplement aisle runs on hype, house brands, and influencer kickbacks. We built SuppDoc as the honest second opinion: every pick graded on the research, linked to its source, matched to products we don't sell, and called out when the evidence is weak.";
 
 export default function FounderNote() {
   const f = FOUNDER;
@@ -21,10 +21,6 @@ export default function FounderNote() {
         border: `1px solid ${TH.edge}`, borderRadius: 26, padding: "44px clamp(24px, 5vw, 56px)",
         boxShadow: `0 26px 60px -34px color-mix(in srgb, ${TH.ink} 32%, transparent)`,
       }}>
-        <div style={{ ...MM, fontSize: 11.5, letterSpacing: "0.18em", textTransform: "uppercase", color: TH.sageDeep, marginBottom: 18 }}>
-          Why we built suppdoc
-        </div>
-
         <p style={{
           ...SI, fontSize: "clamp(20px, 2.6vw, 27px)", lineHeight: 1.45, color: TH.ink, margin: 0,
           letterSpacing: "-0.01em",
