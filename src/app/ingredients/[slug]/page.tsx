@@ -41,6 +41,15 @@ function chip(): React.CSSProperties {
 }
 const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
 
+// Premium hero badge: sentence-case chip with an icon (replaces the old mono caps pills)
+function chipPremium(): React.CSSProperties {
+  return {
+    display: "inline-flex", alignItems: "center", gap: 7, padding: "8px 15px", borderRadius: 999,
+    border: "1px solid var(--c-edge)", fontFamily: '"Bricolage Grotesque", system-ui, sans-serif',
+    fontSize: 13.5, fontWeight: 600, textDecoration: "none",
+  };
+}
+
 const CATEGORY_LABEL: Record<string, string> = {
   vitamins: "Vitamins",
   minerals: "Minerals",
@@ -114,6 +123,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
 
   const categoryLabel = supp.category ? CATEGORY_LABEL[supp.category] : "Supplement";
   const evidenceBadge = EVIDENCE_BADGE[supp.evidence];
+  const evidenceStrength = supp.evidence === "very strong" ? 3 : supp.evidence === "strong" ? 2 : 1;
   const showAmazon = amazonEnabled();
   const desc = (supp.description ?? supp.why).slice(0, 300);
 
@@ -209,47 +219,48 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
           }}>
             <em>{supp.purpose}</em>
           </p>
-          <div style={{ display: "flex", gap: 10, marginTop: 22, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 10, marginTop: 24, flexWrap: "wrap", alignItems: "center" }}>
+            {/* Evidence chip with a 3-segment strength meter */}
             <span style={{
-              padding: "6px 14px", borderRadius: 999, fontSize: 12, fontWeight: 600,
-              background: evidenceBadge.bg, color: evidenceBadge.ink, ...MM, letterSpacing: "0.04em",
+              display: "inline-flex", alignItems: "center", gap: 9, padding: "8px 16px", borderRadius: 999,
+              background: evidenceBadge.bg, color: evidenceBadge.ink, ...D, fontSize: 13.5, fontWeight: 600,
             }}>
-              {evidenceBadge.label.toUpperCase()}
+              <span style={{ display: "inline-flex", alignItems: "flex-end", gap: 3 }} aria-hidden>
+                {[0, 1, 2].map(i => (
+                  <span key={i} style={{
+                    width: 5, height: 7 + i * 3, borderRadius: 2,
+                    background: i < evidenceStrength ? "currentColor" : "color-mix(in srgb, currentColor 24%, transparent)",
+                  }} />
+                ))}
+              </span>
+              {evidenceBadge.label}
             </span>
             {supp.vegan && (
-              <span style={{
-                padding: "6px 14px", borderRadius: 999, fontSize: 12, fontWeight: 600,
-                background: "#dcfce7", color: "#15803d", ...MM, letterSpacing: "0.04em",
-              }}>
-                VEGAN
+              <span style={{ ...chipPremium(), color: "#15803d", background: "color-mix(in srgb, #15803d 9%, transparent)", borderColor: "color-mix(in srgb, #15803d 22%, transparent)" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 22c0-3 1.5-6 4-8"/></svg>
+                Vegan
               </span>
             )}
             {(supp.priority ?? 0) >= 8 && (
-              <span style={{
-                padding: "6px 14px", borderRadius: 999, fontSize: 12, fontWeight: 600,
-                background: "color-mix(in srgb, var(--c-amber) 16%, transparent)", color: "#a16207", ...MM, letterSpacing: "0.04em",
-              }}>
-                CORE INGREDIENT
+              <span style={{ ...chipPremium(), color: "#a16207", background: "color-mix(in srgb, var(--c-amber) 14%, transparent)", borderColor: "color-mix(in srgb, var(--c-amber) 34%, transparent)" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 2 2.9 6.3 6.8.7-5 4.6 1.4 6.7L12 17.8 5.9 21l1.4-6.7-5-4.6 6.8-.7Z"/></svg>
+                Core ingredient
               </span>
             )}
-            <Link href={`/ingredients/${slug}/research`} style={{
-              padding: "6px 14px", borderRadius: 999, fontSize: 12, fontWeight: 600,
-              background: "var(--c-ink-bg)", color: "#fff", textDecoration: "none",
-              ...MM, letterSpacing: "0.04em",
-              display: "inline-flex", alignItems: "center", gap: 6,
-            }}>
-              READ THE RESEARCH
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
-            </Link>
             {rv && rv.count > 0 && (
-              <a href={rv.url} target="_blank" rel="noopener noreferrer" title={`${rv.count.toLocaleString()} randomized trials, meta-analyses and systematic reviews indexed on PubMed for ${shortName}. Click to verify.`} style={{
-                padding: "6px 14px", borderRadius: 999, fontSize: 12, fontWeight: 600,
-                background: "#eef2ff", color: "#3730a3", ...MM, letterSpacing: "0.04em",
-                textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6,
-              }}>
-                {rv.count.toLocaleString()} CLINICAL STUDIES
+              <a href={rv.url} target="_blank" rel="noopener noreferrer" title={`${rv.count.toLocaleString()} randomized trials, meta-analyses and systematic reviews indexed on PubMed for ${shortName}. Click to verify.`} style={{ ...chipPremium(), color: "#3730a3", background: "#eef2ff", borderColor: "color-mix(in srgb, #3730a3 18%, transparent)" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9"><path d="M9 3h6M10 3v5.5L5.5 17a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 8.5V3"/><path d="M7.5 14h9"/></svg>
+                {rv.count.toLocaleString()} studies on PubMed
               </a>
             )}
+            <Link href={`/ingredients/${slug}/research`} style={{
+              padding: "8px 17px", borderRadius: 999, fontSize: 13.5, fontWeight: 600, ...D,
+              background: "var(--c-ink-bg)", color: "#fff", textDecoration: "none",
+              display: "inline-flex", alignItems: "center", gap: 7,
+            }}>
+              Read the research
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+            </Link>
           </div>
 
           {/* E-E-A-T: reviewer byline + last-reviewed date */}
@@ -265,8 +276,19 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
       {/* Answer-first summary, quotable by AI search engines */}
       <section style={{ padding: "0 var(--section-pad-x) 8px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
-          <div style={{ background: th.paper, border: `1px solid ${th.line}`, borderLeft: `3px solid ${th.sage}`, borderRadius: 14, padding: "18px 20px" }}>
-            <p style={{ margin: 0, fontSize: 16.5, lineHeight: 1.6, color: th.ink }}>{quickAnswer}</p>
+          <div style={{
+            display: "flex", gap: 16, alignItems: "flex-start",
+            background: "linear-gradient(135deg, var(--c-accent-glow) 0%, var(--c-surface) 70%)",
+            border: `1px solid ${th.line}`, borderLeft: `3px solid ${th.sage}`,
+            borderRadius: 16, padding: "20px 24px",
+          }}>
+            <span style={{
+              flexShrink: 0, width: 34, height: 34, borderRadius: 10, marginTop: 2,
+              background: th.sage, color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center",
+            }} aria-hidden>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+            </span>
+            <p style={{ margin: 0, fontSize: 16.5, lineHeight: 1.62, color: th.ink }}>{quickAnswer}</p>
           </div>
         </div>
       </section>
@@ -308,9 +330,15 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
 
             <div style={{ flex: 1, minWidth: 240 }}>
             <div style={{ marginBottom: 18 }}>
-              <div style={{ fontSize: 13, color: th.inkMute, ...MM, letterSpacing: "0.05em", marginBottom: 6 }}>
-                RECOMMENDED
-              </div>
+              <span style={{
+                display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 11,
+                padding: "5px 12px", borderRadius: 999, fontSize: 12.5, fontWeight: 600, ...D,
+                color: th.sageDeep, background: "color-mix(in srgb, var(--c-sage) 12%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--c-sage) 26%, transparent)",
+              }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden><path d="M20 6 9 17l-5-5"/></svg>
+                Recommended
+              </span>
               <div style={{ ...D, fontSize: 22, fontWeight: 600, color: th.ink, marginBottom: 4 }}>
                 {supp.brand}, {supp.name.split(" (")[0]}
               </div>
@@ -389,10 +417,11 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                     )}
                     <span style={{
                       position: "absolute", top: 10, left: 10,
-                      fontSize: 10, ...MM, color: p.brandInk, letterSpacing: "0.08em",
-                      background: p.brandBg, padding: "4px 10px", borderRadius: 999,
+                      fontSize: 11.5, ...D, fontWeight: 600, color: p.brandInk,
+                      background: p.brandBg, padding: "5px 11px", borderRadius: 999,
+                      boxShadow: "0 1px 5px rgba(10,37,64,0.10)",
                     }}>
-                      {p.badge.toUpperCase()}
+                      {p.badge}
                     </span>
                   </div>
                   <div style={{ ...D, fontSize: 17, fontWeight: 600, margin: "6px 0 4px", lineHeight: 1.3 }}>
@@ -452,13 +481,20 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
 
             {/* Why this matters (the short why) */}
             <div style={{
-              marginTop: 32, padding: 22,
-              background: th.sageGlow, borderRadius: 16, borderLeft: `3px solid ${th.sage}`,
+              marginTop: 32, padding: "24px 26px",
+              background: "linear-gradient(135deg, var(--c-accent-glow) 0%, color-mix(in srgb, var(--c-accent-glow) 35%, var(--c-surface)) 100%)",
+              borderRadius: 18, border: `1px solid color-mix(in srgb, ${th.sage} 22%, transparent)`,
+              display: "flex", gap: 16, alignItems: "flex-start",
             }}>
-              <div style={{ fontSize: 11, ...MM, color: th.sageDeep, letterSpacing: "0.08em", marginBottom: 8 }}>
-                WHY IT MATTERS
-              </div>
-              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: th.ink }}>
+              <span style={{
+                flexShrink: 0, width: 38, height: 38, borderRadius: 11, marginTop: 1,
+                background: `linear-gradient(180deg, ${th.sage}, ${th.sageDeep})`, color: "#fff",
+                display: "inline-flex", alignItems: "center", justifyContent: "center",
+                boxShadow: `0 6px 16px -6px color-mix(in srgb, ${th.sage} 60%, transparent)`,
+              }} aria-hidden>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9"><path d="M9 18h6M10 21h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg>
+              </span>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.65, color: th.ink }}>
                 {supp.why}
               </p>
             </div>
@@ -469,8 +505,9 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16,
             padding: 24, height: "fit-content",
           }}>
-            <h3 style={{ ...D, fontSize: 14, ...MM, fontWeight: 600, color: th.sage, letterSpacing: "0.1em", margin: "0 0 18px" }}>
-              QUICK FACTS
+            <h3 style={{ ...D, fontSize: 17, fontWeight: 600, color: th.ink, letterSpacing: "-0.01em", margin: "0 0 16px", display: "flex", alignItems: "center", gap: 8 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={th.sage} strokeWidth="2" aria-hidden><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              Quick facts
             </h3>
             <FactRow label="Standard dose" value={supp.dose} />
             <FactRow label="When to take" value={timingLabel(supp.timing)} />
@@ -486,8 +523,9 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             )}
             {supp.warnings && supp.warnings.length > 0 && (
               <div style={{ marginTop: 18, paddingTop: 18, borderTop: `1px solid ${th.line}` }}>
-                <div style={{ fontSize: 11, ...MM, color: "var(--c-destructive)", letterSpacing: "0.08em", marginBottom: 6 }}>
-                  AVOID IF
+                <div style={{ fontSize: 13.5, fontWeight: 600, ...D, color: "var(--c-destructive)", marginBottom: 6, display: "flex", alignItems: "center", gap: 7 }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+                  Avoid if
                 </div>
                 <p style={{ margin: 0, fontSize: 13, color: th.inkSoft, lineHeight: 1.5 }}>
                   {supp.warnings.map(w => warningLabel(w)).join(" · ")}
