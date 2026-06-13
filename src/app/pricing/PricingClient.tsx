@@ -191,7 +191,7 @@ export default function PricingClient({
             <div aria-hidden style={{ position: "absolute", top: -120, right: -100, width: 380, height: 380, borderRadius: 999, background: `radial-gradient(circle, color-mix(in srgb, ${TH.sage} 22%, transparent) 0%, color-mix(in srgb, ${TH.sage} 0%, transparent) 70%)`, pointerEvents: "none" }} />
             <div style={{ position: "relative", zIndex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
-                <span style={{ ...MM, fontSize: 10.5, color: "#0a1f38", background: TH.amber, padding: "4px 11px", borderRadius: 999, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 700 }}>
+                <span style={{ ...D, fontSize: 12, color: "#0a1f38", background: TH.amber, padding: "5px 12px", borderRadius: 999, fontWeight: 700 }}>
                   {t("pricing.foundingTag")}
                 </span>
                 <span style={{ ...MM, fontSize: 11.5, color: TH.amber, letterSpacing: "0.06em" }}>
@@ -295,8 +295,8 @@ export default function PricingClient({
             boxShadow: `0 18px 48px -18px color-mix(in srgb, ${TH.sage} 40%, transparent)`,
           }}>
             <span style={{
-              position: "absolute", top: -11, left: 24, ...MM, fontSize: 10, fontWeight: 700, color: "#fff",
-              background: TH.sage, padding: "4px 11px", borderRadius: 999, letterSpacing: "0.06em", textTransform: "uppercase",
+              position: "absolute", top: -11, left: 24, ...D, fontSize: 12, fontWeight: 700, color: "#fff",
+              background: TH.sage, padding: "5px 12px", borderRadius: 999,
             }}>{t("pricing.mostPopular")}</span>
             <div style={{ ...D, fontSize: 20, color: TH.ink }}>{t("pricing.premiumName")}</div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 8, margin: "8px 0 2px", flexWrap: "wrap" }}>

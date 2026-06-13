@@ -63,7 +63,7 @@ export default function TrackStackCTA({
       }}
     >
       <div style={{ flex: 1, minWidth: 240 }}>
-        <div style={{ ...MM, fontSize: 10.5, color: TH.sage, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>
+        <div style={{ fontSize: 12.5, color: TH.sage, fontWeight: 600, marginBottom: 8 }}>
           Make it stick
         </div>
         <h3 style={{ ...D, fontSize: 22, margin: "0 0 6px", letterSpacing: "-0.02em" }}>

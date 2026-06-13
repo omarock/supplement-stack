@@ -61,7 +61,7 @@ export default function UpgradeCTA({
     }}>
       {dark && <div aria-hidden style={{ position: "absolute", top: -90, right: -70, width: 280, height: 280, borderRadius: 999, background: `radial-gradient(circle, color-mix(in srgb, ${TH.sage} 20%, transparent) 0%, color-mix(in srgb, ${TH.sage} 0%, transparent) 70%)`, pointerEvents: "none" }} />}
       <div style={{ position: "relative", zIndex: 1, maxWidth: variant === "lock" ? 460 : "none", margin: variant === "lock" ? "0 auto" : undefined }}>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 7, ...MM, fontSize: 10.5, letterSpacing: "0.1em", textTransform: "uppercase", color: dark ? TH.amber : TH.sageDeep, marginBottom: 12 }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 12.5, fontWeight: 600, color: dark ? TH.amber : TH.sageDeep, marginBottom: 12 }}>
           <LockIcon /> Premium
         </div>
         <h3 style={{ ...D, fontSize: "clamp(18px, 2.6vw, 22px)", lineHeight: 1.2, letterSpacing: "-0.01em", margin: "0 0 8px" }}>{title}</h3>

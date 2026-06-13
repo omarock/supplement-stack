@@ -59,7 +59,7 @@ export default function EmailCapture({
         </div>
       ) : (
         <>
-          <div style={{ ...MM, fontSize: 10.5, color: dark ? TH.amber : TH.sageDeep, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Free brief</div>
+          <div style={{ fontSize: 12.5, color: dark ? TH.amber : TH.sageDeep, fontWeight: 600, marginBottom: 8 }}>Free brief</div>
           <div style={{ ...D, fontSize: 18, color: fg, letterSpacing: "-0.01em", marginBottom: 4 }}>{headline}</div>
           <div style={{ fontSize: 14, color: fgSoft, lineHeight: 1.55, marginBottom: 14, maxWidth: 520 }}>{sub}</div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", maxWidth: 520 }}>

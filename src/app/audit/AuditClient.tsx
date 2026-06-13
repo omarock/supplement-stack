@@ -66,10 +66,6 @@ export default function AuditClient() {
       <div style={{ maxWidth: 980, margin: "0 auto" }}>
         {/* Header */}
         <header style={{ textAlign: "center", marginBottom: 36, animation: "sd-fade-in .5s ease-out" }}>
-          <div style={{
-            ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em",
-            marginBottom: 14, textTransform: "uppercase",
-          }}>{t("audit.eyebrow")}</div>
           <h1 style={{
             ...D, fontSize: "clamp(36px, 6vw, 60px)", lineHeight: 1.04,
             letterSpacing: "-0.03em", margin: "0 0 16px",
@@ -219,8 +215,8 @@ export default function AuditClient() {
         {!result && !loading && (
           <section style={{ marginTop: 40 }}>
             <div style={{
-              ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.12em",
-              marginBottom: 14, textAlign: "center", textTransform: "uppercase",
+              fontSize: 13.5, color: TH.muted, fontWeight: 600,
+              marginBottom: 14, textAlign: "center",
             }}>{t("audit.whatWeCheck")}</div>
             <div style={{
               display: "grid",

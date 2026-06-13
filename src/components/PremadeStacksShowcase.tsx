@@ -19,7 +19,6 @@ export default function PremadeStacksShowcase({
   return (
     <section style={{ marginBottom: 28 }}>
       <div style={{ textAlign: "center", maxWidth: 580, margin: "0 auto 22px" }}>
-        <div style={{ ...MM, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: TH.sageDeep, marginBottom: 10 }}>{eyebrow}</div>
         <h2 style={{ ...D, fontWeight: 500, fontSize: "clamp(26px, 6vw, 34px)", color: TH.ink, margin: 0, letterSpacing: "-0.02em", lineHeight: 1.12 }}>
           {title ?? (<>Or explore a <span style={{ ...SI, color: TH.sageDeep }}>ready-made</span> stack.</>)}
         </h2>
@@ -35,7 +34,7 @@ export default function PremadeStacksShowcase({
           }}>
             <div style={{ background: s.coverBg, height: 122, display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
               <span aria-hidden style={{ ...SERIF, fontSize: 52, color: s.coverInk, lineHeight: 1 }}>{s.coverGlyph}</span>
-              <span style={{ position: "absolute", top: 12, left: 14, ...MM, fontSize: 8.5, letterSpacing: "0.12em", textTransform: "uppercase", color: s.coverInk, opacity: 0.82 }}>{s.category}</span>
+              <span style={{ position: "absolute", top: 12, left: 14, ...D, fontSize: 11, fontWeight: 600, color: s.coverInk, opacity: 0.85 }}>{s.category}</span>
             </div>
             <div style={{ padding: "15px 16px 16px", display: "flex", flexDirection: "column", flex: 1 }}>
               <div style={{ ...D, fontSize: 16.5, color: TH.ink, letterSpacing: "-0.01em", lineHeight: 1.15 }}>{s.name}</div>

@@ -32,7 +32,7 @@ export default function ShopCTA({ supplementId, heading }: { supplementId: strin
   return (
     <div>
       {heading && (
-        <div style={{ ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 10 }}>{heading}</div>
+        <div style={{ fontSize: 12.5, color: TH.sageDeep, fontWeight: 600, marginBottom: 10 }}>{heading}</div>
       )}
       <div style={{ background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18, padding: 18, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", boxShadow: `0 10px 28px -20px color-mix(in srgb, ${TH.ink} 21%, transparent)` }}>
         <div style={{ width: 88, height: 88, flexShrink: 0, borderRadius: 12, background: "#fff", border: `1px solid ${TH.edge}`, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
@@ -44,7 +44,7 @@ export default function ShopCTA({ supplementId, heading }: { supplementId: strin
           )}
         </div>
         <div style={{ flex: 1, minWidth: 190 }}>
-          <div style={{ ...MM, fontSize: 10, color: TH.sageDeep, letterSpacing: "0.08em", marginBottom: 4 }}>RECOMMENDED</div>
+          <div style={{ ...D, fontSize: 11.5, color: TH.sageDeep, fontWeight: 600, marginBottom: 4 }}>Recommended</div>
           <div style={{ ...D, fontSize: 16, color: TH.ink, lineHeight: 1.25 }}>{p.brand}, {p.productName}</div>
           <div style={{ fontSize: 13, color: TH.inkSoft, marginTop: 3 }}>{p.size} · ~${p.approxPrice} · ★ {p.rating.toFixed(1)}</div>
         </div>

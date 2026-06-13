@@ -2,8 +2,6 @@ import { TH, FONTS } from "@/lib/theme";
 
 export type EvidenceTier = "very strong" | "strong" | "moderate";
 
-const MM = { fontFamily: FONTS.mono } as const;
-
 const TIER: Record<EvidenceTier, { filled: number; label: string; hue: string }> = {
   "very strong": { filled: 3, label: "Very strong", hue: TH.sageDeep },
   "strong":      { filled: 2, label: "Strong", hue: TH.sageDeep },
@@ -45,8 +43,8 @@ export default function EvidenceBadge({
       </span>
       {showLabel && (
         <span style={{
-          ...MM, fontSize: size === "sm" ? 9.5 : 10.5, fontWeight: 500,
-          letterSpacing: "0.06em", textTransform: "uppercase", color: meta.hue,
+          fontFamily: FONTS.display, fontSize: size === "sm" ? 11.5 : 12.5, fontWeight: 600,
+          color: meta.hue,
         }}>{meta.label}</span>
       )}
     </span>

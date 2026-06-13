@@ -31,10 +31,6 @@ export default function QuizChooserView({ locale }: { locale: Locale }) {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           {/* Hero */}
           <header style={{ textAlign: "center", marginBottom: 36, animation: "sd-fade-in .5s ease-out" }}>
-            <div style={{
-              ...MM, fontSize: 11, color: TH.sageDeep, letterSpacing: "0.12em",
-              marginBottom: 14, textTransform: "uppercase",
-            }}>{t("quiz.eyebrow")}</div>
             <h1 style={{
               ...D, fontSize: "clamp(36px, 6vw, 60px)", lineHeight: 1.04,
               letterSpacing: "-0.03em", margin: "0 0 16px",
@@ -92,7 +88,7 @@ export default function QuizChooserView({ locale }: { locale: Locale }) {
             background: TH.surface, border: `1px solid ${TH.edge}`,
             borderRadius: 18, textAlign: "center",
           }}>
-            <div style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.12em", marginBottom: 12, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 13.5, color: TH.muted, fontWeight: 600, marginBottom: 12 }}>
               {t("quiz.notSure")}
             </div>
             <p style={{ fontSize: 15, color: TH.inkSoft, maxWidth: 580, margin: "0 auto 16px", lineHeight: 1.6 }}>
@@ -110,7 +106,7 @@ export default function QuizChooserView({ locale }: { locale: Locale }) {
 
           {/* Other services */}
           <section style={{ marginTop: 50, textAlign: "center" }}>
-            <div style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.12em", marginBottom: 14, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 13.5, color: TH.muted, fontWeight: 600, marginBottom: 14 }}>
               {t("quiz.otherServices")}
             </div>
             <div style={{
@@ -130,7 +126,7 @@ export default function QuizChooserView({ locale }: { locale: Locale }) {
 
           {/* Free guides (internal links) */}
           <section style={{ marginTop: 44, textAlign: "center" }}>
-            <div style={{ ...MM, fontSize: 11, color: TH.muted, letterSpacing: "0.12em", marginBottom: 14, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 13.5, color: TH.muted, fontWeight: 600, marginBottom: 14 }}>
               {t("quiz.browseTitle")}
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center" }}>
@@ -209,15 +205,14 @@ function ChooserCard({
         {recommended && (
           <span style={{
             position: "absolute", top: 14, right: 14,
-            fontSize: 10, ...MM, letterSpacing: "0.08em",
+            fontSize: 11.5, ...D, fontWeight: 600,
             background: accent, color: "#fff",
-            padding: "3px 10px", borderRadius: 999, fontWeight: 600,
+            padding: "4px 12px", borderRadius: 999,
           }}>{recommendedLabel}</span>
         )}
 
         <div style={{
-          ...MM, fontSize: 11, color: accentDeep, letterSpacing: "0.1em",
-          marginBottom: 10, textTransform: "uppercase",
+          fontSize: 12.5, color: accentDeep, fontWeight: 600, marginBottom: 10,
         }}>{tag}</div>
 
         <h2 style={{ ...D, fontSize: 30, color: TH.ink, margin: "0 0 4px", letterSpacing: "-0.025em", lineHeight: 1.1 }}>
