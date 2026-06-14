@@ -44,7 +44,7 @@ const fontVariables = `${bricolage.variable} ${inter.variable} ${instrumentSerif
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.suppdoc.io"),
-  title: "suppdoc.io, personalised supplement stacks, audit & bloodwork analysis",
+  title: "suppdoc — Personalised Supplement Stacks & Bloodwork Analysis",
   description:
     "Get a personalised supplement stack, check it for interactions, and turn your bloodwork into a plan. Free, evidence-graded, and we don't sell our own pills.",
   applicationName: "suppdoc.io",
