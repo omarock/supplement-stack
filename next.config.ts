@@ -90,6 +90,14 @@ const nextConfig: NextConfig = {
         destination: "https://www.suppdoc.io/:path*",
         permanent: true,
       },
+      // Legacy ingredient slug merged during the 2026-06-07 dedup. The old URL was
+      // crawled + indexed by Google, so 301 it to the canonical page instead of
+      // serving a 404 (recovers any link equity, clears the GSC "Not found" error).
+      {
+        source: "/ingredients/garlic-aged-evening",
+        destination: "/ingredients/aged-garlic",
+        permanent: true,
+      },
     ];
   },
 
