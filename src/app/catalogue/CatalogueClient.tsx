@@ -32,16 +32,6 @@ export interface CatalogueItem {
   altHref: string;
 }
 
-const TIMING_LABEL: Record<CatalogueItem["timing"], string> = {
-  morning: "Morning", midday: "Midday", "pre-train": "Pre-train", evening: "Evening",
-};
-const TIMING_GLYPH: Record<CatalogueItem["timing"], string> = {
-  morning: "☀", midday: "✦", "pre-train": "↺", evening: "☾",
-};
-const TIMING_COLOR: Record<CatalogueItem["timing"], string> = {
-  morning: "var(--c-amber)", midday: "#a87a52", "pre-train": "var(--c-sage)", evening: "var(--c-lavender)",
-};
-
 const th = {
   bg: "var(--c-bg)", paper: "var(--c-surface)", elevated: "var(--c-elevated)",
   ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)",
@@ -75,11 +65,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   greens: "Greens", specialty: "Specialty",
 };
 
-function evidenceMeta(e: CatalogueItem["evidence"]) {
-  if (e === "very strong") return { short: "Very strong", bg: "color-mix(in srgb, var(--c-sage) 16%, var(--c-surface))", ink: "var(--c-sage-deep)" };
-  if (e === "strong") return { short: "Strong", bg: "color-mix(in srgb, var(--c-sage) 11%, var(--c-surface))", ink: "var(--c-sage-deep)" };
-  return { short: "Moderate", bg: "color-mix(in srgb, var(--c-amber) 16%, var(--c-surface))", ink: "var(--c-amber-deep)" };
-}
 function evidenceRank(e: CatalogueItem["evidence"]) {
   return e === "very strong" ? 3 : e === "strong" ? 2 : 1;
 }
@@ -235,7 +220,6 @@ export default function CatalogueClient({ items, amazonOn }: { items: CatalogueI
 }
 
 function Card({ it, amazonOn }: { it: CatalogueItem; amazonOn: boolean }) {
-  const ev = evidenceMeta(it.evidence);
   // BottleMockup only reads brand/productName/size; supply those for image-less items.
   const bottleOption = { brand: it.brand, productName: it.productName, size: it.size ?? "" } as unknown as ProductOption;
   const stars = Math.round(it.rating);
@@ -246,28 +230,19 @@ function Card({ it, amazonOn }: { it: CatalogueItem; amazonOn: boolean }) {
       boxShadow: "0 1px 3px rgba(10,37,64,0.04), 0 6px 16px rgba(10,37,64,0.04)",
     }}>
       {/* Clean image tile (→ product page); real photo or branded bottle fallback */}
-      <Link href={it.href} aria-label={`View ${it.name}`} style={{ position: "relative", display: "block", textDecoration: "none" }}>
+      <Link href={it.href} aria-label={`View ${it.name}`} style={{ display: "block", textDecoration: "none" }}>
         <div style={{
-          position: "relative", height: 200, borderRadius: 14, overflow: "hidden",
+          position: "relative", height: 256, borderRadius: 14, overflow: "hidden",
           background: "#fff", border: "1px solid #e5e7eb",
           display: "flex", alignItems: "center", justifyContent: "center",
         }}>
           {it.image ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={it.image} alt={`${it.name} — ${it.brand}`} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 16 }} />
+            <img src={it.image} alt={`${it.name} — ${it.brand}`} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} />
           ) : (
-            <BottleMockup option={bottleOption} height={168} showBackgroundScene={false} />
+            <BottleMockup option={bottleOption} height={216} showBackgroundScene={false} />
           )}
         </div>
-        <span style={{
-          position: "absolute", top: 10, left: 10, fontSize: 11, fontWeight: 600, padding: "4px 10px",
-          borderRadius: 999, background: ev.bg, color: ev.ink,
-        }}>{ev.short} evidence</span>
-        <span style={{
-          position: "absolute", top: 10, right: 10, fontSize: 11, fontWeight: 600, padding: "5px 11px",
-          borderRadius: 999, background: `color-mix(in srgb, ${TIMING_COLOR[it.timing]} 78%, #0a2540)`, color: "#fff",
-          whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 5,
-        }}>{TIMING_GLYPH[it.timing]} {TIMING_LABEL[it.timing]}</span>
       </Link>
 
       {/* Name + brand */}
