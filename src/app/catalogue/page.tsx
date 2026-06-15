@@ -27,7 +27,11 @@ export const metadata: Metadata = {
 function buildItems(): CatalogueItem[] {
   const items: CatalogueItem[] = [];
   for (const s of SUPPLEMENT_DB) {
-    const product = getProducts(s.id)[0] ?? null;
+    const products = getProducts(s.id);
+    // Prefer the first option that has a REAL photo, so the catalogue shows real
+    // product images instead of mockups wherever the data allows. Falls back to
+    // the primary (bestseller) when no option has a photo.
+    const product = products.find((p) => productImage(p)) ?? products[0] ?? null;
     const image = product ? productImage(product) : undefined;
     const buyUrl = product
       ? product.productPath
@@ -55,7 +59,8 @@ function buildItems(): CatalogueItem[] {
       tags: s.tags,
       buyUrl,
       amazonUrl,
-      href: `/ingredients/${s.id}`,
+      href: `/products/${s.id}`,
+      altHref: `/ingredients/${s.id}`,
     });
   }
   return items;

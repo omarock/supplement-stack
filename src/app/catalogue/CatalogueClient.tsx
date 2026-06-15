@@ -25,6 +25,7 @@ export interface CatalogueItem {
   buyUrl: string;
   amazonUrl: string;
   href: string;
+  altHref: string;
 }
 
 const th = {
@@ -191,7 +192,7 @@ export default function CatalogueClient({ items, amazonOn }: { items: CatalogueI
               <button onClick={() => { setQuery(""); setGoal("all"); setCategory("all"); }} style={{ ...chipBase, fontWeight: 600, color: th.ink }}>Clear all filters</button>
             </div>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(236px, 1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: 20 }}>
               {filtered.map(it => <Card key={it.id} it={it} amazonOn={amazonOn} />)}
             </div>
           )}
@@ -225,29 +226,29 @@ function Card({ it, amazonOn }: { it: CatalogueItem; amazonOn: boolean }) {
   const bottleOption = { brand: it.brand, productName: it.productName, size: it.size ?? "" } as unknown as ProductOption;
   return (
     <article style={{
-      background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16, padding: 14,
+      background: th.paper, border: `1px solid ${th.line}`, borderRadius: 18, padding: 16,
       display: "flex", flexDirection: "column", height: "100%",
     }}>
-      {/* Clickable image tile — real photo, or a branded bottle mockup fallback */}
-      <Link href={it.href} aria-label={`View ${it.name}`} style={{ display: "block", textDecoration: "none", marginBottom: 12 }}>
+      {/* Clickable image tile (→ product page); real photo or branded bottle fallback */}
+      <Link href={it.href} aria-label={`View ${it.name}`} style={{ display: "block", textDecoration: "none", marginBottom: 14 }}>
         <div style={{
-          position: "relative", height: 142, borderRadius: 12, overflow: "hidden",
+          position: "relative", height: 200, borderRadius: 14, overflow: "hidden",
           background: "#fff", border: `1px solid ${th.line}`,
           display: "flex", alignItems: "center", justifyContent: "center",
         }}>
           {it.image ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={it.image} alt={`${it.name} — ${it.brand}`} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} />
+            <img src={it.image} alt={`${it.name} — ${it.brand}`} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 18 }} />
           ) : (
-            <BottleMockup option={bottleOption} height={118} showBackgroundScene={false} />
+            <BottleMockup option={bottleOption} height={166} showBackgroundScene={false} />
           )}
           <span style={{
-            position: "absolute", top: 9, left: 9, fontSize: 11, fontWeight: 600, padding: "3px 9px",
+            position: "absolute", top: 11, left: 11, fontSize: 11.5, fontWeight: 600, padding: "4px 10px",
             borderRadius: 999, background: ev.bg, color: ev.ink,
           }}>{ev.short} evidence</span>
           {it.vegan && (
             <span title="Vegan-friendly" style={{
-              position: "absolute", top: 9, right: 9, fontSize: 11, fontWeight: 600, padding: "3px 8px",
+              position: "absolute", top: 11, right: 11, fontSize: 11.5, fontWeight: 600, padding: "4px 9px",
               borderRadius: 999, background: "color-mix(in srgb, var(--c-sage) 14%, #fff)", color: th.sageDeep,
             }}>Vegan</span>
           )}
@@ -256,27 +257,27 @@ function Card({ it, amazonOn }: { it: CatalogueItem; amazonOn: boolean }) {
 
       {/* Name + brand + meta (size · price · rating) */}
       <Link href={it.href} style={{ textDecoration: "none" }}>
-        <h3 style={{ ...D, fontSize: 16, fontWeight: 600, lineHeight: 1.25, color: th.ink, margin: "0 0 3px" }}>{it.name}</h3>
+        <h3 style={{ ...D, fontSize: 18, fontWeight: 600, lineHeight: 1.25, color: th.ink, margin: "0 0 4px" }}>{it.name}</h3>
       </Link>
-      <p style={{ fontSize: 12.5, color: th.inkSoft, margin: "0 0 3px" }}>{it.brand}</p>
-      <p style={{ fontSize: 12, color: th.inkMute, margin: "0 0 14px" }}>
+      <p style={{ fontSize: 13, color: th.inkSoft, margin: "0 0 3px" }}>{it.brand}</p>
+      <p style={{ fontSize: 12.5, color: th.inkMute, margin: "0 0 16px" }}>
         {it.size ? `${it.size} · ` : ""}${it.price}{it.rating ? ` · ★ ${it.rating}` : ""}
       </p>
 
       {/* Buy buttons, stacked — same as the product-options cards */}
-      <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
+      <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 9 }}>
         <a href={it.buyUrl} target="_blank" rel="sponsored noopener noreferrer" style={{
-          display: "block", textAlign: "center", padding: "11px 14px", borderRadius: 10, fontSize: 13, fontWeight: 600,
+          display: "block", textAlign: "center", padding: "12px 16px", borderRadius: 10, fontSize: 13.5, fontWeight: 600,
           background: th.burgundy, color: "#fff", textDecoration: "none",
         }}>Buy on iHerb →</a>
         {amazonOn && (
           <a href={it.amazonUrl} target="_blank" rel="sponsored noopener noreferrer" style={{
-            display: "block", textAlign: "center", padding: "11px 14px", borderRadius: 10, fontSize: 13, fontWeight: 600,
+            display: "block", textAlign: "center", padding: "12px 16px", borderRadius: 10, fontSize: 13.5, fontWeight: 600,
             background: "#ffd814", color: "#0f1111", textDecoration: "none", border: "1px solid #fcd200",
           }}>Buy on Amazon →</a>
         )}
       </div>
-      <Link href={it.href} style={{ display: "block", textAlign: "center", fontSize: 12.5, color: th.sageDeep, textDecoration: "none", marginTop: 12 }}>
+      <Link href={it.altHref} style={{ display: "block", textAlign: "center", fontSize: 13, color: th.sageDeep, textDecoration: "none", marginTop: 13 }}>
         Details &amp; alternatives →
       </Link>
     </article>
