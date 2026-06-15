@@ -44,6 +44,7 @@ const NAV: NavGroup[] = [
       { labelKey: "menu.bestLabel", href: "/best", descKey: "menu.bestDesc" },
       { labelKey: "menu.symptomsLabel", href: "/symptoms", descKey: "menu.symptomsDesc" },
       { labelKey: "menu.ingredientsLabel", href: "/ingredients", descKey: "menu.ingredientsDesc" },
+      { labelKey: "menu.catalogueLabel", href: "/catalogue", descKey: "menu.catalogueDesc" },
       { labelKey: "menu.interactionsLabel", href: "/interactions", descKey: "menu.interactionsDesc" },
       { labelKey: "menu.timingLabel", href: "/timing", descKey: "menu.timingDesc" },
       { labelKey: "menu.biomarkersLabel", href: "/biomarkers", descKey: "menu.biomarkersDesc" },
