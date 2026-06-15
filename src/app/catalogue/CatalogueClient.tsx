@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import BottleMockup from "@/components/BottleMockup";
 import type { ProductOption } from "@/lib/products";
@@ -76,6 +76,15 @@ export default function CatalogueClient({ items, amazonOn }: { items: CatalogueI
   const [goal, setGoal] = useState<string>("all");
   const [category, setCategory] = useState<string>("all");
   const [sort, setSort] = useState<SortKey>("evidence");
+
+  // Pre-apply a filter when arriving from the nav mega-menu (/catalogue?goal=… / ?cat=…).
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    const g = sp.get("goal");
+    const c = sp.get("cat");
+    if (g && GOAL_FILTERS.some((x) => x.key === g)) setGoal(g);
+    if (c && CATEGORY_LABELS[c]) setCategory(c);
+  }, []);
 
   const categories = useMemo(() => {
     const present = new Set(items.map(i => i.category));

@@ -44,7 +44,6 @@ const NAV: NavGroup[] = [
       { labelKey: "menu.bestLabel", href: "/best", descKey: "menu.bestDesc" },
       { labelKey: "menu.symptomsLabel", href: "/symptoms", descKey: "menu.symptomsDesc" },
       { labelKey: "menu.ingredientsLabel", href: "/ingredients", descKey: "menu.ingredientsDesc" },
-      { labelKey: "menu.catalogueLabel", href: "/catalogue", descKey: "menu.catalogueDesc" },
       { labelKey: "menu.interactionsLabel", href: "/interactions", descKey: "menu.interactionsDesc" },
       { labelKey: "menu.timingLabel", href: "/timing", descKey: "menu.timingDesc" },
       { labelKey: "menu.biomarkersLabel", href: "/biomarkers", descKey: "menu.biomarkersDesc" },
@@ -52,18 +51,28 @@ const NAV: NavGroup[] = [
       { labelKey: "menu.journalLabel", href: "/journal", descKey: "menu.journalDesc" },
     ],
   },
-  {
-    label: "My plan",
-    items: [
-      { labelKey: "menu.trackLabel", href: "/track", descKey: "menu.trackDesc" },
-      { labelKey: "menu.bwHistoryLabel", href: "/bloodwork/history", descKey: "menu.bwHistoryDesc" },
-      { labelKey: "menu.meLabel", href: "/me", descKey: "menu.meDesc" },
-      { labelKey: "menu.pricingLabel", href: "/pricing", descKey: "menu.pricingDesc" },
-    ],
-  },
 ];
 
-const GROUP_KEY: Record<string, string> = { Start: "nav.start", Learn: "nav.learn", "My plan": "nav.myPlan" };
+const GROUP_KEY: Record<string, string> = { Start: "nav.start", Learn: "nav.learn" };
+
+// Catalogue mega-menu data (English — the catalogue is English content). Each
+// goal/category links into the catalogue with a pre-applied filter (?goal/?cat).
+const CAT_GOALS: { label: string; href: string; hue: string }[] = [
+  { label: "Energy", href: "/catalogue?goal=energy", hue: "var(--c-amber)" },
+  { label: "Sleep", href: "/catalogue?goal=sleep", hue: "var(--c-lavender)" },
+  { label: "Focus", href: "/catalogue?goal=focus", hue: "var(--c-sage)" },
+  { label: "Stress", href: "/catalogue?goal=stress", hue: "var(--c-coral)" },
+  { label: "Immunity", href: "/catalogue?goal=immunity", hue: "var(--c-sage-deep)" },
+  { label: "Recovery", href: "/catalogue?goal=recovery", hue: "var(--c-amber-deep)" },
+];
+const CAT_CATEGORIES: { label: string; href: string; hue: string }[] = [
+  { label: "Vitamins", href: "/catalogue?cat=vitamins", hue: "var(--c-sage)" },
+  { label: "Minerals", href: "/catalogue?cat=minerals", hue: "var(--c-lavender)" },
+  { label: "Omega & fats", href: "/catalogue?cat=omega-fats", hue: "var(--c-amber)" },
+  { label: "Adaptogens", href: "/catalogue?cat=adaptogens", hue: "var(--c-sage-deep)" },
+  { label: "Nootropics", href: "/catalogue?cat=nootropics", hue: "var(--c-coral)" },
+  { label: "Performance", href: "/catalogue?cat=performance", hue: "var(--c-amber-deep)" },
+];
 
 export default function SiteHeader() {
   const router = useRouter();
@@ -126,6 +135,129 @@ export default function SiteHeader() {
     }
   }
 
+  function renderGroup(group: NavGroup) {
+    const open = openGroup === group.label;
+    return (
+      <div key={group.label} style={{ position: "relative" }} onMouseEnter={() => setOpenGroup(group.label)}>
+        <button onFocus={() => setOpenGroup(group.label)} aria-expanded={open} style={{
+          display: "inline-flex", alignItems: "center", gap: 5,
+          background: "transparent", border: "none", cursor: "pointer",
+          fontFamily: FONTS.body, fontSize: 14, fontWeight: 500,
+          color: open ? TH.ink : TH.inkSoft, padding: "6px 2px", transition: "color .2s",
+        }}>
+          {t(GROUP_KEY[group.label] ?? group.label)}
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"
+            style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform .2s" }}>
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+        {open && (
+          <div style={{ position: "absolute", top: "100%", left: -8, paddingTop: 10, minWidth: 260 }}>
+            <div style={{
+              background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 16,
+              boxShadow: "0 12px 40px -12px rgba(10,37,64,0.25)", padding: 8, animation: "sd-fade-in .18s ease-out",
+            }}>
+              {group.items.map(item => (
+                <Link key={item.href} href={lh(item.href)} onClick={() => setOpenGroup(null)} style={{
+                  display: "block", padding: "10px 12px", borderRadius: 11, textDecoration: "none", color: "inherit", transition: "background .15s",
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.background = TH.bg; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: TH.ink, letterSpacing: "-0.01em" }}>{t(item.labelKey)}</div>
+                  <div style={{ fontSize: 12, color: TH.muted, marginTop: 1 }}>{t(item.descKey)}</div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  function renderCatalogue() {
+    const open = openGroup === "Catalogue";
+    return (
+      <div style={{ position: "relative" }} onMouseEnter={() => setOpenGroup("Catalogue")}>
+        <button onFocus={() => setOpenGroup("Catalogue")} aria-expanded={open} style={{
+          display: "inline-flex", alignItems: "center", gap: 6, cursor: "pointer", border: "none",
+          background: `color-mix(in srgb, ${TH.sage} ${open ? 24 : 15}%, ${TH.surface})`,
+          borderRadius: 999, padding: "6px 14px",
+          fontFamily: FONTS.body, fontSize: 14, fontWeight: 600, color: TH.sageDeep, transition: "background .2s",
+        }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" />
+          </svg>
+          {t("menu.catalogueLabel")}
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"
+            style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform .2s" }}>
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+        {open && (
+          <div style={{ position: "absolute", top: "100%", left: "50%", transform: "translateX(-50%)", paddingTop: 10, zIndex: 70 }}>
+            <div style={{
+              background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 18,
+              boxShadow: "0 16px 48px -14px rgba(10,37,64,0.3)", padding: 18, width: 620,
+              display: "grid", gridTemplateColumns: "0.9fr 0.9fr 1.2fr", gap: 18, animation: "sd-fade-in .18s ease-out",
+            }}>
+              <div>
+                <div style={{ fontSize: 11.5, color: TH.muted, marginBottom: 11 }}>By goal</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+                  {CAT_GOALS.map(g => (
+                    <Link key={g.href} href={lh(g.href)} onClick={() => setOpenGroup(null)} style={{
+                      padding: "6px 11px", borderRadius: 9, fontSize: 13.5, fontWeight: 500, textDecoration: "none",
+                      background: `color-mix(in srgb, ${g.hue} 20%, ${TH.surface})`, color: TH.ink,
+                    }}>{g.label}</Link>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: 11.5, color: TH.muted, marginBottom: 11 }}>By category</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
+                  {CAT_CATEGORIES.map(c => (
+                    <Link key={c.href} href={lh(c.href)} onClick={() => setOpenGroup(null)} style={{
+                      display: "flex", alignItems: "center", gap: 9, fontSize: 13.5, color: TH.ink, textDecoration: "none",
+                    }}>
+                      <span style={{ width: 9, height: 9, borderRadius: 999, background: c.hue, flexShrink: 0 }} />
+                      {c.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <Link href={lh("/catalogue")} onClick={() => setOpenGroup(null)} style={{
+                textDecoration: "none", borderRadius: 14, padding: 16, display: "flex", flexDirection: "column",
+                background: `color-mix(in srgb, ${TH.sage} 10%, ${TH.surface})`,
+                border: `1px solid color-mix(in srgb, ${TH.sage} 22%, transparent)`,
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 6 }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={TH.sageDeep} strokeWidth="2" aria-hidden="true">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" />
+                    <rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" />
+                  </svg>
+                  <span style={{ fontFamily: FONTS.display, fontWeight: 600, fontSize: 15, color: TH.ink }}>The catalogue</span>
+                </div>
+                <div style={{ fontSize: 12.5, color: TH.inkSoft, lineHeight: 1.45, marginBottom: 12 }}>200 products, graded by evidence, with real prices.</div>
+                <div style={{ background: TH.bg, borderRadius: 10, padding: 10, marginBottom: 12 }}>
+                  <div style={{ fontSize: 10.5, color: TH.muted, marginBottom: 6 }}>Evidence grade</div>
+                  <div style={{ display: "flex", height: 9, borderRadius: 999, overflow: "hidden" }}>
+                    <div style={{ width: "54%", background: TH.sageDeep }} />
+                    <div style={{ width: "31%", background: TH.sage }} />
+                    <div style={{ width: "15%", background: TH.amber }} />
+                  </div>
+                </div>
+                <span style={{
+                  marginTop: "auto", background: TH.inkBg, color: "#fff", fontWeight: 600, fontSize: 12.5,
+                  textAlign: "center", padding: "9px 12px", borderRadius: 999,
+                }}>Browse all products →</span>
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <>
       <a className="skip-link" href="#main-content" onClick={skipToContent}>
@@ -148,54 +280,12 @@ export default function SiteHeader() {
           style={{ display: "var(--nav-show)", gap: "var(--nav-gap)", alignItems: "center", position: "absolute", left: "50%", transform: "translateX(-50%)" }}
           onMouseLeave={() => setOpenGroup(null)}
         >
-          {NAV.map(group => {
-            const open = openGroup === group.label;
-            return (
-              <div key={group.label} style={{ position: "relative" }} onMouseEnter={() => setOpenGroup(group.label)}>
-                <button
-                  onFocus={() => setOpenGroup(group.label)}
-                  aria-expanded={open}
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: 5,
-                    background: "transparent", border: "none", cursor: "pointer",
-                    fontFamily: FONTS.body, fontSize: 14, fontWeight: 500,
-                    color: open ? TH.ink : TH.inkSoft, padding: "6px 2px", transition: "color .2s",
-                  }}
-                >
-                  {t(GROUP_KEY[group.label] ?? group.label)}
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"
-                    style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform .2s" }}>
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
-                </button>
-
-                {open && (
-                  <div style={{
-                    position: "absolute", top: "100%", left: -8, paddingTop: 10, minWidth: 260,
-                  }}>
-                    <div style={{
-                      background: TH.surface, border: `1px solid ${TH.edge}`, borderRadius: 16,
-                      boxShadow: "0 12px 40px -12px rgba(10,37,64,0.25)", padding: 8,
-                      animation: "sd-fade-in .18s ease-out",
-                    }}>
-                      {group.items.map(item => (
-                        <Link key={item.href} href={lh(item.href)} onClick={() => setOpenGroup(null)} style={{
-                          display: "block", padding: "10px 12px", borderRadius: 11,
-                          textDecoration: "none", color: "inherit", transition: "background .15s",
-                        }}
-                          onMouseEnter={e => { e.currentTarget.style.background = TH.bg; }}
-                          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
-                        >
-                          <div style={{ fontSize: 14, fontWeight: 600, color: TH.ink, letterSpacing: "-0.01em" }}>{t(item.labelKey)}</div>
-                          <div style={{ fontSize: 12, color: TH.muted, marginTop: 1 }}>{t(item.descKey)}</div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          {renderGroup(NAV[0])}
+          {renderCatalogue()}
+          {renderGroup(NAV[1])}
+          <Link href={lh("/pricing")} onMouseEnter={() => setOpenGroup(null)} style={{
+            fontFamily: FONTS.body, fontSize: 14, fontWeight: 500, color: TH.inkSoft, textDecoration: "none", padding: "6px 2px",
+          }}>{t("menu.pricingLabel")}</Link>
         </div>
 
         <div style={{ display: "var(--nav-show)", gap: 10, alignItems: "center" }}>
@@ -337,6 +427,34 @@ export default function SiteHeader() {
             </div>
           )}
 
+          {/* Catalogue — featured, colourful */}
+          <div style={{
+            background: `color-mix(in srgb, ${TH.sage} 12%, ${TH.surface})`,
+            border: `1px solid color-mix(in srgb, ${TH.sage} 25%, transparent)`,
+            borderRadius: 16, padding: 16,
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke={TH.sageDeep} strokeWidth="2" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" />
+                <rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" />
+              </svg>
+              <span style={{ fontFamily: FONTS.display, fontWeight: 600, fontSize: 20, color: TH.ink, letterSpacing: "-0.01em" }}>{t("menu.catalogueLabel")}</span>
+            </div>
+            <span style={{ fontSize: 13, color: TH.inkSoft }}>{t("menu.catalogueDesc")}</span>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginTop: 12 }}>
+              {CAT_GOALS.map(g => (
+                <Link key={g.href} href={lh(g.href)} onClick={() => setOpenMobile(false)} style={{
+                  padding: "5px 12px", borderRadius: 999, fontSize: 12.5, fontWeight: 500, textDecoration: "none",
+                  background: `color-mix(in srgb, ${g.hue} 22%, ${TH.surface})`, color: TH.ink,
+                }}>{g.label}</Link>
+              ))}
+            </div>
+            <Link href={lh("/catalogue")} onClick={() => setOpenMobile(false)} style={{
+              display: "block", textAlign: "center", marginTop: 14, padding: "11px 14px", borderRadius: 999,
+              background: TH.inkBg, color: "#fff", fontWeight: 600, fontSize: 14, textDecoration: "none",
+            }}>{t("menu.catalogueLabel")} →</Link>
+          </div>
+
           {NAV.map(group => (
             <div key={group.label}>
               <div style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted, marginBottom: 8 }}>
@@ -355,6 +473,11 @@ export default function SiteHeader() {
               </div>
             </div>
           ))}
+
+          <Link href={lh("/pricing")} onClick={() => setOpenMobile(false)} style={{
+            display: "block", padding: "12px 0", borderBottom: `1px solid ${TH.edge}`, textDecoration: "none",
+            fontFamily: FONTS.display, fontWeight: 600, fontSize: 20, color: TH.ink, letterSpacing: "-0.01em",
+          }}>{t("menu.pricingLabel")}</Link>
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, paddingTop: 4 }}>
             <span style={{ fontFamily: FONTS.mono, fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: TH.muted }}>{t("switcher.label")}</span>
