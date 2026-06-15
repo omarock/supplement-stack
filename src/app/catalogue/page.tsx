@@ -33,6 +33,16 @@ function buildItems(): CatalogueItem[] {
     // the primary (bestseller) when no option has a photo.
     const product = products.find((p) => productImage(p)) ?? products[0] ?? null;
     const image = product ? productImage(product) : undefined;
+    // Rich-card display fields (mirrors the stack page's SupplementGrid card).
+    const rc = product?.reviewCount ?? 0;
+    const reviewsLabel = rc >= 1000 ? `${(rc / 1000).toFixed(rc >= 10000 ? 0 : 1)}K` : rc > 0 ? String(rc) : "";
+    const boughtLabel = rc >= 10000 ? "10K+ bought in past month" : rc >= 1000 ? "1K+ bought in past month" : "";
+    const tagChips: string[] = [];
+    if (product?.form) tagChips.push(product.form);
+    if (product?.servingsPerContainer) tagChips.push(`${product.servingsPerContainer} Count`);
+    else if (product?.size) tagChips.push(product.size.replace(/(\d+)\s*(capsules?|softgels?|tablets?|servings?|veg.*?capsules?)/i, "$1 Count"));
+    const cert = (product?.certifications ?? []).find((c) => /USP|NSF|Informed|Organic|GMP/i.test(c)) ?? product?.certifications?.[0];
+    if (cert) tagChips.push(cert);
     const buyUrl = product
       ? product.productPath
         ? iherbProductLink(product.productPath)
@@ -57,6 +67,10 @@ function buildItems(): CatalogueItem[] {
       badge: product?.badge,
       vegan: s.vegan,
       tags: s.tags,
+      timing: s.timing,
+      tagChips: tagChips.slice(0, 3),
+      reviewsLabel,
+      boughtLabel,
       buyUrl,
       amazonUrl,
       href: `/products/${s.id}`,

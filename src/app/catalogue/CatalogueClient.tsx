@@ -22,11 +22,25 @@ export interface CatalogueItem {
   badge?: string;
   vegan: boolean;
   tags: string[];
+  timing: "morning" | "midday" | "evening" | "pre-train";
+  tagChips: string[];
+  reviewsLabel: string;
+  boughtLabel: string;
   buyUrl: string;
   amazonUrl: string;
   href: string;
   altHref: string;
 }
+
+const TIMING_LABEL: Record<CatalogueItem["timing"], string> = {
+  morning: "Morning", midday: "Midday", "pre-train": "Pre-train", evening: "Evening",
+};
+const TIMING_GLYPH: Record<CatalogueItem["timing"], string> = {
+  morning: "☀", midday: "✦", "pre-train": "↺", evening: "☾",
+};
+const TIMING_COLOR: Record<CatalogueItem["timing"], string> = {
+  morning: "var(--c-amber)", midday: "#a87a52", "pre-train": "var(--c-sage)", evening: "var(--c-lavender)",
+};
 
 const th = {
   bg: "var(--c-bg)", paper: "var(--c-surface)", elevated: "var(--c-elevated)",
@@ -192,7 +206,7 @@ export default function CatalogueClient({ items, amazonOn }: { items: CatalogueI
               <button onClick={() => { setQuery(""); setGoal("all"); setCategory("all"); }} style={{ ...chipBase, fontWeight: 600, color: th.ink }}>Clear all filters</button>
             </div>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: 20 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 260px), 1fr))", gap: 16 }}>
               {filtered.map(it => <Card key={it.id} it={it} amazonOn={amazonOn} />)}
             </div>
           )}
@@ -224,62 +238,94 @@ function Card({ it, amazonOn }: { it: CatalogueItem; amazonOn: boolean }) {
   const ev = evidenceMeta(it.evidence);
   // BottleMockup only reads brand/productName/size; supply those for image-less items.
   const bottleOption = { brand: it.brand, productName: it.productName, size: it.size ?? "" } as unknown as ProductOption;
+  const stars = Math.round(it.rating);
   return (
     <article style={{
-      background: th.paper, border: `1px solid ${th.line}`, borderRadius: 18, padding: 16,
-      display: "flex", flexDirection: "column", height: "100%",
+      background: th.paper, border: `1px solid ${th.line}`, borderRadius: 16, padding: 14,
+      display: "flex", flexDirection: "column", gap: 10, height: "100%",
+      boxShadow: "0 1px 3px rgba(10,37,64,0.04), 0 6px 16px rgba(10,37,64,0.04)",
     }}>
-      {/* Clickable image tile (→ product page); real photo or branded bottle fallback */}
-      <Link href={it.href} aria-label={`View ${it.name}`} style={{ display: "block", textDecoration: "none", marginBottom: 14 }}>
+      {/* Clean image tile (→ product page); real photo or branded bottle fallback */}
+      <Link href={it.href} aria-label={`View ${it.name}`} style={{ position: "relative", display: "block", textDecoration: "none" }}>
         <div style={{
           position: "relative", height: 200, borderRadius: 14, overflow: "hidden",
-          background: "#fff", border: `1px solid ${th.line}`,
+          background: "#fff", border: "1px solid #e5e7eb",
           display: "flex", alignItems: "center", justifyContent: "center",
         }}>
           {it.image ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={it.image} alt={`${it.name} — ${it.brand}`} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 18 }} />
+            <img src={it.image} alt={`${it.name} — ${it.brand}`} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 16 }} />
           ) : (
-            <BottleMockup option={bottleOption} height={166} showBackgroundScene={false} />
-          )}
-          <span style={{
-            position: "absolute", top: 11, left: 11, fontSize: 11.5, fontWeight: 600, padding: "4px 10px",
-            borderRadius: 999, background: ev.bg, color: ev.ink,
-          }}>{ev.short} evidence</span>
-          {it.vegan && (
-            <span title="Vegan-friendly" style={{
-              position: "absolute", top: 11, right: 11, fontSize: 11.5, fontWeight: 600, padding: "4px 9px",
-              borderRadius: 999, background: "color-mix(in srgb, var(--c-sage) 14%, #fff)", color: th.sageDeep,
-            }}>Vegan</span>
+            <BottleMockup option={bottleOption} height={168} showBackgroundScene={false} />
           )}
         </div>
+        <span style={{
+          position: "absolute", top: 10, left: 10, fontSize: 11, fontWeight: 600, padding: "4px 10px",
+          borderRadius: 999, background: ev.bg, color: ev.ink,
+        }}>{ev.short} evidence</span>
+        <span style={{
+          position: "absolute", top: 10, right: 10, fontSize: 11, fontWeight: 600, padding: "5px 11px",
+          borderRadius: 999, background: `color-mix(in srgb, ${TIMING_COLOR[it.timing]} 78%, #0a2540)`, color: "#fff",
+          whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 5,
+        }}>{TIMING_GLYPH[it.timing]} {TIMING_LABEL[it.timing]}</span>
       </Link>
 
-      {/* Name + brand + meta (size · price · rating) */}
-      <Link href={it.href} style={{ textDecoration: "none" }}>
-        <h3 style={{ ...D, fontSize: 18, fontWeight: 600, lineHeight: 1.25, color: th.ink, margin: "0 0 4px" }}>{it.name}</h3>
-      </Link>
-      <p style={{ fontSize: 13, color: th.inkSoft, margin: "0 0 3px" }}>{it.brand}</p>
-      <p style={{ fontSize: 12.5, color: th.inkMute, margin: "0 0 16px" }}>
-        {it.size ? `${it.size} · ` : ""}${it.price}{it.rating ? ` · ★ ${it.rating}` : ""}
-      </p>
+      {/* Name + brand */}
+      <div>
+        <Link href={it.href} style={{ textDecoration: "none" }}>
+          <h3 style={{ ...D, fontSize: 16.5, fontWeight: 600, lineHeight: 1.25, color: th.ink, margin: "0 0 2px" }}>{it.name}</h3>
+        </Link>
+        <div style={{ fontSize: 13, color: th.inkSoft }}>{it.brand}{it.size ? ` · ${it.size}` : ""}</div>
+      </div>
 
-      {/* Buy buttons, stacked — same as the product-options cards */}
-      <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 9 }}>
+      {/* Tag chips */}
+      {it.tagChips.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {it.tagChips.map((t, i) => (
+            <span key={i} style={{
+              padding: "3px 9px", borderRadius: 6, fontSize: 11.5, fontWeight: 400,
+              background: "#f3f4f6", color: "var(--c-ink-soft)", border: "1px solid #e5e7eb", whiteSpace: "nowrap",
+            }}>{t}</span>
+          ))}
+        </div>
+      )}
+
+      {/* Rating + reviews */}
+      {it.rating > 0 && (
+        <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13 }}>
+          <span style={{ color: "#ff9900", letterSpacing: "1px", fontSize: 14 }}>
+            {"★".repeat(stars)}<span style={{ color: "#e5e7eb" }}>{"★".repeat(5 - stars)}</span>
+          </span>
+          {it.reviewsLabel && <span style={{ color: th.inkMute }}>({it.reviewsLabel})</span>}
+        </div>
+      )}
+      {it.boughtLabel && (
+        <div style={{ fontSize: 12, color: "#565959", marginTop: -4 }}>
+          <strong style={{ fontWeight: 600 }}>{it.boughtLabel.split(" ")[0]}</strong>{it.boughtLabel.slice(it.boughtLabel.indexOf(" "))}
+        </div>
+      )}
+
+      {/* Price */}
+      <div style={{ ...D, fontSize: 22, fontWeight: 600, color: th.ink, letterSpacing: "-0.02em", marginTop: 2 }}>
+        ${it.price}<span style={{ fontSize: 12, color: th.inkMute, fontWeight: 400, marginLeft: 5 }}>~/month</span>
+      </div>
+
+      {/* Buy buttons */}
+      <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 8, paddingTop: 4 }}>
         <a href={it.buyUrl} target="_blank" rel="sponsored noopener noreferrer" style={{
-          display: "block", textAlign: "center", padding: "12px 16px", borderRadius: 10, fontSize: 13.5, fontWeight: 600,
+          display: "block", textAlign: "center", padding: "12px 14px", borderRadius: 999, fontSize: 13.5, fontWeight: 600,
           background: th.burgundy, color: "#fff", textDecoration: "none",
         }}>Buy on iHerb →</a>
         {amazonOn && (
           <a href={it.amazonUrl} target="_blank" rel="sponsored noopener noreferrer" style={{
-            display: "block", textAlign: "center", padding: "12px 16px", borderRadius: 10, fontSize: 13.5, fontWeight: 600,
+            display: "block", textAlign: "center", padding: "12px 14px", borderRadius: 999, fontSize: 13.5, fontWeight: 600,
             background: "#ffd814", color: "#0f1111", textDecoration: "none", border: "1px solid #fcd200",
           }}>Buy on Amazon →</a>
         )}
+        <Link href={it.altHref} style={{ display: "block", textAlign: "center", fontSize: 12.5, color: th.sageDeep, textDecoration: "none", marginTop: 3 }}>
+          Details &amp; alternatives →
+        </Link>
       </div>
-      <Link href={it.altHref} style={{ display: "block", textAlign: "center", fontSize: 13, color: th.sageDeep, textDecoration: "none", marginTop: 13 }}>
-        Details &amp; alternatives →
-      </Link>
     </article>
   );
 }
