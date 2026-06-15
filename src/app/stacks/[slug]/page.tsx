@@ -61,8 +61,16 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
         <section style={{
           background: stack.coverBg, color: stack.coverInk,
           padding: "64px var(--section-pad-x) 80px",
-          textAlign: "center", position: "relative",
+          textAlign: "center", position: "relative", overflow: "hidden",
         }}>
+          {stack.heroImage && (
+            <>
+              <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: `url(${stack.heroImage})`, backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: stack.coverBg, opacity: 0.26, zIndex: 1, mixBlendMode: "multiply" }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(8,16,11,0.5) 0%, rgba(8,16,11,0.16) 40%, rgba(8,16,11,0.68) 100%)", zIndex: 1 }} />
+            </>
+          )}
+          <div style={{ position: "relative", zIndex: 2 }}>
           <Link href="/stacks" style={{
             display: "inline-flex", alignItems: "center", gap: 6,
             color: stack.coverInk, opacity: 0.85, textDecoration: "none",
@@ -101,6 +109,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
               </div>
             ) : null;
           })()}
+          </div>
         </section>
 
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "56px 24px 32px" }}>

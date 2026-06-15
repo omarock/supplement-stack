@@ -17,6 +17,7 @@ export interface PreMadeStack {
   coverBg: string;
   coverGlyph: string;
   coverInk: string;
+  heroImage?: string; // optional full-bleed hero photo, rendered under a brand-tinted overlay
   popularity?: number; // 1 (most popular) → high (less)
 }
 
@@ -65,6 +66,7 @@ export const STACKS: PreMadeStack[] = [
     expectedTimeline: "Initial improvements in 1-2 weeks. Full effect in 4-6 weeks.",
     coverBg: "linear-gradient(135deg, #324d36 0%, #1c2e1f 100%)",
     coverGlyph: "☾", coverInk: "#cfdcc8", popularity: 2,
+    heroImage: "/stacks/sleep.jpg",
   },
 
   {
