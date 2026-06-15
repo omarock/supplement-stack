@@ -65,7 +65,11 @@ function Heading({ step, title, subtitle }: { step: number; title: string; subti
   const { t } = useT();
   return (
     <div style={{ marginBottom: 28 }}>
-      <div style={{ fontSize: 12, color: th.sage, ...MM, letterSpacing: "0.1em", marginBottom: 14 }}>
+      <div style={{
+        display: "inline-block", fontSize: 12, fontWeight: 600, color: "var(--c-sage-deep)",
+        background: "color-mix(in srgb, var(--c-sage) 16%, var(--c-surface))",
+        padding: "5px 13px", borderRadius: 999, marginBottom: 16,
+      }}>
         {t("qc.stepOf", { step, total: TOTAL_STEPS })}
       </div>
       <h1 style={{ ...S, fontSize: 52, color: th.ink, margin: "0 0 8px", letterSpacing: "-0.03em", lineHeight: 1 }}>
@@ -92,30 +96,36 @@ function Card({ label, sub, selected, onClick, compact = false }: {
   return (
     <button onClick={onClick} style={{
       display: "flex", flexDirection: "column", gap: 3, textAlign: "left",
-      padding: compact ? "12px 16px" : "16px 20px", borderRadius: 14, cursor: "pointer", width: "100%",
+      padding: compact ? "13px 16px" : "16px 20px", borderRadius: 15, cursor: "pointer", width: "100%",
       border: selected ? `2px solid ${th.sage}` : `1.5px solid ${th.line}`,
-      background: selected ? th.sageGlow : th.paper,
+      background: selected ? `color-mix(in srgb, ${th.sage} 12%, ${th.paper})` : th.paper,
+      boxShadow: selected ? `0 8px 20px -12px color-mix(in srgb, ${th.sage} 55%, transparent)` : "none",
       transition: "all .18s ease", outline: "none",
     }}>
-      <span style={{ fontSize: compact ? 14 : 15, fontWeight: 500, color: selected ? th.sage : th.ink }}>{label}</span>
+      <span style={{ fontSize: compact ? 14 : 15, fontWeight: 600, color: selected ? "var(--c-sage-deep)" : th.ink }}>{label}</span>
       {sub && <span style={{ fontSize: 12, color: th.inkSoft, lineHeight: 1.4 }}>{sub}</span>}
     </button>
   );
 }
 
-function GoalCard({ label, glyph, selected, onClick }: {
-  label: string; glyph: string; selected: boolean; onClick: () => void;
+function GoalCard({ label, glyph, hue, selected, onClick }: {
+  label: string; glyph: string; hue: string; selected: boolean; onClick: () => void;
 }) {
   return (
     <button onClick={onClick} style={{
-      display: "flex", flexDirection: "column", gap: 8,
-      padding: "16px 14px", borderRadius: 14, cursor: "pointer", textAlign: "left",
-      border: selected ? `2px solid ${th.sage}` : `1.5px solid ${th.line}`,
-      background: selected ? th.sageGlow : th.paper,
+      display: "flex", flexDirection: "column", gap: 10,
+      padding: "16px 14px", borderRadius: 16, cursor: "pointer", textAlign: "left",
+      border: selected ? `2px solid ${hue}` : `1.5px solid ${th.line}`,
+      background: selected ? `color-mix(in srgb, ${hue} 14%, ${th.paper})` : th.paper,
       transition: "all .18s ease", outline: "none",
+      boxShadow: selected ? `0 10px 24px -12px color-mix(in srgb, ${hue} 65%, transparent)` : "none",
+      transform: selected ? "translateY(-1px)" : "none",
     }}>
-      <span style={{ fontSize: 22, lineHeight: 1 }}>{glyph}</span>
-      <span style={{ fontSize: 13, fontWeight: 500, color: selected ? th.sage : th.ink, lineHeight: 1.3 }}>{label}</span>
+      <span style={{
+        width: 36, height: 36, borderRadius: 11, display: "inline-flex", alignItems: "center", justifyContent: "center",
+        background: `color-mix(in srgb, ${hue} 16%, ${th.paper})`, color: hue, fontSize: 19, lineHeight: 1,
+      }}>{glyph}</span>
+      <span style={{ fontSize: 13.5, fontWeight: 600, color: selected ? hue : th.ink, lineHeight: 1.3 }}>{label}</span>
     </button>
   );
 }
@@ -127,20 +137,25 @@ function ScaleRow({ title, value, labels, onChange }: {
     <div>
       <QLabel text={title} />
       <div style={{ display: "flex", gap: 6 }}>
-        {[1, 2, 3, 4, 5].map(v => (
-          <button key={v} onClick={() => onChange(v)} style={{
-            flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
-            gap: 6, padding: "12px 4px", borderRadius: 12, cursor: "pointer",
-            border: value === v ? `2px solid ${th.sage}` : `1.5px solid ${th.line}`,
-            background: value === v ? th.sageGlow : th.paper,
-            transition: "all .18s ease", outline: "none",
-          }}>
-            <span style={{ ...S, fontSize: 26, color: value === v ? th.sage : th.ink }}>{v}</span>
-            <span style={{ fontSize: 10, color: value === v ? th.sage : th.inkMute, textAlign: "center", lineHeight: 1.2 }}>
-              {labels[v - 1]}
-            </span>
-          </button>
-        ))}
+        {[1, 2, 3, 4, 5].map(v => {
+          const sel = value === v;
+          return (
+            <button key={v} onClick={() => onChange(v)} style={{
+              flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
+              gap: 6, padding: "13px 4px", borderRadius: 13, cursor: "pointer",
+              border: sel ? `2px solid ${th.sage}` : `1.5px solid ${th.line}`,
+              background: sel ? th.sage : th.paper,
+              boxShadow: sel ? `0 9px 22px -10px color-mix(in srgb, ${th.sage} 70%, transparent)` : "none",
+              transform: sel ? "translateY(-1px)" : "none",
+              transition: "all .18s ease", outline: "none",
+            }}>
+              <span style={{ ...S, fontSize: 27, color: sel ? "#fff" : th.ink }}>{v}</span>
+              <span style={{ fontSize: 10, color: sel ? "#fff" : th.inkMute, textAlign: "center", lineHeight: 1.2 }}>
+                {labels[v - 1]}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -233,17 +248,17 @@ function Step1({ d, u }: { d: QuizData; u: Updater }) {
 
 function Step2({ d, u }: { d: QuizData; u: Updater }) {
   const { t } = useT();
-  const goals: { v: string; l: string; glyph: string }[] = [
-    { v: "More energy", l: t("qc.goalEnergy"), glyph: "☀" },
-    { v: "Better sleep", l: t("qc.goalSleep"), glyph: "☾" },
-    { v: "Sharper focus", l: t("qc.goalFocus"), glyph: "✦" },
-    { v: "Stress relief", l: t("qc.goalStress"), glyph: "♡" },
-    { v: "Muscle & recovery", l: t("qc.goalMuscle"), glyph: "↺" },
-    { v: "Immune support", l: t("qc.goalImmune"), glyph: "⊕" },
-    { v: "Better mood", l: t("qc.goalMood"), glyph: "✿" },
-    { v: "Healthy aging", l: t("qc.goalAging"), glyph: "○" },
-    { v: "Skin, hair & nails", l: t("qc.goalSkin"), glyph: "✧" },
-    { v: "General wellness", l: t("qc.goalWellness"), glyph: "◎" },
+  const goals: { v: string; l: string; glyph: string; hue: string }[] = [
+    { v: "More energy", l: t("qc.goalEnergy"), glyph: "☀", hue: "var(--c-amber-deep)" },
+    { v: "Better sleep", l: t("qc.goalSleep"), glyph: "☾", hue: "#7c5cff" },
+    { v: "Sharper focus", l: t("qc.goalFocus"), glyph: "✦", hue: "#2f7ed8" },
+    { v: "Stress relief", l: t("qc.goalStress"), glyph: "♡", hue: "#e0723a" },
+    { v: "Muscle & recovery", l: t("qc.goalMuscle"), glyph: "↺", hue: "var(--c-sage-deep)" },
+    { v: "Immune support", l: t("qc.goalImmune"), glyph: "⊕", hue: "#16a34a" },
+    { v: "Better mood", l: t("qc.goalMood"), glyph: "✿", hue: "#db2777" },
+    { v: "Healthy aging", l: t("qc.goalAging"), glyph: "○", hue: "#0d9488" },
+    { v: "Skin, hair & nails", l: t("qc.goalSkin"), glyph: "✧", hue: "#c2410c" },
+    { v: "General wellness", l: t("qc.goalWellness"), glyph: "◎", hue: "var(--c-sage)" },
   ];
   const toggle = (g: string) =>
     u({ goals: d.goals.includes(g) ? d.goals.filter(x => x !== g) : [...d.goals, g] });
@@ -252,7 +267,7 @@ function Step2({ d, u }: { d: QuizData; u: Updater }) {
       <Heading step={2} title={t("qc.s2title")} subtitle={t("qc.s2sub")} />
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
         {goals.map(g => (
-          <GoalCard key={g.v} label={g.l} glyph={g.glyph}
+          <GoalCard key={g.v} label={g.l} glyph={g.glyph} hue={g.hue}
             selected={d.goals.includes(g.v)} onClick={() => toggle(g.v)} />
         ))}
       </div>
@@ -769,11 +784,11 @@ function StepGenerating({ data }: { data: QuizData }) {
 function ProgressBar({ step }: { step: number }) {
   const pct = Math.min(100, Math.round((step / TOTAL_STEPS) * 100));
   return (
-    <div style={{ height: 2, background: th.line, borderRadius: 2, overflow: "hidden" }}>
+    <div style={{ height: 4, background: th.line, borderRadius: 999, overflow: "hidden" }}>
       <div style={{
         height: "100%", width: `${pct}%`,
-        background: `linear-gradient(90deg, ${th.sage}, #6a9a6e)`,
-        transition: "width .5s cubic-bezier(.4,0,.2,1)", borderRadius: 2,
+        background: "linear-gradient(90deg, #0d9488, var(--c-sage), var(--c-amber))",
+        transition: "width .5s cubic-bezier(.4,0,.2,1)", borderRadius: 999,
       }} />
     </div>
   );
