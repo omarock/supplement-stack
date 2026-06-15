@@ -46,6 +46,8 @@ function buildItems(): CatalogueItem[] {
       price: product?.approxPrice ?? s.monthlyCost,
       brand: product?.brand ?? s.brand,
       size: product?.size,
+      productName: product?.productName ?? s.name,
+      rating: product?.rating ?? 0,
       image,
       hue: s.hue,
       badge: product?.badge,
