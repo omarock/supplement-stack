@@ -80,7 +80,7 @@ export default function ProductImageGallery({ images, alt }: Props) {
             background: "rgba(255,255,255,0.9)",
             border: "1px solid #e5e7eb", borderRadius: 999,
             padding: "4px 10px", fontSize: 11, color: "var(--c-ink-soft)",
-            fontFamily: '"JetBrains Mono", monospace', letterSpacing: "0.04em",
+            fontFamily: '"Inter", system-ui, sans-serif', letterSpacing: "0.04em",
             pointerEvents: "none",
           }}>
             🔍 ZOOM 2x

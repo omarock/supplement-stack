@@ -16,7 +16,7 @@ const th = {
   bg: "var(--c-bg)", ink: "var(--c-ink)", inkSoft: "var(--c-ink-soft)", inkMute: "var(--c-muted)", sage: "var(--c-sage)", line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const MM = { fontFamily: '"Inter", system-ui, sans-serif' } as const;
 
 async function checkAdmin() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

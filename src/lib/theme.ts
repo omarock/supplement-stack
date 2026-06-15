@@ -46,7 +46,11 @@ export const FONTS = {
   display: 'var(--font-display), "Inter Display", system-ui, sans-serif',
   serifItalic: 'var(--font-serif), Georgia, serif',
   body: 'var(--font-sans), system-ui, sans-serif',
-  mono: 'var(--font-mono), ui-monospace, monospace',
+  // "mono" is intentionally aliased to the sans body font. The monospace
+  // "typewriter/code" look read as AI-generated, so it was removed site-wide
+  // (founder request, 2026-06-15). The MM token is kept so the ~58 call sites
+  // keep working; they now just render in the normal body font.
+  mono: 'var(--font-sans), system-ui, sans-serif',
 } as const;
 
 // Convenience style snippets

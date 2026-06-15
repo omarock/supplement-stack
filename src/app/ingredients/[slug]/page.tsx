@@ -39,7 +39,7 @@ function chip(): React.CSSProperties {
     fontSize: 13, fontWeight: 500, textDecoration: "none",
   };
 }
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const MM = { fontFamily: '"Inter", system-ui, sans-serif' } as const;
 
 // Premium hero badge: sentence-case chip with an icon (replaces the old mono caps pills)
 function chipPremium(): React.CSSProperties {

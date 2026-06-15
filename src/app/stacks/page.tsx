@@ -19,7 +19,7 @@ const th = {
   sage: "var(--c-sage)", burgundy: "var(--c-ink-bg)", line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const MM = { fontFamily: '"Inter", system-ui, sans-serif' } as const;
 
 export const metadata: Metadata = {
   title: "Pre-made Stacks, suppdoc.io",

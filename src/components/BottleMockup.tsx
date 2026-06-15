@@ -237,7 +237,7 @@ export default function BottleMockup({
         x={bottleX + bottleW / 2}
         y={labelY + 76}
         textAnchor="middle"
-        fontFamily='"JetBrains Mono", monospace'
+        fontFamily='"Inter", system-ui, sans-serif'
         fontSize="6"
         fill={theme.labelInk}
         opacity="0.65"

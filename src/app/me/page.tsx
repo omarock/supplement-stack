@@ -21,7 +21,7 @@ const th = {
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const D = { fontFamily: '"Bricolage Grotesque", system-ui, sans-serif' } as const;
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const MM = { fontFamily: '"Inter", system-ui, sans-serif' } as const;
 
 async function getUser() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

@@ -20,7 +20,7 @@ const th = {
 };
 // `S` retained as a name for backward compat, now points to Bricolage display (admin has no decorative serif glyphs)
 const S = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const MM = { fontFamily: '"Inter", system-ui, sans-serif' } as const;
 
 const exportBtnStyle: React.CSSProperties = {
   padding: "8px 16px", borderRadius: 999, fontSize: 12, fontWeight: 600,

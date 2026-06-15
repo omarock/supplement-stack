@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Inter, Instrument_Serif } from "next/font/google";
 import ConsentedAnalytics from "@/components/ConsentedAnalytics";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import DeferredWidgets from "@/components/DeferredWidgets";
@@ -33,14 +33,7 @@ const instrumentSerif = Instrument_Serif({
   variable: "--font-serif",
   fallback: ["Georgia", "serif"],
 });
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-mono",
-  fallback: ["ui-monospace", "monospace"],
-});
-
-const fontVariables = `${bricolage.variable} ${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`;
+const fontVariables = `${bricolage.variable} ${inter.variable} ${instrumentSerif.variable}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.suppdoc.io"),

@@ -24,7 +24,7 @@ const th = {
   line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const MM = { fontFamily: '"Inter", system-ui, sans-serif' } as const;
 
 const TIMING_LABEL: Record<Supplement["timing"], string> = {
   morning: "Morning", midday: "Midday", "pre-train": "Pre-train", evening: "Evening",

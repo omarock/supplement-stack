@@ -18,7 +18,7 @@ const th = {
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
 const D = { fontFamily: '"Bricolage Grotesque", system-ui, sans-serif' } as const;
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const MM = { fontFamily: '"Inter", system-ui, sans-serif' } as const;
 
 export async function generateStaticParams() {
   return SUPPLEMENT_DB.map(s => ({ id: s.id }));
@@ -397,7 +397,7 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
     }}>
       <div style={{
         fontSize: 11, color: "var(--c-sage)",
-        fontFamily: '"JetBrains Mono", monospace', letterSpacing: "0.1em",
+        fontFamily: '"Inter", system-ui, sans-serif', letterSpacing: "0.1em",
         fontWeight: 600, marginBottom: 10,
       }}>
         {title}

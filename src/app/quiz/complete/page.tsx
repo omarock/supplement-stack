@@ -17,7 +17,7 @@ const th = {
   line: "var(--c-edge)",
 };
 const S = { fontFamily: '"Instrument Serif", Georgia, serif', fontWeight: 400 } as const;
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const MM = { fontFamily: '"Inter", system-ui, sans-serif' } as const;
 
 // IMPORTANT: option `v` (value) is the ENGLISH string the recommend() engine
 // matches on; only `l` (label) and `s` (sub) are localized. Never localize a

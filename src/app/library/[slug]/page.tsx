@@ -14,7 +14,7 @@ const th = {
   sage: "var(--c-sage)", sageDeep: "var(--c-sage-deep)", line: "var(--c-edge)",
 };
 const D = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const MM = { fontFamily: '"Inter", system-ui, sans-serif' } as const;
 
 const TOOLS: Record<string, { href: string; label: string; sub: string }> = {
   interactions: { href: "/interactions", label: "Check your stack for interactions", sub: "Free interaction checker." },

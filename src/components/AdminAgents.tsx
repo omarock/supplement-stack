@@ -7,7 +7,7 @@ const th = {
   sage: "var(--c-sage)", sageDeep: "var(--c-sage-deep)", amber: "var(--c-amber)", red: "#b91c1c", line: "var(--c-edge)",
 };
 const D = { fontFamily: '"Bricolage Grotesque", "Inter Display", system-ui, sans-serif', fontWeight: 600 } as const;
-const MM = { fontFamily: '"JetBrains Mono", monospace' } as const;
+const MM = { fontFamily: '"Inter", system-ui, sans-serif' } as const;
 
 type Json = Record<string, unknown>;
 interface Item {
@@ -377,7 +377,7 @@ function ImportBox({ onDone, setFlash }: { onDone: () => void; setFlash: (f: { o
       {open && (
         <div style={{ marginTop: 12 }}>
           <textarea value={text} onChange={e => setText(e.target.value)} rows={8} placeholder='Paste the JSON block here, e.g. [ { "kind": "seo_draft", ... } ]'
-            style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${th.line}`, fontSize: 12.5, fontFamily: '"JetBrains Mono", monospace', lineHeight: 1.5, boxSizing: "border-box", resize: "vertical" }} />
+            style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1px solid ${th.line}`, fontSize: 12.5, fontFamily: '"Inter", system-ui, sans-serif', lineHeight: 1.5, boxSizing: "border-box", resize: "vertical" }} />
           <button disabled={busy || !text.trim()} onClick={importItems} style={{ ...btn(th.sage, "#fff"), marginTop: 8, opacity: busy || !text.trim() ? 0.6 : 1 }}>
             {busy ? "Importing…" : "Import to inbox"}
           </button>
