@@ -19,6 +19,7 @@ export interface CatalogueItem {
   vegan: boolean;
   tags: string[];
   buyUrl: string;
+  amazonUrl: string;
   href: string;
 }
 
@@ -66,7 +67,7 @@ function evidenceRank(e: CatalogueItem["evidence"]) {
 
 type SortKey = "evidence" | "price-asc" | "price-desc" | "name";
 
-export default function CatalogueClient({ items, totalCount, strongCount }: { items: CatalogueItem[]; totalCount: number; strongCount: number }) {
+export default function CatalogueClient({ items, amazonOn }: { items: CatalogueItem[]; amazonOn: boolean }) {
   const [query, setQuery] = useState("");
   const [goal, setGoal] = useState<string>("all");
   const [category, setCategory] = useState<string>("all");
@@ -114,24 +115,11 @@ export default function CatalogueClient({ items, totalCount, strongCount }: { it
 
   return (
     <>
-      {/* Hero */}
-      <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 18px", textAlign: "center" }}>
+      {/* Hero — title only (subtitle + stat strip removed per founder) */}
+      <section style={{ padding: "var(--section-pad-y) var(--section-pad-x) 10px", textAlign: "center" }}>
         <h1 style={{ ...S, fontSize: "var(--section-h2)", margin: 0, letterSpacing: "-0.025em", lineHeight: 1.05 }}>
           The <em style={{ color: th.burgundy }}>catalogue</em>.
         </h1>
-        <p style={{ color: th.inkSoft, fontSize: 18, lineHeight: 1.6, maxWidth: 620, margin: "20px auto 0" }}>
-          Every supplement we recommend, in one place. Graded by evidence, with real prices and where to buy. We don&rsquo;t sell our own pills, so the only thing ranking these is the science.
-        </p>
-        <div style={{
-          display: "inline-flex", alignItems: "center", flexWrap: "wrap", justifyContent: "center", gap: 14, marginTop: 22,
-          padding: "10px 20px", borderRadius: 999, background: th.paper, border: `1px solid ${th.line}`, fontSize: 13, color: th.inkSoft,
-        }}>
-          <span>{totalCount} products</span>
-          <span style={{ color: th.inkMute }}>·</span>
-          <span>{strongCount} with strong evidence</span>
-          <span style={{ color: th.inkMute }}>·</span>
-          <span>Third-party links only</span>
-        </div>
       </section>
 
       {/* Controls */}
@@ -199,8 +187,8 @@ export default function CatalogueClient({ items, totalCount, strongCount }: { it
               <button onClick={() => { setQuery(""); setGoal("all"); setCategory("all"); }} style={{ ...chipBase, fontWeight: 600, color: th.ink }}>Clear all filters</button>
             </div>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(232px, 1fr))", gap: 16 }}>
-              {filtered.map(it => <Card key={it.id} it={it} />)}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(258px, 1fr))", gap: 18 }}>
+              {filtered.map(it => <Card key={it.id} it={it} amazonOn={amazonOn} />)}
             </div>
           )}
 
@@ -227,33 +215,33 @@ export default function CatalogueClient({ items, totalCount, strongCount }: { it
   );
 }
 
-function Card({ it }: { it: CatalogueItem }) {
+function Card({ it, amazonOn }: { it: CatalogueItem; amazonOn: boolean }) {
   const ev = evidenceMeta(it.evidence);
   return (
     <article style={{
       background: th.paper, border: `1px solid ${th.line}`, borderRadius: 18, overflow: "hidden",
       display: "flex", flexDirection: "column", height: "100%",
     }}>
-      {/* Image / placeholder */}
-      <div style={{ position: "relative", height: 168, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", borderBottom: `1px solid ${th.line}` }}>
+      {/* Image / placeholder — large, product-forward */}
+      <div style={{ position: "relative", height: 232, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", borderBottom: `1px solid ${th.line}` }}>
         {it.image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={it.image} alt={`${it.name} — ${it.brand}`} loading="lazy" style={{ maxWidth: "82%", maxHeight: "82%", objectFit: "contain" }} />
+          <img src={it.image} alt={`${it.name} — ${it.brand}`} loading="lazy" style={{ maxWidth: "92%", maxHeight: "92%", objectFit: "contain" }} />
         ) : (
           <div aria-hidden style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: `color-mix(in srgb, ${it.hue} 12%, #fff)` }}>
-            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke={it.hue} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke={it.hue} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
               <path d="M10.5 20.5 3.5 13.5a5 5 0 0 1 7-7l7 7a5 5 0 0 1-7 7Z" />
               <path d="m8.5 8.5 7 7" />
             </svg>
           </div>
         )}
         <span style={{
-          position: "absolute", top: 10, left: 10, fontSize: 11, fontWeight: 600, padding: "3px 9px",
+          position: "absolute", top: 12, left: 12, fontSize: 11, fontWeight: 600, padding: "4px 10px",
           borderRadius: 999, background: ev.bg, color: ev.ink,
         }}>{ev.short} evidence</span>
         {it.vegan && (
           <span title="Vegan-friendly" style={{
-            position: "absolute", top: 10, right: 10, fontSize: 11, fontWeight: 600, padding: "3px 8px",
+            position: "absolute", top: 12, right: 12, fontSize: 11, fontWeight: 600, padding: "4px 9px",
             borderRadius: 999, background: "color-mix(in srgb, var(--c-sage) 14%, #fff)", color: th.sageDeep,
           }}>Vegan</span>
         )}
@@ -262,21 +250,27 @@ function Card({ it }: { it: CatalogueItem }) {
       {/* Body */}
       <div style={{ padding: 16, display: "flex", flexDirection: "column", flex: 1 }}>
         <Link href={it.href} style={{ textDecoration: "none" }}>
-          <h3 style={{ ...D, fontSize: 16, fontWeight: 600, lineHeight: 1.25, color: th.ink, margin: "0 0 3px" }}>{it.name}</h3>
+          <h3 style={{ ...D, fontSize: 16.5, fontWeight: 600, lineHeight: 1.25, color: th.ink, margin: "0 0 3px" }}>{it.name}</h3>
         </Link>
         <p style={{ fontSize: 12.5, color: th.inkMute, margin: "0 0 9px" }}>{it.brand}{it.size ? ` · ${it.size}` : ""}</p>
-        <p style={{ fontSize: 13, color: th.inkSoft, lineHeight: 1.4, margin: "0 0 14px" }}>{it.purpose}</p>
+        <p style={{ fontSize: 13, color: th.inkSoft, lineHeight: 1.4, margin: "0 0 16px" }}>{it.purpose}</p>
 
-        <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-          <span style={{ ...D, fontSize: 17, fontWeight: 600, color: th.ink }}>~${it.price}</span>
-          <a href={it.buyUrl} target="_blank" rel="sponsored noopener noreferrer" style={{
-            padding: "9px 15px", borderRadius: 999, fontSize: 13, fontWeight: 600,
-            background: th.burgundy, color: "#fff", textDecoration: "none", whiteSpace: "nowrap",
-          }}>
-            View on iHerb →
-          </a>
+        <div style={{ marginTop: "auto" }}>
+          <div style={{ ...D, fontSize: 19, fontWeight: 600, color: th.ink, marginBottom: 11 }}>~${it.price}</div>
+          <div style={{ display: "flex", gap: 8 }}>
+            <a href={it.buyUrl} target="_blank" rel="sponsored noopener noreferrer" style={{
+              flex: 1, textAlign: "center", padding: "10px 12px", borderRadius: 999, fontSize: 13, fontWeight: 600,
+              background: th.burgundy, color: "#fff", textDecoration: "none", whiteSpace: "nowrap",
+            }}>iHerb →</a>
+            {amazonOn && (
+              <a href={it.amazonUrl} target="_blank" rel="sponsored noopener noreferrer" style={{
+                flex: 1, textAlign: "center", padding: "10px 12px", borderRadius: 999, fontSize: 13, fontWeight: 600,
+                background: "transparent", color: th.ink, border: `1px solid ${th.line}`, textDecoration: "none", whiteSpace: "nowrap",
+              }}>Amazon →</a>
+            )}
+          </div>
         </div>
-        <Link href={it.href} style={{ fontSize: 12.5, color: th.sageDeep, textDecoration: "none", marginTop: 11 }}>
+        <Link href={it.href} style={{ fontSize: 12.5, color: th.sageDeep, textDecoration: "none", marginTop: 13, display: "inline-block" }}>
           Details &amp; alternatives →
         </Link>
       </div>

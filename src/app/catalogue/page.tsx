@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { getProducts, productImage } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
+import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CatalogueClient, { CatalogueItem } from "./CatalogueClient";
@@ -33,6 +34,9 @@ function buildItems(): CatalogueItem[] {
         ? iherbProductLink(product.productPath)
         : iherbLink(product.searchQuery ?? s.iherbSearch)
       : iherbLink(s.iherbSearch);
+    const amazonUrl = product?.amazonAsin
+      ? amazonProductLink(product.amazonAsin)
+      : amazonLink([product?.brand, s.name].filter(Boolean).join(" "));
     items.push({
       id: s.id,
       name: s.name,
@@ -48,6 +52,7 @@ function buildItems(): CatalogueItem[] {
       vegan: s.vegan,
       tags: s.tags,
       buyUrl,
+      amazonUrl,
       href: `/ingredients/${s.id}`,
     });
   }
@@ -56,9 +61,6 @@ function buildItems(): CatalogueItem[] {
 
 export default function CataloguePage() {
   const items = buildItems();
-  const strongCount = items.filter(
-    (i) => i.evidence === "very strong" || i.evidence === "strong"
-  ).length;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -79,7 +81,7 @@ export default function CataloguePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
       <main id="main-content">
-        <CatalogueClient items={items} totalCount={items.length} strongCount={strongCount} />
+        <CatalogueClient items={items} amazonOn={amazonEnabled()} />
       </main>
       <SiteFooter />
     </div>
