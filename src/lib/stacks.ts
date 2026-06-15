@@ -26,6 +26,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "foundation",
     slug: "foundation-stack",
+    heroImage: "/stacks/foundation.jpg",
     name: "The Foundation Stack",
     tagline: "The three supplements almost everyone benefits from.",
     description: "If you only take three supplements, take these. Vitamin D3 (most people are deficient), Omega-3 (modern diets are low in EPA/DHA), and Magnesium (50%+ of adults don't meet the RDA). This is the floor, everything else builds on top.",
@@ -72,6 +73,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "energy",
     slug: "best-supplements-for-energy",
+    heroImage: "/stacks/energy.jpg",
     name: "The Energy Stack",
     tagline: "Steady output, no caffeine crashes.",
     description: "Fuels cellular energy production at the root level. Supports mitochondrial function, addresses common nutrient gaps that cause fatigue, and adds an adaptogen for performance under stress.",
@@ -95,6 +97,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "focus",
     slug: "best-supplements-for-focus",
+    heroImage: "/stacks/focus.jpg",
     name: "The Focus Stack",
     tagline: "Sharper mind, calmer attention.",
     description: "Combines the most well-studied cognitive enhancers. Omega-3 for brain structure, L-theanine for calm focus, lion's mane for neuroplasticity, and B-complex for neurotransmitter synthesis.",
@@ -117,6 +120,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "stress",
     slug: "best-supplements-for-stress",
+    heroImage: "/stacks/stress.jpg",
     name: "The Stress Stack",
     tagline: "Calmer baseline, no sedation.",
     description: "Four ingredients that modulate the stress response from different angles. Ashwagandha lowers cortisol, L-theanine eases acute anxiety, magnesium relaxes the nervous system, and rhodiola builds resilience to chronic stress.",
@@ -140,6 +144,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "recovery",
     slug: "best-supplements-for-recovery",
+    heroImage: "/stacks/recovery.jpg",
     name: "The Recovery Stack",
     tagline: "Train harder. Recover faster.",
     description: "Built for people who train 3+ times a week. Creatine for performance, omega-3 and curcumin for inflammation, collagen for joints and connective tissue, magnesium for sleep-based recovery.",
@@ -163,6 +168,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "immunity",
     slug: "best-supplements-for-immunity",
+    heroImage: "/stacks/immunity.jpg",
     name: "The Immunity Stack",
     tagline: "Resilient through every season.",
     description: "Strengthens the immune pillar with the four most-studied nutrients, vitamin D3, vitamin C, zinc, plus a multi-strain probiotic for the gut-immune axis. Elderberry on standby for the first sign of illness.",
@@ -186,6 +192,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "vegan",
     slug: "vegan-essentials-stack",
+    heroImage: "/stacks/vegan.jpg",
     name: "The Vegan Essentials",
     tagline: "Plant-based, perfectly covered.",
     description: "Plant-based diets are nutrient-dense, but three specific things are missing, and three others run low. This stack fills every common gap so you can stay vegan with confidence.",
@@ -208,6 +215,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "longevity",
     slug: "healthy-aging-stack",
+    heroImage: "/stacks/aging.jpg",
     name: "The Healthy Aging Stack",
     tagline: "Age slower. Move better. Stay sharp.",
     description: "Six ingredients chosen for their cumulative evidence on healthspan, cardiovascular, joint, cognitive, and mitochondrial function. Especially valuable after 40, when natural reserves of these compounds drop.",
@@ -231,6 +239,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "hormonal",
     slug: "hormonal-balance-stack",
+    heroImage: "/stacks/hormonal.jpg",
     name: "The Hormonal Balance Stack",
     tagline: "Smoother cycles, steadier mood.",
     description: "A women's stack focused on the most common nutrient gaps that affect cycle regularity, PMS, mood, and energy. Magnesium and B6 (in B-complex) work synergistically for hormone signaling.",
@@ -254,6 +263,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "beauty",
     slug: "skin-hair-nails-stack",
+    heroImage: "/stacks/skin.jpg",
     name: "The Beauty Stack",
     tagline: "Inside-out support for skin, hair, and nails.",
     description: "Beauty isn't topical. This stack supports the cellular building blocks, collagen and keratin synthesis, antioxidant defense against oxidative damage, and the omega-3s that keep skin barrier intact.",
@@ -277,6 +287,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "longevity-advanced",
     slug: "longevity-blueprint-stack",
+    heroImage: "/stacks/longevity.jpg",
     name: "The Longevity Blueprint",
     tagline: "The frontier protocol for slower biological aging.",
     description: "Built around the same compounds discussed in the labs of Sinclair, Attia, and Huberman. NMN restores NAD+; urolithin A triggers mitophagy; fisetin clears senescent cells; pterostilbene activates sirtuins. The state of the art for cellular renewal.",
@@ -300,6 +311,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "gut-advanced",
     slug: "gut-reset-stack",
+    heroImage: "/stacks/gut.jpg",
     name: "The Gut Reset Stack",
     tagline: "Repair the lining. Rebalance the microbiome.",
     description: "A four-layer approach to gut healing: zinc-carnosine repairs the lining, S. boulardii crowds out opportunistic yeast, tributyrin feeds colon cells directly, DGL soothes the upper GI. Built for IBS, post-antibiotic recovery, and chronic bloating.",
@@ -322,6 +334,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "athletic-performance",
     slug: "athletic-performance-stack",
+    heroImage: "/stacks/athletic.jpg",
     name: "The Athletic Performance Stack",
     tagline: "Train harder. Recover smarter. Adapt faster.",
     description: "For serious athletes: creatine for power, beta-alanine for buffering, HMB for muscle preservation, tart cherry for inflammation and sleep recovery, omega-3 for joint resilience, and l-citrulline for blood flow. Built on the strongest evidence in sport science.",

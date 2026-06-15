@@ -60,8 +60,10 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
         {/* Hero */}
         <section style={{
           background: stack.coverBg, color: stack.coverInk,
-          padding: "64px var(--section-pad-x) 80px",
+          padding: "clamp(40px, 9vw, 64px) var(--section-pad-x) clamp(48px, 11vw, 80px)",
           textAlign: "center", position: "relative", overflow: "hidden",
+          minHeight: stack.heroImage ? "min(74vh, 520px)" : undefined,
+          display: "flex", flexDirection: "column", justifyContent: "center",
         }}>
           {stack.heroImage && (
             <>
@@ -78,7 +80,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
           }}>
             ← All stacks
           </Link>
-          <div style={{ ...S, fontSize: 100, lineHeight: 1, marginBottom: 16, letterSpacing: "-0.04em" }}>
+          <div style={{ ...S, fontSize: "clamp(60px, 16vw, 100px)", lineHeight: 1, marginBottom: 16, letterSpacing: "-0.04em" }}>
             {stack.coverGlyph}
           </div>
           <h1 style={{ ...S, fontSize: "var(--section-h2)", lineHeight: 1.05, margin: "0 auto", maxWidth: 800, letterSpacing: "-0.025em" }}>
@@ -407,10 +409,20 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                   }}>
                     <div style={{
                       background: s.coverBg, padding: "20px 16px", textAlign: "center",
-                      color: s.coverInk,
+                      color: s.coverInk, position: "relative", overflow: "hidden", minHeight: 130,
+                      display: "flex", flexDirection: "column", justifyContent: "center",
                     }}>
-                      <div style={{ ...S, fontSize: 50, lineHeight: 1, marginBottom: 8 }}>{s.coverGlyph}</div>
-                      <div style={{ ...S, fontSize: 18, letterSpacing: "-0.01em" }}>{s.name}</div>
+                      {s.heroImage && (
+                        <>
+                          <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: `url(${s.heroImage})`, backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
+                          <div aria-hidden style={{ position: "absolute", inset: 0, background: s.coverBg, opacity: 0.4, mixBlendMode: "multiply", zIndex: 1 }} />
+                          <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(8,16,11,0.28) 0%, rgba(8,16,11,0.58) 100%)", zIndex: 1 }} />
+                        </>
+                      )}
+                      <div style={{ position: "relative", zIndex: 2 }}>
+                        <div style={{ ...S, fontSize: 50, lineHeight: 1, marginBottom: 8 }}>{s.coverGlyph}</div>
+                        <div style={{ ...S, fontSize: 18, letterSpacing: "-0.01em" }}>{s.name}</div>
+                      </div>
                     </div>
                     <div style={{ padding: 16 }}>
                       <p style={{ fontSize: 13, color: th.inkSoft, margin: 0, lineHeight: 1.45 }}>

@@ -87,19 +87,28 @@ export default function StacksPage() {
                     transition: "transform .2s ease, box-shadow .2s ease",
                     boxShadow: "0 1px 3px rgba(10,37,64,0.04), 0 8px 24px rgba(10,37,64,0.06)",
                   }}>
-                    {/* Cover with gradient + glyph */}
+                    {/* Cover: hero photo (when set) under a brand-tinted overlay, else gradient */}
                     <div style={{
                       background: stack.coverBg, padding: "28px 24px 20px", textAlign: "center",
-                      color: stack.coverInk, position: "relative",
+                      color: stack.coverInk, position: "relative", overflow: "hidden", minHeight: 150,
                     }}>
-                      <div style={{ fontSize: 11, ...MM, opacity: 0.85, letterSpacing: "0.15em", marginBottom: 10 }}>
-                        {stack.category.toUpperCase()}
-                      </div>
-                      <div style={{ ...S, fontSize: 64, lineHeight: 1, marginBottom: 10, letterSpacing: "-0.03em" }}>
-                        {stack.coverGlyph}
-                      </div>
-                      <div style={{ ...S, fontSize: 24, letterSpacing: "-0.01em", lineHeight: 1.15 }}>
-                        {stack.name}
+                      {stack.heroImage && (
+                        <>
+                          <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: `url(${stack.heroImage})`, backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
+                          <div aria-hidden style={{ position: "absolute", inset: 0, background: stack.coverBg, opacity: 0.4, mixBlendMode: "multiply", zIndex: 1 }} />
+                          <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(8,16,11,0.28) 0%, rgba(8,16,11,0.58) 100%)", zIndex: 1 }} />
+                        </>
+                      )}
+                      <div style={{ position: "relative", zIndex: 2 }}>
+                        <div style={{ fontSize: 11, ...MM, opacity: 0.85, letterSpacing: "0.15em", marginBottom: 10 }}>
+                          {stack.category.toUpperCase()}
+                        </div>
+                        <div style={{ ...S, fontSize: 64, lineHeight: 1, marginBottom: 10, letterSpacing: "-0.03em" }}>
+                          {stack.coverGlyph}
+                        </div>
+                        <div style={{ ...S, fontSize: 24, letterSpacing: "-0.01em", lineHeight: 1.15 }}>
+                          {stack.name}
+                        </div>
                       </div>
                     </div>
 
