@@ -67,7 +67,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
         }}>
           {stack.heroImage && (
             <>
-              <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: `url(${stack.heroImage})`, backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
+              <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: `url(${stack.heroImage})`, backgroundSize: "cover", backgroundPosition: stack.heroPos ?? "center", zIndex: 0 }} />
               <div aria-hidden style={{ position: "absolute", inset: 0, background: stack.coverBg, opacity: 0.26, zIndex: 1, mixBlendMode: "multiply" }} />
               <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(8,16,11,0.5) 0%, rgba(8,16,11,0.16) 40%, rgba(8,16,11,0.68) 100%)", zIndex: 1 }} />
             </>
@@ -414,7 +414,7 @@ export default async function StackPage({ params }: { params: Promise<{ slug: st
                     }}>
                       {s.heroImage && (
                         <>
-                          <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: `url(${s.heroImage})`, backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
+                          <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: `url(${s.heroImage})`, backgroundSize: "cover", backgroundPosition: s.heroPos ?? "center", zIndex: 0 }} />
                           <div aria-hidden style={{ position: "absolute", inset: 0, background: s.coverBg, opacity: 0.4, mixBlendMode: "multiply", zIndex: 1 }} />
                           <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(8,16,11,0.28) 0%, rgba(8,16,11,0.58) 100%)", zIndex: 1 }} />
                         </>

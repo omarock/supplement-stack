@@ -18,6 +18,7 @@ export interface PreMadeStack {
   coverGlyph: string;
   coverInk: string;
   heroImage?: string; // optional full-bleed hero photo, rendered under a brand-tinted overlay
+  heroPos?: string;   // optional background-position for the hero photo (default "center")
   popularity?: number; // 1 (most popular) → high (less)
 }
 
@@ -240,6 +241,7 @@ export const STACKS: PreMadeStack[] = [
     id: "hormonal",
     slug: "hormonal-balance-stack",
     heroImage: "/stacks/hormonal.jpg",
+    heroPos: "center 28%",
     name: "The Hormonal Balance Stack",
     tagline: "Smoother cycles, steadier mood.",
     description: "A women's stack focused on the most common nutrient gaps that affect cycle regularity, PMS, mood, and energy. Magnesium and B6 (in B-complex) work synergistically for hormone signaling.",
