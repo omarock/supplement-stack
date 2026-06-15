@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { getProducts, productImage } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
@@ -102,7 +103,9 @@ export default function CataloguePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
       <main id="main-content">
-        <CatalogueClient items={items} amazonOn={amazonEnabled()} />
+        <Suspense fallback={null}>
+          <CatalogueClient items={items} amazonOn={amazonEnabled()} />
+        </Suspense>
       </main>
       <SiteFooter />
     </div>

@@ -66,11 +66,11 @@ export default function BestIndex() {
             <h1 style={{ ...D, fontSize: "clamp(32px, 6vw, 52px)", lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 0 16px" }}>
               Best supplements for <span style={SI}>your goal</span>.
             </h1>
-            <p style={{ fontSize: 18, color: TH.inkSoft, maxWidth: 600, margin: "0 auto", lineHeight: 1.55 }}>
+            <p className="sd-hide-mobile" style={{ fontSize: 18, color: TH.inkSoft, maxWidth: 600, margin: "0 auto", lineHeight: 1.55 }}>
               Evidence-graded picks for what you actually want to improve, each cited, and honest about what works and what doesn&apos;t.
             </p>
             {/* Trust strip */}
-            <div style={{ display: "inline-flex", flexWrap: "wrap", justifyContent: "center", gap: "10px 22px", marginTop: 22 }}>
+            <div className="sd-hide-mobile" style={{ display: "inline-flex", flexWrap: "wrap", justifyContent: "center", gap: "10px 22px", marginTop: 22 }}>
               {["Every claim cited", "We don't sell pills", `${GOALS.length} goals covered`].map(t => (
                 <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13, color: TH.inkSoft, fontWeight: 500 }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={TH.sage} strokeWidth="2.6"><path d="M5 12l5 5 9-11" /></svg>
@@ -80,8 +80,8 @@ export default function BestIndex() {
             </div>
           </header>
 
-          {/* Answer block (AEO: self-contained, key-phrase first) */}
-          <div style={{ maxWidth: 720, margin: "0 auto 30px", background: TH.surface, border: `1px solid ${TH.edge}`, borderLeft: `3px solid ${TH.sage}`, borderRadius: 14, padding: "16px 20px", textAlign: "left" }}>
+          {/* Answer block (AEO: self-contained, key-phrase first) — kept for desktop/SEO, hidden on mobile to save space */}
+          <div className="sd-hide-mobile" style={{ maxWidth: 720, margin: "0 auto 30px", background: TH.surface, border: `1px solid ${TH.edge}`, borderLeft: `3px solid ${TH.sage}`, borderRadius: 14, padding: "16px 20px", textAlign: "left" }}>
             <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: TH.ink }}>
               The best supplements for a goal are the few with the strongest evidence for that specific outcome, not the longest list. For each goal we rank ingredients by evidence tier, with dose, timing, and cost, and we flag where lifestyle matters more than any pill. We do not sell supplements, so the ranking stays unbiased.
             </p>

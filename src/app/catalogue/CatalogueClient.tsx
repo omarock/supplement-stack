@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import BottleMockup from "@/components/BottleMockup";
 import type { ProductOption } from "@/lib/products";
 
@@ -77,14 +78,16 @@ export default function CatalogueClient({ items, amazonOn }: { items: CatalogueI
   const [category, setCategory] = useState<string>("all");
   const [sort, setSort] = useState<SortKey>("evidence");
 
-  // Pre-apply a filter when arriving from the nav mega-menu (/catalogue?goal=… / ?cat=…).
+  // Pre-apply / re-apply the filter from the URL (?goal=… / ?cat=…). Reactive to
+  // navigation so re-selecting a goal from the nav mega-menu updates the grid even
+  // while already on /catalogue (the bug: it used to read the URL only once on mount).
+  const searchParams = useSearchParams();
   useEffect(() => {
-    const sp = new URLSearchParams(window.location.search);
-    const g = sp.get("goal");
-    const c = sp.get("cat");
-    if (g && GOAL_FILTERS.some((x) => x.key === g)) setGoal(g);
-    if (c && CATEGORY_LABELS[c]) setCategory(c);
-  }, []);
+    const g = searchParams.get("goal");
+    setGoal(g && GOAL_FILTERS.some((x) => x.key === g) ? g : "all");
+    const c = searchParams.get("cat");
+    setCategory(c && CATEGORY_LABELS[c] ? c : "all");
+  }, [searchParams]);
 
   const categories = useMemo(() => {
     const present = new Set(items.map(i => i.category));

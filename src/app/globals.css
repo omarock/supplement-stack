@@ -202,6 +202,9 @@ textarea:focus-visible,
      mobile (QA M4). Excludes range/checkbox/radio where font-size is irrelevant. */
   input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
   textarea, select { font-size: 16px !important; }
+  /* Verbose page-intro blocks are kept in the HTML for desktop + SEO but hidden
+     on mobile so the actual content (lists, cards) starts near the top. */
+  .sd-hide-mobile { display: none !important; }
 }
 
 html { scroll-behavior: smooth; }

@@ -73,8 +73,8 @@ export default async function BestForGoalPage({ params }: { params: Promise<{ go
           <h1 style={{ ...D, fontSize: "clamp(30px, 5.5vw, 46px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 14px" }}>
             Best supplements for <span style={SI}>{g.label}</span>.
           </h1>
-          <p style={{ fontSize: 17, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 14px", maxWidth: 620 }}>{g.intro}</p>
-          <ReviewedBy />
+          <p className="sd-hide-mobile" style={{ fontSize: 17, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 14px", maxWidth: 620 }}>{g.intro}</p>
+          <div className="sd-hide-mobile"><ReviewedBy /></div>
           <div style={{ ...MM, fontSize: 11, color: TH.muted, margin: "10px 0 26px" }}>Each pick is evidence-graded · we don&apos;t sell supplements</div>
 
           {/* Ranked list */}

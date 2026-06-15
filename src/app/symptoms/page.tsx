@@ -48,7 +48,7 @@ export default function SymptomsIndex() {
             <h1 style={{ ...D, fontSize: "clamp(30px, 5.5vw, 50px)", lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 16px" }}>
               Supplements for <span style={SI}>your symptoms</span>.
             </h1>
-            <p style={{ fontSize: 18, color: TH.inkSoft, maxWidth: 640, margin: "0 auto 22px", lineHeight: 1.55 }}>
+            <p className="sd-hide-mobile" style={{ fontSize: 18, color: TH.inkSoft, maxWidth: 640, margin: "0 auto 22px", lineHeight: 1.55 }}>
               Tired, foggy, cramping, losing hair? See which nutrient deficiencies are commonly linked to your symptom, which biomarkers to check, and what the evidence says.
             </p>
             <Link href="/bloodwork" style={{
@@ -61,8 +61,8 @@ export default function SymptomsIndex() {
             <div style={{ ...MM, fontSize: 11, color: TH.muted, marginTop: 10 }}>Free · evidence-led · we don&apos;t sell supplements</div>
           </header>
 
-          {/* Answer block (AEO: self-contained, key-phrase first) */}
-          <div style={{ maxWidth: 720, margin: "0 auto 26px", background: TH.surface, border: `1px solid ${TH.edge}`, borderLeft: `3px solid ${TH.sage}`, borderRadius: 14, padding: "16px 20px", textAlign: "left" }}>
+          {/* Answer block (AEO: self-contained, key-phrase first) — kept for desktop/SEO, hidden on mobile to save space */}
+          <div className="sd-hide-mobile" style={{ maxWidth: 720, margin: "0 auto 26px", background: TH.surface, border: `1px solid ${TH.edge}`, borderLeft: `3px solid ${TH.sage}`, borderRadius: 14, padding: "16px 20px", textAlign: "left" }}>
             <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: TH.ink }}>
               Many everyday symptoms, fatigue, brain fog, hair loss, cramps, and poor sleep, can be linked to a specific nutrient shortfall. Persistent fatigue, for instance, is commonly associated with low iron, vitamin D, B12, or magnesium. These guides map each symptom to the nutrients and the evidence behind them. This is education, not a diagnosis.
             </p>
