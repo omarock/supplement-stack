@@ -360,6 +360,7 @@ export const STACKS: PreMadeStack[] = [
   {
     id: "menopause",
     slug: "perimenopause-menopause-stack",
+    heroImage: "/stacks/menopause.jpg",
     name: "The Menopause Support Stack",
     tagline: "Steadier hormones through the transition.",
     description: "Designed for perimenopause and postmenopause. Black cohosh for hot flashes (the most-evidenced herb), chasteberry for luteal balance in perimenopause, magnesium for sleep and mood, D3+K2 and calcium for bone density, omega-3 for cardiovascular and mood support.",
