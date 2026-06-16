@@ -19,7 +19,7 @@ export default function ReviewedBy({ updated }: { updated?: string }) {
     : null;
 
   return (
-    <div style={{
+    <div className="sd-reviewed" style={{
       display: "inline-flex", alignItems: "center", gap: 10, flexWrap: "wrap",
       padding: "8px 14px", borderRadius: 999, background: TH.surface,
       border: `1px solid ${TH.edge}`, marginBottom: 20,

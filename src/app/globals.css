@@ -205,6 +205,10 @@ textarea:focus-visible,
   /* Verbose page-intro blocks are kept in the HTML for desktop + SEO but hidden
      on mobile so the actual content (lists, cards) starts near the top. */
   .sd-hide-mobile { display: none !important; }
+  /* The "reviewed/editorial" trust byline wraps to multiple lines on mobile; the
+     999px pill radius then balloons into an ugly oval. Use a clean rounded
+     rectangle and tighter spacing on small screens. */
+  .sd-reviewed { border-radius: 12px !important; padding: 9px 13px !important; margin-bottom: 14px !important; align-items: flex-start !important; }
 }
 
 html { scroll-behavior: smooth; }

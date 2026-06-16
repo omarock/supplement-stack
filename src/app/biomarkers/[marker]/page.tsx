@@ -109,7 +109,7 @@ export default async function BiomarkerPage({ params }: { params: Promise<{ mark
           <h1 style={{ ...D, fontSize: "clamp(28px, 5vw, 42px)", lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 0 14px" }}>
             {b.label}: what it <span style={SI}>means</span>.
           </h1>
-          <p style={{ fontSize: 18, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 14px" }}>{b.blurb}</p>
+          <p className="sd-hide-mobile" style={{ fontSize: 18, color: TH.inkSoft, lineHeight: 1.55, margin: "0 0 14px" }}>{b.blurb}</p>
           <ReviewedBy />
           <div style={{ height: 10 }} />
 

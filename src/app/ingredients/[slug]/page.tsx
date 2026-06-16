@@ -273,8 +273,8 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
         </div>
       </section>
 
-      {/* Answer-first summary, quotable by AI search engines */}
-      <section style={{ padding: "0 var(--section-pad-x) 8px" }}>
+      {/* Answer-first summary, quotable by AI search engines (kept for desktop/SEO, hidden on mobile to save space) */}
+      <section className="sd-hide-mobile" style={{ padding: "0 var(--section-pad-x) 8px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
           <div style={{
             display: "flex", gap: 16, alignItems: "flex-start",
