@@ -569,12 +569,16 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
               {relatedStacks.map(st => (
                 <Link key={st.id} href={`/stacks/${st.slug}`} style={{ textDecoration: "none" }}>
                   <div style={{
-                    background: st.coverBg, color: st.coverInk, borderRadius: 16, padding: 22,
-                    display: "flex", flexDirection: "column", gap: 6, minHeight: 130,
+                    position: "relative", borderRadius: 16, overflow: "hidden",
+                    minHeight: 180, display: "flex", flexDirection: "column", justifyContent: "flex-end",
+                    padding: 18, color: "#fff",
+                    background: st.heroImage
+                      ? `linear-gradient(to top, rgba(12,18,14,0.88) 0%, rgba(12,18,14,0.32) 52%, rgba(12,18,14,0.06) 100%), url('${st.heroImage}') center/cover no-repeat`
+                      : st.coverBg,
                   }}>
-                    <div style={{ fontSize: 28 }}>{st.coverGlyph}</div>
-                    <div style={{ ...D, fontSize: 18, fontWeight: 600, marginTop: 4 }}>{st.name}</div>
-                    <div style={{ fontSize: 13, opacity: 0.85 }}>{st.tagline}</div>
+                    <div style={{ fontSize: 24, marginBottom: 2, lineHeight: 1 }}>{st.coverGlyph}</div>
+                    <div style={{ ...D, fontSize: 19, fontWeight: 600, textShadow: "0 1px 10px rgba(0,0,0,0.4)" }}>{st.name}</div>
+                    <div style={{ fontSize: 13, opacity: 0.94, textShadow: "0 1px 8px rgba(0,0,0,0.5)" }}>{st.tagline}</div>
                   </div>
                 </Link>
               ))}

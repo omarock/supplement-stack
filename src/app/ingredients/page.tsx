@@ -69,10 +69,10 @@ export default function IngredientsIndexPage() {
         }}>
           The <em style={{ color: th.burgundy }}>supplements</em> we trust.
         </h1>
-        <p style={{ color: th.inkSoft, fontSize: 18, lineHeight: 1.6, maxWidth: 640, margin: "20px auto 0" }}>
+        <p className="sd-hide-mobile" style={{ color: th.inkSoft, fontSize: 18, lineHeight: 1.6, maxWidth: 640, margin: "20px auto 0" }}>
           A growing reference of {totalCount} evidence-backed ingredients, what they do, who benefits, how to dose, and where to source the cleanest version.
         </p>
-        <div style={{
+        <div className="sd-statstrip" style={{
           display: "inline-flex", alignItems: "center", gap: 14, marginTop: 24,
           padding: "10px 20px", borderRadius: 999, background: th.paper,
           border: `1px solid ${th.line}`, fontSize: 13, color: th.inkSoft,

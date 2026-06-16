@@ -213,6 +213,9 @@ textarea:focus-visible,
      image (like the catalogue tiles) instead of a small 150px thumbnail. */
   .buy-card { flex-direction: column !important; gap: 18px !important; padding: 18px !important; }
   .buy-hero { width: 100% !important; height: 260px !important; }
+  /* The /ingredients stat strip wraps to several lines on mobile; the 999px pill
+     radius then balloons. Use a clean rounded rectangle. */
+  .sd-statstrip { border-radius: 14px !important; }
 }
 
 html { scroll-behavior: smooth; }
