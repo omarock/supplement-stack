@@ -28,7 +28,7 @@ export interface CatalogueItem {
   reviewsLabel: string;
   boughtLabel: string;
   buyUrl: string;
-  amazonUrl: string;
+  amazonUrl?: string;
   href: string;
   altHref: string;
 }
@@ -303,7 +303,7 @@ function Card({ it, amazonOn }: { it: CatalogueItem; amazonOn: boolean }) {
           display: "block", textAlign: "center", padding: "12px 14px", borderRadius: 999, fontSize: 13.5, fontWeight: 600,
           background: th.burgundy, color: "#fff", textDecoration: "none",
         }}>Buy on iHerb →</a>
-        {amazonOn && (
+        {amazonOn && it.amazonUrl && (
           <a href={it.amazonUrl} target="_blank" rel="sponsored noopener noreferrer" style={{
             display: "block", textAlign: "center", padding: "12px 14px", borderRadius: 999, fontSize: 13.5, fontWeight: 600,
             background: "#ffd814", color: "#0f1111", textDecoration: "none", border: "1px solid #fcd200",

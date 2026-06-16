@@ -209,6 +209,10 @@ textarea:focus-visible,
      999px pill radius then balloons into an ugly oval. Use a clean rounded
      rectangle and tighter spacing on small screens. */
   .sd-reviewed { border-radius: 12px !important; padding: 9px 13px !important; margin-bottom: 14px !important; align-items: flex-start !important; }
+  /* "Where to buy" on mobile: stack the card and show a big, attractive product
+     image (like the catalogue tiles) instead of a small 150px thumbnail. */
+  .buy-card { flex-direction: column !important; gap: 18px !important; padding: 18px !important; }
+  .buy-hero { width: 100% !important; height: 260px !important; }
 }
 
 html { scroll-behavior: smooth; }

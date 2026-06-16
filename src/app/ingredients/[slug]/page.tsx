@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { SUPPLEMENT_DB, Supplement } from "@/lib/supplements";
 import { STACKS } from "@/lib/stacks";
 import { iherbLink } from "@/lib/iherb";
-import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
+import { amazonEnabled, amazonProductLink } from "@/lib/amazon";
 import { getProducts, productImage, type ProductOption } from "@/lib/products";
 import { iherbProductLink } from "@/lib/iherb";
 import { GOALS } from "@/lib/goals";
@@ -236,13 +236,13 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
               {evidenceBadge.label}
             </span>
             {supp.vegan && (
-              <span style={{ ...chipPremium(), color: "#15803d", background: "color-mix(in srgb, #15803d 9%, transparent)", borderColor: "color-mix(in srgb, #15803d 22%, transparent)" }}>
+              <span className="sd-hide-mobile" style={{ ...chipPremium(), color: "#15803d", background: "color-mix(in srgb, #15803d 9%, transparent)", borderColor: "color-mix(in srgb, #15803d 22%, transparent)" }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 22c0-3 1.5-6 4-8"/></svg>
                 Vegan
               </span>
             )}
             {(supp.priority ?? 0) >= 8 && (
-              <span style={{ ...chipPremium(), color: "#a16207", background: "color-mix(in srgb, var(--c-amber) 14%, transparent)", borderColor: "color-mix(in srgb, var(--c-amber) 34%, transparent)" }}>
+              <span className="sd-hide-mobile" style={{ ...chipPremium(), color: "#a16207", background: "color-mix(in srgb, var(--c-amber) 14%, transparent)", borderColor: "color-mix(in srgb, var(--c-amber) 34%, transparent)" }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 2 2.9 6.3 6.8.7-5 4.6 1.4 6.7L12 17.8 5.9 21l1.4-6.7-5-4.6 6.8-.7Z"/></svg>
                 Core ingredient
               </span>
@@ -263,8 +263,8 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
             </Link>
           </div>
 
-          {/* E-E-A-T: reviewer byline + last-reviewed date */}
-          <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 18, flexWrap: "wrap" }}>
+          {/* E-E-A-T: reviewer byline + last-reviewed date (kept for desktop/SEO, hidden on mobile to keep the top clean) */}
+          <div className="sd-hide-mobile" style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 18, flexWrap: "wrap" }}>
             <ReviewedBy />
             <span style={{ ...MM, fontSize: 11, color: th.inkMute }}>
               Last reviewed: {new Date(LAST_REVIEWED).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
@@ -299,7 +299,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
           <h2 style={{ ...S, fontSize: 32, margin: "0 0 20px", letterSpacing: "-0.02em" }}>
             Where to buy
           </h2>
-          <div style={{
+          <div className="buy-card" style={{
             background: th.paper, border: `1px solid ${th.line}`, borderRadius: 20, padding: 28,
             display: "flex", gap: 28, flexWrap: "wrap", alignItems: "flex-start",
           }}>
@@ -312,7 +312,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
               };
               const heroImg = productImage(heroOpt);
               return (
-                <div style={{
+                <div className="buy-hero" style={{
                   width: 150, height: 150, flexShrink: 0, borderRadius: 16, overflow: "hidden",
                   background: "var(--c-surface)", border: `1px solid ${th.line}`,
                   display: "flex", alignItems: "center", justifyContent: "center",
@@ -361,11 +361,9 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
               >
                 Buy on iHerb →
               </a>
-              {showAmazon && (
+              {showAmazon && products[0]?.amazonAsin && (
                 <a
-                  href={products[0]?.amazonAsin
-                    ? amazonProductLink(products[0].amazonAsin)
-                    : amazonLink(supp.iherbSearch)}
+                  href={amazonProductLink(products[0].amazonAsin)}
                   target="_blank" rel="noopener noreferrer sponsored"
                   style={{
                     display: "inline-flex", alignItems: "center", gap: 10,
@@ -442,9 +440,9 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
                   >
                     Buy on iHerb →
                   </a>
-                  {amazonEnabled() && (
+                  {amazonEnabled() && p.amazonAsin && (
                     <a
-                      href={p.amazonAsin ? amazonProductLink(p.amazonAsin) : amazonLink(`${p.brand} ${p.productName}`)}
+                      href={amazonProductLink(p.amazonAsin)}
                       target="_blank" rel="noopener noreferrer sponsored"
                       style={{
                         display: "block", textAlign: "center", marginTop: 8,

@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { SUPPLEMENT_DB } from "@/lib/supplements";
 import { getProducts, productImage } from "@/lib/products";
 import { iherbLink, iherbProductLink } from "@/lib/iherb";
-import { amazonEnabled, amazonLink, amazonProductLink } from "@/lib/amazon";
+import { amazonEnabled, amazonProductLink } from "@/lib/amazon";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CatalogueClient, { CatalogueItem } from "./CatalogueClient";
@@ -49,9 +49,10 @@ function buildItems(): CatalogueItem[] {
         ? iherbProductLink(product.productPath)
         : iherbLink(product.searchQuery ?? s.iherbSearch)
       : iherbLink(s.iherbSearch);
-    const amazonUrl = product?.amazonAsin
-      ? amazonProductLink(product.amazonAsin)
-      : amazonLink([product?.brand, s.name].filter(Boolean).join(" "));
+    // Only link to Amazon when we have a real ASIN (a direct product page).
+    // Without one, Amazon only shows a search list, so we omit the button and
+    // keep the direct iHerb link instead.
+    const amazonUrl = product?.amazonAsin ? amazonProductLink(product.amazonAsin) : undefined;
     items.push({
       id: s.id,
       name: s.name,
