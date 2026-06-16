@@ -95,7 +95,7 @@ export default function ExpressQuiz() {
             <div style={{ height: 5, background: TH.edge, borderRadius: 999, overflow: "hidden" }}>
               <div style={{
                 width: `${(step / TOTAL) * 100}%`, height: "100%",
-                background: `linear-gradient(90deg, ${TH.sage}, ${TH.sageDeep})`,
+                background: "linear-gradient(90deg, #0d9488, var(--c-sage), var(--c-amber))",
                 boxShadow: `0 0 10px color-mix(in srgb, ${TH.sage} 50%, transparent)`,
                 transition: "width .55s cubic-bezier(.2,.7,.2,1)",
               }} />
@@ -256,19 +256,20 @@ function Scale({ title, value, labels, onChange, reversed }: { title: string; va
 }
 
 // ─── Step components (values mirror /quiz/complete = engine-correct) ──────────
+// One colour per goal — mirrors /quiz/complete so both quizzes feel identical.
 function StepGoals({ data, update }: { data: QuizData; update: (u: Partial<QuizData>) => void }) {
   const { t } = useT();
-  const GOALS: { v: string; l: string; glyph: string }[] = [
-    { v: "More energy", l: t("qc.goalEnergy"), glyph: "☀" },
-    { v: "Better sleep", l: t("qc.goalSleep"), glyph: "☾" },
-    { v: "Sharper focus", l: t("qc.goalFocus"), glyph: "✦" },
-    { v: "Stress relief", l: t("qc.goalStress"), glyph: "♡" },
-    { v: "Muscle & recovery", l: t("qc.goalMuscle"), glyph: "↺" },
-    { v: "Immune support", l: t("qc.goalImmune"), glyph: "⊕" },
-    { v: "Better mood", l: t("qc.goalMood"), glyph: "✿" },
-    { v: "Healthy aging", l: t("qc.goalAging"), glyph: "○" },
-    { v: "Skin, hair & nails", l: t("qc.goalSkin"), glyph: "✧" },
-    { v: "General wellness", l: t("qc.goalWellness"), glyph: "◎" },
+  const GOALS: { v: string; l: string; glyph: string; hue: string }[] = [
+    { v: "More energy", l: t("qc.goalEnergy"), glyph: "☀", hue: "var(--c-amber-deep)" },
+    { v: "Better sleep", l: t("qc.goalSleep"), glyph: "☾", hue: "#7c5cff" },
+    { v: "Sharper focus", l: t("qc.goalFocus"), glyph: "✦", hue: "#2f7ed8" },
+    { v: "Stress relief", l: t("qc.goalStress"), glyph: "♡", hue: "#e0723a" },
+    { v: "Muscle & recovery", l: t("qc.goalMuscle"), glyph: "↺", hue: "var(--c-sage-deep)" },
+    { v: "Immune support", l: t("qc.goalImmune"), glyph: "⊕", hue: "#16a34a" },
+    { v: "Better mood", l: t("qc.goalMood"), glyph: "✿", hue: "#db2777" },
+    { v: "Healthy aging", l: t("qc.goalAging"), glyph: "○", hue: "#0d9488" },
+    { v: "Skin, hair & nails", l: t("qc.goalSkin"), glyph: "✧", hue: "#c2410c" },
+    { v: "General wellness", l: t("qc.goalWellness"), glyph: "◎", hue: "var(--c-sage)" },
   ];
   const toggle = (g: string) => update({ goals: data.goals.includes(g) ? data.goals.filter(x => x !== g) : [...data.goals, g] });
   return (
@@ -279,13 +280,18 @@ function StepGoals({ data, update }: { data: QuizData; update: (u: Partial<QuizD
           const active = data.goals.includes(g.v);
           return (
             <button key={g.v} onClick={() => toggle(g.v)} aria-pressed={active} style={{
-              display: "flex", flexDirection: "column", gap: 8, padding: "15px 14px", borderRadius: 14, cursor: "pointer", textAlign: "left",
-              border: `1.5px solid ${active ? TH.sage : TH.edge}`,
-              background: active ? `color-mix(in srgb, ${TH.sage} 9%, transparent)` : TH.surface,
-              transition: "all .16s", outline: "none",
+              display: "flex", flexDirection: "column", gap: 10, padding: "16px 14px", borderRadius: 16, cursor: "pointer", textAlign: "left",
+              border: active ? `2px solid ${g.hue}` : `1.5px solid ${TH.edge}`,
+              background: active ? `color-mix(in srgb, ${g.hue} 14%, ${TH.surface})` : TH.surface,
+              boxShadow: active ? `0 10px 24px -12px color-mix(in srgb, ${g.hue} 65%, transparent)` : "none",
+              transform: active ? "translateY(-1px)" : "none",
+              transition: "all .18s ease", outline: "none",
             }}>
-              <span aria-hidden style={{ fontSize: 21, lineHeight: 1 }}>{g.glyph}</span>
-              <span style={{ fontSize: 13.5, fontWeight: 500, color: active ? TH.sageDeep : TH.ink, lineHeight: 1.3 }}>{g.l}</span>
+              <span aria-hidden style={{
+                width: 36, height: 36, borderRadius: 11, display: "inline-flex", alignItems: "center", justifyContent: "center",
+                background: `color-mix(in srgb, ${g.hue} 16%, ${TH.surface})`, color: g.hue, fontSize: 19, lineHeight: 1,
+              }}>{g.glyph}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 600, color: active ? g.hue : TH.ink, lineHeight: 1.3 }}>{g.l}</span>
             </button>
           );
         })}

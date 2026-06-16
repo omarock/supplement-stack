@@ -264,7 +264,7 @@ export default function SupplementGrid({ supplements, source, showTotalCost, tit
         )}
         {showTotalCost && (
           <span style={{ fontSize: 13, color: th.inkMute, ...MM, fontWeight: 500 }}>
-            ~${totalCost}/MO · {supplements.length} ITEMS
+            ~${totalCost}/MO · {supplements.length} {supplements.length === 1 ? "ITEM" : "ITEMS"}
           </span>
         )}
       </div>
