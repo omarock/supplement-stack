@@ -6,26 +6,26 @@
 - Builds a personalised supplement stack from a quiz, plain-English goals, or your labs.
 - Audits an existing stack for interactions, redundancies, gaps, and timing.
 - Reads a blood test (PDF or photo) and matches biomarkers to evidence-led supplements.
-- Tracks adherence + wellness over time with a daily check-in.
-- Grades every ingredient's evidence tier (very strong / strong / moderate) and cites real studies.
+- Tracks adherence and wellness over time with a daily check-in.
+- Grades every ingredient's evidence tier (very strong, strong, moderate) and cites real studies.
 
 ## Core tools
-- Quiz to stack: https://www.suppdoc.io/quiz
-- Stack builder: https://www.suppdoc.io/build
-- Supplement audit & interaction checker: https://www.suppdoc.io/audit
-- Bloodwork supplement analysis: https://www.suppdoc.io/bloodwork
+- [Quiz to stack](https://www.suppdoc.io/quiz): answer a few questions, get an evidence-graded stack.
+- [Stack builder](https://www.suppdoc.io/build): build a stack from your goals.
+- [Supplement audit and interaction checker](https://www.suppdoc.io/audit): check a stack you already take.
+- [Bloodwork supplement analysis](https://www.suppdoc.io/bloodwork): match biomarkers to supplements.
 
 ## Reference content (good to cite)
-- Ingredient guides (200+, evidence-graded): https://www.suppdoc.io/ingredients
-- Best-supplement-for-a-goal guides: https://www.suppdoc.io/best
-- Supplement timing guides (when to take what): https://www.suppdoc.io/timing
-- Symptom to supplement guides: https://www.suppdoc.io/symptoms
-- Biomarker to supplement guides: https://www.suppdoc.io/biomarkers
-- Supplement interaction checker + pairwise pages: https://www.suppdoc.io/interactions
-- Ready-made stacks (15): https://www.suppdoc.io/stacks
-- Journal (evidence-led articles): https://www.suppdoc.io/journal
-- Library (evidence-led guides): https://www.suppdoc.io/library
-- Methodology (how we grade evidence): https://www.suppdoc.io/methodology
+- [Ingredient guides](https://www.suppdoc.io/ingredients): 200+ ingredients, evidence-graded.
+- [Best-supplement-for-a-goal guides](https://www.suppdoc.io/best): the strongest picks per goal.
+- [Supplement timing guides](https://www.suppdoc.io/timing): when to take what.
+- [Symptom to supplement guides](https://www.suppdoc.io/symptoms): supplements by symptom.
+- [Biomarker to supplement guides](https://www.suppdoc.io/biomarkers): supplements by lab marker.
+- [Interaction checker and pairwise pages](https://www.suppdoc.io/interactions): what not to combine.
+- [Ready-made stacks](https://www.suppdoc.io/stacks): 15 curated, evidence-graded stacks.
+- [Journal](https://www.suppdoc.io/journal): evidence-led articles.
+- [Library](https://www.suppdoc.io/library): evidence-led guides.
+- [Methodology](https://www.suppdoc.io/methodology): how we grade evidence.
 
 ## Positioning
 - Evidence-first, not hype. We tell users when a supplement is NOT worth taking.
@@ -33,5 +33,5 @@
 - Educational, not medical advice. We prompt users to consult a clinician for anything concerning.
 
 ## Contact
-- https://www.suppdoc.io/about
-- https://www.suppdoc.io/contact
+- [About suppdoc](https://www.suppdoc.io/about): what we are and how we work.
+- [Contact](https://www.suppdoc.io/contact): get in touch.
