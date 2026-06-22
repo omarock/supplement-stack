@@ -13,7 +13,7 @@ import { TIMING } from "@/lib/timing";
 import { BIOMARKERS } from "@/lib/biomarkers";
 import { RESEARCH, buildStudyLink } from "@/lib/research";
 import { researchVolume } from "@/lib/research-volume";
-import { authorSchema, reviewedBySchema } from "@/lib/reviewers";
+import { authorSchema, reviewedBySchemaFor, reviewersFor } from "@/lib/reviewers";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BottleMockup from "@/components/BottleMockup";
@@ -150,7 +150,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
     publisher: { "@type": "Organization", name: st.journal },
     url: buildStudyLink(st),
   }));
-  const reviewedBy = reviewedBySchema();
+  const reviewedBy = reviewedBySchemaFor(supp.id);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -265,7 +265,7 @@ export default async function IngredientPage({ params }: { params: Promise<{ slu
 
           {/* E-E-A-T: reviewer byline + last-reviewed date (kept for desktop/SEO, hidden on mobile to keep the top clean) */}
           <div className="sd-hide-mobile" style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 18, flexWrap: "wrap" }}>
-            <ReviewedBy />
+            <ReviewedBy reviewers={reviewersFor(supp.id)} updated={LAST_REVIEWED} />
             <span style={{ ...MM, fontSize: 11, color: th.inkMute }}>
               Last reviewed: {new Date(LAST_REVIEWED).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
             </span>
