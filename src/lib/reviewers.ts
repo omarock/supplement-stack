@@ -24,7 +24,7 @@ export interface Reviewer {
 export const REVIEWERS: Reviewer[] = [
   {
     slug: "sara-khan",
-    name: "Sara Khan",
+    name: "Sarah Khan",
     credential: "Dietitian",
     title: "BSc & MPhil, Nutrition & Dietetics",
   },
