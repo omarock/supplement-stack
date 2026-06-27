@@ -73,46 +73,64 @@ export function welcomeEmail(firstName?: string): EmailPayload {
   const html = wrap(
     [
       row(`
+        <div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#5ba373;font-weight:700;margin-bottom:12px;">Your personalised stack</div>
         <h1 style="font-size:32px;line-height:1.1;letter-spacing:-0.02em;margin:0 0 18px;color:#0a2540;">
-          Your stack is ready to live in.
+          ${firstName ? `${escapeHtml(firstName)}, your stack is ready.` : "Your stack is ready to live in."}
         </h1>
         <p style="font-size:16px;line-height:1.6;color:#3c4858;margin:0 0 16px;">
           ${greeting}<br><br>
-          Thanks for trusting us with your supplement plan. Your personalised stack is saved at <a href="${BASE}/results" style="color:#3f7a52;">suppdoc.io/results</a>, bookmark it and revisit any time.
+          Thanks for trusting us with your supplement plan. We built it the way we build everything here: graded by the <strong>strength of the evidence</strong> behind each ingredient, never by who&apos;s selling it. It&apos;s saved and waiting for you.
         </p>
-        <p style="font-size:16px;line-height:1.6;color:#3c4858;margin:0 0 24px;">
-          A few things to know before you start:
-        </p>
-        <ul style="font-size:15px;line-height:1.65;color:#3c4858;padding-left:20px;margin:0 0 28px;">
-          <li><strong>Take it slow.</strong> Add one supplement at a time over 2-3 weeks so you can tell what&apos;s working.</li>
-          <li><strong>Be consistent.</strong> Effects build over 4-8 weeks for most ingredients.</li>
-          <li><strong>Talk to a clinician</strong> if you have any health conditions or take prescription meds. We&apos;re educational, not medical.</li>
-        </ul>
         ${button("Open my stack", `${BASE}/results`)}
       `),
+      // Trust strip — honest E-E-A-T signal (our core guides carry a real dietitian review)
       row(`
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f0f9f3;border-radius:12px;">
+          <tr><td style="padding:16px 18px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+              <td valign="top" style="padding-right:10px;font-size:18px;line-height:1.2;color:#3f7a52;">✓</td>
+              <td style="font-size:13.5px;line-height:1.55;color:#3c4858;">
+                <strong style="color:#0a2540;">Reviewed, not just written.</strong> Our core ingredient guides are reviewed by <strong>Sarah Khan, Registered Dietitian</strong> (BSc &amp; MPhil, Nutrition &amp; Dietetics) and checked against published research, so you can trust what goes in your body.
+              </td>
+            </tr></table>
+          </td></tr>
+        </table>
+      `, "8px 36px 24px"),
+      row(`
+        <p style="font-size:16px;line-height:1.6;color:#3c4858;margin:0 0 14px;">
+          Three things that make the difference before you start:
+        </p>
+        <ul style="font-size:15px;line-height:1.65;color:#3c4858;padding-left:20px;margin:0 0 28px;">
+          <li><strong>Take it slow.</strong> Add one supplement at a time over 2-3 weeks so you can actually tell what&apos;s working.</li>
+          <li><strong>Be consistent.</strong> Effects build over 4-8 weeks for most ingredients, the early days are about the habit, not the feeling.</li>
+          <li><strong>Talk to a clinician</strong> if you have any health conditions or take prescription meds. We&apos;re educational, not medical.</li>
+        </ul>
         <div style="background:#f6f5f1;border-radius:12px;padding:20px;font-size:14px;line-height:1.6;color:#3c4858;">
-          <strong style="color:#0a2540;">Quick win for day one:</strong> Take your vitamin D with a meal containing fat (eggs, avocado, olive oil). It&apos;s fat-soluble, without fat, absorption drops by half.
+          <strong style="color:#0a2540;">Quick win for day one:</strong> Take your vitamin D with a meal that has some fat in it (eggs, avocado, olive oil). It&apos;s fat-soluble, without fat, absorption drops by about half.
         </div>
-      `),
+      `, "0 36px 28px"),
     ].join(""),
-    "Your personalised stack is saved. Here's how to get the most out of it.",
+    "Your evidence-graded, dietitian-reviewed stack is saved. Here's how to start.",
   );
   const text = `${greeting}
 
-Your suppdoc.io stack is ready at ${BASE}/results, bookmark it.
+Your suppdoc.io stack is ready and saved at ${BASE}/results, bookmark it.
 
-A few things before you start:
+We graded it by the strength of the evidence behind each ingredient, never by who's selling it. Our core ingredient guides are reviewed by Sarah Khan, Registered Dietitian (BSc & MPhil, Nutrition & Dietetics) and checked against published research.
+
+Three things before you start:
 • Take it slow, add one supplement at a time over 2-3 weeks
 • Be consistent, effects build over 4-8 weeks
 • Talk to a clinician if you have any conditions or take prescription meds
 
-Quick win: Take vitamin D with a meal containing fat (eggs, avocado, olive oil). Without fat, absorption drops by half.
+Quick win for day one: Take vitamin D with a meal containing fat (eggs, avocado, olive oil). Without fat, absorption drops by about half.
 
 The suppdoc.io team
 ${BASE}`;
   return {
-    subject: "Your suppdoc.io stack is saved, here's how to start",
+    subject: firstName
+      ? `${firstName}, your stack is ready (and dietitian-reviewed)`
+      : "Your stack is ready, and it's dietitian-reviewed",
     html,
     text,
   };
