@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { getAdminSupabase, adminEmails } from "@/lib/supabase-admin";
 import { sendViaResend } from "@/lib/resend";
+import { welcomeEmail } from "@/lib/email-templates";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
@@ -35,6 +36,7 @@ export async function POST(req: NextRequest) {
   const email = String(body.email ?? "").trim().toLowerCase();
   const source = (typeof body.source === "string" ? body.source : "unknown").slice(0, 40);
   const note = typeof body.note === "string" ? body.note.slice(0, 500) : null;
+  const firstName = typeof body.firstName === "string" ? body.firstName.slice(0, 60) : undefined;
 
   if (!email || !EMAIL_RE.test(email)) {
     return Response.json({ ok: false, error: "invalid_email" }, { status: 400 });
@@ -84,6 +86,38 @@ Stored in DB: ${stored ? "yes" : `NO (${storeError ?? "unknown"})`}`;
       recipients.map(to => sendViaResend(to, subject, html, text)),
     );
     notified = results.some(r => r.ok);
+  }
+
+  // 3) Instant welcome email to the USER. Previously the welcome was only sent by
+  //    the day-0 drip cron (so up to ~24h late), and NEVER for non-quiz signups
+  //    (email capture, etc.). Now every signup gets it immediately. Idempotent: we
+  //    log stage "welcome" in email_drip_log, which the drip cron also checks
+  //    (plus a UNIQUE(email,stage) constraint), so neither path can double-send.
+  //    Skipped for founding-member leads, who get a tailored manual follow-up.
+  if (admin && source !== "founding-member") {
+    try {
+      const { data: prior } = await admin
+        .from("email_drip_log")
+        .select("id")
+        .eq("email", email)
+        .eq("stage", "welcome")
+        .limit(1);
+      if (!prior || prior.length === 0) {
+        const payload = welcomeEmail(firstName);
+        const html = payload.html.split("{{EMAIL_TOKEN}}").join(encodeURIComponent(email));
+        const send = await sendViaResend(email, payload.subject, html, payload.text);
+        await admin.from("email_drip_log").insert({
+          email,
+          stage: "welcome",
+          quiz_id: null,
+          resend_id: send.id ?? null,
+          status: send.ok ? "sent" : "failed",
+          error: send.ok ? null : (send.error ?? null),
+        });
+      }
+    } catch {
+      // Best-effort: a welcome-email hiccup must never fail lead capture.
+    }
   }
 
   // Captured if we stored it OR emailed it to you. Only a true failure returns !ok.
